@@ -7,14 +7,14 @@ import EmbarkJS from 'Embark/EmbarkJS';
 import OraclePrice from '../SvetAng/embarkArtifacts/contracts/OraclePrice';
 import Exchange from '../SvetAng/embarkArtifacts/contracts/Exchange';
 import ERC20 from '../SvetAng/embarkArtifacts/contracts/TokTst';
-import IndexStorage from '../SvetAng/embarkArtifacts/contracts/IndexStorage';
+import IndexToken from '../SvetAng/embarkArtifacts/contracts/IndexToken';
 
-async indexList(e) {
+async getActivesList(e) {
    // e.preventDefault();
     await EmbarkJS.enableEthereum();
     await web3.eth.getAccounts().then(e => { this.state.account = e[0];  
       });
-      IndexStorage.methods.indexList().call().then(_value => this.setState({ tokenList: _value }));
+      IndexToken.methods.getActivesList().call().then(_value => this.setState({ tokenList: _value }));
     
   }
   /*
