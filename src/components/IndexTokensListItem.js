@@ -1,14 +1,21 @@
 import React from 'react'
-import EmbarkJS from 'Embark/EmbarkJS';
+
+//import EmbarkJS from 'Embark/EmbarkJS';
 //import OraclePrice from 'github.com/stanta/SvetAng/tree/svetboard-Ropsten/embarkArtifacts/contracts/OraclePrice';
 //import Exchange from 'github.com/stanta/SvetAng/tree/svetboard-Ropsten/embarkArtifacts/contracts/Exchange';
 //import ERC20 from 'github.com/stanta/SvetAng/tree/svetboard-Ropsten/embarkArtifacts/contracts/TokTst';
 
-import OraclePrice from '../SvetAng/embarkArtifacts/contracts/OraclePrice';
-import Exchange from '../SvetAng/embarkArtifacts/contracts/Exchange';
-import ERC20 from '../SvetAng/embarkArtifacts/contracts/TokTst';
-import IndexToken from '../SvetAng/embarkArtifacts/contracts/IndexToken';
-
+//import OraclePrice from '../SvetAng/embarkArtifacts/contracts/OraclePrice';
+//import Exchange from '../SvetAng/embarkArtifacts/contracts/Exchange';
+//import ERC20 from '../SvetAng/embarkArtifacts/contracts/TokTst';
+import {IndexTokenConfig} from '../contracts/IndexToken';
+import {DrizzleProvider} from 'drizzle-react';
+import {LoadingContainer, AccountData, ContractData, ContractForm} from 'drizzle-react-components';
+ 
+const drizzleOptions  = {
+    contracts: [IndexTokenConfig]
+}
+/*
 async getActivesList(e) {
    // e.preventDefault();
     await EmbarkJS.enableEthereum();
@@ -17,7 +24,7 @@ async getActivesList(e) {
       IndexToken.methods.getActivesList().call().then(_value => this.setState({ tokenList: _value }));
     
   }
-  /*
+  
   async getValue(e) {
   //  e.preventDefault();
     await EmbarkJS.enableEthereum();
@@ -55,19 +62,23 @@ async getActivesList(e) {
 */
 export default function IndexTokensListItem() {
     return (
-
+        <DrizzleProvider options = {drizzleOptions}>
+            <LoadingContainer>
+                
             <li className="left-list-item">
                         
                         <i className="fa fa-question-circle"></i>
-                    
-                    
+                        <AccountData accountIndex={0} units={"ether"} precision = {3} />
+
                         <p>
                             VERY GOOD INDEX TOKEN
                         </p>
-                    
-                    
+
+                        <ContractData contract = "IndexTokenConfig" method = "getActivesList" />
                         <button className="invest">INVEST</button>
                     
             </li>
+            </LoadingContainer>
+        </DrizzleProvider>
     )
 }

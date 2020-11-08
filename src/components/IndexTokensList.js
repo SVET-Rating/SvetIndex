@@ -1,9 +1,9 @@
 import React from 'react'
-import EmbarkJS from 'Embark/EmbarkJS';
+//import EmbarkJS from 'Embark/EmbarkJS';
 
 import IndexTokensListItem from './IndexTokensListItem'
-import IndexStorage from '../SvetAng/embarkArtifacts/contracts/IndexStorage';
-
+//import IndexStorage from '../SvetAng/embarkArtifacts/contracts/IndexStorage';
+/*
 async indexList(e) {
    // e.preventDefault();
     await EmbarkJS.enableEthereum();
@@ -12,7 +12,7 @@ async indexList(e) {
       IndexStorage.methods.indexList().call().then(_value => this.setState({ tokenList: _value }));
     
   }
-  
+  */
 export default function IndexTokensList() {
     return (
         <div>
