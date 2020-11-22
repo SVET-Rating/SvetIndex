@@ -1,0 +1,75 @@
+Deploying Exchange with 476463 gas at the price of 1 Gwei. Estimated cost: 0.000476463 ether  (txHash: 0x93f78ab3cc00eb87f098e360546a2729cd4ae8f5acb6933898fddd24ef905cbe)
+Deploying OraclePrice with 461590 gas at the price of 1 Gwei. Estimated cost: 0.00046159 ether  (txHash: 0xba3410b64841136711b32c301f809ed8015c975bedeff8f07d469ca492fc012b)
+Deploying Bytomtest with 833442 gas at the price of 1 Gwei. Estimated cost: 0.000833442 ether  (txHash: 0x4cfbd6a9566433df5020591677b9b78e5ee9da1d5bfd1d7aebb5f86860a4caf2)
+Deploying OracleCircAmount with 435904 gas at the price of 1 Gwei. Estimated cost: 0.000435904 ether  (txHash: 0x5d3c89c061468f092145f4a94522fd31665d796ee770fe8dbc50d3801e8dfa12)
+Deploying Faucet with 312230 gas at the price of 1 Gwei. Estimated cost: 0.00031223 ether  (txHash: 0x1e6abe40fbec578a1db9f05b35bcefdc366e1321f8ffeb82e74b94acc90fbd98)
+Deploying SVTtst with 808942 gas at the price of 1 Gwei. Estimated cost: 0.000808942 ether  (txHash: 0xea2470640684122a14fff83797d1bbf7ca91f84223161f89d418f6b9ddcf86f4)
+Deploying Waytst with 854492 gas at the price of 1 Gwei. Estimated cost: 0.000854492 ether  (txHash: 0x8dddd6997beace26952ed9619bb3fe45188e55286c19b50c6c8ada372d56727e)
+Deploying Experts with 223668 gas at the price of 1 Gwei. Estimated cost: 0.000223668 ether  (txHash: 0x50c0abd96859420783e3cb2353789ece114f9870b53a164c89b9b6f5ff84db0b)
+Deploying OracleTotSupply with 466769 gas at the price of 1 Gwei. Estimated cost: 0.000466769 ether  (txHash: 0xdbfd070e762567bbab9b07de97ff010af8c4646272623fbe2707dc5b329f84e8)
+Deploying IndexStorage with 611272 gas at the price of 1 Gwei. Estimated cost: 0.000611272 ether  (txHash: 0x214db0a9ce102ee5ad8136e798519fb52b4a0de31d4b850423780446bbbbb869)
+Deploying Lstorage with 296606 gas at the price of 1 Gwei. Estimated cost: 0.000296606 ether  (txHash: 0xdfe913d4f5b4f096ecb7c6a4de38aaec75f350eb76b6fdc89ab339b33b6d7db9)
+Deploying Kybertst with 872064 gas at the price of 1 Gwei. Estimated cost: 0.000872064 ether  (txHash: 0x0d473b1d5ea0c73869646bc9916def85b3c4c5ee879ef13f2d8cd1abd1551b88)
+Deploying Index2Swap with 1841000 gas at the price of 1 Gwei. Estimated cost: 0.001841 ether  (txHash: 0xebbae7fe19194efd0a5116c856dc880148d4bcc9c90aa6e9b227fc173f180cd8)
+Deploying IndexFactory with 2179922 gas at the price of 1 Gwei. Estimated cost: 0.002179922 ether  (txHash: 0xc6c814010db83cf128b52d9714fa633f6136d7e97f22437ee80c0dc5c512d181)
+OracleCircAmount deployed at 0xdE59DE3aEdBd1E3b4D6B76BB3570F3241cF401d5 using 426357 gas (txHash: 0x5d3c89c061468f092145f4a94522fd31665d796ee770fe8dbc50d3801e8dfa12)
+Faucet deployed at 0x579495758D821e9Dca5897b7087D241C83a0AaDc using 309273 gas (txHash: 0x1e6abe40fbec578a1db9f05b35bcefdc366e1321f8ffeb82e74b94acc90fbd98)
+Experts deployed at 0xb5e0c27a3b5c59dF4281d884f5EAf9fd5cee0c78 using 222106 gas (txHash: 0x50c0abd96859420783e3cb2353789ece114f9870b53a164c89b9b6f5ff84db0b)
+OraclePrice deployed at 0x122743fCE13Bd1EDf7C2C6e861eCeF6dEAA37BDf using 426333 gas (txHash: 0xba3410b64841136711b32c301f809ed8015c975bedeff8f07d469ca492fc012b)
+SVTtst deployed at 0x1A77B888Dd5F6B81fD4D691fEaC2f26cFD1AA4Ce using 798756 gas (txHash: 0xea2470640684122a14fff83797d1bbf7ca91f84223161f89d418f6b9ddcf86f4)
+OracleTotSupply deployed at 0x751769f0a740a865031283CAd19e56369c8e8c70 using 426357 gas (txHash: 0xdbfd070e762567bbab9b07de97ff010af8c4646272623fbe2707dc5b329f84e8)
+Bytomtest deployed at 0x9a942272eE122559104B09Ed103A566a5DE6E524 using 798744 gas (txHash: 0x4cfbd6a9566433df5020591677b9b78e5ee9da1d5bfd1d7aebb5f86860a4caf2)
+Waytst deployed at 0xaB32FcB8310480b18AE007BCc4fB6Bca5127496a using 798804 gas (txHash: 0x8dddd6997beace26952ed9619bb3fe45188e55286c19b50c6c8ada372d56727e)
+IndexStorage deployed at 0xf10D4cA6660cffe2Dcad86E8D025E8d420bD9d0d using 566624 gas (txHash: 0x214db0a9ce102ee5ad8136e798519fb52b4a0de31d4b850423780446bbbbb869)
+Exchange deployed at 0xbB75b58141adFeB13a44C0428388cA990A420f75 using 439713 gas (txHash: 0x93f78ab3cc00eb87f098e360546a2729cd4ae8f5acb6933898fddd24ef905cbe)
+Lstorage deployed at 0x45F9737B94Ccb239A5a96F9B87610f0261b77E74 using 294036 gas (txHash: 0xdfe913d4f5b4f096ecb7c6a4de38aaec75f350eb76b6fdc89ab339b33b6d7db9)
+Index2Swap deployed at 0x7f32eae08d114036d6A50fAd69c07C65058Bf21F using 1761443 gas (txHash: 0xebbae7fe19194efd0a5116c856dc880148d4bcc9c90aa6e9b227fc173f180cd8)
+Kybertst deployed at 0xfedd6562DEC6a65Ed57aeAf8901Fbf716cCc6B92 using 798720 gas (txHash: 0x0d473b1d5ea0c73869646bc9916def85b3c4c5ee879ef13f2d8cd1abd1551b88)
+IndexFactory deployed at 0x691f3750417a0E8c6E2D6f23328350e2F34383EF using 1994724 gas (txHash: 0xc6c814010db83cf128b52d9714fa633f6136d7e97f22437ee80c0dc5c512d181)
+finished deploying contracts
+Blockchain> OraclePrice.addPrice("0xfedd6562DEC6a65Ed57aeAf8901Fbf716cCc6B92", 941986000000000000) | 0xadf863850b0736b1b231cad5f21632b94860f779b68b3693f2e4e1c70e6434ec | gas:129514 | blk:8860480 | status:0x1
+Blockchain> Exchange.setBA("0x1A77B888Dd5F6B81fD4D691fEaC2f26cFD1AA4Ce") | 0x2ccec61a077222e5ac3163925d898570d8532569b5007c6356d64bb61972957f | gas:43345 | blk:8860480 | status:0x1
+Blockchain> IndexFactory.setTotSupply("0x751769f0a740a865031283CAd19e56369c8e8c70") | 0xc52cc926d9a800576a6a3224a1378aa6a35a046f7d61656196c99343ae98fffe | gas:43481 | blk:8860480 | status:0x1
+Error: Error registering afterDeploy lifecycle hook: Transaction has been reverted by the EVM:
+{
+  "blockHash": "0xb96bb8318285157e20db99e23ef6d402ba8277aaed1c0ade6fc884336b6ed24d",
+  "blockNumber": 8860480,
+  "contractAddress": null,
+  "cumulativeGasUsed": 2132369,
+  "from": "0x132e2c063960e14ee62ec2dac6aba6ba4bb68552",
+  "gasUsed": 23661,
+  "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+  "status": false,
+  "to": "0x751769f0a740a865031283cad19e56369c8e8c70",
+  "transactionHash": "0xb7ba6a0b138448716af36bfa57cae90cbf924fd2f906e4a0e6c56b888f5a5fde",
+  "transactionIndex": 26,
+  "address": "0x751769f0a740a865031283cad19e56369c8e8c70",
+  "data": "0x52258b9d0000000000000000000000009a942272ee122559104b09ed103a566a5de6e524000000000000000000000000000000000000000000000000000000007d2b7500",
+  "events": {}
+}
+    at FunctionConfigs.afterAllDeployAction (/home/st/Desktop/SvetAng2/SvetAng/node_modules/embark-specialconfigs/src/functionConfigs.js:41:17)
+ready to watch file changes
+Blockchain> Exchange.setPriceOracle("0x122743fCE13Bd1EDf7C2C6e861eCeF6dEAA37BDf") | 0x50c6e8cb475959ccaed7fdbbf4360a9325d128d704bfe341662639c6b53f4fb5 | gas:43368 | blk:8860480 | status:0x1
+Blockchain> Lstorage.setswap("0x7f32eae08d114036d6A50fAd69c07C65058Bf21F") | 0x8ad7d808553457f3f43e30fb5cabda0b983d8a431f8feae79993290cbc81c8d2 | gas:43367 | blk:8860480 | status:0x1
+Blockchain> Faucet.setToken("0xfedd6562DEC6a65Ed57aeAf8901Fbf716cCc6B92") | 0x3e0503321808c2816660c278dbcb5a6778f817e4c155a5fd8dcd3ba87b4f2006 | gas:48319 | blk:8860480 | status:0x1
+Blockchain> OracleCircAmount.setExpertsContr("0xb5e0c27a3b5c59dF4281d884f5EAf9fd5cee0c78") | 0x8f482354f4ad974e5afa422302784904415c4dff96352e8508245866c7c63b17 | gas:43448 | blk:8860480 | status:0x1
+Blockchain> Index2Swap.setSwap("0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D", 99, 30) | 0xf7fff303360c70e1951301df349411cba22e6aad24386e6c961648ca921880a1 | gas:28901 | blk:8860480 | status:0x1
+Blockchain> Index2Swap.set("0x1A77B888Dd5F6B81fD4D691fEaC2f26cFD1AA4Ce", "0x122743fCE13Bd1EDf7C2C6e861eCeF6dEAA37BDf", "0x45F9737B94Ccb239A5a96F9B87610f0261b77E74") | 0x481ff5113e037554b12fa9579e841604b93a917cd9670a5f5f5f13af6e19bd17 | gas:85820 | blk:8860480 | status:0x1
+Blockchain> OraclePrice.addPrice("0x9a942272eE122559104B09Ed103A566a5DE6E524", 70325000000000000) | 0x236f6fa89e10322ee5867a102563fc9d78a9a5b0cbbe51d66b6dbf92298a1500 | gas:114502 | blk:8860480 | status:0x1
+Blockchain> OracleTotSupply.addamount("0x9a942272eE122559104B09Ed103A566a5DE6E524", 2100000000) | 0xb7ba6a0b138448716af36bfa57cae90cbf924fd2f906e4a0e6c56b888f5a5fde | gas:23661 | blk:8860480 | status:0x0
+Blockchain> OraclePrice.addPrice("0xaB32FcB8310480b18AE007BCc4fB6Bca5127496a", 241054000000000000) | 0xb1b8c9858113b4e70fbe07741773fcd09ed539e6daa345415779dff5eaca39dc | gas:114514 | blk:8860480 | status:0x1
+Blockchain> OracleTotSupply.addamount("0xaB32FcB8310480b18AE007BCc4fB6Bca5127496a", 210451990) | 0xc9eec3ae738fa0083e6ca01618b80f58be20ed1279cbcf415a1592cff44050d3 | gas:23673 | blk:8860480 | status:0x0
+Blockchain> OraclePrice.setExpertsContr("0xb5e0c27a3b5c59dF4281d884f5EAf9fd5cee0c78") | 0xf4f3a09d7bf8d0ca73e31b3b99707a64d6c65e3e01b404a59ecc19da96e5667f | gas:43493 | blk:8860480 | status:0x1
+Blockchain> IndexFactory.setPriceOracle("0x122743fCE13Bd1EDf7C2C6e861eCeF6dEAA37BDf") | 0x3132c0d5daebf61b49d26c8aef4297f532e9d951fb3a998b1f60918bd452f738 | gas:43437 | blk:8860480 | status:0x1
+Blockchain> OracleCircAmount.addamount("0xaB32FcB8310480b18AE007BCc4fB6Bca5127496a", 189000000) | 0x77bb844d0722c8fde8cb4572009474ab0aa5246735115f0faeea4286e9ab6ea9 | gas:129456 | blk:8860480 | status:0x1
+Blockchain> Faucet.setToken("0x9a942272eE122559104B09Ed103A566a5DE6E524") | 0x79dd2f11d5d8c14e832672d3ec6f8cd25b149322d0499e31f06c67e445668d6f | gas:48319 | blk:8860480 | status:0x1
+Blockchain> OracleCircAmount.addamount("0xfedd6562DEC6a65Ed57aeAf8901Fbf716cCc6B92", 198046404) | 0x658afa04d08fb4f7478ad613b8488e613cea656b78a5fef8f927ba70e4a7192a | gas:23673 | blk:8860480 | status:0x0
+Blockchain> OracleCircAmount.addamount("0x9a942272eE122559104B09Ed103A566a5DE6E524", 1374417194) | 0x0a6b774645f97dc18fe73dc939c841718a0c292f1d8a80b694680107313b205d | gas:114456 | blk:8860480 | status:0x1
+Blockchain> Experts.addExpert("0x132e2c063960e14eE62EC2dAC6AbA6bA4BB68552") | 0xd53b25cb9b6c045b080b320f06cf03842808379c173347c13a8391cfa47ede87 | gas:43418 | blk:8860480 | status:0x1
+Blockchain> IndexFactory.setIndexStorage("0xf10D4cA6660cffe2Dcad86E8D025E8d420bD9d0d") | 0x18374c946a8f8ab6c8a29762555a57d3c4c8501de04efcf7a5120d8b9ee1f609 | gas:43460 | blk:8860480 | status:0x1
+Blockchain> IndexFactory.setAmountOracle("0xdE59DE3aEdBd1E3b4D6B76BB3570F3241cF401d5") | 0xaeda5fd65590026a464a7129e12b9f7c56bb0e3af85c92f9e2143a31556320dd | gas:43459 | blk:8860480 | status:0x1
+Blockchain> IndexStorage.setFactory("0x691f3750417a0E8c6E2D6f23328350e2F34383EF") | 0x5acb7546f389da80cfaee092d9b874e0a4bf22a5e21e018417b5f6c4dd32a0ca | gas:43470 | blk:8860480 | status:0x1
+Blockchain> Faucet.setToken("0xaB32FcB8310480b18AE007BCc4fB6Bca5127496a") | 0x4f06279bf626ba7a56fee28ebf5d77cf50b1a42cf019bff60343964fafb04c14 | gas:63319 | blk:8860480 | status:0x1
+Blockchain> OracleTotSupply.addamount("0xfedd6562DEC6a65Ed57aeAf8901Fbf716cCc6B92", 210404983) | 0x03c02bce07c2975278b1f5c2c7c58c8f8b1db40d0af575213201d3cc946d0f36 | gas:23673 | blk:8860480 | status:0x0
+Blockchain> Faucet.setToken("0x1A77B888Dd5F6B81fD4D691fEaC2f26cFD1AA4Ce") | 0xe955d6b16bf75ab4be9c269dfda287db252e71acb6fe692178e879e88d7e5600 | gas:48319 | blk:8860480 | status:0x1
+Blockchain> SVTtst.transfer("0xbB75b58141adFeB13a44C0428388cA990A420f75", 1000000000000000000000000) | 0x813866bd6d127e773aec15678cb1c8ade3bc0a010b1883824dddfac2a219a55d | gas:51223 | blk:8860480 | status:0x1
