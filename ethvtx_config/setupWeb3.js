@@ -4,7 +4,15 @@ import Web3 from 'web3';
 import EmbarkJs from 'Embark/EmbarkJS';
 import { start, setWeb3, authorizeAndSetWeb3 } from 'ethvtx/lib/dispatchers';
 import { embark } from 'ethvtx/lib/utils';
-import SimpleStorage from 'Embark/contracts/SimpleStorage';
+import OraclePrice from 'Embark/contracts/OraclePrice';
+import OracleCircAmount from 'Embark/contracts/OracleCircAmount';
+import OracleTotSupply from 'Embark/contracts/OracleTotSupply';
+import Index2Swap from 'Embark/contracts/Index2Swap';
+import IndexFactory from 'Embark/contracts/IndexFactory';
+import Lstorage from 'Embark/contracts/Lstorage';
+import IndexStorage from 'Embark/contracts/IndexStorage';
+import ERC20 from 'Embark/contracts/ERC20';
+import IndexToken from 'Embark/contracts/IndexToken';
 
 export const setupWeb3 = async (store) => {
 
@@ -42,15 +50,76 @@ export const setupWeb3 = async (store) => {
             VtxContract.init(store);
 
             // Loading a spec si made easy with the embark.loadSpec helper
-            loadContractSpec(store.dispatch, ...embark.loadSpec(SimpleStorage, 'SimpleStorage', true, true));
+            loadContractSpec(store.dispatch, ...embark.loadSpec(Experts, 'Experts', true, true));
+            loadContractSpec(store.dispatch, ...embark.loadSpec(Exchange, 'Exchange', true, true));
+            loadContractSpec(store.dispatch, ...embark.loadSpec(OraclePrice, 'OraclePrice', true, true));
+            loadContractSpec(store.dispatch, ...embark.loadSpec(OracleCircAmount, 'OracleCircAmount', true, true));
+            loadContractSpec(store.dispatch, ...embark.loadSpec(OracleTotSupply, 'OracleTotSupply', true, true));
+            loadContractSpec(store.dispatch, ...embark.loadSpec(Index2Swap, 'Index2Swap', true, true));
+            loadContractSpec(store.dispatch, ...embark.loadSpec(IndexFactory, 'IndexFactory', true, true));
+            loadContractSpec(store.dispatch, ...embark.loadSpec(Lstorage, 'Lstorage', true, true));
+            loadContractSpec(store.dispatch, ...embark.loadSpec(IndexStorage, 'IndexStorage', true, true));
+            loadContractSpec(store.dispatch, ...embark.loadSpec(ERC20, 'ERC20', true, true));
+            loadContractSpec(store.dispatch, ...embark.loadSpec(IndexToken, 'IndexToken', true, true));
+           
 
             // Loading an instance BEFORE starting the store will check on the chain if the correct bytecode is found, and if not, the WrongNet status is applied
-            loadContractInstance(store.dispatch, 'SimpleStorage', SimpleStorage.address, {
-                alias: '@simplestorage',
+            loadContractInstance(store.dispatch, 'Experts', Experts.address, {
+                alias: '@Experts',
                 permanent: true,
                 balance: true
             });
 
+            loadContractInstance(store.dispatch, 'Exchange', Exchange.address, {
+                alias: '@Exchange',
+                permanent: true,
+                balance: true
+            });
+            loadContractInstance(store.dispatch, 'OraclePrice', OraclePrice.address, {
+                alias: '@OraclePrice',
+                permanent: true,
+                balance: true
+            });
+            loadContractInstance(store.dispatch, 'OracleCircAmount', OracleCircAmount.address, {
+                alias: '@OracleCircAmount',
+                permanent: true,
+                balance: true
+            });
+            loadContractInstance(store.dispatch, 'OracleTotSupply', OracleTotSupply.address, {
+                alias: '@OracleTotSupply',
+                permanent: true,
+                balance: true
+            });
+            loadContractInstance(store.dispatch, 'Index2Swap', Index2Swap.address, {
+                alias: '@Index2Swap',
+                permanent: true,
+                balance: true
+            });
+            loadContractInstance(store.dispatch, 'IndexFactory', IndexFactory.address, {
+                alias: '@IndexFactory',
+                permanent: true,
+                balance: true
+            });
+            loadContractInstance(store.dispatch, 'Lstorage', Lstorage.address, {
+                alias: '@Lstorage',
+                permanent: true,
+                balance: true
+            });
+            loadContractInstance(store.dispatch, 'IndexStorage', IndexStorage.address, {
+                alias: '@IndexStorage',
+                permanent: true,
+                balance: true
+            });
+            loadContractInstance(store.dispatch, 'IndexToken', IndexToken.address, {
+                alias: '@IndexToken',
+                permanent: true,
+                balance: true
+            });
+            loadContractInstance(store.dispatch, 'ERC20', ERC20.address, {
+                alias: '@ERC20',
+                permanent: true,
+                balance: true
+            });
             // Loading a permanent account before starting the store will keep it even after resets
             addAccount(store.dispatch, '0xa087a6Ddc4BDB1028fe4431C8616F8E15Cf5F522', {
                 alias: '@testpermanent',
