@@ -58,68 +58,68 @@ export const setupWeb3 = async (store) => {
 
             // Loading an instance BEFORE starting the store will check on the chain if the correct bytecode is found, and if not, the WrongNet status is applied
             loadContractInstance(store.dispatch, 'Experts', Experts.address, {
-                alias: '@Experts',
+                alias: '@experts',
                 permanent: true,
                 balance: true
             });
 
             loadContractInstance(store.dispatch, 'Exchange', Exchange.address, {
-                alias: '@Exchange',
+                alias: '@exchange',
                 permanent: true,
                 balance: true
             });
             loadContractInstance(store.dispatch, 'OraclePrice', OraclePrice.address, {
-                alias: '@OraclePrice',
+                alias: '@oracleprice',
                 permanent: true,
                 balance: true
             });
             loadContractInstance(store.dispatch, 'OracleCircAmount', OracleCircAmount.address, {
-                alias: '@OracleCircAmount',
+                alias: '@oraclecircamount',
                 permanent: true,
                 balance: true
             });
             loadContractInstance(store.dispatch, 'OracleTotSupply', OracleTotSupply.address, {
-                alias: '@OracleTotSupply',
+                alias: '@oracletotsupply',
                 permanent: true,
                 balance: true
             });
             loadContractInstance(store.dispatch, 'Index2Swap', Index2Swap.address, {
-                alias: '@Index2Swap',
+                alias: '@index2swap',
                 permanent: true,
                 balance: true
             });
             loadContractInstance(store.dispatch, 'IndexFactory', IndexFactory.address, {
-                alias: '@IndexFactory',
+                alias: '@indexfactory',
                 permanent: true,
                 balance: true
             });
             loadContractInstance(store.dispatch, 'Lstorage', Lstorage.address, {
-                alias: '@Lstorage',
+                alias: '@lstorage',
                 permanent: true,
                 balance: true
             });
             loadContractInstance(store.dispatch, 'IndexStorage', IndexStorage.address, {
-                alias: '@IndexStorage',
+                alias: '@indexstorage',
                 permanent: true,
                 balance: true
             });
-            loadContractInstance(store.dispatch, 'IndexToken', IndexToken.address, {
-                alias: '@IndexToken',
+      /*      loadContractInstance(store.dispatch, 'IndexToken', IndexToken.address, {
+                alias: '@indextoken',
                 permanent: true,
                 balance: true
             });
             loadContractInstance(store.dispatch, 'ERC20', ERC20.address, {
-                alias: '@ERC20',
+                alias: '@erc20',
                 permanent: true,
                 balance: true
-            });
+            }); 
             // Loading a permanent account before starting the store will keep it even after resets
-            Web3.eth.getAccounts().then(e => {    
+            web3.eth.getAccounts().then(e => {    
                 addAccount(store.dispatch, e[0], {
-                    alias: '@mainAcc',
+                    alias: '@mainacc',
                     permanent: true
                 });
-            });
+            }); */
             // Starts the store, will update the vtxconfig.status depending on the environment. Will also call the enable callback if available
             start(store.dispatch, EmbarkJs.enableEthereum ? EmbarkJs.enableEthereum : undefined);
 

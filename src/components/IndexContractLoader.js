@@ -1,6 +1,6 @@
 import React from 'react';
 import { withContracts, getContractFromProps } from 'react-ethvtx';
-import ContractIndexMethodCall from "./ContracIndexMethodCall";
+import {ContractIndexMethodCall } from "./ContracIndexMethodCall";
 
 class ContractLoaderContainer extends React.Component {
 
