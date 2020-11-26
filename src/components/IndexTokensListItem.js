@@ -29,11 +29,11 @@ const mapStateToProps = (state) => {
 
 const contract = getContractFromProps(this.props, 'SimpleStorage', this.props.address);
 
-
+/*
 const mapStateToProps = (state) => ({
     simplestorage_get: getContract(state, 'SimpleStorage', '@simplestorage').fn.get()
 });
-
+*/
 
 const mapDispatchToProps = dispatch => ({
     changeActiveElement: (e) => dispatch(indexTokenSelect(e.target.parentElement.id)),

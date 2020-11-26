@@ -1,9 +1,9 @@
 {
   "contracts": ["contracts/**"],
   "app": {
-    "js/dapp.js": ["app/dapp.js"],
-    "index.html": "app/index.html",
-    "images/": ["app/images/**"],
+    "js/dapp.js": ["src/App.js"],
+    "index.html": "src/index.js", 
+    "images/": ["src/images/**"],
     "css/bootstrap.min.css": "node_modules/bootstrap/dist/css/bootstrap.min.css"
   },
   "buildDir": "dist/",
@@ -27,5 +27,5 @@
       "optimize-runs": 200
     }
   },
-  "generationDir": "embarkArtifacts"
+  "generationDir": "src/embarkArtifacts"
 }

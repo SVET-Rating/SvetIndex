@@ -1,18 +1,11 @@
 import { VtxContract } from 'ethvtx/lib/contracts/VtxContract';
 import { loadContractSpec, loadContractInstance, addAccount } from 'ethvtx/lib/dispatchers';
 import Web3 from 'web3';
-import EmbarkJs from 'Embark/EmbarkJS';
+import  EmbarkJs  from 'embarkjs';
 import { start, setWeb3, authorizeAndSetWeb3 } from 'ethvtx/lib/dispatchers';
 import { embark } from 'ethvtx/lib/utils';
-import OraclePrice from 'Embark/contracts/OraclePrice';
-import OracleCircAmount from 'Embark/contracts/OracleCircAmount';
-import OracleTotSupply from 'Embark/contracts/OracleTotSupply';
-import Index2Swap from 'Embark/contracts/Index2Swap';
-import IndexFactory from 'Embark/contracts/IndexFactory';
-import Lstorage from 'Embark/contracts/Lstorage';
-import IndexStorage from 'Embark/contracts/IndexStorage';
-import ERC20 from 'Embark/contracts/ERC20';
-import IndexToken from 'Embark/contracts/IndexToken';
+
+import {OraclePrice, OracleCircAmount,  OracleTotSupply,  Index2Swap, IndexFactory, Lstorage, IndexStorage, ERC20,  IndexToken, Experts, Exchange } from "../embarkArtifacts/contracts"
 
 export const setupWeb3 = async (store) => {
 
@@ -121,7 +114,7 @@ export const setupWeb3 = async (store) => {
                 balance: true
             });
             // Loading a permanent account before starting the store will keep it even after resets
-            web3.eth.getAccounts().then(e => {    
+            Web3.eth.getAccounts().then(e => {    
                 addAccount(store.dispatch, e[0], {
                     alias: '@mainAcc',
                     permanent: true
