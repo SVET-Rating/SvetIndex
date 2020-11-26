@@ -121,11 +121,12 @@ export const setupWeb3 = async (store) => {
                 balance: true
             });
             // Loading a permanent account before starting the store will keep it even after resets
-            addAccount(store.dispatch, '0xa087a6Ddc4BDB1028fe4431C8616F8E15Cf5F522', {
-                alias: '@testpermanent',
-                permanent: true
+            web3.eth.getAccounts().then(e => {    
+                addAccount(store.dispatch, e[0], {
+                    alias: '@mainAcc',
+                    permanent: true
+                });
             });
-
             // Starts the store, will update the vtxconfig.status depending on the environment. Will also call the enable callback if available
             start(store.dispatch, EmbarkJs.enableEthereum ? EmbarkJs.enableEthereum : undefined);
 

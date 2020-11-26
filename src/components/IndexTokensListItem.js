@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Fragment } from 'react'
 import indexTokenSelect from '../redux/actions/indexTokenSelect'
+import { IndexContractLoader } from './IndexContractLoader'
 
 
 const IndexTokensListItem =  (props) => {
@@ -12,24 +13,9 @@ const IndexTokensListItem =  (props) => {
         
         
         
-        return (<li className="left-list-item" id={item.id} style={!item.active ? {boxShadow:'none'}:{}}>
-                        
-        <i className="fa fa-question-circle"></i>
-    
-    
-        <p onClick={props.changeActiveElement}>
-            {/* VERY GOOD INDEX TOKEN */}
-            {item.name}
-        </p>
-        <p style={{ minWidth: '1rem' }}>
-            {/* VERY GOOD INDEX TOKEN */}
-            {item.balance}
-        </p>
-    
-    
-        <button className="invest">INVEST</button>
-    
-     </li>)
+        return (
+            <IndexContractLoader />
+        )
     });
     return (
        
@@ -40,6 +26,14 @@ const mapStateToProps = (state) => {
     const {indexTokensList} = state;
     return {indexList: indexTokensList.indexTokensList}
 }
+
+const contract = getContractFromProps(this.props, 'SimpleStorage', this.props.address);
+
+
+const mapStateToProps = (state) => ({
+    simplestorage_get: getContract(state, 'SimpleStorage', '@simplestorage').fn.get()
+});
+
 
 const mapDispatchToProps = dispatch => ({
     changeActiveElement: (e) => dispatch(indexTokenSelect(e.target.parentElement.id)),
