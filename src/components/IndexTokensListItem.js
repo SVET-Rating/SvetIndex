@@ -27,7 +27,7 @@ const mapStateToProps = (state) => {
     return {indexList: indexTokensList.indexTokensList}
 }
 
-const contract = getContractFromProps(this.props, 'SimpleStorage', this.props.address);
+//const contract = getContractFromProps(this.props, 'SimpleStorage', this.props.address);
 
 /*
 const mapStateToProps = (state) => ({

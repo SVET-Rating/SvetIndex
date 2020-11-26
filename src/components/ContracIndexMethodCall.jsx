@@ -47,4 +47,4 @@ const mapStateToProps = (state) => ({
     IndexToken_balanceOf: getContract(state, 'IndexToken').fn.balanceOf
 });
 
-export const ContractMethodCall = connect(mapStateToProps)(ContractMethodCallRaw);
+export const ContractIndexMethodCall = connect(mapStateToProps)(ContractMethodCallRaw);
