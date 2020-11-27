@@ -10,12 +10,10 @@ const IndexTokensListItem =  (props) => {
     console.log(props.indexList)
    
     
-    const indexJSXList = this.props.IndexStorage_indexList.map((item,key) => {
-        
-        
+    const indexJSXList = props.indexstorage_indexlist.map((item,key) => {
         
         return (
-            <IndexContractLoader />
+            <IndexContractLoader address = {item.address}/>
         )
     });
     return (
@@ -34,7 +32,8 @@ const mapStateToProps = (state) => {
 
 
 const mapStateToProps = (state) => ({
-    IndexStorage_indexList: getContract(state, 'IndexStorage', '@indexstorage').fn.indexList()
+    
+    indexstorage_indexlist: getContract(state, 'IndexStorage', '@indexstorage').fn.indexList()
 });
 
 
