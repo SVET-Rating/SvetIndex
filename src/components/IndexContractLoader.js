@@ -11,7 +11,7 @@ class ContractLoaderContainer extends React.Component {
         return (
             <div>
             {
-                contracts !== null ? <ContractIndexMethodCall /> : 'Loading ...'
+                contract !== null ? <ContractIndexMethodCall /> : 'Loading ...'
             }
             </div>
         );
