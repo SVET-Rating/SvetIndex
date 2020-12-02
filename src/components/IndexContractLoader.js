@@ -11,7 +11,7 @@ class ContractLoaderContainer extends React.Component {
         return (
             <div>
             {
-                contract !== null ? <ContractIndexMethodCall /> : 'Loading ...'
+                contract !== null ? <ContractIndexMethodCall /> : 'Loading Index contract ...'
             }
             </div>
         );
@@ -24,8 +24,9 @@ const loadContract = (state, props) => {
         return [
             {
                 contract: "IndexToken",
-                address: this.props.address,
-                balance: true
+                address: props.address,
+                balance: true,
+                contracts: props.contractList
             }
         ]
     } else {

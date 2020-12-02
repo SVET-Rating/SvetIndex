@@ -10,9 +10,10 @@ export default function Invesment() {
             <div className="left-list">
                 <IndexTokenList/>
             </div>
+            
             <div className="right-list">
-            <TokensInIndexTokenList />
-            </div>
+            <br /> "TokensInIndexTokenList"
+            </div >
 
         </div> 
         </div>

@@ -3,17 +3,18 @@ import { connect } from 'react-redux';
 import { Fragment } from 'react';
 import indexTokenSelect from '../redux/actions/indexTokenSelect';
 import { IndexContractLoader } from './IndexContractLoader';
-import { getContract } from 'ethvtx/lib/contracts/helpers/getters';
+import { getContract, getContractList } from 'ethvtx/lib/contracts/helpers/getters';
+//import contracts from '../embarkArtifacts/contracts';
 
 
 const IndexTokensListItem =  (props) => {
-    console.log(props.indexList)
+   // console.log(props.indexList)
    
     if  (props.indexstorage_indexlist !== undefined) {
-        const indexJSXList = props.indexstorage_indexlist.map((item) => {
+        const indexJSXList = props.indexstorage_indexlist.map((item, key) => {
             
             return (
-                <IndexContractLoader address = {item.address}/>
+                <IndexContractLoader contractList = {props.contractsList} address = {item.addr}/>
             )
         });
     
@@ -37,7 +38,8 @@ const mapStateToProps = (state) => {
 
 
 const mapStateToProps = (state) => ({
-    indexstorage_indexlist: getContract(state, 'IndexStorage', '@indexstorage').fn.indexList()
+    indexstorage_indexlist: getContract(state, 'IndexStorage', '@indexstorage').fn.indexList(),
+    contractsList: getContractList(state)
 });
 
 

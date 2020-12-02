@@ -10,7 +10,7 @@ class ContractLoaderContainer extends React.Component {
         return (
             <div>
             {
-                contracts !== null ? 'Loaded !' : 'Loading ...'
+                contract !== null ? 'Loaded !' : 'Loading ERC contract...'
             }
             </div>
         );

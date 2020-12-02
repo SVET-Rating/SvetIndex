@@ -123,7 +123,15 @@ module.exports = {
             fromIndex: 0,
             args: ["SvetIndex1", "SVI1"], 
             
+          },
+      IndexToken2: {
+          instanceOf: 'IndexToken',
+
+            fromIndex: 0,
+            args: ["SvetIndex2", "SVI2"], 
+            
           }
+                
                        
     },
       afterDeploy: async ({contracts, web3, logger}) => {
@@ -183,6 +191,11 @@ module.exports = {
                   contracts.Waytst.options.address,  
                   contracts.Kybertst.options.address]
           ).send({from: web3.eth.defaultAccount});
+          await contracts.IndexFactory.methods.makeIndex(contracts.IndexToken2.options.address,
+            [contracts.Bytomtest.options.address,
+            contracts.Waytst.options.address,  
+            contracts.Kybertst.options.address]
+    ).send({from: web3.eth.defaultAccount});
     }
   },
 
