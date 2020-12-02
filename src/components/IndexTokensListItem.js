@@ -9,17 +9,22 @@ import { getContract } from 'ethvtx/lib/contracts/helpers/getters';
 const IndexTokensListItem =  (props) => {
     console.log(props.indexList)
    
+    if  (props.indexstorage_indexlist !== undefined) {
+        const indexJSXList = props.indexstorage_indexlist.map((item) => {
+            
+            return (
+                <IndexContractLoader address = {item.address}/>
+            )
+        });
     
-    const indexJSXList = props.indexstorage_indexlist.map((item,key) => {
-        
         return (
-            <IndexContractLoader address = {item.address}/>
+        
+                <Fragment>{indexJSXList}</Fragment>
         )
-    });
-    return (
-       
-            <Fragment>{indexJSXList}</Fragment>
-    )
+    } else {
+        return ("Data loading...")
+    }
+    
 }
 /*
 const mapStateToProps = (state) => {
@@ -32,7 +37,6 @@ const mapStateToProps = (state) => {
 
 
 const mapStateToProps = (state) => ({
-    
     indexstorage_indexlist: getContract(state, 'IndexStorage', '@indexstorage').fn.indexList()
 });
 
