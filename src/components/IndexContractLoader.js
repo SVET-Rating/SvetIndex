@@ -1,38 +1,43 @@
-import React from 'react';
-import { withContracts, getContractFromProps } from 'react-ethvtx';
+import React, { Fragment } from 'react';
+
 import {ContractIndexMethodCall } from "./ContracIndexMethodCall";
+import { getContract, getAccount } from 'ethvtx/lib/contracts/helpers/getters';
+import { connect } from 'react-redux';
+import indexTokenSelect from '../redux/actions/indexTokenSelect';
 
-class ContractLoaderContainer extends React.Component {
+const ContractLoaderContainer  =  (props) => {
 
-    render() {
 
-        const contract = getContractFromProps(this.props, "IndexToken", this.props.address);
 
         return (
+            <Fragment>
             <div>
             {
-                contract !== null ? <ContractIndexMethodCall /> : 'Loading Index contract ...'
+                 <ContractIndexMethodCall 
+                    IndexToken_name = {props.indexToken_name} 
+                    IndexToken_SYM ={props.indexToken_SYM} 
+                    IndexToken_balanceOf = {props.indexToken_balanceOf}
+                /> 
             }
             </div>
+            </Fragment>
         );
-    }
+    
 }
 
-const loadContract = (state, props) => {
 
-    if (props.address) {
-        return [
-            {
-                contract: "IndexToken",
-                address: props.address,
-                balance: true,
-                contracts: props.contractList
-            }
-        ]
-    } else {
-        return [];
-    }
+const mapStateToProps = (state, props) => ({
+    
+    indexToken_name: getContract(state, "@"+props.item.name.toLowerCase() ).fn.name(),
+    indexToken_SYM: getContract(state, "@"+ props.item.name.toLowerCase() ).fn.symbol(),
+    indexToken_balanceOf: getContract(state, "@"+ props.item.name.toLowerCase() ).fn.balanceOf(getAccount(state, '@mainAcc'))
+});
 
-};
+const mapDispatchToProps = dispatch => ({
+    changeActiveElement: (e) => dispatch(indexTokenSelect(e.target.parentElement.id)),
+  })
 
-export const IndexContractLoader = withContracts(loadContract, ContractLoaderContainer);
+
+export const IndexContractLoader = connect(mapStateToProps, mapDispatchToProps)(ContractLoaderContainer)
+
+// export const IndexContractLoader = withContracts(loadContract, ContractLoaderContainer);

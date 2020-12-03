@@ -4,6 +4,7 @@ import Web3 from 'web3';
 import  EmbarkJs  from 'embarkjs';
 import { start, setWeb3, authorizeAndSetWeb3 } from 'ethvtx/lib/dispatchers';
 import { embark } from 'ethvtx/lib/utils';
+import { getContract, getAccount } from 'ethvtx/lib/contracts/helpers/getters';
 
 import {OraclePrice, OracleCircAmount,  OracleTotSupply,  Index2Swap, IndexFactory, Lstorage, IndexStorage, ERC20,  IndexToken, Experts, Exchange } from "../embarkArtifacts/contracts"
 
@@ -103,11 +104,43 @@ export const setupWeb3 = async (store) => {
                 permanent: true,
                 balance: true
             });
-      /*      loadContractInstance(store.dispatch, 'IndexToken', IndexToken.address, {
-                alias: '@indextoken',
-                permanent: true,
-                balance: true
-            });
+
+            await IndexStorage.methods.indexList().call().then(_value => 
+              _value.map((item, key) => {
+                const curIndex =  EmbarkJs.Blockchain.Contract({
+                    abi: IndexToken.options.jsonInterface,
+                    address:  item.addr});
+                
+                    curIndex.methods.name().call().then(name => {
+
+                        loadContractInstance(store.dispatch, 'IndexToken', item.addr, {
+                            alias: "@" + name.toLowerCase(),
+                            permanent: true,
+                            balance: true
+                        });
+                    
+                        curIndex.methods.getActivesList ().call().then(_value => 
+                            _value.map((itemT, key) => {
+                              const curToken =  EmbarkJs.Blockchain.Contract({
+                                  abi: ERC20.options.jsonInterface,
+                                  address:  itemT.addrActive});
+                              
+                                  curToken.methods.name().call().then(nameT => {
+              
+                                      loadContractInstance(store.dispatch, 'ERC20', itemT.addrActive, {
+                                          alias: "@" + nameT.toLowerCase(),
+                                          permanent: true,
+                                          balance: true
+                                      });
+                                  
+                                  
+                                  
+                              });
+                          }));
+                    
+                });
+            }));
+            /*
             loadContractInstance(store.dispatch, 'ERC20', ERC20.address, {
                 alias: '@erc20',
                 permanent: true,

@@ -14,7 +14,7 @@ const IndexTokensListItem =  (props) => {
         const indexJSXList = props.indexstorage_indexlist.map((item, key) => {
             
             return (
-                <IndexContractLoader contractList = {props.contractsList} address = {item.addr}/>
+                <IndexContractLoader item = {item}/>
             )
         });
     
