@@ -16,7 +16,7 @@ const ContractLoaderContainer  =  (props) => {
                  <ContractIndexMethodCall 
                     IndexToken_name = {props.indexToken_name} 
                     IndexToken_SYM ={props.indexToken_SYM} 
-                    IndexToken_balanceOf = {props.indexToken_balanceOf}
+                    IndexToken_balanceOf = " {props.indexToken_balanceOf}"
                 /> 
             }
             </div>
@@ -24,13 +24,13 @@ const ContractLoaderContainer  =  (props) => {
         );
     
 }
-
+// 
 
 const mapStateToProps = (state, props) => ({
     
-    indexToken_name: getContract(state, "@"+props.item.name.toLowerCase() ).fn.name(),
-    indexToken_SYM: getContract(state, "@"+ props.item.name.toLowerCase() ).fn.symbol(),
-    indexToken_balanceOf: getContract(state, "@"+ props.item.name.toLowerCase() ).fn.balanceOf(getAccount(state, '@mainAcc'))
+    indexToken_name: getContract(state,"IndexToken", props.item.addr ).fn.name(),
+    indexToken_SYM: getContract(state, "IndexToken", props.item.addr).fn.symbol(),
+   // indexToken_balanceOf: getContract(state, "IndexToken",props.item.addr ).fn.balanceOf(getAccount(state, '@mainAcc'))
 });
 
 const mapDispatchToProps = dispatch => ({
