@@ -13,18 +13,7 @@ const indexTokenReducer = (state=indexTokenInitialState, action) => {
             return {...state, indexTokensList: action.payload }
         case INDEX_TOKEN_ACTIVE:
             let newState = {...state,
-                indexTokensList:state.indexTokensList.map((item,key) => { 
-                    if (item.id === action.payload) 
-                    {
-                        item.active = true
-                    } 
-                    else 
-                    {
-                        item.active = false
-                    } 
-                    return item
-                })
-                }
+                activeToken:action.payload}
             return newState
         default:
             return state;
