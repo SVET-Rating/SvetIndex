@@ -67,8 +67,9 @@ const mapStateToProps = (state) => ({
 });
 
 
-const mapDispatchToProps = dispatch => ({
-    changeActiveElement: (e) => { 
+
+const mapDispatchToProps = (dispatch) => ({
+    changeActiveElement: (e)=> { 
         dispatch(indexTokenSelect(e.target.parentElement.id))
         dispatch(getTokensByIndex(e.target.parentElement.id))}
   })
