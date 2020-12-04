@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Fragment } from 'react';
-import indexTokenSelect from '../redux/actions/indexTokenSelect';
-import { IndexContractLoader } from './IndexContractLoader';
+import indexTokenSelect from '../../ethvtx_config/actions/indexTokenSelect';
+import { IndexContractLoader } from '../IndexContractLoader';
 import { getContract, getContractList } from 'ethvtx/lib/contracts/helpers/getters';
 //import contracts from '../embarkArtifacts/contracts';
 
@@ -10,11 +10,12 @@ import { getContract, getContractList } from 'ethvtx/lib/contracts/helpers/gette
 const IndexTokensListItem =  (props) => {
    // console.log(props.indexList)
    
-    if  (props.indexstorage_indexlist !== undefined) {
-        const indexJSXList = props.indexstorage_indexlist.map((item, key) => {
+    if  (props.indexList !== undefined) {
+        const indexJSXList = props.indexList.map((item, key) => {
             
             return (
-                <IndexContractLoader contractList = {props.contractsList} address = {item.addr}/>
+                <li key={key}>{item}</li>
+                
             )
         });
     
@@ -27,18 +28,19 @@ const IndexTokensListItem =  (props) => {
     }
     
 }
-/*
-const mapStateToProps = (state) => {
-    const {indexTokensList} = state;
-    return {indexList: indexTokensList.indexTokensList}
-}
-*/
+
+
+
+// const mapStateToProps = (state) => {
+//     return {indexList: state.indexTokensList}
+// }
+
 
 //const contract = getContractFromProps(this.props, 'SimpleStorage', this.props.address);
 
 
 const mapStateToProps = (state) => ({
-    indexstorage_indexlist: getContract(state, 'IndexStorage', '@indexstorage').fn.indexList(),
+    indexList: getContract(state, 'IndexStorage', '@indexstorage').fn.indexList(),
     contractsList: getContractList(state)
 });
 

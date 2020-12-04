@@ -1,6 +1,9 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import { getSagas, getReducers, getInitialState, configureVtx } from 'ethvtx';
 import createSagaMiddleware from 'redux-saga';
+import thunk from 'redux-thunk'
+import indexTokenReducer from './reducers/indexTokenReducer';
+import indexTokenTokens from './reducers/getTokenTokens';
 
 export const createVtxStore = () => {
 
@@ -12,15 +15,20 @@ export const createVtxStore = () => {
         confirmation_treshold: 3
     });
 
+    const additionReducers  = {
+        indexTokenReducer,
+        indexTokenTokens
+    }
+
     // Recover the vortex reducers. This method takes your custom reducers and combines them with vortex's
-    const reducers = getReducers();
+    const reducers = getReducers(additionReducers);
 
     const sagaMiddleware = createSagaMiddleware();
 
     const store = createStore(
         reducers,
         initial_state,
-        composer(applyMiddleware(sagaMiddleware))
+        composer(applyMiddleware(sagaMiddleware,thunk))
     );
 
     // Recover the vortex sagas. This method takes your custom sagas and combines them with vortex's

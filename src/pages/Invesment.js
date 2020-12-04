@@ -1,6 +1,7 @@
+/* eslint-disable react/no-typos */
 import React from 'react'
-import IndexTokenList from '../components/IndexTokensList'
-import TokensInIndexTokenList from '../components/TokensInIndexTokenList'
+import IndexTokenList from '../components/indexTokenList/IndexTokensList';
+import TokensInIndexTokenList from '../components/indexTokenTokens/TokensInIndexTokenList'
 
 export default function Invesment() {
     return (
@@ -12,8 +13,8 @@ export default function Invesment() {
             </div>
             
             <div className="right-list">
-            <br /> "TokensInIndexTokenList"
-            </div >
+            <TokensInIndexTokenList />
+            </div>
 
         </div> 
         </div>

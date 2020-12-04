@@ -25,8 +25,8 @@ const loadContract = (state, props) => {
             {
                 contract: "IndexToken",
                 address: props.address,
-                balance: true,
-                contracts: props.contractList
+                balance: true
+                
             }
         ]
     } else {
