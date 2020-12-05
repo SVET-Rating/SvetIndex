@@ -5,7 +5,9 @@ import "../openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
 interface iIndexToken is IERC20 {
     struct Index { 
       address addrActive; // addr of active's token
-      uint256 amount; // in wei            
+      uint256 amount; // in wei    
+      string name;
+      string symbol;        
     }
 
     function getActivesList() external view returns (Index[] memory) ;

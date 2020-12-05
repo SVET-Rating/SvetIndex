@@ -1,9 +1,9 @@
 pragma solidity ^0.6.1;
 pragma experimental ABIEncoderV2;
 import "./interfaces/iIndextoken.sol";
-import "./openzeppelin-contracts/contracts/token/ERC20/ERC20.sol";
+import "./openzeppelin-contracts/contracts/token/ERC20/ERC20Detailed.sol";
 
-contract IndexToken is iIndexToken, ERC20 {
+contract IndexToken is iIndexToken, ERC20Detailed {
   
     /**
     * makes ERC20 compatible index token 
@@ -15,8 +15,7 @@ contract IndexToken is iIndexToken, ERC20 {
     bool transferEnable;
     bool enableSetActvs;
     Index[] internal activesList ;
-    string private _name;
-    string private _symbol;
+
   //  uint8 private _decimals;
     
     /**
@@ -40,11 +39,8 @@ contract IndexToken is iIndexToken, ERC20 {
             transferEnable = _trans;
         }
 
-    constructor (string memory name, string memory symbol ) public {
+    constructor (string memory name, string memory symbol ) public ERC20Detailed( name, symbol, 18) {
                         
-        _name = name;
-        _symbol = symbol;
-        _decimals = 18;
 
         factory = msg.sender;
         transferEnable = false;
@@ -53,9 +49,10 @@ contract IndexToken is iIndexToken, ERC20 {
         }
     
     function setActivesList ( address[] memory _activesAddr, uint[] memory _activAm) public {
-        require(enableSetActvs, "Actives alresady filled");
+        require(enableSetActvs, "Actives already filled");
         for (uint8 i=0; i<_activesAddr.length; i++) {
-            activesList.push(Index(_activesAddr[i], _activAm[i]));
+            ERC20Detailed activeT = ERC20Detailed(_activesAddr[i]);
+            activesList.push(Index(_activesAddr[i], _activAm[i], activeT.name(), activeT.symbol()));
             }
         enableSetActvs = false;
     }
@@ -122,20 +119,6 @@ contract IndexToken is iIndexToken, ERC20 {
         super.transferFrom(sender, recipient, amount);
     }
 
-    /**
-     * @dev Returns the name of the token.
-     */
-    function name() public view returns (string memory) {
-        return _name;
-    }
-
-    /**
-     * @dev Returns the symbol of the token, usually a shorter version of the
-     * name.
-     */
-    function symbol() public view returns (string memory) {
-        return _symbol;
-    }
 
     /**
      * @dev Returns the number of decimals used to get its user representation.
@@ -150,9 +133,6 @@ contract IndexToken is iIndexToken, ERC20 {
      * no way affects any of the arithmetic of the contract, including
      * {IERC20-balanceOf} and {IERC20-transfer}.
      */
-    function decimals() public view returns (uint8) {
-        return _decimals;
-    }
 
 
 }
