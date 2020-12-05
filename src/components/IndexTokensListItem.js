@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Fragment } from 'react'
 import indexTokenSelect from '../redux/actions/indexTokenSelect'
+import getTokensByIndex from '../redux/actions/tokensByIndexToken'
 
 
 const IndexTokensListItem =  (props) => {
@@ -42,7 +43,10 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    changeActiveElement: (e) => dispatch(indexTokenSelect(e.target.parentElement.id)),
+    changeActiveElement: (e) => {
+        dispatch(indexTokenSelect(e.target.parentElement.id))
+        dispatch(getTokensByIndex(e.target.parentElement.id))
+    }
   })
 
 export default connect(mapStateToProps,mapDispatchToProps)(IndexTokensListItem)

@@ -3,11 +3,10 @@ import {connect} from 'react-redux';
 
 const TokensInIndexTokenListItem = (props) => {
     //get active index token from list
-    const activeIndexToken = props.indexList.filter(listItem => listItem.active)
-    if (activeIndexToken[0].tokens === undefined) {
+    if (props.indexList.length === 0) {
         return <Fragment><li className="right-list-item"><p>Tokens are absent !</p></li></Fragment>
     } else {
-    var getTokensByActiveIndexToken = activeIndexToken[0].tokens.map((item,key) => {
+    var getTokensByActiveIndexToken = props.indexList.map((item,key) => {
         return (
            <li className="right-list-item">
            <p>{item.name}</p>
@@ -25,8 +24,8 @@ const TokensInIndexTokenListItem = (props) => {
 }
 
 const mapStateToProps = (state) => {
-    const {indexTokensList} = state;
-    return {indexList: indexTokensList.indexTokensList}
+    const {indexTokenTokens} = state;
+    return {indexList: indexTokenTokens.tokens}
 }
 
 export default connect(mapStateToProps,null)(TokensInIndexTokenListItem)
