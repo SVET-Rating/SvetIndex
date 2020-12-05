@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Fragment } from 'react';
 import indexTokenSelect from '../../ethvtx_config/actions/indexTokenSelect';
-import getTokensByIndex from '../../ethvtx_config/actions/getTokensByIndex';
+import buySvetTokenAction from '../../ethvtx_config/actions/buySvetTokensAction';
+
 //import { IndexContractLoader } from '../IndexContractLoader';
 import { getContract, getContractList } from 'ethvtx/lib/contracts/helpers/getters';
 //import contracts from '../embarkArtifacts/contracts';
@@ -25,7 +26,7 @@ const IndexTokensListItem =  (props) => {
         <i className="fa fa-question-circle"></i>
     
     
-        <p onClick={(e) => {props.changeActiveElement(e); props.tokens(e)}}>
+        <p onClick={(e) => {props.changeActiveElement(e)}}>
             {/* VERY GOOD INDEX TOKEN */}
             {item.name}
         </p>
@@ -35,7 +36,7 @@ const IndexTokensListItem =  (props) => {
         </p>
     
     
-        <button className="invest">INVEST</button>
+        <button className="invest" onClick={() => props.startBuyTokens(props.svetTokensAmount)}>INVEST</button>
     
      </li>)
     });
@@ -55,7 +56,8 @@ const IndexTokensListItem =  (props) => {
 const mapStateToProps = (state) => ({
     indexList: getContract(state, 'IndexStorage', '@indexstorage').fn.indexList(),
     contractsList: getContractList(state),
-    activeToken: state.indexTokenReducer.activeToken
+    activeToken: state.indexTokenReducer.activeToken,
+    svetTokensAmount:0
 });
 
 
@@ -63,7 +65,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch => {
     return {
     changeActiveElement: (e) => dispatch(indexTokenSelect(e.target.parentElement.id)),
-    tokens: (e) => dispatch(getTokensByIndex(e.target.parentElement.id))
+    startBuyTokens: (svetTokensAmount) => dispatch(buySvetTokenAction(svetTokensAmount))
   }}
 
 

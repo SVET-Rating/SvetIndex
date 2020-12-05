@@ -14,6 +14,8 @@ html {
   border: 1px solid black;
 }
 
+
+
 button.invest {
   background-color: #6FCF97;
   font-size: 0.9rem;
@@ -21,6 +23,8 @@ button.invest {
   width: 6rem;
   color: white;
   border: none;
+  cursor: pointer;
+  border-radius: 50px;
 }
 
 header {

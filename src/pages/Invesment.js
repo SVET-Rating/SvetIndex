@@ -1,15 +1,18 @@
 /* eslint-disable react/no-typos */
-import React from 'react'
+import React from 'react';
+import { connect } from 'react-redux';
 import IndexTokenList from '../components/indexTokenList/IndexTokensList';
-import TokensInIndexTokenList from '../components/indexTokenTokens/TokensInIndexTokenList'
+import TokensInIndexTokenList from '../components/indexTokenTokens/TokensInIndexTokenList';
+import buySvetPaymentMethods from '../components/buySvetTokens/buySvetPaymentMethods';
 
-export default function Invesment() {
+
+const investmentPage = (props) => {
     return (
         <div>
            <div className="tokens-container">
             
             <div className="left-list">
-                <IndexTokenList/>
+                <buySvetPaymentMethods />
             </div>
             
             <div className="right-list">
@@ -20,3 +23,9 @@ export default function Invesment() {
         </div>
     )
 }
+
+const mapStatToProps = (state) => ({
+    processState: state.buyTokensReducer.processState
+})
+
+export default connect(mapStatToProps,null)(investmentPage)
