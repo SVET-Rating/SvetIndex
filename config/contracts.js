@@ -192,9 +192,9 @@ module.exports = {
                   contracts.Kybertst.options.address]
           ).send({from: web3.eth.defaultAccount});
           await contracts.IndexFactory.methods.makeIndex(contracts.IndexToken2.options.address,
-            [contracts.Bytomtest.options.address,
-            contracts.Waytst.options.address,  
-            contracts.Kybertst.options.address]
+            [contracts.Waytst.options.address,  
+              contracts.Kybertst.options.address]
+            
     ).send({from: web3.eth.defaultAccount});
     }
   },

@@ -63,8 +63,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch => {
     return {
     changeActiveElement: (e) => dispatch(indexTokenSelect(e.target.parentElement.id)),
-    tokens: (e) => dispatch(getTokensByIndex(e.target.parentElement.id)),
-    dispatch
+    tokens: (e) => dispatch(getTokensByIndex(e.target.parentElement.id))
   }}
 
 
