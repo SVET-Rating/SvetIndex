@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import IndexTokenList from '../components/indexTokenList/IndexTokensList';
 import TokensInIndexTokenList from '../components/indexTokenTokens/TokensInIndexTokenList';
-import buySvetPaymentMethods from '../components/buySvetTokens/buySvetPaymentMethods';
+import buySvetPaymentMethods from '../components/buyTokens/buySvetPaymentMethods';
 
 
 const investmentPage = (props) => {
