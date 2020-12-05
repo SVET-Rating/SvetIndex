@@ -8,7 +8,7 @@ const TokensInIndexTokenListItem = (props) => {
     } else {
     var getTokensByActiveIndexToken = props.indexList.map((item,key) => {
         return (
-           <li className="right-list-item">
+           <li className="right-list-item" style={{showBox:'none'}}>
            <p>{item.name}</p>
            <p>{item.amount}</p>
            <p>{item.symbol}</p>
