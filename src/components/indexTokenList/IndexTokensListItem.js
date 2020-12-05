@@ -10,7 +10,7 @@ import { getContract, getContractList } from 'ethvtx/lib/contracts/helpers/gette
 
 const IndexTokensListItem =  (props) => {
    // console.log(props.indexList)
-   
+  
     if  (props.indexList !== undefined) {
         const indexJSXList = props.indexList.map((item, key) => {
 
@@ -25,7 +25,7 @@ const IndexTokensListItem =  (props) => {
         <i className="fa fa-question-circle"></i>
     
     
-        <p onClick={props.changeActiveElement}>
+        <p onClick={(e) => {props.changeActiveElement(e); props.tokens(e)}}>
             {/* VERY GOOD INDEX TOKEN */}
             {item.name}
         </p>
@@ -52,14 +52,6 @@ const IndexTokensListItem =  (props) => {
 
 
 
-// const mapStateToProps = (state) => {
-//     return {indexList: state.indexTokensList}
-// }
-
-
-//const contract = getContractFromProps(this.props, 'SimpleStorage', this.props.address);
-
-
 const mapStateToProps = (state) => ({
     indexList: getContract(state, 'IndexStorage', '@indexstorage').fn.indexList(),
     contractsList: getContractList(state),
@@ -67,10 +59,14 @@ const mapStateToProps = (state) => ({
 });
 
 
-const mapDispatchToProps = dispatch => ({
-    changeActiveElement: (e) => { 
-        dispatch(indexTokenSelect(e.target.parentElement.id))
-        dispatch(getTokensByIndex(e.target.parentElement.id))}
-  })
+
+const mapDispatchToProps = dispatch => {
+    return {
+    changeActiveElement: (e) => dispatch(indexTokenSelect(e.target.parentElement.id)),
+    tokens: (e) => dispatch(getTokensByIndex(e.target.parentElement.id)),
+    dispatch
+  }}
+
+
 
 export default connect(mapStateToProps,mapDispatchToProps)(IndexTokensListItem)
