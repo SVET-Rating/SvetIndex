@@ -1,10 +1,10 @@
 {
   "contracts": ["contracts/**"],
   "app": {
-    "js/dapp.js": ["src/App.js"],
-    "index.html": "src/index.js", 
-    "images/": ["src/images/**"],
-    "css/bootstrap.min.css": "node_modules/bootstrap/dist/css/bootstrap.min.css"
+    "App.js": ["src/App.js"],
+    "index.js": ["src/index.js"],
+    "index.html": "src/index.html", 
+    "images/": ["src/images/**"]
   },
   "buildDir": "dist/",
   "config": "config/",

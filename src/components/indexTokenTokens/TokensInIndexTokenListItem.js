@@ -4,7 +4,9 @@ import {connect} from 'react-redux';
 const TokensInIndexTokenListItem = (props) => {
     //get active index token from list
     if (props.indexList.length === 0) {
-        return <Fragment><li className="right-list-item"><p>Tokens are absent !</p></li></Fragment>
+        return( 
+                "Tokens are absent !"
+             )
     } else {
     var getTokensByActiveIndexToken = props.indexList.map((item,key) => {
         return (
