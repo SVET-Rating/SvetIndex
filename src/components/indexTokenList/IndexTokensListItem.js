@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Fragment } from 'react';
 import indexTokenSelect from '../../ethvtx_config/actions/indexTokenSelect';
-import getTokensByIndex from '../../ethvtx_config/actions/getTokensByIndex';
+import buySvetTokenAction from '../../ethvtx_config/actions/buySvetTokensAction';
+
 //import { IndexContractLoader } from '../IndexContractLoader';
 import { getContract, getContractList } from 'ethvtx/lib/contracts/helpers/getters';
 //import contracts from '../embarkArtifacts/contracts';
@@ -16,7 +17,7 @@ const IndexTokensListItem =  (props) => {
 
             var styleSelect = {};
 
-            if (item.addr !== props.activeToken) {
+            if (item.addr !== props.activeToken.tokenAddress) {
                styleSelect = {boxShadow:'none'}
             }
             
@@ -25,7 +26,7 @@ const IndexTokensListItem =  (props) => {
         <i className="fa fa-question-circle"></i>
     
     
-        <p onClick={(e) => {props.changeActiveElement(e); props.tokens(e)}}>
+        <p onClick={(e) => {props.changeActiveElement(e,item.name)}}>
             {/* VERY GOOD INDEX TOKEN */}
             {item.name}
         </p>
@@ -35,7 +36,8 @@ const IndexTokensListItem =  (props) => {
         </p>
     
     
-        <button className="invest">INVEST</button>
+        <button className="invest" onClick={() => props.startBuyToken(props.svetTokensAmount)
+            }>INVEST</button>
     
      </li>)
     });
@@ -55,15 +57,16 @@ const IndexTokensListItem =  (props) => {
 const mapStateToProps = (state) => ({
     indexList: getContract(state, 'IndexStorage', '@indexstorage').fn.indexList(),
     contractsList: getContractList(state),
-    activeToken: state.indexTokenReducer.activeToken
+    activeToken: state.indexTokenReducer.activeToken,
+    svetTokensAmount:10
 });
 
 
 
 const mapDispatchToProps = dispatch => {
     return {
-    changeActiveElement: (e) => dispatch(indexTokenSelect(e.target.parentElement.id)),
-    tokens: (e) => dispatch(getTokensByIndex(e.target.parentElement.id))
+    changeActiveElement: (e,indexTokenName) => dispatch(indexTokenSelect(e.target.parentElement.id,indexTokenName)),
+    startBuyToken: (svetTokensAmount) => dispatch(buySvetTokenAction(svetTokensAmount))
   }}
 
 

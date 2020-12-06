@@ -4,6 +4,7 @@ import createSagaMiddleware from 'redux-saga';
 import thunk from 'redux-thunk'
 import indexTokenReducer from './reducers/indexTokenReducer';
 import indexTokenTokens from './reducers/getTokenTokens';
+import buyTokensReducer from './reducers/buyTokensReducer';
 
 export const createVtxStore = () => {
 
@@ -17,7 +18,8 @@ export const createVtxStore = () => {
 
     const additionReducers  = {
         indexTokenReducer,
-        indexTokenTokens
+        indexTokenTokens,
+        buyTokensReducer
     }
 
     // Recover the vortex reducers. This method takes your custom reducers and combines them with vortex's
