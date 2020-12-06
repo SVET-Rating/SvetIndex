@@ -2,12 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 
-const buyIndexTokensFormComponent = (props) => {
+const IndexTokenPaymentForm = (props) => {
     return (
         <div>
             <div className="left-list-header">
                     <p>
-                        YOU ARE GOING TO BUY ( TOKENS )
+                        YOU ARE GOING TO BUY ( {props.indexTokenName} )
                     </p>
                     <p>
                         YOU HAVE TO PAY SVET TOKENS FOR INVESTMENT
@@ -16,7 +16,7 @@ const buyIndexTokensFormComponent = (props) => {
                 </div>
                 <div className="svet-token-payment-form">
                 <div className="svet-token-payment-form-input">
-                    <p style={{fontSize: '0.9rem'}}>INPUT AMOUNT OF ( {props.indexTokenName} )</p>
+                    <p style={{fontSize: '0.9rem'}}>INPUT AMOUNT </p>
                     <input type="text" name="amount_of_svet_tokens" />
                 </div>
 
@@ -33,5 +33,5 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps,null)(buyIndexTokensFormComponent);
+export default connect(mapStateToProps,null)(IndexTokenPaymentForm);
 

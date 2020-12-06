@@ -5,12 +5,11 @@ import IndexTokenList from '../components/indexTokenList/IndexTokensList';
 import TokensInIndexTokenList from '../components/indexTokenTokens/TokensInIndexTokenList';
 import SvetPaymentMethods from '../components/buyTokens/buySvetPaymentMethods';
 import SvetPaymentMethodsForm from '../components/buyTokens/buySvetTokensForm';
-import buyIndexTokensFormComponent from '../components/buyTokens/buySvetTokensForm';
+import IndexTokenPaymentForm from '../components/buyTokens/buyIndexTokensForm';
 import {SELECT_INDEX_TOKEN, 
     BUY_SVET_PAYMENT_METHOD, 
     BUY_SVET_PAYMENT_FORM,
     BUY_INDEX_TOKEN} from '../ethvtx_config/processStates/buyTokenProcessStates';
-import { BUY_SVET_TOKENS } from '../ethvtx_config/actions/types';
 
 
 const investmentPage = (props) => {
@@ -29,7 +28,7 @@ const investmentPage = (props) => {
     }
 
     if (props.processState === BUY_INDEX_TOKEN) {
-        processStateComponent = <buyIndexTokensFormComponent />
+        processStateComponent = <IndexTokenPaymentForm />
     }
     return (
         <div>
