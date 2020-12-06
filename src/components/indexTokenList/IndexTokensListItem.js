@@ -36,7 +36,8 @@ const IndexTokensListItem =  (props) => {
         </p>
     
     
-        <button className="invest" onClick={() => props.startBuyTokens(props.svetTokensAmount)}>INVEST</button>
+        <button className="invest" onClick={() => props.startBuyToken(props.svetTokensAmount)
+            }>INVEST</button>
     
      </li>)
     });
@@ -65,7 +66,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch => {
     return {
     changeActiveElement: (e) => dispatch(indexTokenSelect(e.target.parentElement.id)),
-    startBuyTokens: (svetTokensAmount) => dispatch(buySvetTokenAction(svetTokensAmount))
+    startBuyToken: (svetTokensAmount) => dispatch(buySvetTokenAction(svetTokensAmount))
   }}
 
 

@@ -27,6 +27,17 @@ button.invest {
   border-radius: 50px;
 }
 
+button.payment-method {
+  background-color: #6FCF97;
+  font-size: 0.9rem;
+  height: 3.3rem;
+  width: 7rem;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 50px;
+}
+
 header {
   width: 90%;
   margin: 2rem auto !important;
@@ -94,6 +105,36 @@ li>p {
   text-align: center;
 }
 
+.svet-token-payment-methods {
+  display: grid;
+  width: 90%;
+  margin: 1rem auto !important;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 2rem;
+  min-height: 26rem;
+  align-items: center;
+  justify-items: center;
+}
+
+.svet-token-payment-form {
+  display: grid;
+  width: 90%;
+  margin: 1rem auto !important;
+  grid-template-columns: 1fr;
+  grid-gap: 2rem;
+  min-height: 26rem;
+  align-items: center;
+  justify-items: center;
+}
+.svet-token-payment-form-input {
+  display: grid;
+  width: 90%;
+  margin: 1rem auto !important;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 2rem;
+  align-items: center;
+  justify-items: center;
+}
 li>i {
   color:#8e8e8e;
 }
