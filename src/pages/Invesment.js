@@ -5,6 +5,7 @@ import IndexTokenList from '../components/indexTokenList/IndexTokensList';
 import TokensInIndexTokenList from '../components/indexTokenTokens/TokensInIndexTokenList';
 import SvetPaymentMethods from '../components/buyTokens/buySvetPaymentMethods';
 import SvetPaymentMethodsForm from '../components/buyTokens/buySvetTokensForm';
+import buyIndexTokensFormComponent from '../components/buyTokens/buySvetTokensForm';
 import {SELECT_INDEX_TOKEN, 
     BUY_SVET_PAYMENT_METHOD, 
     BUY_SVET_PAYMENT_FORM,
@@ -25,6 +26,10 @@ const investmentPage = (props) => {
 
     if (props.processState === BUY_SVET_PAYMENT_FORM) {
         processStateComponent = <SvetPaymentMethodsForm />
+    }
+
+    if (props.processState === BUY_INDEX_TOKEN) {
+        processStateComponent = <buyIndexTokensFormComponent />
     }
     return (
         <div>

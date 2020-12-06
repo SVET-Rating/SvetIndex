@@ -7,7 +7,7 @@ import { DAI,ETHER,FIAT_MONEY,BITCOIN } from '../paymentMethod/paymentMethodType
 
 
 const initialStateBuySvetTokens = {
-    'svetTokens': 0,
+    'svetTokens':0,
     'buyTokenProcessState': SELECT_INDEX_TOKEN,
     'buySvetTokenMethod': ETHER
 }

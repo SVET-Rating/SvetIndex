@@ -35,7 +35,7 @@ const getIndexList = (address,state) => {
 }
 
 const mapStateToProps = (state) => {
-    return {indexList: getIndexList(state.indexTokenReducer.activeToken, state)}
+    return {indexList: getIndexList(state.indexTokenReducer.activeToken.tokenAddress, state)}
     //return {indexList: state.indexTokenTokens.tokens }
     
 }

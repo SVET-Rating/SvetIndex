@@ -17,7 +17,7 @@ const IndexTokensListItem =  (props) => {
 
             var styleSelect = {};
 
-            if (item.addr !== props.activeToken) {
+            if (item.addr !== props.activeToken.tokenAddress) {
                styleSelect = {boxShadow:'none'}
             }
             
@@ -26,7 +26,7 @@ const IndexTokensListItem =  (props) => {
         <i className="fa fa-question-circle"></i>
     
     
-        <p onClick={(e) => {props.changeActiveElement(e)}}>
+        <p onClick={(e) => {props.changeActiveElement(e,item.name)}}>
             {/* VERY GOOD INDEX TOKEN */}
             {item.name}
         </p>
@@ -58,14 +58,14 @@ const mapStateToProps = (state) => ({
     indexList: getContract(state, 'IndexStorage', '@indexstorage').fn.indexList(),
     contractsList: getContractList(state),
     activeToken: state.indexTokenReducer.activeToken,
-    svetTokensAmount:0
+    svetTokensAmount:10
 });
 
 
 
 const mapDispatchToProps = dispatch => {
     return {
-    changeActiveElement: (e) => dispatch(indexTokenSelect(e.target.parentElement.id)),
+    changeActiveElement: (e,indexTokenName) => dispatch(indexTokenSelect(e.target.parentElement.id,indexTokenName)),
     startBuyToken: (svetTokensAmount) => dispatch(buySvetTokenAction(svetTokensAmount))
   }}
 
