@@ -1,4 +1,5 @@
-import {React,Fragment} from 'react';
+import React from 'react';
+//  import Fragment from 'react-fragment';
 import {connect} from 'react-redux';
 import { getContract } from 'ethvtx/lib/contracts/helpers/getters';
 import getTokensByIndex from '../../ethvtx_config/actions/getTokensByIndex';
@@ -6,7 +7,7 @@ import getTokensByIndex from '../../ethvtx_config/actions/getTokensByIndex';
 const TokensInIndexTokenListItem = (props) => {
     //get active index token from list
         if (props.indexList === undefined) {
-            return <Fragment><li className="right-list-item"><p>Tokens are absent !</p></li></Fragment>
+            return <div><li className="right-list-item"><p>Tokens are absent !</p></li></div>
         } else {
         props.tokens(props.indexList);
         var getTokensByActiveIndexToken = props.indexList.map((item,key) => {
@@ -22,7 +23,7 @@ const TokensInIndexTokenListItem = (props) => {
         }   
                     
         return (
-            <Fragment>{getTokensByActiveIndexToken}</Fragment>
+            <div>{getTokensByActiveIndexToken}</div>
         )
     
 }

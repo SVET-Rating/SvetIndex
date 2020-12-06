@@ -44,7 +44,7 @@ const IndexTokensListItem =  (props) => {
     
         return (
         
-                <Fragment>{indexJSXList}</Fragment>
+                <div>{indexJSXList}</div>
         )
     } else {
         return ("Data loading...")
