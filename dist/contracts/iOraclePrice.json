@@ -1,0 +1,111 @@
+{
+  "abiDefinition": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_addrToken",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_price",
+          "type": "uint256"
+        }
+      ],
+      "name": "addPrice",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_addrToken",
+          "type": "address"
+        }
+      ],
+      "name": "delToken",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_addrToken",
+          "type": "address"
+        }
+      ],
+      "name": "getLastPrice",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_addrToken",
+          "type": "address"
+        }
+      ],
+      "name": "getLenPrice",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getallTokens",
+      "outputs": [
+        {
+          "internalType": "address[]",
+          "name": "",
+          "type": "address[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "className": "iOraclePrice",
+  "args": [],
+  "gas": "auto",
+  "silent": false,
+  "track": true,
+  "deploy": false,
+  "realRuntimeBytecode": "",
+  "realArgs": [],
+  "code": "",
+  "runtimeBytecode": "",
+  "linkReferences": {},
+  "swarmHash": "",
+  "gasEstimates": null,
+  "functionHashes": {
+    "addPrice(address,uint256)": "7f04e456",
+    "delToken(address)": "118e0633",
+    "getLastPrice(address)": "c692fc74",
+    "getLenPrice(address)": "9d83bc5f",
+    "getallTokens()": "ab7bc7aa"
+  },
+  "filename": "/home/st/Desktop/svet_token/.embark/contracts/interfaces/iOraclePrice.sol",
+  "originalFilename": "contracts/interfaces/iOraclePrice.sol",
+  "path": "/home/st/Desktop/svet_token/contracts/interfaces/iOraclePrice.sol",
+  "type": "file",
+  "deploymentAccount": "0x132e2c063960e14eE62EC2dAC6AbA6bA4BB68552"
+}

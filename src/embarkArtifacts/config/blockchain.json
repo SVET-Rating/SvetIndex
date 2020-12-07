@@ -1,0 +1,14 @@
+{
+  "provider": "web3",
+  "library": "embarkjs",
+  "dappConnection": [
+    "http://localhost:8555",
+    "$WEB3",
+    "ws://localhost:8546",
+    "http://localhost:8545"
+  ],
+  "dappAutoEnable": true,
+  "warnIfMetamask": false,
+  "blockchainClient": "geth",
+  "networkId": 3
+}

@@ -1,0 +1,118 @@
+{
+  "abiDefinition": [
+    {
+      "inputs": [],
+      "name": "getLenIndexes",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "indexList",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "symbol",
+              "type": "string"
+            },
+            {
+              "internalType": "address",
+              "name": "addr",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct iIndexStorage.IndexName[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_name",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_symbol",
+          "type": "string"
+        }
+      ],
+      "name": "indexes",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_name",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_symbol",
+          "type": "string"
+        },
+        {
+          "internalType": "address",
+          "name": "_index",
+          "type": "address"
+        }
+      ],
+      "name": "setIndex",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "className": "iIndexStorage",
+  "args": [],
+  "gas": "auto",
+  "silent": false,
+  "track": true,
+  "deploy": false,
+  "realRuntimeBytecode": "",
+  "realArgs": [],
+  "code": "",
+  "runtimeBytecode": "",
+  "linkReferences": {},
+  "swarmHash": "",
+  "gasEstimates": null,
+  "functionHashes": {
+    "getLenIndexes()": "c5d6bd8f",
+    "indexList()": "a47d7a31",
+    "indexes(string,string)": "c05d6c1d",
+    "setIndex(string,string,address)": "26be2e21"
+  },
+  "filename": "/home/st/Desktop/svet_token/.embark/contracts/interfaces/iIndexStorage.sol",
+  "originalFilename": "contracts/interfaces/iIndexStorage.sol",
+  "path": "/home/st/Desktop/svet_token/contracts/interfaces/iIndexStorage.sol",
+  "type": "file",
+  "deploymentAccount": "0x132e2c063960e14eE62EC2dAC6AbA6bA4BB68552"
+}

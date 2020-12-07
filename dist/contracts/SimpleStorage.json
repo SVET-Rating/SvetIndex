@@ -1,0 +1,107 @@
+{
+  "abiDefinition": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "initialValue",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "caller",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "_value",
+          "type": "uint256"
+        }
+      ],
+      "name": "Set",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "get",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "retVal",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "x",
+          "type": "uint256"
+        }
+      ],
+      "name": "set",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "storedData",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "className": "SimpleStorage",
+  "args": [],
+  "gas": "auto",
+  "silent": false,
+  "track": true,
+  "deploy": false,
+  "realRuntimeBytecode": "6080604052348015600f57600080fd5b5060043610603c5760003560e01c80632a1afcd914604157806360fe47b11460595780636d4ce63c146075575b600080fd5b6047607b565b60408051918252519081900360200190f35b607360048036036020811015606d57600080fd5b50356081565b005b604760c4565b60005481565b6000819055604080513381526020810183905281517ffd28ec3ec2555238d8ad6f9faf3e4cd10e574ce7e7ef28b73caa53f9512f65b9929181900390910190a150565b6000549056fea264697066735822122045a8350306e983f9aa",
+  "realArgs": [],
+  "code": "608060405234801561001057600080fd5b506040516101473803806101478339818101604052602081101561003357600080fd5b5051600055610100806100476000396000f3fe6080604052348015600f57600080fd5b5060043610603c5760003560e01c80632a1afcd914604157806360fe47b11460595780636d4ce63c146075575b600080fd5b6047607b565b60408051918252519081900360200190f35b607360048036036020811015606d57600080fd5b50356081565b005b604760c4565b60005481565b6000819055604080513381526020810183905281517ffd28ec3ec2555238d8ad6f9faf3e4cd10e574ce7e7ef28b73caa53f9512f65b9929181900390910190a150565b6000549056fea264697066735822122045a8350306e983f9aa3276a5f830904b2639be975d741c17c5ec11062076022e64736f6c63430006060033",
+  "runtimeBytecode": "6080604052348015600f57600080fd5b5060043610603c5760003560e01c80632a1afcd914604157806360fe47b11460595780636d4ce63c146075575b600080fd5b6047607b565b60408051918252519081900360200190f35b607360048036036020811015606d57600080fd5b50356081565b005b604760c4565b60005481565b6000819055604080513381526020810183905281517ffd28ec3ec2555238d8ad6f9faf3e4cd10e574ce7e7ef28b73caa53f9512f65b9929181900390910190a150565b6000549056fea264697066735822122045a8350306e983f9aa3276a5f830904b2639be975d741c17c5ec11062076022e64736f6c63430006060033",
+  "linkReferences": {},
+  "swarmHash": "3276a5f830904b2639be975d741c17c5ec11062076022e64736f6c6343000606",
+  "gasEstimates": {
+    "creation": {
+      "codeDepositCost": "51200",
+      "executionCost": "infinite",
+      "totalCost": "infinite"
+    },
+    "external": {
+      "get()": "1020",
+      "set(uint256)": "21539",
+      "storedData()": "976"
+    }
+  },
+  "functionHashes": {
+    "get()": "6d4ce63c",
+    "set(uint256)": "60fe47b1",
+    "storedData()": "2a1afcd9"
+  },
+  "filename": "/home/st/Desktop/svet_token/.embark/contracts/simple_storage.sol",
+  "originalFilename": "contracts/simple_storage.sol",
+  "path": "/home/st/Desktop/svet_token/contracts/simple_storage.sol",
+  "type": "file",
+  "deploymentAccount": "0x132e2c063960e14eE62EC2dAC6AbA6bA4BB68552"
+}

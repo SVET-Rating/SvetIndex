@@ -1,0 +1,111 @@
+{
+  "abiDefinition": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_addrToken",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "addamount",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_addrToken",
+          "type": "address"
+        }
+      ],
+      "name": "delToken",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_addrToken",
+          "type": "address"
+        }
+      ],
+      "name": "getLastamount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_addrToken",
+          "type": "address"
+        }
+      ],
+      "name": "getLenamount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getallTokens",
+      "outputs": [
+        {
+          "internalType": "address[]",
+          "name": "",
+          "type": "address[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "className": "iOracleTotSupply",
+  "args": [],
+  "gas": "auto",
+  "silent": false,
+  "track": true,
+  "deploy": false,
+  "realRuntimeBytecode": "",
+  "realArgs": [],
+  "code": "",
+  "runtimeBytecode": "",
+  "linkReferences": {},
+  "swarmHash": "",
+  "gasEstimates": null,
+  "functionHashes": {
+    "addamount(address,uint256)": "52258b9d",
+    "delToken(address)": "118e0633",
+    "getLastamount(address)": "a9bc9ed9",
+    "getLenamount(address)": "5f1b98f0",
+    "getallTokens()": "ab7bc7aa"
+  },
+  "filename": "/home/st/Desktop/svet_token/.embark/contracts/interfaces/iOracleTotSupply.sol",
+  "originalFilename": "contracts/interfaces/iOracleTotSupply.sol",
+  "path": "/home/st/Desktop/svet_token/contracts/interfaces/iOracleTotSupply.sol",
+  "type": "file",
+  "deploymentAccount": "0x132e2c063960e14eE62EC2dAC6AbA6bA4BB68552"
+}
