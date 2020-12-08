@@ -1,4 +1,9 @@
-import { CHECK_SVET_TOKENS, BUY_SVET_TOKENS, SELECT_SVET_PAYMENT_METHOD } from '../actions/types';
+import { CHECK_SVET_TOKENS, 
+    BUY_SVET_TOKENS, 
+    SELECT_SVET_PAYMENT_METHOD, 
+    CHECK_SVET_TOKENS_FOR_BUY_INDEX_TOKEN, 
+    START_INVEST,
+    START_TO_BUY_SVET_TOKENS} from '../actions/types';
 import {SELECT_INDEX_TOKEN, 
         BUY_SVET_PAYMENT_METHOD, 
         BUY_SVET_PAYMENT_FORM,
@@ -10,7 +15,7 @@ const initialStateBuySvetTokens = {
     'svetTokens':{},
     'buyTokenProcessState': SELECT_INDEX_TOKEN,
     'buySvetTokenMethod': ETHER,
-    'enoughSvetTokensForBuy': false
+    'enoughSvetTokensForBuy': undefined
 
 }
 
@@ -18,14 +23,15 @@ const initialStateBuySvetTokens = {
 const buyTokensReducer = (state=initialStateBuySvetTokens, action) => {
 
     switch(action.type) {
-        case CHECK_SVET_TOKENS:
-            if (action.payload === 0) {
-                return {...state, svetTokens: action.payload, buyTokenProcessState: BUY_SVET_PAYMENT_METHOD }
-            } else {
-                return {...state, svetTokens: action.payload, buyTokenProcessState: BUY_INDEX_TOKEN}
-            }
+        case START_INVEST:
+            return {...state, svetTokens: action.payload, buyTokenProcessState: BUY_INDEX_TOKEN}
+        case START_TO_BUY_SVET_TOKENS:
+            return {...state, buyTokenProcessState: BUY_SVET_PAYMENT_METHOD }
         case SELECT_SVET_PAYMENT_METHOD:
             return {...state, buySvetTokenMethod: action.payload, buyTokenProcessState: BUY_SVET_PAYMENT_FORM}
+        case CHECK_SVET_TOKENS_FOR_BUY_INDEX_TOKEN:
+            return {...state, 
+                enoughSvetTokensForBuy:action.payload.enoughSvetTokensForBuy}
             
         default:
             return state;

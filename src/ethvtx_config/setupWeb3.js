@@ -5,7 +5,7 @@ import  EmbarkJs  from 'embarkjs';
 import { start, setWeb3, authorizeAndSetWeb3 } from 'ethvtx/lib/dispatchers';
 import { embark } from 'ethvtx/lib/utils';
 
-import {OraclePrice, OracleCircAmount,  OracleTotSupply,  Index2Swap, IndexFactory, Lstorage, IndexStorage, ERC20,  IndexToken, Experts, Exchange } from "../embarkArtifacts/contracts"
+import {OraclePrice, OracleCircAmount,  OracleTotSupply,  Index2Swap, IndexFactory, Lstorage, IndexStorage, ERC20,  IndexToken, Experts, Exchange, SVTtst } from "../embarkArtifacts/contracts"
 
 export const setupWeb3 = async (store) => {
 
@@ -57,6 +57,12 @@ export const setupWeb3 = async (store) => {
            
 
             // Loading an instance BEFORE starting the store will check on the chain if the correct bytecode is found, and if not, the WrongNet status is applied
+            loadContractInstance(store.dispatch, 'ERC20', SVTtst.address, {
+                alias: '@svettoken',
+                permanent: true,
+                balance: true
+            });
+
             loadContractInstance(store.dispatch, 'Experts', Experts.address, {
                 alias: '@experts',
                 permanent: true,

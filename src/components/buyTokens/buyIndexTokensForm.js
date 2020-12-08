@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getContract, getContractList } from 'ethvtx/lib/contracts/helpers/getters';
-
+import  checkSvetTokensForBuyIndexTokensAction  from '../../ethvtx_config/actions/checkIndexTokenAmountAction';
+import svetTokensBuyProcessStart from '../../ethvtx_config/actions/goToSvetTokenMethodPayment';
 const IndexTokenPaymentForm = (props) => {
     return (
         <div>
@@ -15,20 +16,27 @@ const IndexTokenPaymentForm = (props) => {
                     
                 </div>
                 <div className="svet-token-payment-form">
-                    <p>INDEX TOKEN PRICE: {props.indexTokenPrice}</p>
+                    <p>INDEX TOKEN PRICE IN SVET TOKENS: {props.indexTokenPrice}</p>
+                    <p>YOU HAVE: {props.svetTokensAmount} SVET TOKENS</p>
+                    <p>YOU CAN BUY: {props.svetTokensAmount/props.indexTokenPrice}</p>
                 <div className="svet-token-payment-form-input">
                     
                     <p style={{fontSize: '0.9rem'}}>INPUT AMOUNT </p>
                     <input type="text" name="amount_of_svet_tokens" 
-                    onChange={(e) => props.addIndexTokenAmount(e)}
+                    onChange={(e) => {props.addIndexTokenAmount(e,props.indexTokenPrice,props.svetTokensAmount)}}
                     />
                 </div>
-
-                <button className="payment-method" 
-                style={props.enoughSvetTokensForBuy ? {}:{display:'none'}}>INVEST</button>
-                <button className="payment-method" 
-                style={props.enoughSvetTokensForBuy ? {display:'none'}:{}}>BUY SVET TOKENS</button>
+                    <div style={props.enoughSvetTokensForBuy === undefined?{display:'none'}:{}}>
+                        <button className="payment-method" 
+                        style={props.enoughSvetTokensForBuy ? {}:{display:'none'}}
+                        onClick={(e) => {props.buyIndexTokens(e)}}
+                        >INVEST</button>
+                        <button className="payment-method" 
+                        style={props.enoughSvetTokensForBuy ? {display:'none'}:{}}
+                        onClick={(e) => {props.buySvetTokensMethodSelect(e)}}
+                        >BUY SVET TOKENS</button>
                 </div>
+            </div>
 
         </div> 
     );
@@ -48,12 +56,16 @@ const getIndexPriceInSvet = (tokens,state) => {
         ///10^item[4]
         return tokenPrice
     });
+    var svetTokenPrice = getContract(state, 'OraclePrice', '@oracleprice').fn.getLastPrice(state.buyTokensReducer.svetTokens.address)
+    if (svetTokenPrice === undefined) {
+        return svetTokenPrice;
+    }
     if (tokensPrice.indexOf(undefined) !== -1) {
         return undefined;
     }
-    var svetTokenAddress = getContract(state, 'Exchange', '@exchange').fn.getBA();
-
-    return tokensPrice.reduce((a, b) => a + b, 0)
+    
+    var resultIndexTokenPriceUSD = tokensPrice.reduce((a, b) => a + b, 0)
+    return resultIndexTokenPriceUSD/(svetTokenPrice/10**18)
     
 }
 
@@ -61,15 +73,17 @@ const mapStateToProps = (state) => {
     return {
         indexTokenName: state.indexTokenReducer.activeToken.indexTokenName,
         enoughSvetTokensForBuy: state.buyTokensReducer.enoughSvetTokensForBuy,
-        indexTokenPrice: getIndexPriceInSvet(state.indexTokenTokens.tokens,state)
+        indexTokenPrice: getIndexPriceInSvet(state.indexTokenTokens.tokens,state),
+        svetTokensAmount: state.buyTokensReducer.svetTokens.amount
     }
 }
 
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         addIndexTokenAmount: (e) => dispatch(checkIndexTokenAmountAction(e.targget.value))
-//     }
-// }
+const mapDispatchToProps = dispatch => {
+    return {
+        buySvetTokensMethodSelect:(e) => dispatch(svetTokensBuyProcessStart(e)),
+        addIndexTokenAmount: (e,indexTokenPrice,svetTokensAmount) => dispatch(checkSvetTokensForBuyIndexTokensAction(e.target.value, indexTokenPrice, svetTokensAmount))
+    }
+}
 
-export default connect(mapStateToProps,null)(IndexTokenPaymentForm);
+export default connect(mapStateToProps,mapDispatchToProps)(IndexTokenPaymentForm);
 
