@@ -36,7 +36,7 @@ const IndexTokensListItem =  (props) => {
         </p>
     
     
-        <button className="invest" onClick={() => props.startBuyToken(props.svetTokensAmount)
+        <button className="invest" onClick={() => props.startBuyToken(props.svetTokensAmount,props.svetTokenAddress)
             }>INVEST</button>
     
      </li>)
@@ -58,7 +58,9 @@ const mapStateToProps = (state) => ({
     indexList: getContract(state, 'IndexStorage', '@indexstorage').fn.indexList(),
     contractsList: getContractList(state),
     activeToken: state.indexTokenReducer.activeToken,
-    svetTokensAmount:10
+    svetTokensAmount:100,
+    svetTokenAddress: getContract(state, 'Exchange', '@exchange').fn.getBA()
+    //svetTokenAddress: getContract(state, 'Exchange', '@exchange').fn.getBA()
 });
 
 
@@ -66,7 +68,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch => {
     return {
     changeActiveElement: (e,indexTokenName) => dispatch(indexTokenSelect(e.target.parentElement.id,indexTokenName)),
-    startBuyToken: (svetTokensAmount) => dispatch(buySvetTokenAction(svetTokensAmount))
+    startBuyToken: (svetTokensAmount,svetTokenAddress) => dispatch(buySvetTokenAction(svetTokensAmount,svetTokenAddress))
   }}
 
 
