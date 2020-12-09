@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Fragment } from 'react';
 import indexTokenSelect from '../../ethvtx_config/actions/indexTokenSelect';
-import buySvetTokenAction from '../../ethvtx_config/actions/buySvetTokensAction';
+import startBuyIndexTokens from '../../ethvtx_config/actions/startToBuyIndexTokens';
 
 //import { IndexContractLoader } from '../IndexContractLoader';
 import { getContract, getContractList } from 'ethvtx/lib/contracts/helpers/getters';
@@ -36,7 +36,7 @@ const IndexTokensListItem =  (props) => {
         </p>
     
     
-        <button className="invest" onClick={() => props.startBuyToken(props.svetTokensAmount)
+        <button className="invest" onClick={() => props.startBuyToken(props.svetTokensAmount,props.svetTokenAddress)
             }>INVEST</button>
     
      </li>)
@@ -58,7 +58,9 @@ const mapStateToProps = (state) => ({
     indexList: getContract(state, 'IndexStorage', '@indexstorage').fn.indexList(),
     contractsList: getContractList(state),
     activeToken: state.indexTokenReducer.activeToken,
-    svetTokensAmount:10
+    svetTokensAmount: getContract(state, 'ERC20', '@svettoken').fn.balanceOf(state.contracts.web3.currentProvider.selectedAddress)/10**18,
+    svetTokenAddress: getContract(state, 'Exchange', '@exchange').fn.getBA()
+    //svetTokenAddress: getContract(state, 'Exchange', '@exchange').fn.getBA()
 });
 
 
@@ -66,7 +68,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch => {
     return {
     changeActiveElement: (e,indexTokenName) => dispatch(indexTokenSelect(e.target.parentElement.id,indexTokenName)),
-    startBuyToken: (svetTokensAmount) => dispatch(buySvetTokenAction(svetTokensAmount))
+    startBuyToken: (svetTokensAmount,svetTokenAddress) => dispatch(startBuyIndexTokens(svetTokensAmount,svetTokenAddress))
   }}
 
 

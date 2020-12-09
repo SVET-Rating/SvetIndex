@@ -152,6 +152,7 @@ module.exports = {
          contracts.OraclePrice.methods.addPrice(contracts.Bytomtest.options.address, web3.utils.toBN(0.070325 * 10**18)).send({from: web3.eth.defaultAccount}),   
          contracts.OraclePrice.methods.addPrice(contracts.Waytst.options.address, web3.utils.toBN(0.241054 *10**18)).send({from: web3.eth.defaultAccount}),        
          contracts.OraclePrice.methods.addPrice(contracts.Kybertst.options.address,  web3.utils.toBN(0.941986 * 10**18)).send({from: web3.eth.defaultAccount}),
+         contracts.OraclePrice.methods.addPrice(contracts.SVTtst.options.address,  web3.utils.toBN(0.5 * 10**18)).send({from: web3.eth.defaultAccount}),
       // circulation amount
          contracts.OracleCircAmount.methods.addamount(contracts.Bytomtest.options.address,  web3.utils.toBN(1374417194)).send({from: web3.eth.defaultAccount}),   
          contracts.OracleCircAmount.methods.addamount(contracts.Waytst.options.address,  web3.utils.toBN(189000000)).send({from: web3.eth.defaultAccount}),        
@@ -166,6 +167,7 @@ module.exports = {
          contracts.Exchange.methods.setPriceOracle(contracts.OraclePrice.options.address).send({from: web3.eth.defaultAccount}),
 
          contracts.SVTtst.methods.transfer(contracts.Exchange.options.address, "10000000000000000000000").send({from: web3.eth.defaultAccount}),
+         contracts.SVTtst.methods.transfer("0x282C9C7745925270e7bcdeB03358504F1CB6768D", "10000000000000000000000").send({from: web3.eth.defaultAccount}),
 
         // Index2Swap
          contracts.Index2Swap.setSwap ("0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D", 99, 30 ),

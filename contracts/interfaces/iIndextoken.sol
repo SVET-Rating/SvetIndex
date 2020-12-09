@@ -6,8 +6,9 @@ interface iIndexToken is IERC20 {
     struct Index { 
       address addrActive; // addr of active's token
       uint256 amount; // in wei    
+      uint decimals; 
       string name;
-      string symbol;        
+      string symbol;
     }
 
     function getActivesList() external view returns (Index[] memory) ;

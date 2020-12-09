@@ -56,7 +56,7 @@ contract IndexFactory  {
         IndexToken indexT =  IndexToken (_indexAddr);
         string memory name = indexT.name();
         string memory symbol =  indexT.symbol();
-        require (indexStorage.indexes(name, symbol) == address(0x0), "Same name+symbol exists");
+        //require (indexStorage.indexes(name, symbol) == address(0x0), "Same name+symbol exists");
         uint[] memory activesAm = new uint[](_actives.length);
         
         for (uint8 i=0; i<_actives.length; i++) {

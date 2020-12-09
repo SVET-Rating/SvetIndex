@@ -52,7 +52,7 @@ contract IndexToken is iIndexToken, ERC20Detailed {
         require(enableSetActvs, "Actives already filled");
         for (uint8 i=0; i<_activesAddr.length; i++) {
             ERC20Detailed activeT = ERC20Detailed(_activesAddr[i]);
-            activesList.push(Index(_activesAddr[i], _activAm[i], activeT.name(), activeT.symbol()));
+            activesList.push(Index(_activesAddr[i], _activAm[i], activeT.decimals(), activeT.name(), activeT.symbol()));
             }
         enableSetActvs = false;
     }
