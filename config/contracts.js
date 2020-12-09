@@ -167,7 +167,7 @@ module.exports = {
          contracts.Exchange.methods.setPriceOracle(contracts.OraclePrice.options.address).send({from: web3.eth.defaultAccount}),
 
          contracts.SVTtst.methods.transfer(contracts.Exchange.options.address, "10000000000000000000000").send({from: web3.eth.defaultAccount}),
-         contracts.SVTtst.methods.transfer("0x282C9C7745925270e7bcdeB03358504F1CB6768D", "10000000000000000000000").send({from: web3.eth.defaultAccount}),
+         contracts.SVTtst.methods.transfer(web3.eth.defaultAccount, "10000000000000000000000").send({from: web3.eth.defaultAccount}),
 
         // Index2Swap
          contracts.Index2Swap.setSwap ("0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D", 99, 30 ),

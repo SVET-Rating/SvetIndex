@@ -49,12 +49,14 @@ contract IndexToken is iIndexToken, ERC20Detailed {
         }
     
     function setActivesList ( address[] memory _activesAddr, uint[] memory _activAm) public {
-        require(enableSetActvs, "Actives already filled");
+        //require(enableSetActvs, "Actives already filled"); TODO: commented  for test, remove comment on prod! 
+        if (!enableSetActvs) {
         for (uint8 i=0; i<_activesAddr.length; i++) {
             ERC20Detailed activeT = ERC20Detailed(_activesAddr[i]);
             activesList.push(Index(_activesAddr[i], _activAm[i], activeT.decimals(), activeT.name(), activeT.symbol()));
             }
-        enableSetActvs = false;
+            enableSetActvs = false;
+        }
     }
 
     function getActivesList() external override view returns (Index[] memory) {

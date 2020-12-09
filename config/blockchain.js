@@ -52,6 +52,32 @@ module.exports = {
     ]
   },
 
+
+  cloudflare: {
+    // fork mainnet
+   
+    // do:
+    // npm install -g ganache-cli
+    // ganache-cli -f https://cloudflare-eth.com/  -m "clutch captain shoe salt awake harvest setup primary inmate ugly among become" -i 999 -u 0x9759A6Ac90977b93B58547b4A71c78317f391A28
+  // to start:
+  // https://ethereumdev.io/testing-your-smart-contract-with-existing-protocols-ganache-fork/
+    // OR
+    //  ganache-cli -f https://ropsten.infura.io/v3/3362483b5eab409ea69e99f99aefd67a  -m "clutch captain shoe salt awake harvest setup primary inmate ugly among become" -i 999 -u 0x9759A6Ac90977b93B58547b4A71c78317f391A28
+    // embark run --nodashboard  cloudflare
+
+    endpoint: "http://127.0.0.1:8545", // Endpoint of an node to connect to. Can be on localhost or on the internet
+    accounts: [
+      {
+        //privateKeyFile: "./testnet/password",
+       // privateKey: "",// process.env.privKey,
+        mnemonic: "clutch captain shoe salt awake harvest setup primary inmate ugly among become",
+        hdpath: "m/44'/60'/0'/0/",
+                   //m/44'/60'/0'/0/
+        //numAddresses: "1"
+      }
+    ]
+  },
+
   testnet: {
     networkType: "testnet", // Can be: testnet(ropsten), rinkeby, livenet or custom, in which case, it will use the specified networkId
     syncMode: "light",
