@@ -87,12 +87,12 @@ module.exports = {
               
               },
 
-      Faucet: {
+    /*  Faucet: {
           fromIndex: 0,
           args: [], 
           
           },
-       
+    */   
       TokTst: { deploy: false,}, //todo add totalsupply
       Bytomtest: {
         instanceOf: 'TokTst',
@@ -131,17 +131,15 @@ module.exports = {
             args: ["SvetIndex2", "SVI2"], 
             
           }
-                
-                       
     },
       afterDeploy: async ({contracts, web3, logger}) => {
 
         await Promise.all ([ 
-         contracts.Faucet.methods.setToken(contracts.Bytomtest.options.address).send({from: web3.eth.defaultAccount}),
+/*         contracts.Faucet.methods.setToken(contracts.Bytomtest.options.address).send({from: web3.eth.defaultAccount}),
          contracts.Faucet.methods.setToken(contracts.Waytst.options.address).send({from: web3.eth.defaultAccount}),
          contracts.Faucet.methods.setToken(contracts.Kybertst.options.address).send({from: web3.eth.defaultAccount}),  
          contracts.Faucet.methods.setToken(contracts.SVTtst.options.address).send({from: web3.eth.defaultAccount}),        
-
+*/
          contracts.Experts.methods.addExpert(web3.eth.defaultAccount).send({from: web3.eth.defaultAccount}),
          contracts.OraclePrice.methods.setExpertsContr(contracts.Experts.options.address).send({from: web3.eth.defaultAccount}),
     //     contracts.OraclePrice.methods.setExchange(contracts.Exchange.options.address).send({from: web3.eth.defaultAccount}),   
@@ -170,7 +168,7 @@ module.exports = {
          contracts.SVTtst.methods.transfer(web3.eth.defaultAccount, "10000000000000000000000").send({from: web3.eth.defaultAccount}),
 
         // Index2Swap
-         contracts.Index2Swap.setSwap ("0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D", 99, 30 ),
+         contracts.Index2Swap.methods.setSwap ("0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D", 99, 30 ),
          contracts.Index2Swap.set (contracts.SVTtst.options.address, contracts.OraclePrice.options.address, contracts.Lstorage.options.address ),
 
         // IndexFactory
@@ -187,24 +185,71 @@ module.exports = {
         ]);
 
          // init index SVET1
-         
-         await contracts.IndexFactory.methods.makeIndex(contracts.IndexToken.options.address,
-                  [contracts.Bytomtest.options.address,
-                  contracts.Waytst.options.address,  
-                  contracts.Kybertst.options.address]
-          ).send({from: web3.eth.defaultAccount});
-          await contracts.IndexFactory.methods.makeIndex(contracts.IndexToken2.options.address,
-            [contracts.Waytst.options.address,  
-              contracts.Kybertst.options.address]
-            
-    ).send({from: web3.eth.defaultAccount});
+      await contracts.IndexStorage.methods.getLenIndexes().call().then (lenInd => {
+         if (lenInd == 0) {
+           contracts.IndexFactory.methods.makeIndex(contracts.IndexToken.options.address,
+                    [contracts.Bytomtest.options.address,
+                    contracts.Waytst.options.address,  
+                    contracts.Kybertst.options.address]
+            ).send({from: web3.eth.defaultAccount});
+           contracts.IndexFactory.methods.makeIndex(contracts.IndexToken2.options.address,
+              [contracts.Waytst.options.address,  
+                contracts.Kybertst.options.address]
+              ).send({from: web3.eth.defaultAccount});
+              }
+          });   
     }
   },
 
   // default environment, merges with the settings in default
   // assumed to be the intended environment by `embark run`
-  development: {},
+  development: {
+    deploy: {
+      WETHtst: {
+        instanceOf: 'TokTst',
+        fromIndex: 0,
+        args: ["WrapETH", "WETH", 18], 
 
+        },
+        UniswapV2Factory: {
+          file: "../contracts/uniswap/UniswapV2Factory.sol",
+          fromIndex: 0,
+          args: ['$accounts[0]']
+        
+        },
+
+        /*    deps: ['SimpleStorage'],
+    address: async (deps) => {
+      // use `deps.contracts.SimpleStorage` to determine and return address
+    },
+        */
+      UniswapV2Router02: {
+        deps: ['WETHtst', 'UniswapV2Factory'],
+
+        file: "../contracts/uniswap/UniswapV2Router02.sol",
+        fromIndex: 0,
+        args: [async (deps) => {
+              return (deps.contracts.WETHtst.options.address)},
+            async (deps) => {
+              return (deps.contracts.WETHtst)
+        }]
+      }
+      },
+      
+      afterDeploy: async ({contracts, web3, logger}) => {
+        await  contracts.Index2Swap.methods.setSwap(contracts.UniswapV2Router02.options.address, 99, 30 ).send({from: web3.eth.defaultAccount});
+
+        await contracts.UniswapV2Router02.methods.addLiquidityETH (
+          contracts.Waytst.options.address,
+          web3.utils.toBN(0.241054 *10**18 *10 /500),
+          web3.utils.toBN(0.241054 *10**18 *10 /500),
+          web3.utils.toBN(10**18 *10 ),
+          web3.eth.defaultAccount,
+          new Date().getTime()/1000
+        ).send({from: web3.eth.defaultAccount, _value: web3.utils.toBN(10**18 *10 ) });
+      }
+    
+  },
   // merges with the settings in default
   // used with "embark run privatenet"
   privatenet: {},
