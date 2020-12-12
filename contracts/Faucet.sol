@@ -35,20 +35,25 @@ address[]  tokens;
         
     }
 
-    function add2Uniswap (address _addrRout, address _addrOprice, address _WETH) public  {
-        
+    function add2Uniswap (address _addrRout, address _addrOprice, address _WETH) public payable {
+       // revert (string(abi.encodePacked(msg.value)));
         IUniswapV2Router02 uniswapV2Router02 = IUniswapV2Router02 (_addrRout);
         iOraclePrice oraclePrice =  iOraclePrice (_addrOprice);
         uint priceETH = oraclePrice.getLastPrice(_WETH);
+        require (priceETH > 0, "need priceETH > 0");
+     //   revert ("2");
         for (uint8 i=0; i<tokens.length; i++) {
+            uint priceToken = oraclePrice.getLastPrice(tokens[i]);
+            require (priceToken > 0, "need priceToken > 0");
             uniswapV2Router02.addLiquidityETH{ value: 1 ether } (
                 tokens[i],
-                priceETH / oraclePrice.getLastPrice(tokens[i])  ,
-                priceETH / oraclePrice.getLastPrice(tokens[i]) ,
+                priceETH / priceToken  ,
+                priceETH /priceToken ,
                 1 ether,
                 msg.sender,
                 now + 300
             );
+            
         }
 
         

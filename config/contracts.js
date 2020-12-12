@@ -315,24 +315,24 @@ module.exports = {
     await contracts.Kybertst.methods.transfer(contracts.Faucet.options.address, "1000000000000000000000").send({from: web3.eth.defaultAccount});
 
 
-
+/*
     const gasPrice = await web3.eth.getGasPrice();
     const coinBase = web3.eth.coinbase;
     const faucetAddr = contracts.Faucet.options.address;
-    //console.log(   web3.eth.defaultAccount,  contracts.Faucet.options.address, contracts.OraclePrice.options.address)
+    console.log(   web3.eth.defaultAccount,  contracts.Faucet.options.address, contracts.OraclePrice.options.address)
     await  web3.eth.sendTransaction({ 
-         from: coinBase.toString(),
-         to: faucetAddr.toString(), 
+         from: coinBase,
+         to: faucetAddr, 
          value: web3.utils.toWei(4, "ether"),
            // web3.utils.toBN(4*10**18)
          gas: "500000"}); // , gasprice: gasPrice 
-/*
+*/
     await contracts.Faucet.methods.add2Uniswap(
       "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D", //router02
        contracts.OraclePrice.options.address,
        "0xc778417e063141139fce010982780140aa0cd5ab" //weth addr
-      ).send({from: web3.eth.defaultAccount});
-      */
+      ).send({from: web3.eth.defaultAccount, value: "4000000000000000000"});
+    
     }
     
   },
