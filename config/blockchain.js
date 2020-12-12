@@ -53,7 +53,7 @@ module.exports = {
   },
 
 
-  cloudflare: {
+  clowdflare: {
     // fork mainnet
    
     // do:

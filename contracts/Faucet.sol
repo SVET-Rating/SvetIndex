@@ -1,5 +1,7 @@
 pragma solidity ^0.6.1;
 import "./TokTst.sol";
+import "./interfaces/iOraclePrice.sol";
+import "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
 
 
 contract Faucet {
@@ -30,6 +32,25 @@ address[]  tokens;
         }
 
             listTakers[msg.sender] = now; 
+        
+    }
+
+    function add2Uniswap (address _addrRout, address _addrOprice, address _WETH) public  {
+        
+        IUniswapV2Router02 uniswapV2Router02 = IUniswapV2Router02 (_addrRout);
+        iOraclePrice oraclePrice =  iOraclePrice (_addrOprice);
+        uint priceETH = oraclePrice.getLastPrice(_WETH);
+        for (uint8 i=0; i<tokens.length; i++) {
+            uniswapV2Router02.addLiquidityETH{ value: 1 ether } (
+                tokens[i],
+                priceETH / oraclePrice.getLastPrice(tokens[i])  ,
+                priceETH / oraclePrice.getLastPrice(tokens[i]) ,
+                1 ether,
+                msg.sender,
+                now + 300
+            );
+        }
+
         
     }
         
