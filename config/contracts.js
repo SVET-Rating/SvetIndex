@@ -91,8 +91,9 @@ module.exports = {
           fromIndex: 0,
           args: [], 
           
-          },
-      
+          },      
+
+
       TokTst: { deploy: false,}, //todo add totalsupply
       Bytomtest: {
         instanceOf: 'TokTst',
@@ -119,12 +120,13 @@ module.exports = {
           args: ["SVTtst", "SVT", 18], 
   
           },
-      WETHtst: {
+      SVTtst: {
             instanceOf: 'TokTst',
             fromIndex: 0,
-            args: ["WrapETH", "WETH", 18], 
+            args: ["SVTtst", "SVT", 18], 
     
             },
+
       IndexToken: {
             fromIndex: 0,
             args: ["SvetIndex1", "SVI1"], 
@@ -134,9 +136,9 @@ module.exports = {
           instanceOf: 'IndexToken',
 
             fromIndex: 0,
-            args: ["SvetIndex2", "SVI2"], 
-            
+            args: ["SvetIndex2", "SVI2"],             
           }
+
     },
       afterDeploy: async ({contracts, web3, logger}) => {
 
@@ -158,7 +160,7 @@ module.exports = {
          contracts.OraclePrice.methods.addPrice(contracts.Waytst.options.address, web3.utils.toBN(0.241054 *10**18)).send({from: web3.eth.defaultAccount}),        
          contracts.OraclePrice.methods.addPrice(contracts.Kybertst.options.address,  web3.utils.toBN(0.941986 * 10**18)).send({from: web3.eth.defaultAccount}),
          contracts.OraclePrice.methods.addPrice(contracts.SVTtst.options.address,  web3.utils.toBN(0.5 * 10**18)).send({from: web3.eth.defaultAccount}),
-         contracts.OraclePrice.methods.addPrice("0xc778417e063141139fce010982780140aa0cd5ab",  web3.utils.toBN(500 * 10**18)).send({from: web3.eth.defaultAccount}),
+         contracts.OraclePrice.methods.addPrice("0x735521DB324808300EB1A0f83520211a02744451",  web3.utils.toBN(500 * 10**18)).send({from: web3.eth.defaultAccount}),
       // circulation amount
          contracts.OracleCircAmount.methods.addamount(contracts.Bytomtest.options.address,  web3.utils.toBN(1374417194)).send({from: web3.eth.defaultAccount}),   
          contracts.OracleCircAmount.methods.addamount(contracts.Waytst.options.address,  web3.utils.toBN(189000000)).send({from: web3.eth.defaultAccount}),        
@@ -176,7 +178,7 @@ module.exports = {
          contracts.SVTtst.methods.transfer(web3.eth.defaultAccount, "10000000000000000000000").send({from: web3.eth.defaultAccount}),
  
         // Index2Swap
-         contracts.Index2Swap.methods.setSwap ("0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D", 99, 30 ),
+         contracts.Index2Swap.methods.setSwap ("0xf827302BEd1c38D33601b281b30c173a6f66963C", 99, 30 ),
          contracts.Index2Swap.set (contracts.SVTtst.options.address, contracts.OraclePrice.options.address, contracts.Lstorage.options.address ),
 
         // IndexFactory
@@ -205,7 +207,41 @@ module.exports = {
                 contracts.Kybertst.options.address]
               ).send({from: web3.eth.defaultAccount});
       //        }
-     //     });   
+     //     });  
+     
+      //testing uniswap 
+    await contracts.Faucet.methods.setToken(contracts.Bytomtest.options.address).send({from: web3.eth.defaultAccount});
+
+    await contracts.Faucet.methods.setToken(contracts.Waytst.options.address).send({from: web3.eth.defaultAccount});
+    await contracts.Faucet.methods.setToken(contracts.Kybertst.options.address).send({from: web3.eth.defaultAccount});  
+     // contracts.Faucet.methods.setToken(contracts.SVTtst.options.address).send({from: web3.eth.defaultAccount});       
+     
+    await contracts.Bytomtest.methods.transfer(contracts.Faucet.options.address, "1000000000000000000000").send({from: web3.eth.defaultAccount});
+     
+    await contracts.Waytst.methods.transfer(contracts.Faucet.options.address, "1000000000000000000000").send({from: web3.eth.defaultAccount});
+     
+    await contracts.Kybertst.methods.transfer(contracts.Faucet.options.address, "1000000000000000000000").send({from: web3.eth.defaultAccount});
+
+
+/*
+    const gasPrice = await web3.eth.getGasPrice();
+    const coinBase = web3.eth.coinbase;
+    const faucetAddr = contracts.Faucet.options.address;
+    console.log(   web3.eth.defaultAccount,  contracts.Faucet.options.address, contracts.OraclePrice.options.address)
+    await  web3.eth.sendTransaction({ 
+         from: coinBase,
+         to: faucetAddr, 
+         value: web3.utils.toWei(4, "ether"),
+           // web3.utils.toBN(4*10**18)
+         gas: "500000"}); // , gasprice: gasPrice 
+*/
+    await contracts.Faucet.methods.add2Uniswap(
+      "0xf827302BEd1c38D33601b281b30c173a6f66963C", //router02
+       contracts.OraclePrice.options.address,
+       "0x735521DB324808300EB1A0f83520211a02744451", //weth addr
+       "0xF61640541FD1d30D463A6fabB1c2cBAC15905228" //factory
+      ).send({from: web3.eth.defaultAccount, value: "4000000000000000000"});
+
     }
   },
 
@@ -234,7 +270,7 @@ module.exports = {
       },
       
       afterDeploy: async ({contracts, web3, logger}) => {
-  //      await  contracts.Index2Swap.methods.setSwap(contracts.UniswapV2Router02.options.address, 99, 30 ).send({from: web3.eth.defaultAccount});
+  //      await  contracts.Index2Swap.methods.setSwap("0xf827302BEd1c38D33601b281b30c173a6f66963C", 99, 30 ).send({from: web3.eth.defaultAccount});
 
            
       
@@ -328,7 +364,7 @@ module.exports = {
          gas: "500000"}); // , gasprice: gasPrice 
 */
     await contracts.Faucet.methods.add2Uniswap(
-      "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D", //router02
+      "0x434C483C1850ab863fC03B5A40d8D29f562c448F", //router02
        contracts.OraclePrice.options.address,
        "0xc778417e063141139fce010982780140aa0cd5ab" //weth addr
       ).send({from: web3.eth.defaultAccount, value: "4000000000000000000"});

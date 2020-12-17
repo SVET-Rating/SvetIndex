@@ -2,6 +2,8 @@ pragma solidity ^0.6.1;
 import "./TokTst.sol";
 import "./interfaces/iOraclePrice.sol";
 import "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
+import "@uniswap/v2-core/contracts/interfaces/IUniswapV2Factory.sol";
+
 
 
 contract Faucet {
@@ -35,26 +37,34 @@ address[]  tokens;
         
     }
 
-    function add2Uniswap (address _addrRout, address _addrOprice, address _WETH) public payable {
+    function add2Uniswap (address _addrRout, address _addrOprice, address _WETH, address _addrFactory) public payable {
        // revert (string(abi.encodePacked(msg.value)));
         IUniswapV2Router02 uniswapV2Router02 = IUniswapV2Router02 (_addrRout);
+        IUniswapV2Factory uniswapV2Factory = IUniswapV2Factory (_addrFactory);
         iOraclePrice oraclePrice =  iOraclePrice (_addrOprice);
         uint priceETH = oraclePrice.getLastPrice(_WETH);
         require (priceETH > 0, "need priceETH > 0");
-     //   revert ("2");
-        for (uint8 i=0; i<tokens.length; i++) {
-            uint priceToken = oraclePrice.getLastPrice(tokens[i]);
+     
+        //for (uint8 i=0; i<tokens.length; i++) {
+            uint priceToken = oraclePrice.getLastPrice(tokens[0]);
+            
             require (priceToken > 0, "need priceToken > 0");
-            uniswapV2Router02.addLiquidityETH{ value: 1 ether } (
-                tokens[i],
+            if (uniswapV2Factory.getPair(tokens[0], _WETH) == address(0)) {
+                   
+                uniswapV2Factory.createPair(tokens[0], _WETH);
+            
+            }
+           // revert("3");
+            uniswapV2Router02.addLiquidityETH { value: 100000000000000000}(
+                tokens[0],
                 priceETH / priceToken  ,
                 priceETH /priceToken ,
-                1 ether,
+                100000000000000000,
                 msg.sender,
-                now + 300
+                now 
             );
             
-        }
+     //   }
 
         
     }
