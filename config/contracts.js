@@ -93,28 +93,26 @@ module.exports = {
           
           },
        
-      TokTst: { deploy: false,}, //todo add totalsupply
+      MockERC20: { deploy: false,}, //todo add totalsupply
       Bytomtest: {
-        instanceOf: 'TokTst',
+        instanceOf: 'MockERC20',
           fromIndex: 0,
-          args: ["Bytom", "BTM", 18], 
-
+          address: '0x8dF3b210283F08eC30da4e8fF8bf62981FbBef34'
       },
         
       Waytst: {
-        instanceOf: 'TokTst',
+        instanceOf: 'MockERC20',
         fromIndex: 0,
-        args: ["WaykiChain", "WIC", 18], 
+        address: '0xb9e750aE9fD8B2f47e3523941C26669E4F67f84E'
 
         },
       Kybertst: {
-        instanceOf: 'TokTst',
+        instanceOf: 'MockERC20',
         fromIndex: 0,
-        args: ["KNC", "QUB", 18], 
-
+        address: '0x8736d5567DAF02CDcdB9890716bC28f363b8807a'
         },
       SVTtst: {
-          instanceOf: 'TokTst',
+          instanceOf: 'MockERC20',
           fromIndex: 0,
           args: ["SVTtst", "SVT", 18], 
   
@@ -137,11 +135,11 @@ module.exports = {
       afterDeploy: async ({contracts, web3, logger}) => {
 
         await Promise.all ([ 
-         contracts.Faucet.methods.setToken(contracts.Bytomtest.options.address).send({from: web3.eth.defaultAccount}),
+    /*     contracts.Faucet.methods.setToken(contracts.Bytomtest.options.address).send({from: web3.eth.defaultAccount}),
          contracts.Faucet.methods.setToken(contracts.Waytst.options.address).send({from: web3.eth.defaultAccount}),
          contracts.Faucet.methods.setToken(contracts.Kybertst.options.address).send({from: web3.eth.defaultAccount}),  
          contracts.Faucet.methods.setToken(contracts.SVTtst.options.address).send({from: web3.eth.defaultAccount}),        
-
+*/
          contracts.Experts.methods.addExpert(web3.eth.defaultAccount).send({from: web3.eth.defaultAccount}),
          contracts.OraclePrice.methods.setExpertsContr(contracts.Experts.options.address).send({from: web3.eth.defaultAccount}),
     //     contracts.OraclePrice.methods.setExchange(contracts.Exchange.options.address).send({from: web3.eth.defaultAccount}),   
@@ -170,7 +168,7 @@ module.exports = {
          contracts.SVTtst.methods.transfer(web3.eth.defaultAccount, "10000000000000000000000").send({from: web3.eth.defaultAccount}),
 
         // Index2Swap
-         contracts.Index2Swap.setSwap ("0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D", 99, 30 ),
+         contracts.Index2Swap.setSwap ("0x7C7698593eb574535ef5F89e7541A9FC2CfF9B37", 99, 30 ),
          contracts.Index2Swap.set (contracts.SVTtst.options.address, contracts.OraclePrice.options.address, contracts.Lstorage.options.address ),
 
         // IndexFactory

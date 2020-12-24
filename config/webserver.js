@@ -1,6 +1,6 @@
 module.exports = {
   enabled: true,
   host: "localhost",
-  openBrowser: true,
+  openBrowser: false,
   port: 8000
 };
