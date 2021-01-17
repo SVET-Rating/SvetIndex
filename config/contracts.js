@@ -86,60 +86,20 @@ module.exports = {
               args: [], 
               
               },
-
-      Faucet: {
-          fromIndex: 0,
-          args: [], 
-          
-          },
-       
-      MockERC20: { deploy: false,}, //todo add totalsupply
-      Bytomtest: {
-        instanceOf: 'MockERC20',
-          fromIndex: 0,
-          address: '0x8dF3b210283F08eC30da4e8fF8bf62981FbBef34'
-      },
-        
-      Waytst: {
-        instanceOf: 'MockERC20',
-        fromIndex: 0,
-        address: '0xb9e750aE9fD8B2f47e3523941C26669E4F67f84E'
-
-        },
-      Kybertst: {
-        instanceOf: 'MockERC20',
-        fromIndex: 0,
-        address: '0x8736d5567DAF02CDcdB9890716bC28f363b8807a'
-        },
+      MockERC20: { deploy: false,},
+      
       SVTtst: {
-          instanceOf: 'MockERC20',
-          fromIndex: 0,
-          args: ["SVTtst", "SVT", 18], 
-  
-          },
-      IndexToken: {
-            fromIndex: 0,
-            args: ["SvetIndex1", "SVI1"], 
-            
-          },
-      IndexToken2: {
-          instanceOf: 'IndexToken',
+              instanceOf: 'MockERC20',
+              fromIndex: 0,
+              args: ["SVTtst", "SVT", "210000000000000000000000"], 
+                //address: '0x8736d5567DAF02CDcdB9890716bC28f363b8807a'
+      }                
 
-            fromIndex: 0,
-            args: ["SvetIndex2", "SVI2"], 
-            
-          }
-                
-                       
     },
       afterDeploy: async ({contracts, web3, logger}) => {
 
         await Promise.all ([ 
-    /*     contracts.Faucet.methods.setToken(contracts.Bytomtest.options.address).send({from: web3.eth.defaultAccount}),
-         contracts.Faucet.methods.setToken(contracts.Waytst.options.address).send({from: web3.eth.defaultAccount}),
-         contracts.Faucet.methods.setToken(contracts.Kybertst.options.address).send({from: web3.eth.defaultAccount}),  
-         contracts.Faucet.methods.setToken(contracts.SVTtst.options.address).send({from: web3.eth.defaultAccount}),        
-*/
+
          contracts.Experts.methods.addExpert(web3.eth.defaultAccount).send({from: web3.eth.defaultAccount}),
          contracts.OraclePrice.methods.setExpertsContr(contracts.Experts.options.address).send({from: web3.eth.defaultAccount}),
     //     contracts.OraclePrice.methods.setExchange(contracts.Exchange.options.address).send({from: web3.eth.defaultAccount}),   
@@ -147,25 +107,9 @@ module.exports = {
          contracts.OracleTotSupply.methods.setExpertsContr(contracts.Experts.options.address).send({from: web3.eth.defaultAccount}),
     //     contracts.OracleCircAmount.methods.setExchange(contracts.Exchange.options.address).send({from: web3.eth.defaultAccount}),   
           // TODO price scale x10000
-         contracts.OraclePrice.methods.addPrice(contracts.Bytomtest.options.address, web3.utils.toBN(0.070325 * 10**18)).send({from: web3.eth.defaultAccount}),   
-         contracts.OraclePrice.methods.addPrice(contracts.Waytst.options.address, web3.utils.toBN(0.241054 *10**18)).send({from: web3.eth.defaultAccount}),        
-         contracts.OraclePrice.methods.addPrice(contracts.Kybertst.options.address,  web3.utils.toBN(0.941986 * 10**18)).send({from: web3.eth.defaultAccount}),
-         contracts.OraclePrice.methods.addPrice(contracts.SVTtst.options.address,  web3.utils.toBN(0.5 * 10**18)).send({from: web3.eth.defaultAccount}),
-      // circulation amount
-         contracts.OracleCircAmount.methods.addamount(contracts.Bytomtest.options.address,  web3.utils.toBN(1374417194)).send({from: web3.eth.defaultAccount}),   
-         contracts.OracleCircAmount.methods.addamount(contracts.Waytst.options.address,  web3.utils.toBN(189000000)).send({from: web3.eth.defaultAccount}),        
-         contracts.OracleCircAmount.methods.addamount(contracts.Kybertst.options.address,  web3.utils.toBN(198046404)).send({from: web3.eth.defaultAccount}),
-         // OracleTotSupply
-         contracts.OracleTotSupply.methods.addamount(contracts.Bytomtest.options.address,  web3.utils.toBN(21000000)).send({from: web3.eth.defaultAccount}),   
-         contracts.OracleTotSupply.methods.addamount(contracts.Waytst.options.address,  web3.utils.toBN(210451990)).send({from: web3.eth.defaultAccount}),        
-         contracts.OracleTotSupply.methods.addamount(contracts.Kybertst.options.address,  web3.utils.toBN(210404983)).send({from: web3.eth.defaultAccount}),
-
 
          contracts.Exchange.methods.setBA(contracts.SVTtst.options.address).send({from: web3.eth.defaultAccount}),
          contracts.Exchange.methods.setPriceOracle(contracts.OraclePrice.options.address).send({from: web3.eth.defaultAccount}),
-
-         contracts.SVTtst.methods.transfer(contracts.Exchange.options.address, "10000000000000000000000").send({from: web3.eth.defaultAccount}),
-         contracts.SVTtst.methods.transfer(web3.eth.defaultAccount, "10000000000000000000000").send({from: web3.eth.defaultAccount}),
 
         // Index2Swap
          contracts.Index2Swap.setSwap ("0x7C7698593eb574535ef5F89e7541A9FC2CfF9B37", 99, 30 ),
@@ -184,18 +128,8 @@ module.exports = {
 
         ]);
 
-         // init index SVET1
-         
-         await contracts.IndexFactory.methods.makeIndex(contracts.IndexToken.options.address,
-                  [contracts.Bytomtest.options.address,
-                  contracts.Waytst.options.address,  
-                  contracts.Kybertst.options.address]
-          ).send({from: web3.eth.defaultAccount});
-          await contracts.IndexFactory.methods.makeIndex(contracts.IndexToken2.options.address,
-            [contracts.Waytst.options.address,  
-              contracts.Kybertst.options.address]
-            
-    ).send({from: web3.eth.defaultAccount});
+       
+
     }
   },
 

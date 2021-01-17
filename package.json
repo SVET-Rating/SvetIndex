@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@openzeppelin/contracts": "^3.2.0",
+    "@openzeppelin/contracts": "^3.3.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
+    "@testing-library/user-event": "^12.6.0",
     "@uniswap/v2-core": "^1.0.1",
     "@uniswap/v2-periphery": "^1.1.0-beta.0",
     "embark": "^6.0.0",
@@ -26,7 +26,7 @@
     "embarkjs-web3": "^6.0.0",
     "embarkjs-whisper": "^6.0.0",
     "ethvtx": "2.0.6",
-    "grommet": "^2.5.5",
+    "grommet": "^2.16.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-ethvtx": "^2.1.1",
@@ -64,5 +64,14 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/node": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "nodemon": "^2.0.6"
   }
 }
