@@ -118,7 +118,7 @@ export const setupWeb3 = async (store) => {
                       curIndex.methods.name().call().then(name => {
   
                           loadContractInstance(store.dispatch, 'IndexToken', item.addr, {
-                              alias: "@" + name.toLowerCase(),
+                        //      address: item.addr,
                               permanent: true,
                               balance: true
                           });
