@@ -7,7 +7,7 @@ import "./interfaces/iOracleCircAmount.sol";
 import "./interfaces/iOracleTotSupply.sol";
 import "./interfaces/iIndexStorage.sol"; //todo intertface
 
-contract IndexFactory  {
+contract IndexFactorySvet  {
 
     // is needed to list of products? 
 
@@ -52,12 +52,12 @@ contract IndexFactory  {
 
     
 
-    function makeIndex (address _indexAddr, address[] memory _actives, uint256[] memory _amounts) public onlyOwner returns (address) { // string memory _name, string memory _symbol,
+    function makeIndex (address _indexAddr, address[] memory _actives) public onlyOwner returns (address) { // string memory _name, string memory _symbol,
         IndexToken indexT =  IndexToken (_indexAddr);
         string memory name = indexT.name();
         string memory symbol =  indexT.symbol();
         //require (indexStorage.indexes(name, symbol) == address(0x0), "Same name+symbol exists"); TODO: commented  for test, remove comment on prod! 
-        /*uint[] memory activesAm = new uint[](_actives.length);
+        uint[] memory activesAm = new uint[](_actives.length);
         
         for (uint8 i=0; i<_actives.length; i++) {
             uint price =  oraclePrice.getLastPrice(_actives[i]);        
@@ -66,10 +66,11 @@ contract IndexFactory  {
             require(ts > 0, "No total supply for token");
             uint amount = oracleCircAmount.getLastamount(_actives[i]);
             require(amount > 0, "No circ. amount for token");         
+            activesAm[i] = amount * price / ts / _actives.length;
         }
 
-        */
-        indexT.setActivesList(_actives, _amounts);
+        
+        indexT.setActivesList(_actives, activesAm);
         indexStorage.setIndex(name, symbol, address(indexT));
         return address(indexT); //indexT
 

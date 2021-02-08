@@ -3,7 +3,7 @@ pragma experimental ABIEncoderV2;
 import "./interfaces/iIndextoken.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract IndexToken is iIndexToken, ERC20 {
+contract IndexTokenSvet is iIndexToken, ERC20 {
   
     /**
     * makes ERC20 compatible index token 

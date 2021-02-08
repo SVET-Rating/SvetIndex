@@ -1,4 +1,4 @@
-const embcontracts = require ('/mnt/512-2/dfd/SvetAng2/sushiswap_svet/embark4Contracts.json');
+const embcontracts = require ('../embark4Contracts.json');
 module.exports = embcontracts;
 /*module.exports = {
   // default applies to all environments

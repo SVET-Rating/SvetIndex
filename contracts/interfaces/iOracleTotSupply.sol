@@ -1,4 +1,4 @@
-pragma solidity ^0.6.1;
+pragma solidity =0.6.12;
 
 interface iOracleTotSupply {
     function addamount   (address _addrToken, uint _amount ) external ;

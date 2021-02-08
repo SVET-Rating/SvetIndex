@@ -1,18 +1,21 @@
-pragma solidity ^0.6.1;
+pragma solidity =0.6.12;
 //import "./interfaces/iIndex2Swap.sol";
 import "./interfaces/iIndextoken.sol";
 import "./interfaces/iOraclePrice.sol";
 import "./interfaces/iLstorage.sol";
 
-import "@openzeppelin/contracts/math/SafeMath.sol";
+import "./interfaces/IUniswapV2Factory.sol";
+import "./interfaces/IUniswapV2Pair.sol";
+import "./interfaces/IUniswapV2Router02.sol";
 
-import "@uniswap/v2-core/contracts/interfaces/IUniswapV2Factory.sol";
-import "@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol";
-import "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
+//import "@openzeppelin/contracts/math/SafeMath.sol";
+import "./libraries/SafeMath.sol";
+//import "./libraries/UniswapV2Library.sol";
+import "./libraries/UniswapV2OracleLibrary.sol";
 
 
 contract Index2Swap  {
-    using SafeMath  for uint;
+    using SafeMathUniswap for uint;
 
     /**
     *     SvetSwap
@@ -57,11 +60,14 @@ contract Index2Swap  {
     function setNewOwner (address _newOwner) public onlyOwner {
         owner = _newOwner;
     }
+    
+    receive() external payable {
+    }
 
     function setSwap (address _addrRout, uint8 _discount, uint16 _miningDelay) public onlyOwner {
 
         require(_discount  > 0 && _addrRout != address (0x0), "in setIUniswapV2 all must !=0");
-//       
+      
         uniswapV2Router02 = IUniswapV2Router02 (_addrRout);
         miningDelay = _miningDelay;
         discount = _discount;
@@ -115,53 +121,58 @@ contract Index2Swap  {
 */
     function fillETH (address _addrIndex,                        
                         address _addrActive2,  // token
-                        uint256 _amount1, 
-                        uint256 _amount2) internal   returns (uint256 amountRes1, uint256 amountRes2) { 
+                        uint256 _amount1
+                        ) internal   returns (uint[] memory amountRet) { 
 
         // here wee need connection to Uniswap
-
-        
-        // amountOutMin must be retrieved from an oracle of some kind
         address[] memory path = new address[](2);
         path[0] = uniswapV2Router02.WETH();
         path[1] = _addrActive2;
-        uniswapV2Router02.swapETHForExactTokens{ value: _amount1 }( _amount2, path, address (this), block.timestamp + miningDelay);
+        amountRet = uniswapV2Router02.getAmountsOut(_amount1, path);
+        amountRet = uniswapV2Router02.swapExactETHForTokens{ value: _amount1 }( amountRet[1], path, address (this), block.timestamp + miningDelay);
         
         //send liquidity  
-        uint liqCurr;
+ /*       uint liqCurr;
         ( amountRes1, amountRes2, liqCurr) = uniswapV2Router02.addLiquidity(
                      path[0],
                      _addrActive2,
                     0,// _amount1, //uint amountADesired,
-                     _amount2, //uint amountBDesired,
+                     amountRet[1], //uint amountBDesired,
                     0,// _amount1 * uint256(discount) /100,
-                    _amount2.mul(uint(discount)).div(uint(100)),
+                    amountRet[1]*discount/100,
                     address (this),
                      block.timestamp + miningDelay
                     ) ;
-        lstorage.add (_addrIndex, _addrActive2,liqCurr);
+                    */
 
     }
 
-    function withdraw (address _addrIndex,
-                        address _addrActive1, //dai, weth
-                        address _addrActive2,  //token
-                        uint256 _amount1 ,
+    function swapInd4Eth (address _addrIndex,
+                        address addrActive,  //token
+                        uint256 _amount ,
                         address _whom                        
-                        ) internal returns (uint256 amountRes1, uint256 amountRes2) { 
+                        ) public payable returns (uint[] memory amountRet) { 
 
         // here wee need connection to Uniswap        
         //return liquidity  
-    
-        IUniswapV2Factory uniswapV2Factory = IUniswapV2Factory (uniswapV2Router02.factory());
-        address curPairAddr = uniswapV2Factory.getPair(_addrActive1, _addrActive2);
-        require(curPairAddr != address(0), "No pair");        
-        IUniswapV2Pair curPair = IUniswapV2Pair (curPairAddr);
-        (uint112 reserve1,,) = curPair.getReserves();
+     
+        (uint reserve1,uint reserve2,) = IUniswapV2Pair (
+                    IUniswapV2Factory (uniswapV2Router02.factory()
+                ).getPair(uniswapV2Router02.WETH(), addrActive)
+            ).getReserves();
+        address[] memory path = new address[](2);
+        path[0] = addrActive; //active
+        path[1] = uniswapV2Router02.WETH(); //eth
 
+        amountRet = uniswapV2Router02.getAmountsOut(_amount, path);
+        IERC20(addrActive).approve(address(uniswapV2Router02), _amount);
+        amountRet = uniswapV2Router02.swapExactTokensForETH(  _amount , amountRet[1]*discount / 100, path, address (this), block.timestamp + miningDelay);
+
+
+/*
         uint needLiq = _amount1.mul(curPair.totalSupply()).div(reserve1);
         
-        lstorage.sub (_addrIndex, _addrActive2,needLiq);
+        
         ( amountRes1, amountRes2) = uniswapV2Router02.removeLiquidity(
                      _addrActive1,
                      _addrActive2,
@@ -171,6 +182,7 @@ contract Index2Swap  {
                      _whom,
                      block.timestamp + miningDelay
                     );
+                    */
     }
 
 
@@ -179,7 +191,8 @@ contract Index2Swap  {
         require(priceEth > 0, "No price Eth");
         uint priceSvet =  oraclePrice.getLastPrice(address(svetT));
         require(priceSvet > 0, "No price Svet");
-        svetT.transfer(msg.sender,msg.value.div(priceEth).div(priceSvet)); //prices in ether
+        uint amount = msg.value *  priceEth / priceSvet;
+        svetT.transfer(msg.sender, amount);  //prices in ether
 
     }
 
@@ -191,42 +204,30 @@ contract Index2Swap  {
         require(priceEth > 0, "No price Eth");
         svetT.transferFrom(msg.sender, address(this), _amount); //prices in ether
         uint amount = _amount.mul(priceSvet).div(priceEth);
-        address[] memory path = new address[](2);
-        path[0] = wETH;
-        path[1] = wETH;
-        uniswapV2Router02.swapTokensForExactETH(
-             _amount, 
-             amount.mul(discount), 
-             path, 
-             address (this), 
-             block.timestamp + miningDelay);
+
         payable(msg.sender).transfer(amount);
 
     }
 
-    function buyIndexforSvetEth (uint _amount, address _indexT) public returns (uint256 amountRes1, uint256 amountRes2){
-        
-        // _amount - amount of index to buy
-        uint priceSvet =  oraclePrice.getLastPrice(address(svetT));
-        uint priceEth =  oraclePrice.getLastPrice(uniswapV2Router02.WETH());
+    function buyIndexforSvetEth (uint _amount, address _indexT) public returns (uint  amountRes0, uint amountRes1){// _amount - amount of index to buy
+
         iIndexToken index = iIndexToken(_indexT);
-        
-        uint actLen = index.getActivesLen();
         uint  totPriceActSv;
-        for (uint8 i = 0; i<actLen; i++) {
+        for (uint8 i = 0; i<index.getActivesLen(); i++) {
             (address addrActive, uint256 amount) = index.getActivesItem(i);
-            uint priceAct = oraclePrice.getLastPrice(addrActive).div(priceEth); //if prices in USD
-            amount = amount.mul(_amount);
-             totPriceActSv += amount.mul( priceAct.div(priceSvet)); //
-            // need ti be approved first for all sum! 
-            (uint256 amountRet1, uint256 amountRet2) = fillETH (
-             _indexT, 
-            addrActive,  //
-            amount.div(priceAct), // ethers to put
-            amount //tokens to get 
-            ) ;
-            amountRes1 += amountRet1;
-            amountRes2 += amountRet2;
+  
+            totPriceActSv += amount*_amount * 
+                        oraclePrice.getLastPrice(uniswapV2Router02.WETH()) /
+                        oraclePrice.getLastPrice(address(svetT)) / 10000; //
+    
+                        
+            uint[] memory amountRet = fillETH (
+                _indexT, 
+                addrActive,  //
+                amount * _amount / 10000
+            );
+            lstorage.add (msg.sender, _indexT, addrActive, amountRet[1]);
+
         }
         svetT.transferFrom(msg.sender, address(this),totPriceActSv);
         index.mint(msg.sender, _amount);
@@ -234,29 +235,27 @@ contract Index2Swap  {
     }
 
     function sellIndexforSvet (uint _amount, address _indexT) public returns (uint256 amountRes1, uint256 amountRes2){
-        address wETH = uniswapV2Router02.WETH();
-        uint priceSvet =  oraclePrice.getLastPrice(address(svetT));
-        uint priceEth =  oraclePrice.getLastPrice(wETH);
+
         iIndexToken index = iIndexToken(_indexT);
         
         uint  totPriceActSv;
-        uint actLen = index. getActivesLen();
-        for (uint8 i = 0; i<actLen; i++) {
+        for (uint8 i = 0; i<index.getActivesLen(); i++) {
             (address addrActive, uint256 amount) = index.getActivesItem(i);
-            uint priceAct = oraclePrice.getLastPrice(addrActive).div(priceEth); //if prices in USD
-            amount = amount.mul(_amount);
-            totPriceActSv += amount.mul( priceAct.div(priceSvet)); //
-            (uint256 amountRet1, uint256 amountRet2) = withdraw (
-            _indexT, 
-            wETH, 
-            addrActive,  //
-            amount, //tokens to get 
-            address (this)) ;
-            amountRes1 -= amountRet1;
-            amountRes2 -= amountRet2;
-        }
+            amount = amount.mul(_amount) /10000;
+            totPriceActSv += amount * 
+                        oraclePrice.getLastPrice(uniswapV2Router02.WETH()) /
+                        oraclePrice.getLastPrice(address(svetT)); //
+            uint[] memory amountRet = swapInd4Eth (
+                _indexT, 
+                addrActive,  //
+                amount, //tokens to get 
+                address (this)) ;
+
+            lstorage.sub (msg.sender, _indexT, addrActive, amount);
+
+            }
         index.burnFrom(msg.sender, _amount);
         svetT.transfer(msg.sender, totPriceActSv);
-        
+
     }
 }

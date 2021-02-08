@@ -1,4 +1,4 @@
-pragma solidity ^0.6.1;
+pragma solidity =0.6.12;
 
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "./interfaces/iLstorage.sol";
@@ -7,7 +7,7 @@ contract Lstorage is iLstorage {
     using SafeMath  for uint;
     address owner;
     address swap;
-    mapping (address => mapping (address =>  uint)) liq; 
+    mapping  (address => mapping  (address => mapping (address =>  uint))) liq; 
 
         constructor () public {
         owner = msg.sender;
@@ -28,16 +28,15 @@ contract Lstorage is iLstorage {
         }
 
 
-    function add (address _addrIndex, address _addrA, uint _amount) external override onlyswap {
+    function add (address _addrOwn, address _addrIndex, address _addrA, uint _amount) external override onlyswap {
 
-        liq [_addrIndex][_addrA].add( _amount);
+        liq [_addrOwn][_addrIndex][_addrA] +=  _amount;
 
     }
 
-    function sub (address _addrIndex, address _addrA, uint _needLiq) external override {
-
-        require(liq [ _addrIndex][_addrA] - _needLiq > 0 , "no liq on this index");
-        liq [ _addrIndex][_addrA].sub(_needLiq);
+    function sub (address _addrOwn, address _addrIndex, address _addrA, uint _needLiq) external override {
+        require(liq [_addrOwn][ _addrIndex][_addrA] >= _needLiq  , "no liq on this index");
+        liq [_addrOwn][ _addrIndex][_addrA] -= _needLiq;
 
     }
 
