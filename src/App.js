@@ -1,15 +1,43 @@
 import Navbar from './components/Navbar'
 import Investment from './pages/Invesment'
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+
+import InvestmentPage from './pages/Invesment';
+import DashboardPage from "./pages/dashboard";
+import HomePage from "./pages/home";
+import OraculesPage from "./pages/oracules";
+import ExpertsPage from "./pages/experts";
 
 function App() {
   return (
     <div className="App" >
+      <Router>
       <header>
         <Navbar/>
     </header>
     <main>
-        <Investment />
+        <Switch>
+        <Route exact path="/">
+          <HomePage />
+        </Route>
+        <Route path="/investments">
+          <InvestmentPage />
+        </Route>
+        <Route path="/dashboards">
+           <DashboardPage />
+        </Route>
+        <Route path="/oracules">
+            <OraculesPage />
+        </Route>
+        <Route path="/experts">
+            <ExpertsPage />
+        </Route>
+        </Switch>
         <footer>
             <div className="footer-info">
                 <div className="footer-header">about “BEST INDEX TOKEN”</div>
@@ -23,6 +51,7 @@ function App() {
             </div>
         </footer>
     </main>
+    </Router>
     </div>
   );
 }

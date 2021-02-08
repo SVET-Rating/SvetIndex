@@ -57,6 +57,11 @@ nav>div {
   cursor: pointer;
 }
 
+nav>div>a {
+  color:#8e8e8e;
+  text-decoration: none;
+}
+
 .tokens-container {
   display: grid;
   width: 90%;
