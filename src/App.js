@@ -3,6 +3,7 @@ import Investment from './pages/Invesment'
 import React from 'react';
 import {
   BrowserRouter as Router,
+  HashRouter,
   Switch,
   Route,
 } from "react-router-dom";
@@ -16,7 +17,7 @@ import ExpertsPage from "./pages/experts";
 function App() {
   return (
     <div className="App" >
-      <Router>
+      <HashRouter>
       <header>
         <Navbar/>
     </header>
@@ -51,7 +52,7 @@ function App() {
             </div>
         </footer>
     </main>
-    </Router>
+    </HashRouter>
     </div>
   );
 }
