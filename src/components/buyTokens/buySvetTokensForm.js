@@ -25,7 +25,7 @@ import { getContract, getContractList } from 'ethvtx/lib/contracts/helpers/gette
                 </div>
                   
                 <button className="payment-method" 
-                onClick={(e)=>{props.buySvetTokens(props.index2swap,props.etherAmount)}}>BUY TOKENS</button>
+                onClick={(e)=>{props.buySvetTokens(props.index2swap,props.etherAmount,props.currentAddress)}}>BUY TOKENS</button>
                 </div>
 
         </div>
@@ -46,7 +46,7 @@ const getSvetTokenPrice = (state) => {
     return svetTokenPrice;
 }
 const getIndex2swap = (state) => {
-  var fnIndex2swap = getContract(state, 'IndexSwap', '@indexswap')._contract.methods.buySvet4Eth;
+  var fnIndex2swap = getContract(state, 'IndexSwap', '@indexswap');
   return fnIndex2swap;
 }
 const mapStateToProps = (state) => {
@@ -54,7 +54,8 @@ const mapStateToProps = (state) => {
         paymentMethod: state.buyTokensReducer.buySvetTokenMethod,
         svetTokenPrice: getSvetTokenPrice(state),
         etherAmount: state.buyTokensReducer.etherAmount,
-        index2swap: getIndex2swap(state)
+        index2swap: getIndex2swap(state),
+        currentAddress: state.vtxconfig.coinbase
         
     }
 }
@@ -63,7 +64,7 @@ const mapStateToProps = (state) => {
 const mapStateToDispatch = dispatch => {
    return {
     buySvetTokenEtherAmount:(e) => dispatch(changeEtherForBuyAmount(e.target.value)),
-    buySvetTokens:(index2swap,etherAmount) => dispatch(etherToSvetTokens(index2swap,etherAmount))
+    buySvetTokens:(index2swap,etherAmount,currentAddress) => dispatch(etherToSvetTokens(index2swap,etherAmount,currentAddress))
    }
 }
 

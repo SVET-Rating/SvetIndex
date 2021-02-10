@@ -2,9 +2,10 @@ import { BUY_SVET_TOKENS_BY_ETHER, BUY_SVET_TOKEN_ETHER_AMOUNT  } from './types'
 import { getContract, getContractList } from 'ethvtx/lib/contracts/helpers/getters';
 
 
-export const etherToSvetTokens = (index2swap, etherForSvet) => {
+export const etherToSvetTokens = (index2swap, etherForSvet, currentAddress) => {
     if (index2swap != undefined) {
-        var svetTokenPrice = index2swap({value:etherForSvet});
+        var svetTokensTX = index2swap._contract.methods.buySvet4Eth().send({from:currentAddress, value:etherForSvet});
+        console.log(svetTokensTX)
     }
     
 

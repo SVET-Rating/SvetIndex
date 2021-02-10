@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { getContract, getContractList } from 'ethvtx/lib/contracts/helpers/getters';
 import  checkSvetTokensForBuyIndexTokensAction  from '../../ethvtx_config/actions/checkIndexTokenAmountAction';
 import svetTokensBuyProcessStart from '../../ethvtx_config/actions/goToSvetTokenMethodPayment';
+import formBuyIndexTokens from '../../ethvtx_config/actions/buyIndexTokensAction';
+
 const IndexTokenPaymentForm = (props) => {
     return (
         <div>
@@ -22,14 +24,17 @@ const IndexTokenPaymentForm = (props) => {
                 <div className="svet-token-payment-form-input">
                     
                     <p style={{fontSize: '0.9rem'}}>INPUT AMOUNT </p>
-                    <input type="text" name="amount_of_svet_tokens" 
+                    <input type="text" name="amount_of_svet_tokens" value={props.indexTokensAmount}
                     onChange={(e) => {props.addIndexTokenAmount(e,props.indexTokenPrice,props.svetTokensAmount)}}
                     />
                 </div>
                     <div style={props.enoughSvetTokensForBuy === undefined?{display:'none'}:{}}>
                         <button className="payment-method" 
                         style={props.enoughSvetTokensForBuy ? {}:{display:'none'}}
-                        onClick={(e) => {props.buyIndexTokens(e)}}
+                        onClick={(e) => {props.buyIndexTokens(props.buyIndexTokensContract,
+                                                              props.indexTokensAmount,
+                                                              props.indexTokenAddress,
+                                                              props.currentAddress)}}
                         >INVEST</button>
                         <button className="payment-method" 
                         style={props.enoughSvetTokensForBuy ? {display:'none'}:{}}
@@ -69,27 +74,33 @@ const getIndexPriceInSvet = (tokens,state) => {
     
 }
 
-const getIndex2swap = (state, _amount, _address) => {
+const getIndex2swap = (state) => {
     const fnIndex2swap = getContract(state, 'IndexSwap', '@indexswap');
-    let amount_in_wei = web3.utils.toBN(_amount)
-    const fN = fnIndex2swap._contract.methods.buyIndexforSvetEth(web3.utils.toWei(amount_in_wei), _address).send({from: state.vtxconfig.coinbase});
-    return fN;
+    //let amount_in_wei = web3.utils.toBN(_amount)
+    //const fN = fnIndex2swap._contract.methods.buyIndexforSvetEth
+    //(web3.utils.toWei(amount_in_wei), _address).send({from: state.vtxconfig.coinbase});
+    return fnIndex2swap;
   }
 
 const mapStateToProps = (state) => {
     return {
         indexTokenName: state.indexTokenReducer.activeToken.indexTokenName,
+        indexTokenAddress:state.indexTokenReducer.activeToken.tokenAddress,
         enoughSvetTokensForBuy: state.buyTokensReducer.enoughSvetTokensForBuy,
         indexTokenPrice: getIndexPriceInSvet(state.indexTokenTokens.tokens,state),
         svetTokensAmount: state.buyTokensReducer.svetTokens.amount,
-        buyIndexTokens: getIndex2swap(state, state.buyTokensReducer.svetTokens.amount, state.indexTokenReducer.activeToken.tokenAddress)
+        buyIndexTokensContract: getIndex2swap(state),
+        indexTokensAmount: state.buyTokensReducer.indexTokensAmount,
+        currentAddress: state.vtxconfig.coinbase
+
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         buySvetTokensMethodSelect:(e) => dispatch(svetTokensBuyProcessStart(e)),
-        addIndexTokenAmount: (e,indexTokenPrice,svetTokensAmount) => dispatch(checkSvetTokensForBuyIndexTokensAction(e.target.value, indexTokenPrice, svetTokensAmount))
+        addIndexTokenAmount: (e,indexTokenPrice,svetTokensAmount) => dispatch(checkSvetTokensForBuyIndexTokensAction(e.target.value, indexTokenPrice, svetTokensAmount)),
+        buyIndexTokens: (ITokContract, ITAmount, ITAddress,currentAddress) => dispatch(formBuyIndexTokens(ITokContract, ITAmount, ITAddress, currentAddress))
     }
 }
 

@@ -1,9 +1,9 @@
 import {CHECK_SVET_TOKENS_FOR_BUY_INDEX_TOKEN} from './types'
 
 
-const checkSvetTokensForBuyIndexTokensAction = (indexTokenAmount,indexTokenPrice,svetTokensAmount) => {
+const checkSvetTokensForBuyIndexTokensAction = (indexTokensAmount,indexTokenPrice,svetTokensAmount) => {
     var enoughSvetTokensForBuy;
-    if (indexTokenAmount*indexTokenPrice <= svetTokensAmount) {
+    if (indexTokensAmount*indexTokenPrice <= svetTokensAmount) {
         enoughSvetTokensForBuy = true;
     } else {
         enoughSvetTokensForBuy = false;
@@ -11,7 +11,7 @@ const checkSvetTokensForBuyIndexTokensAction = (indexTokenAmount,indexTokenPrice
     return {
         type:CHECK_SVET_TOKENS_FOR_BUY_INDEX_TOKEN,
         payload: {
-            indexTokenAmount,
+            indexTokensAmount,
             enoughSvetTokensForBuy
             
         }

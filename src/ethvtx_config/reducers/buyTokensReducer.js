@@ -18,7 +18,8 @@ const initialStateBuySvetTokens = {
     'buyTokenProcessState': SELECT_INDEX_TOKEN,
     'buySvetTokenMethod': ETHER,
     'enoughSvetTokensForBuy': undefined,
-    'etherAmount':0
+    'etherAmount':0,
+    'indexTokensAmount':0
 
 }
 
@@ -33,7 +34,7 @@ const buyTokensReducer = (state=initialStateBuySvetTokens, action) => {
         case SELECT_SVET_PAYMENT_METHOD:
             return {...state, buySvetTokenMethod: action.payload, buyTokenProcessState: BUY_SVET_PAYMENT_FORM}
         case CHECK_SVET_TOKENS_FOR_BUY_INDEX_TOKEN:
-            return {...state, 
+            return {...state, indexTokensAmount: action.payload.indexTokensAmount,
                 enoughSvetTokensForBuy:action.payload.enoughSvetTokensForBuy}
         case BUY_SVET_TOKEN_ETHER_AMOUNT:
             console.log('PAYLOAD:',action.payload.etherAmount)
