@@ -69,12 +69,20 @@ const getIndexPriceInSvet = (tokens,state) => {
     
 }
 
+const getIndex2swap = (state, _amount, _address) => {
+    const fnIndex2swap = getContract(state, 'IndexSwap', '@indexswap');
+
+    const fN = fnIndex2swap._contract.methods.buyIndexforSvetEth(web3.utils.toWei(_amount), _address).send({from: state.vtxconfig.coinbase});
+    return fN;
+  }
+
 const mapStateToProps = (state) => {
     return {
         indexTokenName: state.indexTokenReducer.activeToken.indexTokenName,
         enoughSvetTokensForBuy: state.buyTokensReducer.enoughSvetTokensForBuy,
         indexTokenPrice: getIndexPriceInSvet(state.indexTokenTokens.tokens,state),
-        svetTokensAmount: state.buyTokensReducer.svetTokens.amount
+        svetTokensAmount: state.buyTokensReducer.svetTokens.amount,
+        buyIndexTokens: getIndex2swap(state, state.buyTokensReducer.svetTokens.amount, state.indexTokenReducer.activeToken.tokenAddress)
     }
 }
 
