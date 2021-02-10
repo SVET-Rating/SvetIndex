@@ -2,6 +2,8 @@ pragma solidity =0.6.12;
 
 
 interface iIndex2Swap  {
+
+  function buySvet4Eth() payable external;
   /*  function fill (address _addrIndex, 
                         address _addrActive1, //DAI
                         address _addrActive2,  // token

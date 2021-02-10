@@ -46,7 +46,7 @@ const getSvetTokenPrice = (state) => {
     return svetTokenPrice;
 }
 const getIndex2swap = (state) => {
-  var fnIndex2swap = getContract(state, 'IndexSwap', '@indexswap').fn.buySvet4Eth;
+  var fnIndex2swap = getContract(state, 'IndexSwap', '@indexswap')._contract.methods.buySvet4Eth;
   return fnIndex2swap;
 }
 const mapStateToProps = (state) => {

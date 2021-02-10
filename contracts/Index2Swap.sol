@@ -1,5 +1,5 @@
 pragma solidity =0.6.12;
-//import "./interfaces/iIndex2Swap.sol";
+import "./interfaces/iIndex2Swap.sol";
 import "./interfaces/iIndextoken.sol";
 import "./interfaces/iOraclePrice.sol";
 import "./interfaces/iLstorage.sol";
@@ -14,7 +14,7 @@ import "./libraries/SafeMath.sol";
 import "./libraries/UniswapV2OracleLibrary.sol";
 
 
-contract Index2Swap  {
+contract Index2Swap is iIndex2Swap {
     using SafeMathUniswap for uint;
 
     /**
@@ -186,7 +186,7 @@ contract Index2Swap  {
     }
 
 
-    function buySvet4Eth () public payable {
+    function buySvet4Eth () public payable override {
         uint priceEth =  oraclePrice.getLastPrice(uniswapV2Router02.WETH());
         require(priceEth > 0, "No price Eth");
         uint priceSvet =  oraclePrice.getLastPrice(address(svetT));

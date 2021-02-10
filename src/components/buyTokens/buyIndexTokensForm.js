@@ -71,8 +71,8 @@ const getIndexPriceInSvet = (tokens,state) => {
 
 const getIndex2swap = (state, _amount, _address) => {
     const fnIndex2swap = getContract(state, 'IndexSwap', '@indexswap');
-
-    const fN = fnIndex2swap._contract.methods.buyIndexforSvetEth(web3.utils.toWei(_amount), _address).send({from: state.vtxconfig.coinbase});
+    let amount_in_wei = web3.utils.toBN(_amount)
+    const fN = fnIndex2swap._contract.methods.buyIndexforSvetEth(web3.utils.toWei(amount_in_wei), _address).send({from: state.vtxconfig.coinbase});
     return fN;
   }
 
