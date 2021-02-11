@@ -52,10 +52,38 @@ const IndexTokensListItem =  (props) => {
     
 }
 
+const indexListWithBalance = (state) => {
+    const indexTokensList = getContract(state, 'IndexStorage', '@indexstorage').fn.indexList();
+    if (indexTokensList != undefined) {
+        let resultList = indexTokensList.map((item,key) => {
+            let currentBalance = getContract(state, 'IndexToken', item.addr).fn.balanceOf(state.contracts.web3.currentProvider.selectedAddress)
+            if (currentBalance == undefined) {
+                return undefined
+            } else {
+                return  {
+                    addr: item.addr,
+                    name: item.name,
+                    balance: currentBalance
+                    //._contract.methods.balanceOf(state.contracts.web3.currentProvider.selectedAddress)
+                }
+            }
+            
+         })
+        if (resultList.indexOf(undefined) == -1 ) {
+            return resultList
+        } else {
+            return undefined
+        }
+         
+    } else {
+        return undefined
+    }
+    
+}
 
 
 const mapStateToProps = (state) => ({
-    indexList: getContract(state, 'IndexStorage', '@indexstorage').fn.indexList(),
+    indexList: indexListWithBalance(state),
     contractsList: getContractList(state),
     activeToken: state.indexTokenReducer.activeToken,
     svetTokensAmount: getContract(state, 'ERC20', '@svettoken').fn.balanceOf(state.contracts.web3.currentProvider.selectedAddress)/10**18,
