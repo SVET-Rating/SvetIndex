@@ -57,7 +57,7 @@ const getIndexPriceInSvet = (tokens,state) => {
         if (tokenPriceCurrent === undefined) {
             return tokenPriceCurrent;
         }
-        tokenPrice = tokenPriceCurrent/10**item[2]*item[1]/10**item[2]
+        tokenPrice = tokenPriceCurrent/10**item[2]*item[1]/10000
         ///10^item[4]
         return tokenPrice
     });

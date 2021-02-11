@@ -12,43 +12,55 @@ const Lstorage = artifacts.require('Lstorage.sol');
 const OraclePrice = artifacts.require('OraclePrice.sol');
 const OracleTotSupply = artifacts.require('OracleTotSupply.sol');
 const OracleCircAmount = artifacts.require('OracleCircAmount.sol');
-const Faucet = artifacts.require('Faucet.sol');
+//const Faucet = artifacts.require('Faucet.sol');
 //const UniswapV2Library = artifacts.require('./libraries/UniswapV2Library.sol');
 const TransferHelper = artifacts.require('./libraries/TransferHelper.sol');
 
 module.exports = async function(deployer,_network, addresses) {
+  console.log ("_network.network_id:", _network);
     const [admin,user1] = addresses;
 //test of that is not tmux problem at all 
+var weth, factory, router ;
+  if (_network == "ropsten") {
+     weth = await WETH.at('0xc778417e063141139fce010982780140aa0cd5ab');
+     factory = await Factory.at ('0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f');
+     router = await Router.at('0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D');
+
+  } else {
+
     await deployer.deploy(WETH);
-    const weth = await WETH.deployed();
-   // const weth = await WETH.at('0xc778417e063141139fce010982780140aa0cd5ab');
+     weth = await WETH.deployed();
+    await deployer.deploy(Factory, user1);
+     factory = await Factory.deployed();
+
+    //  await deployer.deploy(UniswapV2Library);
+    await deployer.deploy(TransferHelper);
+   // deployer.link (UniswapV2Library, Router);
+    deployer.link (TransferHelper, Router);
+    await deployer.deploy(Router, factory.address, weth.address);
+    console.log ("deploy router");
+     router = await Router.deployed();
+  }
+  console.log("factory.address:", factory.address, "weth.address:", weth.address, "weth.address:", "router.address:", router.address );
+    
+   // 
     const tokenA = await MockERC20.new('TokenA','TKA',web3.utils.toWei('100000000000','ether'));
     const tokenB = await MockERC20.new('TokenB', 'TKB', web3.utils.toWei('10000000000','ether'));
     const tokenC = await MockERC20.new('TokenC','TKC',web3.utils.toWei('100000000000','ether'));
     const SvetToken = await MockERC20.new('SveT','SVT',web3.utils.toWei('21000000','ether'));;
-    console.log ("tokenA, tokenB, tokenC: ", tokenA.address, tokenB.address, tokenC.address);
+    console.log ("tokenA, tokenB, tokenC, SveT: ", tokenA.address, tokenB.address, tokenC.address, SvetToken.address);
 
 
-    await deployer.deploy(Factory, user1);
-    const factory = await Factory.deployed();
-    //const factory = await Factory.at ('0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f');
-    const piarTokenA = await factory.createPair(weth.address, tokenA.address);
-    await factory.createPair(weth.address, tokenB.address);
-    await factory.createPair(weth.address, tokenC.address);
+    
+    const pairTokenA = await factory.createPair(weth.address, tokenA.address);
+    const pairTokenB  = await factory.createPair(weth.address, tokenB.address);
+    const pairTokenC = await factory.createPair(weth.address, tokenC.address);
+   console.log('piar of tokenA:',pairTokenA.tx, 'piar of tokenB:',pairTokenB.tx, 'piar of tokenC:',pairTokenC.tx); 
 
+  
 
-  //  await deployer.deploy(UniswapV2Library);
-    await deployer.deploy(TransferHelper);
-   // deployer.link (UniswapV2Library, Router);
-    deployer.link (TransferHelper, Router);
-    console.log("factory.address:", factory.address, "weth.address:", weth.address);
-    await deployer.deploy(Router, factory.address, weth.address);
-    console.log ("deploy router");
-    const router = await Router.deployed();
-    //const router = await Router.at('0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D');
-
-    await deployer.deploy(Faucet);
-    const faucet = await Faucet.deployed();
+    //await deployer.deploy(Faucet);
+    //const faucet = await Faucet.deployed();
     await deployer.deploy(OraclePrice);
     const oracle_price = await OraclePrice.deployed();
 
@@ -155,7 +167,7 @@ module.exports = async function(deployer,_network, addresses) {
 */
     console.log('tokenA',tokenA.address);
     console.log('add2Uniswap');
-    console.log('Faucet address:',faucet.address);
+    //console.log('Faucet address:',faucet.address);
     console.log('Router address:',router.address);
     console.log('OraclePrice address:',oracle_price.address);
     console.log('WETH address:',weth.address);
@@ -180,47 +192,154 @@ module.exports = async function(deployer,_network, addresses) {
     );
     */
     console.log('Approve tokens for UniswapV2Router02');
-    await tokenA.approve(router.address, web3.utils.toWei('100000','ether'));
-    await tokenB.approve(router.address, web3.utils.toWei('100000','ether'));
-    await tokenC.approve(router.address, web3.utils.toWei('100000','ether'));
+    var tx
+    var tx = await tokenA.approve(router.address, web3.utils.toWei('100000','ether'));
+    console.log ("tokenA.approve tx.tx: ", tx.tx);
+    tx =  await tokenB.approve(router.address, web3.utils.toWei('100000','ether'));
+    console.log ("tokenb.approve tx.tx: ", tx.tx);
+    tx =  await tokenC.approve(router.address, web3.utils.toWei('100000','ether'));
+    console.log ("tokenc.approve tx.tx: ", tx.tx);
     console.log('Add liquidityETH');
-    //console.log('piar of tokenA',piarTokenA.logs); 
+    
 
     //console.log('min ether:',web3.utils.toWei('1','ether'));
     
-    await router.addLiquidityETH(tokenA.address,
-                                 web3.utils.toWei("14219", "ether"),
-                                 web3.utils.toWei("14219", "ether"),
-                                 web3.utils.toWei("1", "ether"),
+    tx = await router.addLiquidityETH(tokenA.address,
+                                 web3.utils.toWei("1421", "ether"),
+                                 web3.utils.toWei("1421", "ether"),
+                                 web3.utils.toWei("0.1", "ether"),
                                  admin,
                                  Math.round(Date.now()/1000)+100*60,
-                            {from:admin, value: web3.utils.toWei('1','ether')});
-    await router.addLiquidityETH(tokenB.address,
-                                web3.utils.toWei("1061", "ether"),
-                                web3.utils.toWei("1061", "ether"),
-                                web3.utils.toWei("1", "ether"),
+                            {from:admin, value: web3.utils.toWei('0.1','ether')});
+  console.log ("addLiquidityETH tokenA. tx.tx: ", tx.tx);
+  tx =  await router.addLiquidityETH(tokenB.address,
+                                web3.utils.toWei("106", "ether"),
+                                web3.utils.toWei("106", "ether"),
+                                web3.utils.toWei("0.1", "ether"),
                                 admin,
                                 Math.round(Date.now()/1000)+100*60,
-                            {from:admin, value: web3.utils.toWei('1','ether')});
-    await router.addLiquidityETH(tokenC.address,
-                                web3.utils.toWei("4148", "ether"),
-                                web3.utils.toWei("4148", "ether"),
-                                web3.utils.toWei("1", "ether"),
+                            {from:admin, value: web3.utils.toWei('0.1','ether')});
+    console.log ("addLiquidityETHtokenB tx.tx: ", tx.tx);
+  tx =  await router.addLiquidityETH(tokenC.address,
+                                web3.utils.toWei("414", "ether"),
+                                web3.utils.toWei("414", "ether"),
+                                web3.utils.toWei("0.1", "ether"),
                                 admin,
                                 Math.round(Date.now()/1000)+100*60,
-                            {from:admin, value: web3.utils.toWei('1','ether')});
+                            {from:admin, value: web3.utils.toWei('0.1','ether')});
+  console.log ("addLiquidityETH tokenC tx.tx: ", tx.tx);                        
 
-   await index2swap.buySvet4Eth({from:admin, value: web3.utils.toWei('1','ether')});
-   await SvetToken.approve(index2swap.address, web3.utils.toWei('2000','ether'), {from:admin});
-   const buyIndexforSvetEth = await index2swap.buyIndexforSvetEth(web3.utils.toWei('0.1','ether'),index_token1.address , {from:admin});
-   console.log("buyIndexforSvetEth", buyIndexforSvetEth.tx);
-   //sell
-   await index_token1.approve(index2swap.address, web3.utils.toWei('0.1','ether'), {from:admin});
-   const sellIndexforSvet=await index2swap.sellIndexforSvet(web3.utils.toWei('0.1','ether'),index_token1.address, {from:admin});
-   console.log("sellIndexforSvet", sellIndexforSvet.tx);
+if (_network != "ropsten") {
+    await index2swap.buySvet4Eth({from:admin, value: web3.utils.toWei('0.01','ether')});
+    await SvetToken.approve(index2swap.address, web3.utils.toWei('200','ether'), {from:admin});
+    const buyIndexforSvetEth = await index2swap.buyIndexforSvetEth(web3.utils.toWei('0.01','ether'),index_token1.address , {from:admin});
+    console.log("buyIndexforSvetEth", buyIndexforSvetEth.tx);
+    //sell
+    await index_token1.approve(index2swap.address, web3.utils.toWei('0.01','ether'), {from:admin});
+    const sellIndexforSvet=await index2swap.sellIndexforSvet(web3.utils.toWei('0.01','ether'),index_token1.address, {from:admin});
+    console.log("sellIndexforSvet", sellIndexforSvet.tx);
 
-   await index2swap.withdrEth4Svet(web3.utils.toWei('0.1','ether'), {from:admin});
-    
+    await index2swap.withdrEth4Svet(web3.utils.toWei('0.005','ether'), {from:admin});
+  }
+   if (_network == "ropsten") { 
+    var embark4Contracts ={
+      ropsten: {
+          // order of connections the dapp should connect to
+          dappConnection: [
+        //    "$EMBARK",
+        //    "$WEB3",  // uses pre existing web3 object if available (e.g in Mist)
+       //     "ws://localhost:8546",
+            "https://ropsten.infura.io/v3/753a98a2eb6c4d64918829f47d069440"
+          ],
+      
+          // Automatically call `ethereum.enable` if true.
+          // If false, the following code must run before sending any transaction: `await EmbarkJS.enableEthereum();`
+          // Default value is true.
+          // dappAutoEnable: true,
+      
+          gas: "auto",
+      
+          // Strategy for the deployment of the contracts:
+          // - implicit will try to deploy all the contracts located inside the contracts directory
+          //            or the directory configured for the location of the contracts. This is default one
+          //            when not specified
+          // - explicit will only attempt to deploy the contracts that are explicitly specified inside the
+          //            contracts section.
+          strategy: 'explicit',
+      
+          // minimalContractSize, when set to true, tells Embark to generate contract files without the heavy bytecodes
+          // Using filteredFields lets you customize which field you want to filter out of the contract file (requires minimalContractSize: true)
+           //minimalContractSize: true,
+          // filteredFields: [],
+      
+          deploy: {
+            Experts: {
+              address: experts.address,
+              abiDefinition: experts.abi
+            },
+      
+            Exchange: {
+              address: exchanges.address,
+              abiDefinition: exchanges.abi
+            },
+         /*
+            ExpertsRewards: {
+              fromIndex: 0,
+              args: [],
+              onDeploy: async ({contracts, web3, logger}) => {
+                await contracts.ExpertsRewards.methods.setExpertsContr(contracts.Experts.options.address).send({from: web3.eth.defaultAccount});
+      
+              }
+            },
+      */
+      
+            OraclePrice: {
+              address: oracle_price.address,
+              abiDefinition: oracle_price.abi
+              
+              },
+            OracleCircAmount: {
+              address: oracle_circ_amount.address,
+              abiDefinition: oracle_circ_amount.abi
+                
+                },
+            OracleTotSupply: {
+              address: oracle_tot_supply.address,
+              abiDefinition: oracle_tot_supply.abi
+                  
+                  },
+      
+            Index2Swap: {
+              address: index2swap.address,
+              abiDefinition: index2swap.abi 
+                  
+                  },
+            IndexFactory: {
+              address: index_factory.address,
+              abiDefinition: index_factory.abi 
+                  },
+            Lstorage: {
+              address: lstorage.address,
+              abiDefinition: lstorage.abi 
+                    },
+      
+            IndexStorage: {
+              address: index_storage.address,
+              abiDefinition: index_storage.abi  
+          },
+
+            SVTtst: {
+              address: SvetToken.address,
+              abiDefinition: SvetToken.abi 
+            }                
+      
+          }
+          
+        }
+      
+  };
+   }
+      else {
     var embark4Contracts ={
         cloudflare: {
             // order of connections the dapp should connect to
@@ -317,6 +436,7 @@ module.exports = async function(deployer,_network, addresses) {
           }
         
     };
+  }
 
     
 
