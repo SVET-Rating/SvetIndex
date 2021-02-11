@@ -13,11 +13,11 @@ const TokensInIndexTokenListItem = (props) => {
         var getTokensByActiveIndexToken = props.indexList.map((item,key) => {
             return (
             <li className="right-list-item" style={{showBox:'none'}}>
-            <p>{item.name} <br />
-            {item.addrActive}</p> 
+            <div><div><p>{item.name}</p>
             <p>{item.symbol}</p>
-            <p>{item.amount}</p>
-            <i className="fa fa-question-circle"></i>                  
+            <p>{item.amount/100}</p>
+            <i className="fa fa-question-circle"></i></div>
+            <div>{item.addrActive}</div></div>               
             </li>
             )
         });
