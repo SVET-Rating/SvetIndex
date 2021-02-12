@@ -15,7 +15,7 @@ const TokensInIndexTokenListItem = (props) => {
             <li className="right-list-item" style={{showBox:'none'}}>
             <div><div><p>{item.name}</p>
             <p>{item.symbol}</p>
-            <p>{item.amount/100}</p>
+            <p>{item.amount/100}%</p>
             <i className="fa fa-question-circle"></i></div>
             <div>{item.addrActive}</div></div>               
             </li>

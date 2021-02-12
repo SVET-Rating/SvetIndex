@@ -26,4 +26,3 @@ yarn-error.log*
 .embark
 embarkArtifacts
 src/contracts
-embark4Contracts.json
