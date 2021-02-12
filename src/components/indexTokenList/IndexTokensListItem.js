@@ -35,12 +35,14 @@ const IndexTokensListItem =  (props) => {
         </p>
         <p style={{ minWidth: '1rem' }}>
             {/* VERY GOOD INDEX TOKEN */}
-            {item.balance}
+            {item.balance/1000000000000000000}
         </p>
     
     
         <button className="invest" onClick={() => props.startBuyToken(props.svetTokensAmount,props.svetTokenAddress)
             }>INVEST</button>
+        <br/>
+        
     
      </li>)
     });
