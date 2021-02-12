@@ -215,21 +215,17 @@ contract Index2Swap is iIndex2Swap {
         uint  totPriceActSv;
         for (uint8 i = 0; i<index.getActivesLen(); i++) {
             (address addrActive, uint256 amount) = index.getActivesItem(i);
-  
-            totPriceActSv += amount*_amount * 
-                        oraclePrice.getLastPrice(uniswapV2Router02.WETH()) /
-                        oraclePrice.getLastPrice(address(svetT)) / 10000; //
-    
                         
             uint[] memory amountRet = fillETH (
                 _indexT, 
                 addrActive,  //
-                amount * _amount / 10000
+                amount * _amount * oraclePrice.getLastPrice(address(svetT)) / //usd
+                 oraclePrice.getLastPrice(uniswapV2Router02.WETH()) / 10000
             );
             lstorage.add (msg.sender, _indexT, addrActive, amountRet[1]);
 
         }
-        svetT.transferFrom(msg.sender, address(this),totPriceActSv);
+        svetT.transferFrom(msg.sender, address(this),_amount);
         index.mint(msg.sender, _amount);
 
     }
