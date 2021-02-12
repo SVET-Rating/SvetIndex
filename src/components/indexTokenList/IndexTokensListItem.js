@@ -16,10 +16,15 @@ const IndexTokensListItem =  (props) => {
         const indexJSXList = props.indexList.map((item, key) => {
 
             var styleSelect = {};
+            var investStyle = {};
 
             if (item.addr !== props.activeToken.tokenAddress) {
                styleSelect = {boxShadow:'none'}
+               investStyle = {display:'none'}
             }
+
+
+           
             
             return (<li className="left-list-item" id={item.addr} style={styleSelect}>
                         
@@ -38,9 +43,9 @@ const IndexTokensListItem =  (props) => {
             {item.balance/1000000000000000000}
         </p>
     
-    
+        
         <button className="invest" onClick={() => props.startBuyToken(props.svetTokensAmount,props.svetTokenAddress)
-            }>INVEST</button>
+            } style={investStyle}>INVEST</button>
         <br/>
         
     
