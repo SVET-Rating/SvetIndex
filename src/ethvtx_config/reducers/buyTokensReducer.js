@@ -5,6 +5,7 @@ import { CHECK_SVET_TOKENS,
     START_INVEST,
     START_TO_BUY_SVET_TOKENS, 
     BUY_SVET_TOKEN_ETHER_AMOUNT,
+    BUY_INDEX_TOKENS,
     BUY_SVET_TOKENS_BY_ETHER} from '../actions/types';
 import {SELECT_INDEX_TOKEN, 
         BUY_SVET_PAYMENT_METHOD, 
@@ -40,6 +41,10 @@ const buyTokensReducer = (state=initialStateBuySvetTokens, action) => {
             console.log('PAYLOAD:',action.payload.etherAmount)
             return {...state,
                    etherAmount:action.payload.etherAmount}
+        case BUY_INDEX_TOKENS:
+            return {
+                ...state, buyTokenProcessState:SELECT_INDEX_TOKEN
+            }
             
         default:
             return state;
