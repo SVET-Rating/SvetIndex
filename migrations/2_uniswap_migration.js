@@ -236,10 +236,10 @@ if (_network != "ropsten") {
     console.log("buyIndexforSvetEth", buyIndexforSvetEth.tx);
     //sell
     await index_token1.approve(index2swap.address, web3.utils.toWei('0.01','ether'), {from:admin});
-    const sellIndexforSvet=await index2swap.sellIndexforSvet(web3.utils.toWei('0.01','ether'),index_token1.address, {from:admin});
+    const sellIndexforSvet=await index2swap.sellIndexforSvet(web3.utils.toWei('0.005','ether'),index_token1.address, {from:admin});
     console.log("sellIndexforSvet", sellIndexforSvet.tx);
 
-    await index2swap.withdrEth4Svet(web3.utils.toWei('0.005','ether'), {from:admin});
+    await index2swap.withdrEth4Svet(web3.utils.toWei('0.004','ether'), {from:admin});
   }
    if (_network == "ropsten") { 
     var embark4Contracts ={
