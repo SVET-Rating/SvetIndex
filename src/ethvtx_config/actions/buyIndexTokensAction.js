@@ -4,7 +4,7 @@ const formBuyIndexTokens = (ITokContract, ITAmount, ITAddress,currentAddress) =>
     console.log(ITokContract)
     let amount_in_wei = web3.utils.toBN(ITAmount);
     if (ITokContract != undefined && ITAmount != 0) {
-        const IndexToken = ITokContract._contract.methods.buyIndexforSvetEth(web3.utils.toWei(amount_in_wei), ITAddress)
+        const IndexToken = ITokContract._contract.methods.buyIndexforSvetEth(amount_in_wei, ITAddress)
                            .send({from: currentAddress});
     }
     
