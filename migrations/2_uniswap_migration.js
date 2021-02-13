@@ -44,9 +44,9 @@ var weth, factory, router ;
   console.log("factory.address:", factory.address, "weth.address:", weth.address, "weth.address:", "router.address:", router.address );
     
    // 
-    const tokenA = await MockERC20.new('TokenA','TKA',web3.utils.toWei('100000000000','ether'));
-    const tokenB = await MockERC20.new('TokenB', 'TKB', web3.utils.toWei('10000000000','ether'));
-    const tokenC = await MockERC20.new('TokenC','TKC',web3.utils.toWei('100000000000','ether'));
+    const tokenA = await MockERC20.new('Bytom','BTM',web3.utils.toWei('100000000000','ether'));
+    const tokenB = await MockERC20.new('WaykiChain', 'WIC', web3.utils.toWei('10000000000','ether'));
+    const tokenC = await MockERC20.new('Kyber','KNC',web3.utils.toWei('100000000000','ether'));
     const SvetToken = await MockERC20.new('SveT','SVT',web3.utils.toWei('21000000','ether'));;
     console.log ("tokenA, tokenB, tokenC, SveT: ", tokenA.address, tokenB.address, tokenC.address, SvetToken.address);
 
@@ -88,8 +88,8 @@ var weth, factory, router ;
     await deployer.deploy(IndexStorage);
     const index_storage = await IndexStorage.deployed();
 
-    const index_token1 = await IndexToken.new('Svet index 1', 'SVI');
-    const index_token2 = await IndexToken.new('Svet index 2', 'SVI');
+    const index_token1 = await IndexToken.new('Svet index 1', 'SVI1');
+    const index_token2 = await IndexToken.new('Svet index 2', 'SVI2');
 
     await deployer.deploy(Lstorage);
     const lstorage = await Lstorage.deployed(); 
