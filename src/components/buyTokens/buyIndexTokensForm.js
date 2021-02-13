@@ -34,7 +34,9 @@ const IndexTokenPaymentForm = (props) => {
                         onClick={(e) => {props.buyIndexTokens(props.buyIndexTokensContract,
                                                               props.indexTokensAmount,
                                                               props.indexTokenAddress,
-                                                              props.currentAddress)}}
+                                                              props.currentAddress,
+                                                              props.svetToken,
+                                                              )}}
                         >INVEST</button>
                         <button className="payment-method" 
                         style={props.enoughSvetTokensForBuy ? {display:'none'}:{}}
@@ -91,7 +93,8 @@ const mapStateToProps = (state) => {
         svetTokensAmount: state.buyTokensReducer.svetTokens.amount,
         buyIndexTokensContract: getIndex2swap(state),
         indexTokensAmount: state.buyTokensReducer.indexTokensAmount,
-        currentAddress: state.vtxconfig.coinbase
+        currentAddress: state.vtxconfig.coinbase,
+        svetToken:getContract(state, 'ERC20', '@svettoken')
 
     }
 }
@@ -100,7 +103,7 @@ const mapDispatchToProps = dispatch => {
     return {
         buySvetTokensMethodSelect:(e) => dispatch(svetTokensBuyProcessStart(e)),
         addIndexTokenAmount: (e,indexTokenPrice,svetTokensAmount) => dispatch(checkSvetTokensForBuyIndexTokensAction(e.target.value, indexTokenPrice, svetTokensAmount)),
-        buyIndexTokens: (ITokContract, ITAmount, ITAddress,currentAddress) => dispatch(formBuyIndexTokens(ITokContract, ITAmount, ITAddress, currentAddress))
+        buyIndexTokens: (ITokContract, ITAmount, ITAddress,currentAddress, svetToken) => dispatch(formBuyIndexTokens(ITokContract, ITAmount, ITAddress, currentAddress, svetToken))
     }
 }
 
