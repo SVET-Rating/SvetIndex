@@ -231,7 +231,7 @@ var weth, factory, router ;
 
 if (_network != "ropsten") {
     await index2swap.buySvet4Eth({from:admin, value: web3.utils.toWei('0.01','ether')});
-    await SvetToken.approve(index2swap.address, web3.utils.toWei('200','ether'), {from:admin});
+    await SvetToken.approve(index2swap.address, web3.utils.toWei('0.02','ether'), {from:admin});
     const buyIndexforSvetEth = await index2swap.buyIndexforSvetEth(web3.utils.toWei('0.01','ether'),index_token1.address , {from:admin});
     console.log("buyIndexforSvetEth", buyIndexforSvetEth.tx);
     //sell
