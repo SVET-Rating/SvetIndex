@@ -3,7 +3,7 @@ import { getContract, getContractList } from 'ethvtx/lib/contracts/helpers/gette
 
 
 const indexTokenInitialState = {
-    'activeToken': {tokenAddress:'',indexTokenName:''},
+    'activeToken': {tokenAddress:'',indexTokenName:'',indexTokenBalance:0},
     'indexTokensList': []
 }
 
