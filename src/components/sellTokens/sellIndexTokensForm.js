@@ -28,7 +28,8 @@ const sellIndexTokens = (props) => {
                         onClick={(e) => {props.sellIndexTokenAction(props.sellIndexTokensContract,
                                                               props.indexTokensAmountForSell,
                                                               props.indexTokenAddress,
-                                                              props.currentAddress)}}
+                                                              props.currentAddress,
+                                                              props.indexTokenContract)}}
                         >SELL</button>
                        
                 </div>
@@ -53,7 +54,8 @@ const mapStateToProps = (state) => {
         indexTokenBalance: state.indexTokenReducer.activeToken.indexTokenBalance,
         sellIndexTokensContract: getIndex2swap(state),
         currentAddress: state.vtxconfig.coinbase,
-        indexTokensAmountForSell: state.sellIndexTokenReducer.indexTokensAmountForSell
+        indexTokensAmountForSell: state.sellIndexTokenReducer.indexTokensAmountForSell,
+        indexTokenContract: getContract(state, 'IndexToken', state.indexTokenReducer.activeToken.tokenAddress)
 
     }
 }
@@ -63,10 +65,10 @@ const mapDispatchToProps = dispatch => {
         sellIndexTokenAction: (sellIndexTokensContract,
                                indexTokensAmountForSell,
                                indexTokenAddress,
-                                currentAddress) => dispatch(sellIndexTokenAction(sellIndexTokensContract,
+                                currentAddress,indexTokenContract) => dispatch(sellIndexTokenAction(sellIndexTokensContract,
                                     indexTokensAmountForSell,
                                     indexTokenAddress,
-                                     currentAddress)),
+                                     currentAddress,indexTokenContract)),
                                      sellIndexTokenAmount: (e) => dispatch(sellIndexTokenAmount(e.target.value))
     }
 }

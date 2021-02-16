@@ -52,7 +52,7 @@ const IndexTokensListItem =  (props) => {
             } style={investStyle}>INVEST</button>
         <br/>
 
-        <button className="invest" onClick={() => props.startSellToken()} >Sell</button>
+        <button className="invest" onClick={() => props.startSellToken()} style={investStyle}>Sell</button>
         
     
      </li>)
