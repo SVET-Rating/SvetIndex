@@ -5,7 +5,7 @@ export default function IndexTokensList() {
         <div>
             <div className="left-list-header">
                     <p>
-                        AVAILABLE INDEX TOKENS (PORTFELS)
+                        AVAILABLE INDEX TOKENS (PORTFOLIOS)
                     </p>
                 </div>
                 <ul className="left-list-items">
