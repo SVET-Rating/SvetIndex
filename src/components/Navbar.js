@@ -12,12 +12,14 @@ export default function Navbar() {
         
             <div>
                 <nav>
-                    <div><Link to="/">HOME</Link></div>
-                    <div><Link to="/investments">INVESTMENTS</Link></div>
-                    <div><Link to="/dashboards">MY DASHBOARD</Link></div>
-                    <div><Link to="/oracules">ORACULES</Link></div>
-                    <div><Link to="/experts">EXPERTS</Link></div>
+                    <div><Link to="/investments">YOUR ACCOUNT</Link></div>
+                    <div><Link to="/dashboards">SVET INDEXES</Link></div>
+                    <div><Link to="/oracules">TOP PROJECTS</Link></div>
+                    <div><Link to="/experts">ANALYSIS</Link></div>
+                    <div><Link to="#">ON / OFF RAMP</Link></div>
                 </nav>
             </div>
     )
+    /**                    <div><Link to="/">HOME</Link></div>
+ */
 }

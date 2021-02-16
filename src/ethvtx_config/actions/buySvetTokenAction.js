@@ -4,7 +4,7 @@ import { getContract, getContractList } from 'ethvtx/lib/contracts/helpers/gette
 
 export const etherToSvetTokens = (index2swap, etherForSvet, currentAddress) => {
     if (index2swap != undefined) {
-        var svetTokensTX = index2swap._contract.methods.buySvet4Eth().send({from:currentAddress, value:etherForSvet});
+        var svetTokensTX = index2swap._contract.methods.buySvet4Eth().send({from:currentAddress, value: web3.utils.toWei(etherForSvet)});
         console.log(svetTokensTX)
     }
     

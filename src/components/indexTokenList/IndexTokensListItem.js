@@ -35,7 +35,10 @@ const IndexTokensListItem =  (props) => {
         <p onClick={(e) => {props.changeActiveElement(e,item.name,item.balance/1000000000000000000)}}>
             {/* VERY GOOD INDEX TOKEN */}
             {item.name}
+            <br />
+            {item.addr}
         </p>
+        
         <p>
             {item.price}
         </p>

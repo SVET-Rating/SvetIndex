@@ -239,7 +239,7 @@ contract Index2Swap is iIndex2Swap {
             (address addrActive, uint256 amount) = index.getActivesItem(i);
             amount = amount.mul(_amount) /10000;
             totPriceActSv += amount * 
-                        oraclePrice.getLastPrice(uniswapV2Router02.WETH()) /
+                        oraclePrice.getLastPrice(addrActive) /
                         oraclePrice.getLastPrice(address(svetT)); //
             uint[] memory amountRet = swapInd4Eth (
                 _indexT, 
