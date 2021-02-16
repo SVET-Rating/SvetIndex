@@ -5,6 +5,7 @@ import thunk from 'redux-thunk'
 import indexTokenReducer from './reducers/indexTokenReducer';
 import indexTokenTokens from './reducers/getTokenTokens';
 import buyTokensReducer from './reducers/buyTokensReducer';
+import sellIndexTokenReducer from './reducers/sellTokensReducer';
 
 export const createVtxStore = () => {
 
@@ -19,6 +20,7 @@ export const createVtxStore = () => {
     const additionReducers  = {
         indexTokenReducer,
         indexTokenTokens,
+        sellIndexTokenReducer,
         buyTokensReducer
     }
 
