@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Fragment } from 'react';
 import indexTokenSelect from '../../ethvtx_config/actions/indexTokenSelect';
 import startBuyIndexTokens from '../../ethvtx_config/actions/startToBuyIndexTokens';
+import startSellToken from '../../ethvtx_config/actions/startSellIndexTokens';
 
 //import { IndexContractLoader } from '../IndexContractLoader';
 import { getContract, getContractList } from 'ethvtx/lib/contracts/helpers/getters';
@@ -31,7 +32,7 @@ const IndexTokensListItem =  (props) => {
         <i className="fa fa-question-circle"></i>
     
     
-        <p onClick={(e) => {props.changeActiveElement(e,item.name)}}>
+        <p onClick={(e) => {props.changeActiveElement(e,item.name,item.balance/1000000000000000000)}}>
             {/* VERY GOOD INDEX TOKEN */}
             {item.name}
             <br />
@@ -50,6 +51,8 @@ const IndexTokensListItem =  (props) => {
         <button className="invest" onClick={() => props.startBuyToken(props.svetTokensAmount,props.svetTokenAddress)
             } style={investStyle}>INVEST</button>
         <br/>
+
+        <button className="invest" onClick={() => props.startSellToken()} >Sell</button>
         
     
      </li>)
@@ -146,8 +149,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => {
     return {
-    changeActiveElement: (e,indexTokenName) => dispatch(indexTokenSelect(e.target.parentElement.id,indexTokenName)),
-    startBuyToken: (svetTokensAmount,svetTokenAddress) => dispatch(startBuyIndexTokens(svetTokensAmount,svetTokenAddress))
+    changeActiveElement: (e,indexTokenName,indexTokenBalance) => dispatch(indexTokenSelect(e.target.parentElement.id,indexTokenName,indexTokenBalance)),
+    startBuyToken: (svetTokensAmount,svetTokenAddress) => dispatch(startBuyIndexTokens(svetTokensAmount,svetTokenAddress)),
+    startSellToken: () => dispatch(startSellToken())
   }}
 
 

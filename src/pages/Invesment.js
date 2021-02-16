@@ -6,14 +6,18 @@ import TokensInIndexTokenList from '../components/indexTokenTokens/TokensInIndex
 import SvetPaymentMethods from '../components/buyTokens/buySvetPaymentMethods';
 import SvetPaymentMethodsForm from '../components/buyTokens/buySvetTokensForm';
 import IndexTokenPaymentForm from '../components/buyTokens/buyIndexTokensForm';
+import SellIndexTokenForm from '../components/sellTokens/sellIndexTokensForm';
+
 import {SELECT_INDEX_TOKEN, 
     BUY_SVET_PAYMENT_METHOD, 
     BUY_SVET_PAYMENT_FORM,
     BUY_INDEX_TOKEN} from '../ethvtx_config/processStates/buyTokenProcessStates';
+    import { SELECT_INDEX_TOKEN_SELL, SELL_INDEX_TOKEN } from '../ethvtx_config/processStates/sellTokenProcessStates';
 
 
 const investmentPage = (props) => {
     var processStateComponent;
+    
     if (props.processState === SELECT_INDEX_TOKEN) {
         processStateComponent =  <IndexTokenList/>
         
@@ -29,6 +33,10 @@ const investmentPage = (props) => {
 
     if (props.processState === BUY_INDEX_TOKEN) {
         processStateComponent = <IndexTokenPaymentForm />
+    }
+
+    if (props.processStateSell == SELL_INDEX_TOKEN) {
+        processStateComponent = <SellIndexTokenForm />
     }
     return (
         <div>
@@ -48,7 +56,8 @@ const investmentPage = (props) => {
 }
 
 const mapStatToProps = (state) => ({
-    processState: state.buyTokensReducer.buyTokenProcessState
+    processState: state.buyTokensReducer.buyTokenProcessState,
+    processStateSell: state.sellIndexTokenReducer.sellTokenProcessState
 })
 
 export default connect(mapStatToProps,null)(investmentPage)
