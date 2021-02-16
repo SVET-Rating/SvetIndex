@@ -10,8 +10,8 @@ export const sellIndexTokenAction = (sellIndexTokensContract,
     let amount_in_wei = web3.utils.toWei(indexTokensAmountForSell);
     if (sellIndexTokensContract != undefined && indexTokensAmountForSell != 0) {
         async function sellIndex()  {
-         const approve_result = await indexTokenContract._contract.methods.approve( indexTokenAddress, amount_in_wei).send({from: currentAddress});
-         const allowance = await indexTokenContract._contract.methods.allowance( currentAddress, sellIndexTokensContract.address).send({from: currentAddress});
+         const approve_result = await indexTokenContract._contract.methods.approve( sellIndexTokensContract.address, amount_in_wei).send({from: currentAddress});
+         //const allowance = await indexTokenContract._contract.methods.allowance( currentAddress, sellIndexTokensContract.address).send({from: currentAddress});
          await sellIndexTokensContract._contract.methods.sellIndexforSvet(amount_in_wei, indexTokenAddress).send({from: currentAddress})
          
         }
