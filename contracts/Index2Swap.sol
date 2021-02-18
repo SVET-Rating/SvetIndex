@@ -156,7 +156,7 @@ contract Index2Swap is iIndex2Swap {
         // here wee need connection to Uniswap        
         //return liquidity  
      
-        (uint reserve1,uint reserve2,) = IUniswapV2Pair (
+        (uint reserve0,uint reserve1,) = IUniswapV2Pair (
                     IUniswapV2Factory (uniswapV2Router02.factory()
                 ).getPair(uniswapV2Router02.WETH(), addrActive)
             ).getReserves();
@@ -165,6 +165,7 @@ contract Index2Swap is iIndex2Swap {
         path[1] = uniswapV2Router02.WETH(); //eth
 
         amountRet = uniswapV2Router02.getAmountsOut(_amount, path);
+        require (reserve0 >=amountRet[0] && reserve1 >= amountRet[1], "No enought token amount in pair");
         IERC20(addrActive).approve(address(uniswapV2Router02), _amount);
         amountRet = uniswapV2Router02.swapExactTokensForETH(  _amount , amountRet[1]*discount / 100, path, address (this), block.timestamp + miningDelay);
 
