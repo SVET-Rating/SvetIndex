@@ -8,13 +8,16 @@ import { embark } from 'ethvtx/lib/utils';
 import {OraclePrice, OracleCircAmount,  OracleTotSupply,  Index2Swap, IndexFactory, Lstorage, IndexStorage, ERC20,  IndexToken, Experts, Exchange, SVTtst } from "../embarkArtifacts/contracts"
 
 export const setupWeb3 = async (store) => {
-
-    return new Promise((ok, ko) => {
+    try {
+      await EmbarkJs.enableEthereum ();
+  
+      return new Promise((ok, ko) => {
 
         EmbarkJs.onReady(async () => {
-
-            if (EmbarkJs.enableEthereum) {
-
+            
+          
+            if (EmbarkJs.enableEthereum ) {
+              
                 const web3_getter = () => {
 
                     const web3 = new Web3(EmbarkJs.Blockchain.Providers.web3.getCurrentProvider());
@@ -160,6 +163,11 @@ export const setupWeb3 = async (store) => {
             ok();
         });
 
-    })
+    });
 
-};
+    }  catch (e) {
+        const text = 'Something went wrong connecting to Ethereum. Please make sure you have a node running or are using Metamask or StatusIM and  connect to the Ethereum Ropsten network';
+        alert (text);
+    
+    };
+}
