@@ -7,7 +7,7 @@ contract Lstorage is iLstorage {
     using SafeMath  for uint;
     address owner;
     address swap;
-    mapping  (address => mapping  (address => mapping (address =>  uint))) liq; 
+    mapping  (address => mapping  (address => mapping (address =>  uint)))  liq; 
 
         constructor () public {
         owner = msg.sender;
@@ -38,6 +38,10 @@ contract Lstorage is iLstorage {
         require(liq [_addrOwn][ _addrIndex][_addrA] >= _needLiq  , "no liq on this index");
         liq [_addrOwn][ _addrIndex][_addrA] -= _needLiq;
 
+    }
+
+    function getBalance (address _addrOwn, address _addrIndex, address _addrA) external view returns (uint) {
+        return liq[_addrOwn][_addrIndex][_addrA];
     }
 
 }
