@@ -44,7 +44,7 @@ export const setupWeb3 = async (store) => {
 
             // Initialize the Store's contract manager
             VtxContract.init(store);
-
+            try {
             // Loading a spec si made easy with the embark.loadSpec helper
             loadContractSpec(store.dispatch, ...embark.loadSpec(Experts, 'Experts', true, true));
             loadContractSpec(store.dispatch, ...embark.loadSpec(Exchange, 'Exchange', true, true));
@@ -112,6 +112,7 @@ export const setupWeb3 = async (store) => {
                 permanent: true,
                 balance: true
             });
+            
             await IndexStorage.methods.indexList().call().then(_value => 
                 _value.map((item, key) => {
                   const curIndex =  EmbarkJs.Blockchain.Contract({
@@ -147,7 +148,10 @@ export const setupWeb3 = async (store) => {
                       
                   });
               }));
-             
+            }
+            catch {
+                alert ("Can't connect to smart contract. Check type of Ethereum  network you connected and reload dApp.")
+            }
             /* Loading a permanent account before starting the store will keep it even after resets
             web3.eth.getAccounts().then(e => {    
                 addAccount(store.dispatch, e[0], {
@@ -166,7 +170,7 @@ export const setupWeb3 = async (store) => {
     });
 
     }  catch (e) {
-        const text = 'Something went wrong connecting to Ethereum. Please make sure you have a node running or are using Metamask or StatusIM and  connect to the Ethereum Ropsten network';
+        const text = 'Something went wrong connecting to Ethereum. Please make sure you have a node running, installed ethereum wallet (like Metamask or StatusIM or same)  and  connect to the Ethereum network';
         alert (text);
     
     };
