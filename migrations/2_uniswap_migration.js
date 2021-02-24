@@ -1,7 +1,6 @@
 const Factory = artifacts.require('UniswapV2Factory.sol');
 const Router = artifacts.require('UniswapV2Router02.sol');
 const WETH = artifacts.require('WETH.sol');
-const MockERC20 = artifacts.require('MockERC20.sol');
 const Experts = artifacts.require('Experts.sol');
 const Exchange = artifacts.require('Exchange.sol');
 const Index2Swap = artifacts.require('Index2Swap.sol');
@@ -15,6 +14,9 @@ const OracleCircAmount = artifacts.require('OracleCircAmount.sol');
 //const Faucet = artifacts.require('Faucet.sol');
 //const UniswapV2Library = artifacts.require('./libraries/UniswapV2Library.sol');
 const TransferHelper = artifacts.require('./libraries/TransferHelper.sol');
+
+const tokens = require("../tokens.json");
+const fs = require('fs');
 
 module.exports = async function(deployer,_network, addresses) {
   console.log ("_network.network_id:", _network);
@@ -43,29 +45,14 @@ var weth, factory, router ;
   }
   console.log("factory.address:", factory.address, "weth.address:", weth.address, "weth.address:", "router.address:", router.address );
     
+  
+
    // 
-    const tokenA = await MockERC20.new('Bytom','BTM',web3.utils.toWei('100000000000','ether'));
-    const tokenB = await MockERC20.new('WaykiChain', 'WIC', web3.utils.toWei('10000000000','ether'));
-    const tokenC = await MockERC20.new('Kyber','KNC',web3.utils.toWei('100000000000','ether'));
-    const SvetToken = await MockERC20.new('SveT','SVT',web3.utils.toWei('21000000','ether'));
-    const wBTC = await MockERC20.new('WrappedBTC','wBTC',web3.utils.toWei('21000000','ether'));
-    const cDAI = await MockERC20.new('CDai','CDai',web3.utils.toWei('100000000000','ether'));
-    const cUSDC = await MockERC20.new('cUSDC','cUSDC',web3.utils.toWei('100000000000','ether'));
-
-    console.log ("tokenA, tokenB, tokenC, SveT: ", tokenA.address, tokenB.address, tokenC.address, SvetToken.address);
-
-    console.log ("wBTC, cDAIm cUSDC: ", wBTC.address,  cDAI.address, cUSDC.address);
-
-
     
-    const pairTokenA = await factory.createPair(weth.address, tokenA.address);
-    const pairTokenB  = await factory.createPair(weth.address, tokenB.address);
-    const pairTokenC = await factory.createPair(weth.address, tokenC.address);
-    const pairTokenD = await factory.createPair(weth.address, wBTC.address);
-    const pairTokenE = await factory.createPair(weth.address, cDAI.address);
-    const pairTokenF = await factory.createPair(weth.address, cUSDC.address);
 
-   console.log('piar of tokenA:',pairTokenA.tx, 'piar of tokenB:',pairTokenB.tx, 'piar of tokenC:',pairTokenC.tx, 'piar of tokenWBTC:',pairTokenD.tx, 'piar of cDAi:',pairTokenE.tx, 'piar of CUSDC:',pairTokenF.tx, ); 
+
+
+   //console.log('piar of tokenA:',pairTokenA.tx, 'piar of tokenB:',pairTokenB.tx, 'piar of tokenC:',pairTokenC.tx, 'piar of tokenWBTC:',pairTokenD.tx, 'piar of cDAi:',pairTokenE.tx, 'piar of CUSDC:',pairTokenF.tx, ); 
 
 
   
@@ -98,11 +85,7 @@ var weth, factory, router ;
 
     await deployer.deploy(IndexStorage);
     const index_storage = await IndexStorage.deployed();
-
-    const index_token1 = await IndexToken.new('Svet index 1', 'SVI1');
-    const index_token2 = await IndexToken.new('Svet index 2', 'SVI2');
-    const index_token3 = await IndexToken.new('Svet index BTC-stable', 'SVI3');
-    const index_token4 = await IndexToken.new('SVET Saving Index', 'SVI4');
+;
 
     await deployer.deploy(Lstorage);
     const lstorage = await Lstorage.deployed(); 
@@ -115,25 +98,7 @@ var weth, factory, router ;
     await oracle_tot_supply.setExpertsContr(experts.address);
     console.log('OracleCircAmount setExpertsContr');
     await oracle_circ_amount.setExpertsContr(experts.address);
-    const tAprice = "0.070325";
-    const tBprice = "0.241054";
-    const tCprice = "0.941986";
-    const tEthprice = "2000";
-    console.log('addPrice to OraclePrice - tokenA');
-    await oracle_price.addPrice(tokenA.address, web3.utils.toWei(tAprice, "ether"));
-    console.log('addPrice to OraclePrice - tokenB');
-    await oracle_price.addPrice(tokenB.address, web3.utils.toWei(tBprice, "ether"));
-    console.log('addPrice to OraclePrice - tokenC');
-    await oracle_price.addPrice(tokenC.address, web3.utils.toWei(tCprice, "ether"));
-    console.log('addPrice to OraclePrice - SvetToken');
-    await oracle_price.addPrice(SvetToken.address, web3.utils.toWei("0.5", "ether"));
-    console.log('addPrice to OraclePrice - WETH token');
-    await oracle_price.addPrice(weth.address, web3.utils.toWei(tEthprice, "ether"));
-    await oracle_price.addPrice(wBTC.address, web3.utils.toWei("40000", "ether"));
-    await oracle_price.addPrice(cDAI.address, web3.utils.toWei("1.01", "ether"));
-    await oracle_price.addPrice(cUSDC.address, web3.utils.toWei("0.99", "ether"));
-
-
+   
 /*    console.log('add amount to oracle_circ');
 
     await oracle_circ_amount.addamount(tokenA.address,  web3.utils.toBN(1374417194));
@@ -144,14 +109,12 @@ var weth, factory, router ;
     await oracle_tot_supply.addamount(tokenB.address,  web3.utils.toBN(210404983));
     await oracle_tot_supply.addamount(tokenC.address,  web3.utils.toBN(210451990));
     */
-    await exchanges.setBA(SvetToken.address);
     await exchanges.setPriceOracle(oracle_price.address);  
 
-    await SvetToken.transfer(index2swap.address, web3.utils.toWei("2000", "ether"));
   //  await SvetToken.transfer(admin, "10000000000000000000000");
     
     await index2swap.setSwap(router.address, 99, 30 ),
-    await index2swap.set(SvetToken.address, oracle_price.address, lstorage.address );
+   // await index2swap.set(SvetToken.address, oracle_price.address, lstorage.address );
     await index_factory.setPriceOracle(oracle_price.address);
     await index_factory.setAmountOracle(oracle_circ_amount.address);
     await index_factory.setIndexStorage(index_storage.address);
@@ -159,33 +122,7 @@ var weth, factory, router ;
     // Lstorage
     await lstorage.setswap(index2swap.address);
     await index_storage.setFactory(index_factory.address);
-    console.log('create index token1');
-    const trIndex1 = await index_factory.makeIndex(index_token1.address,
-              [tokenA.address,
-              tokenB.address,
-              tokenC.address], 
-              [ 2624,
-                3774,
-                3601] ); //in shares 1/10000
-    console.log(trIndex1.tx);              
-    console.log('create index token2');
-    const trIndex2 = await index_factory.makeIndex(index_token2.address,
-              [tokenA.address,
-              tokenC.address],
-              [4216, 5784 ]); //in shares 1/10000
-    console.log(trIndex2.tx);
-    const trIndex3 = await index_factory.makeIndex(index_token3.address,
-      [wBTC.address,
-      cDAI.address,
-      cUSDC.address,  ],
-      [5000, 2500, 2500 ]); //in shares 1/10000
-    console.log(trIndex3.tx);
 
-    const trIndex4 = await index_factory.makeIndex(index_token4.address,
-      [cDAI.address,
-        cUSDC.address],
-      [5000, 5000 ]); //in shares 1/10000
-    console.log(trIndex4.tx);
 
 /*
     await faucet.setToken(tokenA.address);
@@ -196,7 +133,7 @@ var weth, factory, router ;
     await tokenB.transfer(faucet.address, "1000000000000000000000000");
     await tokenC.transfer(faucet.address, "1000000000000000000000000");
 */
-    console.log('tokenA',tokenA.address);
+  //  console.log('tokenA',tokenA.address);
     console.log('add2Uniswap');
     //console.log('Faucet address:',faucet.address);
     console.log('Router address:',router.address);
@@ -222,89 +159,10 @@ var weth, factory, router ;
             {from: admin, value: 100000000000}
     );
     */
-    console.log('Approve tokens for UniswapV2Router02');
-    var tx
-    var tx = await tokenA.approve(router.address, web3.utils.toWei('100000','ether'));
-    console.log ("tokenA.approve tx.tx: ", tx.tx);
-    tx =  await tokenB.approve(router.address, web3.utils.toWei('100000','ether'));
-    console.log ("tokenb.approve tx.tx: ", tx.tx);
-    tx =  await tokenC.approve(router.address, web3.utils.toWei('100000','ether'));
-    console.log ("tokenc.approve tx.tx: ", tx.tx);
-    tx =  await wBTC.approve(router.address, web3.utils.toWei('100000','ether'));
-    console.log ("tokenc.approve tx.tx: ", tx.tx);
-    tx =  await cDAI.approve(router.address, web3.utils.toWei('100000','ether'));
-    console.log ("tokenc.approve tx.tx: ", tx.tx);
-    tx =  await cUSDC.approve(router.address, web3.utils.toWei('100000','ether'));
-    console.log ("tokenc.approve tx.tx: ", tx.tx);
-    console.log('Add liquidityETH');
-    
+   
 
-    //console.log('min ether:',web3.utils.toWei('1','ether'));
-    
-    tx = await router.addLiquidityETH(tokenA.address,
-                                 web3.utils.toWei("1500", "ether"),
-                                 web3.utils.toWei("1500", "ether"),
-                                 web3.utils.toWei("0.1", "ether"),
-                                 admin,
-                                 Math.round(Date.now()/1000)+100*60,
-                            {from:admin, value: web3.utils.toWei('0.1','ether')});
-  console.log ("addLiquidityETH tokenA. tx.tx: ", tx.tx);
-  tx =  await router.addLiquidityETH(tokenB.address,
-                                web3.utils.toWei("100", "ether"),
-                                web3.utils.toWei("100", "ether"),
-                                web3.utils.toWei("0.1", "ether"),
-                                admin,
-                                Math.round(Date.now()/1000)+100*60,
-                            {from:admin, value: web3.utils.toWei('0.1','ether')});
-    console.log ("addLiquidityETHtokenB tx.tx: ", tx.tx);
-  tx =  await router.addLiquidityETH(tokenC.address,
-                                web3.utils.toWei("425", "ether"),
-                                web3.utils.toWei("425", "ether"),
-                                web3.utils.toWei("0.1", "ether"),
-                                admin,
-                                Math.round(Date.now()/1000)+100*60,
-                            {from:admin, value: web3.utils.toWei('0.1','ether')});
-  console.log ("addLiquidityETH tokenC tx.tx: ", tx.tx);                        
 
-      tx =  await router.addLiquidityETH(wBTC.address,
-        web3.utils.toWei("0.0033", "ether"),
-        web3.utils.toWei("0.0033", "ether"),
-        web3.utils.toWei("0.1", "ether"),
-        admin,
-        Math.round(Date.now()/1000)+100*60,
-    {from:admin, value: web3.utils.toWei('0.1','ether')});
-    console.log ("addLiquidityETH WBTC  tx.tx: ", tx.tx);                        
 
-    tx =  await router.addLiquidityETH(cDAI.address,
-      web3.utils.toWei("202", "ether"),
-      web3.utils.toWei("202", "ether"),
-      web3.utils.toWei("0.1", "ether"),
-      admin,
-      Math.round(Date.now()/1000)+100*60,
-    {from:admin, value: web3.utils.toWei('0.1','ether')});
-    console.log ("addLiquidityETH CDAI tx.tx: ", tx.tx);   
-
-    tx =  await router.addLiquidityETH(cUSDC.address,
-      web3.utils.toWei("198", "ether"),
-      web3.utils.toWei("198", "ether"),
-      web3.utils.toWei("0.1", "ether"),
-      admin,
-      Math.round(Date.now()/1000)+100*60,
-    {from:admin, value: web3.utils.toWei('0.1','ether')});
-    console.log ("addLiquidityETH CDAI tx.tx: ", tx.tx);  
-
-if (_network != "ropsten") {
-    await index2swap.buySvet4Eth({from:admin, value: web3.utils.toWei('0.01','ether')});
-    await SvetToken.approve(index2swap.address, web3.utils.toWei('0.02','ether'), {from:admin});
-    const buyIndexforSvetEth = await index2swap.buyIndexforSvetEth(web3.utils.toWei('0.01','ether'),index_token1.address , {from:admin});
-    console.log("buyIndexforSvetEth", buyIndexforSvetEth.tx);
-    //sell
-    await index_token1.approve(index2swap.address, web3.utils.toWei('0.01','ether'), {from:admin});
-  //  const sellIndexforSvet=await index2swap.sellIndexforSvet(web3.utils.toWei('0.005','ether'),index_token1.address, {from:admin});
- //   console.log("sellIndexforSvet", sellIndexforSvet.tx);
-
-  //  await index2swap.withdrEth4Svet(web3.utils.toWei('0.004','ether'), {from:admin});
-  }
    if (_network == "ropsten") { 
     var embark4Contracts ={
       ropsten: {
@@ -391,17 +249,30 @@ if (_network != "ropsten") {
               address: index_storage.address,
               abiDefinition: index_storage.abi  
           },
-
+/*
             SVTtst: {
               address: SvetToken.address,
               abiDefinition: SvetToken.abi 
-            }                
-      
-          }
-          
+            },
+            */
+            Factory: {
+              address: factory.address,
+              abiDefinition: factory.abi 
+            },
+            Router: {
+              address: router.address,
+              abiDefinition: router.abi 
+
+          },
+
+          WETH: {
+              address: weth.address,
+              abiDefinition: weth.abi   
         }
-      
-  };
+    }
+      }
+    }
+
    }
       else {
     var embark4Contracts ={
@@ -489,22 +360,34 @@ if (_network != "ropsten") {
                 address: index_storage.address,
                 abiDefinition: index_storage.abi  
             },
-
+/*
               SVTtst: {
                 address: SvetToken.address,
                 abiDefinition: SvetToken.abi 
-              }                
-        
+              }, */
+              Factory: {
+                address: factory.address,
+                abiDefinition: factory.abi 
+              },
+              Router: {
+                address: router.address,
+                abiDefinition: router.abi 
+
+            },
+
+            WETH: {
+                address: weth.address,
+                abiDefinition: weth.abi 
+
             }
-            
           }
         
-    };
+    }
   }
-
+      }
     
 
-    fs = require('fs');
+    
 
     fs.writeFileSync("embark4Contracts.json", JSON.stringify(embark4Contracts));
 
