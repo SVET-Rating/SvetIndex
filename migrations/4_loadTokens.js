@@ -20,53 +20,65 @@ const fs = require('fs');
 
 module.exports = async function(deployer,_network, addresses) {
 
-const [admin] = addresses[0];
+    const [admin] = addresses[0];
 
-const ethLiq = 0.05;
-const ethPrice = 1600; //USD
-var newtokens = "{"; 
-var netKey;
-if (_network == "ropsten" || _network == "mainnet" ) {
-    netKey = _network;
-} else
-{
-    netKey = "cloudflare"
-}
-
-const factory = await Factory.at(contracts[netKey]["deploy"]["Factory"]["address"]);
-const router = await Router.at(contracts[netKey]["deploy"]["Router"]["address"]);
-const weth = await WETH.at(contracts[netKey]["deploy"] ["WETH"]["address"]);
-
-
-Object.keys(tokens).forEach (async (token) => {
-    var contract;
-    if (token.address == "") {
-         contract = await MockERC20.new(token, token.symbol, web3.utils.toWei(token.totAmount,'ether'));  
-        token.address = contract.address;              
-    } else {
-         contract = await MockERC20.at(token.address);
+    const ethLiq = 0.05;
+    const ethPrice = 1600; //USD
+    var newtokens = "{"; 
+    var netKey;
+    if (_network == "ropsten" || _network == "mainnet" ) {
+        netKey = _network;
+    } else
+    {
+        netKey = "cloudflare"
     }
-    await factory.createPair(weth.address, token.address);
-    await oracle_price.addPrice(token.address, web3.utils.toWei(token.priceUSD.toString(), "ether"));
-    //await oracle_circ_amount.addamount(token.address,  web3.utils.toBN(1374417194));
-    //    await oracle_tot_supply.addamount(token.address,  web3.utils.toBN(2100000000));
 
-    var tAmount = ethLiq * ethPrice / token.priceUSD ;
-    await contract.approve (router.address, web3.utils.toWei(tAmount.toString(), "ether"));
-    await router.addLiquidityETH(token.address,
-        web3.utils.toWei(tAmount.toString(), "ether"),
-        web3.utils.toWei(tAmount.toString(), "ether"),
-        web3.utils.toWei(ethLiq.toString(), "ether"),
-        admin,
-        Math.round(Date.now()/1000)+100*60,
-      {from:admin, value: web3.utils.toWei(ethLiq.toString(),'ether')});  
-    newtokens += JSON.stringify(token);
-});
+    const factory = await Factory.at(contracts[netKey]["deploy"]["Factory"]["address"]);
+    const router = await Router.at(contracts[netKey]["deploy"]["Router"]["address"]);
+    const weth = await WETH.at(contracts[netKey]["deploy"] ["WETH"]["address"]);
+    const oracle_price = await OraclePrice.at(contracts[netKey]["deploy"] ["OraclePrice"]["address"]);
 
 
-newtokens += "}";
-fs.writeFileSync("tokens1.json", newtokens);
-}
+   await  Object.keys(tokens).forEach (async (tokenName) => {
+        var token = tokens[tokenName];
+
+        const contrERC = async (tName, tN) => {
+            if (tN.address == "") {
+                const ercContr = await MockERC20.new(tName, tN.symbol, web3.utils.toWei(tN.totAmount.toString(),'ether'));
+                return ercContr;
+                        
+            } else {
+                return  await MockERC20.at(tN.address);
+        } }
+
+       await contrERC(tokenName, token).then ((contract) => {   
+            
+            token.address = contract.address;
+            var allToken ={};
+            allToken[tokenName]=token
+            newtokens += JSON.stringify(allToken);
+            factory.createPair(weth.address, contract.address).then(() =>   {
+                var tAmount = ethLiq * ethPrice / token.priceUSD ;
+                contract.approve (router.address, web3.utils.toWei(tAmount.toString(), "ether")).then (() => {
+                    router.addLiquidityETH(token.address,
+                        web3.utils.toWei(tAmount.toString(), "ether"),
+                        web3.utils.toWei(tAmount.toString(), "ether"),
+                        web3.utils.toWei(ethLiq.toString(), "ether"),
+                        admin, 
+                        Math.round(Date.now()/1000)+100*60,
+                        {from:admin, value: web3.utils.toWei(ethLiq.toString(),'ether')});  
+                    oracle_price.addPrice(token.address,  web3.utils.toWei(token.priceUSD.toString(), "ether")) ;
+                        //await oracle_circ_amount.addamount(token.address,  web3.utils.toBN(1374417194));
+                    //    await oracle_tot_supply.addamount(token.address,  web3.utils.toBN(2100000000));
+                });
+            });
+        });
+    });
+
+
+    newtokens += "}";
+    fs.writeFileSync("tokens1.json", newtokens);
+    }
 
 /**
  * const tokenA = await MockERC20.new('Bytom','BTM',web3.utils.toWei('100000000000','ether'));

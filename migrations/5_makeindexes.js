@@ -16,19 +16,18 @@ const OracleCircAmount = artifacts.require('OracleCircAmount.sol');
 const tokens = require ("../tokens1.json");
 const contracts = require("../embark4Contracts.json");
 const fs = require('fs');
-const { ERC20 } = require("../src/embarkArtifacts/contracts");
 
 
 module.exports = async function(deployer,_network, addresses) {
 
 const [admin] = addresses[0];
 
-
+var netkey ;
 if (_network == "ropsten" || _network == "mainnet" ) {
-    const netKey = _network;
+     netKey = _network;
 } else
 {
-    const netKey = "cloudflare"
+     netKey = "cloudflare"
 }
 
 
