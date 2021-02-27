@@ -65,7 +65,7 @@ module.exports = {
     //  ganache-cli -f https://ropsten.infura.io/v3/753a98a2eb6c4d64918829f47d069440  -m "clutch captain shoe salt awake harvest setup primary inmate ugly among become" -i 999 -u 0x9759A6Ac90977b93B58547b4A71c78317f391A28
     // embark run --nodashboard  cloudflare
 
-    endpoint: "http://127.0.0.1:8545", // Endpoint of an node to connect to. Can be on localhost or on the internet
+    endpoint: "http://127.0.0.1:7545", // Endpoint of an node to connect to. Can be on localhost or on the internet
     accounts: [
       {
         //privateKeyFile: "./testnet/password",

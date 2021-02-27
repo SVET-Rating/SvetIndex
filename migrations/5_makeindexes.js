@@ -13,14 +13,14 @@ const Lstorage = artifacts.require('Lstorage.sol');
 const OraclePrice = artifacts.require('OraclePrice.sol');
 const OracleTotSupply = artifacts.require('OracleTotSupply.sol');
 const OracleCircAmount = artifacts.require('OracleCircAmount.sol');
-const tokens = require ("../tokens1.json");
+const tokens = require ("../tokens.json");
 const contracts = require("../embark4Contracts.json");
 const fs = require('fs');
 
 
 module.exports = async function(deployer,_network, addresses) {
 
-const [admin] = addresses[0];
+const admin = addresses[0];
 
 var netkey ;
 if (_network == "ropsten" || _network == "mainnet" ) {
@@ -33,11 +33,11 @@ if (_network == "ropsten" || _network == "mainnet" ) {
 
 
 const index_factory = await IndexFactory.at(contracts[netKey]["deploy"]["IndexFactory"]["address"]);
-const exchanges = await Router.at(contracts[netKey]["deploy"]["Exchange"]["address"]);
-const index2swap = await WETH.at(contracts[netKey]["deploy"] ["Index2Swap"]["address"]);
+const exchanges = await Exchange.at(contracts[netKey]["deploy"]["Exchange"]["address"]);
+const index2swap = await Index2Swap.at(contracts[netKey]["deploy"] ["Index2Swap"]["address"]);
 
-await exchanges.setBA(tokens.SvetToken.address);
 const SvetToken = await MockERC20.at(tokens.SvetToken.address);
+await exchanges.setBA(tokens.SvetToken.address);
 await SvetToken.transfer(index2swap.address, web3.utils.toWei("20000", "ether"));
 await index2swap.set(tokens.SvetToken.address, contracts[netKey]["deploy"] ["OraclePrice"]["address"], contracts[netKey]["deploy"] ["Lstorage"]["address"]);
 

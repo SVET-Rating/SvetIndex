@@ -15,7 +15,6 @@ const OracleCircAmount = artifacts.require('OracleCircAmount.sol');
 //const UniswapV2Library = artifacts.require('./libraries/UniswapV2Library.sol');
 const TransferHelper = artifacts.require('./libraries/TransferHelper.sol');
 
-const tokens = require("../tokens.json");
 const fs = require('fs');
 
 module.exports = async function(deployer,_network, addresses) {
@@ -122,6 +121,7 @@ var weth, factory, router ;
     // Lstorage
     await lstorage.setswap(index2swap.address);
     await index_storage.setFactory(index_factory.address);
+    await oracle_price.add
 
 
 /*

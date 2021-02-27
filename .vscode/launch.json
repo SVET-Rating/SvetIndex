@@ -5,10 +5,32 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "run migration v10 -G",
+            "type": "node",
+            "request": "launch",
+            "program": "/home/st/.nvm/versions/node/v10.18.0/lib/node_modules/truffle/build/cli.bundled.js",
+            "args": ["migrate --reset  --compile-all --network cloudflare"],
+            "cwd": "${workspaceFolder}",
+            "outFiles": [
+                "${workspaceFolder}/migrations/*"
+            ],
+        }, ///home/st/.nvm/versions/node/v10.18.0/
+        {
             "name": "run migration v14 -G",
             "type": "node",
             "request": "launch",
             "program": "/home/st/.nvm/versions/node/v14.15.4/lib/node_modules/truffle/build/cli.bundled.js",
+            "args": ["migrate --reset  --compile-all --network cloudflare"],
+            "cwd": "${workspaceFolder}",
+            "outFiles": [
+                "${workspaceFolder}/migrations/*"
+            ],
+          },
+          {
+            "name": "run migration v12 -G",
+            "type": "node",
+            "request": "launch",
+            "program": "/home/st/.nvm/versions/node/v12.14.1/lib/node_modules/truffle/build/cli.bundled.js",
             "args": ["migrate --reset  --compile-all --network cloudflare"],
             "cwd": "${workspaceFolder}",
             "outFiles": [
