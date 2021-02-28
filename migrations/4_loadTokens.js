@@ -13,6 +13,8 @@ const Lstorage = artifacts.require('Lstorage.sol');
 const OraclePrice = artifacts.require('OraclePrice.sol');
 const OracleTotSupply = artifacts.require('OracleTotSupply.sol');
 const OracleCircAmount = artifacts.require('OracleCircAmount.sol');
+const SvtT = artifacts.require('MockERC20.sol');
+
 var tokens = require ("../tokens.json");
 const contracts = require("../embark4Contracts.json");
 const fs = require('fs');
@@ -24,6 +26,7 @@ module.exports = async function(deployer,_network, addresses) {
 
     const ethLiq = 0.05;
     const ethPrice = 1600; //USD
+    const svtPrice = 1; //usd
     var netKey;
     if (_network == "ropsten" || _network == "mainnet" ) {
         netKey = _network;
@@ -35,8 +38,12 @@ module.exports = async function(deployer,_network, addresses) {
     const factory = await Factory.at(contracts[netKey]["deploy"]["Factory"]["address"]);
     const router = await Router.at(contracts[netKey]["deploy"]["Router"]["address"]);
     const weth = await WETH.at(contracts[netKey]["deploy"] ["WETH"]["address"]);
+    const svtT = await MockERC20.at(contracts[netKey]["deploy"] ["SVTtst"]["address"]);
     const oracle_price = await OraclePrice.at(contracts[netKey]["deploy"] ["OraclePrice"]["address"]);
     oracle_price.addPrice(weth.address, web3.utils.toWei(ethPrice.toString()));
+    oracle_price.addPrice(svtT.address, web3.utils.toWei(svtPrice.toString()));
+
+
    // const contr = await MockERC20.new ('SvetToken', tokens['SvetToken']['symbol'], web3.utils.toWei(tokens['SvetToken']['totAmount'].toString()),  {from:admin});
 
 

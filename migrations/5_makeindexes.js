@@ -36,10 +36,6 @@ const index_factory = await IndexFactory.at(contracts[netKey]["deploy"]["IndexFa
 const exchanges = await Exchange.at(contracts[netKey]["deploy"]["Exchange"]["address"]);
 const index2swap = await Index2Swap.at(contracts[netKey]["deploy"] ["Index2Swap"]["address"]);
 
-const SvetToken = await MockERC20.at(tokens.SvetToken.address);
-await exchanges.setBA(tokens.SvetToken.address);
-await SvetToken.transfer(index2swap.address, web3.utils.toWei("20000", "ether"));
-await index2swap.set(tokens.SvetToken.address, contracts[netKey]["deploy"] ["OraclePrice"]["address"], contracts[netKey]["deploy"] ["Lstorage"]["address"]);
 
 const index_token1 = await IndexToken.new('Svet index 1', 'SVI1');
 const index_token2 = await IndexToken.new('Svet index 2', 'SVI2');
@@ -87,7 +83,7 @@ console.log(trIndex5.tx);
 */
 if (_network != "ropsten") {
     await index2swap.buySvet4Eth({from:admin, value: web3.utils.toWei('0.01','ether')});
-    await SvetToken.approve(index2swap.address, web3.utils.toWei('0.02','ether'), {from:admin});
+    
     const buyIndexforSvetEth = await index2swap.buyIndexforSvetEth(web3.utils.toWei('0.01','ether'),index_token1.address , {from:admin});
     console.log("buyIndexforSvetEth", buyIndexforSvetEth.tx);
     //sell

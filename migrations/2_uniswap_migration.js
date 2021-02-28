@@ -11,6 +11,7 @@ const Lstorage = artifacts.require('Lstorage.sol');
 const OraclePrice = artifacts.require('OraclePrice.sol');
 const OracleTotSupply = artifacts.require('OracleTotSupply.sol');
 const OracleCircAmount = artifacts.require('OracleCircAmount.sol');
+const SvtT = artifacts.require('MockERC20.sol');
 //const Faucet = artifacts.require('Faucet.sol');
 //const UniswapV2Library = artifacts.require('./libraries/UniswapV2Library.sol');
 const TransferHelper = artifacts.require('./libraries/TransferHelper.sol');
@@ -21,7 +22,7 @@ module.exports = async function(deployer,_network, addresses) {
   console.log ("_network.network_id:", _network);
     const [admin,user1] = addresses;
 //test of that is not tmux problem at all 
-var weth, factory, router ;
+var weth, factory, router, svetToken ;
   if (_network == "ropsten") {
      weth = await WETH.at('0xc778417e063141139fce010982780140aa0cd5ab');
      factory = await Factory.at ('0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f');
@@ -31,6 +32,8 @@ var weth, factory, router ;
 
     await deployer.deploy(WETH);
      weth = await WETH.deployed();
+     await deployer.deploy(SvtT, "SvetToken", "SVT", web3.utils.toWei("21000000" ));
+     svetToken = await SvtT.deployed();
     await deployer.deploy(Factory, user1);
      factory = await Factory.deployed();
 
@@ -121,7 +124,12 @@ var weth, factory, router ;
     // Lstorage
     await lstorage.setswap(index2swap.address);
     await index_storage.setFactory(index_factory.address);
-    await oracle_price.add
+    
+    await exchanges.setBA(svetToken.address);
+    await svetToken.transfer(index2swap.address, web3.utils.toWei("20000", "ether"));
+    await svetToken.approve(index2swap.address, web3.utils.toWei('0.02','ether'), {from:admin});
+    await index2swap.set(svetToken.address, oracle_price.address, lstorage.address);
+    
 
 
 /*
@@ -249,12 +257,12 @@ var weth, factory, router ;
               address: index_storage.address,
               abiDefinition: index_storage.abi  
           },
-/*
+
             SVTtst: {
-              address: SvetToken.address,
-              abiDefinition: SvetToken.abi 
+              address: svetToken.address,
+              abiDefinition: svetToken.abi 
             },
-            */
+            
             Factory: {
               address: factory.address,
               abiDefinition: factory.abi 
@@ -360,11 +368,11 @@ var weth, factory, router ;
                 address: index_storage.address,
                 abiDefinition: index_storage.abi  
             },
-/*
+
               SVTtst: {
-                address: SvetToken.address,
-                abiDefinition: SvetToken.abi 
-              }, */
+                address: svetToken.address,
+                abiDefinition: svetToken.abi 
+              }, 
               Factory: {
                 address: factory.address,
                 abiDefinition: factory.abi 
