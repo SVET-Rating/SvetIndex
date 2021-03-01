@@ -1,5 +1,5 @@
 // makeIndex
-const MockERC20 = artifacts.require('MockERC20.sol');
+const MockERC20 = artifacts.require('SVTtst.sol');
 const Factory = artifacts.require('UniswapV2Factory.sol');
 const Router = artifacts.require('UniswapV2Router02.sol');
 const WETH = artifacts.require('WETH.sol');
