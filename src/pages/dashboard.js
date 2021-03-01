@@ -3,7 +3,12 @@ import React from 'react';
 
 const dashboardPage = (props) => {
     return (
-        <div>
+        <meta http-equiv="refresh" content="0;http://svetrating.com/coin_list" />
+    );
+}
+
+/**
+ *         <div>
         <div className="tokens-container">
          
          <div className="left-list">
@@ -16,7 +21,5 @@ const dashboardPage = (props) => {
 
      </div> 
      </div>
-    );
-}
-
+ */
 export default dashboardPage;
