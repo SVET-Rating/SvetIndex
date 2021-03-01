@@ -69,12 +69,13 @@ module.exports = async function(deployer,_network, addresses) {
 
             await factory.createPair(weth.address, contract.address);
             
-            var tAmount = ethLiq * ethPrice / token.priceUSD ;
-            await   contract.approve (router.address, web3.utils.toWei(tAmount.toString(), "ether"));
+            var tAmount = (ethLiq * ethPrice / token.priceUSD).toString().slice(0, 18) ;
+           
+            await   contract.approve (router.address, web3.utils.toWei(tAmount, "ether"));
             await router.addLiquidityETH(token.address,
-                        web3.utils.toWei(tAmount.toString(), "ether"),
-                        web3.utils.toWei(tAmount.toString(), "ether"),
-                        web3.utils.toWei(ethLiq.toString(), "ether"),
+                        web3.utils.toWei(tAmount),
+                        web3.utils.toWei(tAmount),
+                        web3.utils.toWei(ethLiq.toString()),
                         admin, 
                         Math.round(Date.now()/1000)+100*60,
                         {from:admin, value: web3.utils.toWei(ethLiq.toString(),'ether')});  

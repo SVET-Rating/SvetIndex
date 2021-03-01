@@ -42,7 +42,11 @@ const index_token2 = await IndexToken.new('Svet index 2', 'SVI2');
 const index_token3 = await IndexToken.new('Svet index BTC-stable', 'SVI3');
 const index_token4 = await IndexToken.new('SVET Saving Index', 'SVI4');
 const index_token5 = await IndexToken.new('SVET Perspective Index', 'SVI5')
-
+console.log( index_token1.address,
+  index_token2.address,
+  index_token3.address,
+  index_token4.address,
+  index_token5.address );
 console.log('create index token1');
 const trIndex1 = await index_factory.makeIndex(index_token1.address,
           [tokens.Bytom.address,
@@ -52,35 +56,36 @@ const trIndex1 = await index_factory.makeIndex(index_token1.address,
             3774,
             3601] ); //in shares 1/10000
 console.log(trIndex1.tx);              
-console.log('create index token2');
-/*
+console.log('create index token3');
+
 const trIndex3 = await index_factory.makeIndex(index_token3.address,
-  [wBTC.address,
-  cDAI.address,
-  cUSDC.address,  ],
+  [tokens.WBTC.address,
+    tokens.cDAI.address,
+    tokens.cUSDC.address,  ],
   [5000, 2500, 2500 ]); //in shares 1/10000
 console.log(trIndex3.tx);
-
+console.log('create index token4');
 const trIndex4 = await index_factory.makeIndex(index_token4.address,
-  [cDAI.address,
-    cUSDC.address],
+  [tokens.cDAI.address,
+    tokens.cUSDC.address],
   [5000, 5000 ]); //in shares 1/10000
 console.log(trIndex4.tx);
-
+console.log('create index token5');
 const trIndex5 = await index_factory.makeIndex(index_token5.address,
-  [POLS.address,
-    RARI.address,
-    INCH.address,
-    KEEP.address,
-    Bondly.address,
-    DDIM.address,
-    SOL.address,
-    CAKE.address,
-    MANA.address, 
-    SWAP.address],
+  [tokens["Polkastarter"]["address"],
+    tokens["Rarible"]["address"],
+    tokens["1INCH"]["address"],
+    tokens["Keep Network"]["address"],
+    tokens["Bondly"]["address"],
+    tokens["DuckDaoDime"]["address"],
+    tokens["Solana"]["address"],
+    tokens["PancakeSwap"]["address"],
+    tokens["Decentraland"]["address"], 
+    tokens["Trustswap"]["address"]
+  ],
   [1000, 1000, 1000, 1000,1000, 1000,1000, 1000,1000, 1000]); //in shares 1/10000
 console.log(trIndex5.tx);
-*/
+
 if (_network != "ropsten") {
     await index2swap.buySvet4Eth({from:admin, value: web3.utils.toWei('0.01','ether')});
     
@@ -88,7 +93,7 @@ if (_network != "ropsten") {
     console.log("buyIndexforSvetEth", buyIndexforSvetEth.tx);
     //sell
     await index_token1.approve(index2swap.address, web3.utils.toWei('0.01','ether'), {from:admin});
-  //  const sellIndexforSvet=await index2swap.sellIndexforSvet(web3.utils.toWei('0.005','ether'),index_token1.address, {from:admin});
+  //  const sellIndexforSvet=await izndex2swap.sellIndexforSvet(web3.utils.toWei('0.005','ether'),index_token1.address, {from:admin});
  //   console.log("sellIndexforSvet", sellIndexforSvet.tx);
 
   //  await index2swap.withdrEth4Svet(web3.utils.toWei('0.004','ether'), {from:admin});
