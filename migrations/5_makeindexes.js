@@ -23,7 +23,7 @@ module.exports = async function(deployer,_network, addresses) {
 const admin = addresses[0];
 
 var netkey ;
-if (_network == "ropsten" || _network == "mainnet" ) {
+if (_network == "ropsten" || _network == "mainnet" || _network == "ganache") {
      netKey = _network;
 } else
 {
@@ -49,9 +49,9 @@ console.log( index_token1.address,
   index_token5.address );
 console.log('create index token1');
 const trIndex1 = await index_factory.makeIndex(index_token1.address,
-          [tokens.Bytom.address,
-          tokens.WaykiChain.address,
-          tokens.Kyber.address], 
+          [tokens[netKey].Bytom.address,
+          tokens[netKey].WaykiChain.address,
+          tokens[netKey].Kyber.address], 
           [ 2624,
             3774,
             3601] ); //in shares 1/10000
@@ -59,29 +59,29 @@ console.log(trIndex1.tx);
 console.log('create index token3');
 
 const trIndex3 = await index_factory.makeIndex(index_token3.address,
-  [tokens.WBTC.address,
-    tokens.cDAI.address,
-    tokens.cUSDC.address,  ],
+  [tokens[netKey].WBTC.address,
+    tokens[netKey].cDAI.address,
+    tokens[netKey].cUSDC.address,  ],
   [5000, 2500, 2500 ]); //in shares 1/10000
 console.log(trIndex3.tx);
 console.log('create index token4');
 const trIndex4 = await index_factory.makeIndex(index_token4.address,
-  [tokens.cDAI.address,
-    tokens.cUSDC.address],
+  [tokens[netKey].cDAI.address,
+    tokens[netKey].cUSDC.address],
   [5000, 5000 ]); //in shares 1/10000
 console.log(trIndex4.tx);
 console.log('create index token5');
 const trIndex5 = await index_factory.makeIndex(index_token5.address,
-  [tokens["Polkastarter"]["address"],
-    tokens["Rarible"]["address"],
-    tokens["1INCH"]["address"],
-    tokens["Keep Network"]["address"],
-    tokens["Bondly"]["address"],
-    tokens["DuckDaoDime"]["address"],
-    tokens["Solana"]["address"],
-    tokens["PancakeSwap"]["address"],
-    tokens["Decentraland"]["address"], 
-    tokens["Trustswap"]["address"]
+   [tokens[netKey]["Polkastarter"]["address"],
+    tokens[netKey]["Rarible"]["address"],
+    tokens[netKey]["1INCH"]["address"],
+    tokens[netKey]["Keep Network"]["address"],
+    tokens[netKey]["Bondly"]["address"],
+    tokens[netKey]["DuckDaoDime"]["address"],
+    tokens[netKey]["Solana"]["address"],
+    tokens[netKey]["PancakeSwap"]["address"],
+    tokens[netKey]["Decentraland"]["address"], 
+    tokens[netKey]["Trustswap"]["address"]
   ],
   [1000, 1000, 1000, 1000,1000, 1000,1000, 1000,1000, 1000]); //in shares 1/10000
 console.log(trIndex5.tx);

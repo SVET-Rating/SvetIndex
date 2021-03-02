@@ -9,7 +9,7 @@ module.exports = async function(deployer,_network, addresses) {
     const [admin,user1] = addresses;
 
 var netKey;
-if (_network == "ropsten" || _network == "mainnet" ) {
+if (_network == "ropsten" || _network == "mainnet" || _network == "ganache") {
     netKey = _network;
 } else
 {

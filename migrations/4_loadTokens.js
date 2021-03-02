@@ -28,7 +28,7 @@ module.exports = async function(deployer,_network, addresses) {
     const ethPrice = 1600; //USD
     const svtPrice = 1; //usd
     var netKey;
-    if (_network == "ropsten" || _network == "mainnet" ) {
+    if (_network == "ropsten" || _network == "mainnet" || _network == "ganache") {
         netKey = _network;
     } else
     {
@@ -48,10 +48,10 @@ module.exports = async function(deployer,_network, addresses) {
 
 
 //    await Object.keys(tokens).forEach (async (tokenName) => {
-    for (tokenName of Object.keys(tokens)) {
+    for (tokenName of Object.keys(tokens[netKey])) {
         var token = tokens[netKey][tokenName];
 
-        var  contract 
+        var  contract ;
         
         if (token.address == '') {
                 const totAm = web3.utils.toWei(token['totAmount']);
