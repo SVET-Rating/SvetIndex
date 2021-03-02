@@ -49,7 +49,7 @@ module.exports = async function(deployer,_network, addresses) {
 
 //    await Object.keys(tokens).forEach (async (tokenName) => {
     for (tokenName of Object.keys(tokens)) {
-        var token = tokens[tokenName];
+        var token = tokens[netKey][tokenName];
 
         var  contract 
         
@@ -65,7 +65,7 @@ module.exports = async function(deployer,_network, addresses) {
                 contract = await   MockERC20.at(token.address);
                 }  
                           
-        tokens[tokenName].address = contract.address;
+        tokens[netKey][tokenName].address = contract.address;
             
         var tAmount = (ethLiq * ethPrice / token.priceUSD).toString().slice(0, 18) ;
         
@@ -77,15 +77,15 @@ module.exports = async function(deployer,_network, addresses) {
                     admin, 
                     Math.round(Date.now()/1000)+100*60,
                     {from:admin, value: web3.utils.toWei(ethLiq.toString(),'ether')});  
-        await oracle_price.addPrice( tokens[tokenName].address,  web3.utils.toWei(token.priceUSD.toString(), "ether")) ;
+        await oracle_price.addPrice( tokens[netKey][tokenName].address,  web3.utils.toWei(token.priceUSD.toString(), "ether")) ;
                     //await oracle_circ_amount.addamount(token.address,  web3.utils.toBN(1374417194));
                 //    await oracle_tot_supply.addamount(token.address,  web3.utils.toBN(2100000000));
-                
+        fs.writeFileSync("tokens.json", JSON.stringify (tokens));                
     }
 
 
     
-    fs.writeFileSync("tokens.json", JSON.stringify (tokens));
+    
     }
 
 /**

@@ -42,10 +42,10 @@ for (contractName of Object.keys(contracts[netKey]["deploy"])) {
       deplContract[contractName] = await curContract.at(contracts[netKey]["deploy"][contractName].address); 
           }  
             
-  
+  fs.writeFileSync("embark4Contracts.json", JSON.stringify(contracts));
+
   }
 
-  fs.writeFileSync("embark4Contracts.json", JSON.stringify(contracts));
 
 
     
