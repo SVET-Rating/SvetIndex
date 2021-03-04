@@ -37,12 +37,12 @@ const exchanges = await Exchange.at(contracts[netKey]["deploy"]["Exchange"]["add
 const index2swap = await Index2Swap.at(contracts[netKey]["deploy"] ["Index2Swap"]["address"]);
 
 
-const index_token1 = await IndexToken.new('Svet index 1', 'SVI1');
-const index_token2 = await IndexToken.new('Svet index 2', 'SVI2');
+//const index_token1 = await IndexToken.new('Svet index 1', 'SVI1');
+//const index_token2 = await IndexToken.new('Svet index 2', 'SVI2');
 const index_token3 = await IndexToken.new('Svet index BTC-stable', 'SVI3');
 const index_token4 = await IndexToken.new('SVET Saving Index', 'SVI4');
 const index_token5 = await IndexToken.new('SVET Perspective Index', 'SVI5')
-console.log( index_token1.address,
+/* console.log( index_token1.address,
   index_token2.address,
   index_token3.address,
   index_token4.address,
@@ -55,7 +55,8 @@ const trIndex1 = await index_factory.makeIndex(index_token1.address,
           [ 2624,
             3774,
             3601] ); //in shares 1/10000
-console.log(trIndex1.tx);              
+console.log(trIndex1.tx);       
+*/       
 console.log('create index token3');
 
 const trIndex3 = await index_factory.makeIndex(index_token3.address,

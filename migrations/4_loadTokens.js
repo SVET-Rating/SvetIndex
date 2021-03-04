@@ -24,7 +24,7 @@ module.exports = async function(deployer,_network, addresses) {
 
     const admin = addresses[0];
 
-    const ethLiq = 0.05;
+    const ethLiq = 0.1;
     const ethPrice = 1600; //USD
     const svtPrice = 1; //usd
     var netKey;
@@ -40,9 +40,7 @@ module.exports = async function(deployer,_network, addresses) {
     const weth = await WETH.at(contracts[netKey]["deploy"] ["WETH"]["address"]);
     const svtT = await MockERC20.at(contracts[netKey]["deploy"] ["SVTtst"]["address"]);
     const oracle_price = await OraclePrice.at(contracts[netKey]["deploy"] ["OraclePrice"]["address"]);
-    oracle_price.addPrice(weth.address, web3.utils.toWei(ethPrice.toString()));
-    oracle_price.addPrice(svtT.address, web3.utils.toWei(svtPrice.toString()));
-
+    
 
    // const contr = await MockERC20.new ('SvetToken', tokens['SvetToken']['symbol'], web3.utils.toWei(tokens['SvetToken']['totAmount'].toString()),  {from:admin});
 
@@ -58,33 +56,37 @@ module.exports = async function(deployer,_network, addresses) {
                 console.log("couldn't find, deploy tokens as new:",  tokenName);
                 contract  = await MockERC20.new (tokenName, token['symbol'], totAm, {from:admin});            
                 await factory.createPair(weth.address, contract.address);
-
-                } 
-        else {
-                console.log("try to find token",  tokenName, token.address);
-                contract = await   MockERC20.at(token.address);
-                }  
-                          
-        tokens[netKey][tokenName].address = contract.address;
-            
-        var tAmount = (ethLiq * ethPrice / token.priceUSD).toString().slice(0, 18) ;
+                var tAmount = (ethLiq * ethPrice / token.priceUSD).toString().slice(0, 18) ;
         
-        await   contract.approve (router.address, web3.utils.toWei(tAmount, "ether"));
-        await router.addLiquidityETH(token.address,
+                await   contract.approve (router.address, web3.utils.toWei(tAmount, "ether"));
+                console.log ("adding liquidity", tokenName );
+                await router.addLiquidityETH(contract.address,
                     web3.utils.toWei(tAmount),
                     web3.utils.toWei(tAmount),
                     web3.utils.toWei(ethLiq.toString()),
                     admin, 
                     Math.round(Date.now()/1000)+100*60,
                     {from:admin, value: web3.utils.toWei(ethLiq.toString(),'ether')});  
+                tokens[netKey][tokenName].address = contract.address;
+           
+                fs.writeFileSync("tokens.json", JSON.stringify (tokens));                
+
+                } 
+        else {
+                console.log("try to find token",  tokenName, token.address);
+                contract = await   MockERC20.at(token.address);
+                }  
+        console.log ("adding price", tokenName );    
+
         await oracle_price.addPrice( tokens[netKey][tokenName].address,  web3.utils.toWei(token.priceUSD.toString(), "ether")) ;
                     //await oracle_circ_amount.addamount(token.address,  web3.utils.toBN(1374417194));
                 //    await oracle_tot_supply.addamount(token.address,  web3.utils.toBN(2100000000));
-        fs.writeFileSync("tokens.json", JSON.stringify (tokens));                
     }
 
 
-    
+    await oracle_price.addPrice(weth.address, web3.utils.toWei(ethPrice.toString()));
+    await oracle_price.addPrice(svtT.address, web3.utils.toWei(svtPrice.toString()));
+
     
     }
 

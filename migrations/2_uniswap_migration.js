@@ -36,13 +36,14 @@ for (contractName of Object.keys(contracts[netKey]["deploy"])) {
     deplContract[contractName] = await curContract.deployed();
     contracts[netKey]["deploy"][contractName].address = deplContract[contractName].address;
     contracts[netKey]["deploy"][contractName].abi = deplContract[contractName].abi;
+    fs.writeFileSync("embark4Contracts.json", JSON.stringify(contracts));
+
           } 
   else {
       console.log("try to find contract",  contractName);
       deplContract[contractName] = await curContract.at(contracts[netKey]["deploy"][contractName].address); 
           }  
             
-  fs.writeFileSync("embark4Contracts.json", JSON.stringify(contracts));
 
   }
 

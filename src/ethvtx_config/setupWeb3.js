@@ -136,7 +136,7 @@ export const setupWeb3 = async (store) => {
                                     curToken.methods.name().call().then(nameT => {
                 
                                         loadContractInstance(store.dispatch, 'ERC20', itemT.addrActive, {
-                                            alias: "@" + nameT.toLowerCase(),
+                                   //         alias: "@" + nameT.toLowerCase(),
                                             permanent: true,
                                             balance: true
                                         });
