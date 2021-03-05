@@ -231,7 +231,7 @@ contract Index2Swap is iIndex2Swap {
 
     }
 
-    function sellIndexforSvet (uint _amount, address _indexT) public returns (uint256 amountRes1, uint256 amountRes2){
+    function sellIndexforSvet (uint _amount, address _indexT) public returns (uint[] memory amountRet){
 
         iIndexToken index = iIndexToken(_indexT);
         
@@ -242,13 +242,13 @@ contract Index2Swap is iIndex2Swap {
             totPriceActSv += amount * 
                         oraclePrice.getLastPrice(addrActive) /
                         oraclePrice.getLastPrice(address(svetT)); //
-            uint[] memory amountRet = swapInd4Eth (
+            amountRet = swapInd4Eth (
                 _indexT, 
                 addrActive,  //
                 amount, //tokens to get 
                 address (this)) ;
 
-            lstorage.sub (msg.sender, _indexT, addrActive, amount);
+            lstorage.sub (msg.sender, _indexT, addrActive, amountRet[0]);
 
             }
         index.burnFrom(msg.sender, _amount);

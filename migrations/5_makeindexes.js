@@ -37,7 +37,7 @@ const exchanges = await Exchange.at(contracts[netKey]["deploy"]["Exchange"]["add
 const index2swap = await Index2Swap.at(contracts[netKey]["deploy"] ["Index2Swap"]["address"]);
 
 
-//const index_token1 = await IndexToken.new('Svet index 1', 'SVI1');
+const index_token1 = await IndexToken.new('Svet index 1', 'SVI1');
 //const index_token2 = await IndexToken.new('Svet index 2', 'SVI2');
 const index_token3 = await IndexToken.new('Svet index BTC-stable', 'SVI3');
 const index_token4 = await IndexToken.new('SVET Saving Index', 'SVI4');
@@ -47,7 +47,7 @@ const index_token5 = await IndexToken.new('SVET Perspective Index', 'SVI5')
   index_token3.address,
   index_token4.address,
   index_token5.address );
-console.log('create index token1');
+console.log('create index token1'); */
 const trIndex1 = await index_factory.makeIndex(index_token1.address,
           [tokens[netKey].Bytom.address,
           tokens[netKey].WaykiChain.address,
@@ -56,7 +56,7 @@ const trIndex1 = await index_factory.makeIndex(index_token1.address,
             3774,
             3601] ); //in shares 1/10000
 console.log(trIndex1.tx);       
-*/       
+
 console.log('create index token3');
 
 const trIndex3 = await index_factory.makeIndex(index_token3.address,
@@ -94,9 +94,9 @@ if (_network != "ropsten") {
     console.log("buyIndexforSvetEth", buyIndexforSvetEth.tx);
     //sell
     await index_token1.approve(index2swap.address, web3.utils.toWei('0.01','ether'), {from:admin});
-  //  const sellIndexforSvet=await izndex2swap.sellIndexforSvet(web3.utils.toWei('0.005','ether'),index_token1.address, {from:admin});
- //   console.log("sellIndexforSvet", sellIndexforSvet.tx);
+    const sellIndexforSvet=await index2swap.sellIndexforSvet(web3.utils.toWei('0.005','ether'),index_token1.address, {from:admin});
+    console.log("sellIndexforSvet", sellIndexforSvet.tx);
 
-  //  await index2swap.withdrEth4Svet(web3.utils.toWei('0.004','ether'), {from:admin});
+    await index2swap.withdrEth4Svet(web3.utils.toWei('0.004','ether'), {from:admin});
   }
 }
