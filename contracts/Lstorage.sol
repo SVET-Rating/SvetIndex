@@ -40,7 +40,7 @@ contract Lstorage is iLstorage {
 
     }
 
-    function getBalance (address _addrOwn, address _addrIndex, address _addrA) external view returns (uint) {
+    function getBalance (address _addrOwn, address _addrIndex, address _addrA) external view override returns (uint) {
         return liq[_addrOwn][_addrIndex][_addrA];
     }
 

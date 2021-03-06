@@ -5,5 +5,6 @@ interface iLstorage  {
 
     function add (address _addrOwn, address _addrIndex, address _addrA, uint _amount) external ;
     function sub (address _addrOwn, address _addrIndex, address _addrA, uint _amount) external ;
+    function getBalance (address _addrOwn, address _addrIndex, address _addrA) external view returns (uint) ;
 
 }
