@@ -33,22 +33,14 @@ if (_network == "ropsten" || _network == "mainnet" || _network == "ganache") {
 
 
 const index_factory = await IndexFactory.at(contracts[netKey]["deploy"]["IndexFactory"]["address"]);
-const exchanges = await Exchange.at(contracts[netKey]["deploy"]["Exchange"]["address"]);
+//const exchanges = await Exchange.at(contracts[netKey]["deploy"]["Exchange"]["address"]);
 const index2swap = await Index2Swap.at(contracts[netKey]["deploy"] ["Index2Swap"]["address"]);
 
-
-const index_token1 = await IndexToken.new('Svet index 1', 'SVI1');
-//const index_token2 = await IndexToken.new('Svet index 2', 'SVI2');
-const index_token3 = await IndexToken.new('Svet index BTC-stable', 'SVI3');
-const index_token4 = await IndexToken.new('SVET Saving Index', 'SVI4');
-const index_token5 = await IndexToken.new('SVET Perspective Index', 'SVI5')
-/* console.log( index_token1.address,
-  index_token2.address,
-  index_token3.address,
-  index_token4.address,
-  index_token5.address );
-console.log('create index token1'); */
-const trIndex1 = await index_factory.makeIndex(index_token1.address,
+if (_network != "ropsten" || _network != "mainnet") {
+  console.log('create index token1');
+await deployer.deploy(IndexToken,'Svet index 1', 'SVI1');
+ const index_token1 = await IndexToken.deployed();
+ const trIndex1 = await index_factory.makeIndex(index_token1.address,
           [tokens[netKey].Bytom.address,
           tokens[netKey].WaykiChain.address,
           tokens[netKey].Kyber.address], 
@@ -57,6 +49,9 @@ const trIndex1 = await index_factory.makeIndex(index_token1.address,
             3601] ); //in shares 1/10000
 console.log(trIndex1.tx);       
 
+ //const index_token2 = await deployer.deploy(IndexToken,'Svet index 2', 'SVI2');
+await deployer.deploy(IndexToken,'Svet index BTC-stable', 'SVI3');
+const index_token3 = await IndexToken.deployed();
 console.log('create index token3');
 
 const trIndex3 = await index_factory.makeIndex(index_token3.address,
@@ -65,12 +60,26 @@ const trIndex3 = await index_factory.makeIndex(index_token3.address,
     tokens[netKey].cUSDC.address,  ],
   [5000, 2500, 2500 ]); //in shares 1/10000
 console.log(trIndex3.tx);
+await deployer.deploy(IndexToken,'SVET Saving Index', 'SVI4');
+const index_token4 = await IndexToken.deployed();
+
 console.log('create index token4');
 const trIndex4 = await index_factory.makeIndex(index_token4.address,
   [tokens[netKey].cDAI.address,
     tokens[netKey].cUSDC.address],
   [5000, 5000 ]); //in shares 1/10000
 console.log(trIndex4.tx);
+await deployer.deploy(IndexToken,'SVET Perspective Index', 'SVI5');
+const index_token5 = await IndexToken.deployed();
+/* console.log( index_token1.address,
+  index_token2.address,
+  index_token3.address,
+  index_token4.address,
+  index_token5.address );
+console.log('create index token1'); */
+
+
+
 console.log('create index token5');
 const trIndex5 = await index_factory.makeIndex(index_token5.address,
    [tokens[netKey]["Polkastarter"]["address"],
@@ -87,7 +96,7 @@ const trIndex5 = await index_factory.makeIndex(index_token5.address,
   [1000, 1000, 1000, 1000,1000, 1000,1000, 1000,1000, 1000]); //in shares 1/10000
 console.log(trIndex5.tx);
 
-if (_network != "ropsten") {
+console.log("testing work");
     await index2swap.buySvet4Eth({from:admin, value: web3.utils.toWei('0.01','ether')});
     
     const buyIndexforSvetEth = await index2swap.buyIndexforSvetEth(web3.utils.toWei('0.01','ether'),index_token1.address , {from:admin});
