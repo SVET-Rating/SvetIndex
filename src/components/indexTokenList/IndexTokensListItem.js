@@ -35,25 +35,24 @@ const IndexTokensListItem =  (props) => {
         <p onClick={(e) => {props.changeActiveElement(e,item.name,item.balance/1000000000000000000)}}>
             {/* VERY GOOD INDEX TOKEN */}
             {item.name}
-            <br />
-            {item.addr}
+            <br /> <span style={{'fontSize':'65%'}}>
+            {item.addr} </span>
         </p>
         
-        <p>
-            {item.price}
+        <p> Price: <br />
+            ${item.price.toFixed(4)}
         </p>
-        <p style={{ minWidth: '1rem' }}>
+        <p style={{ minWidth: '1rem' }}> Balance: <br />
             {/* VERY GOOD INDEX TOKEN */}
-            {item.balance/1000000000000000000}
+            {(item.balance/1000000000000000000).toFixed(4)}
         </p>
-    
-        
+        <p>
         <button className="invest" onClick={() => props.startBuyToken(props.svetTokensAmount,props.svetTokenAddress)
             } style={investStyle}>INVEST</button>
-        <br/>
+        
 
         <button className="invest" onClick={() => props.startSellToken()} style={investStyle}>Sell</button>
-        
+        </p>
     
      </li>)
     });

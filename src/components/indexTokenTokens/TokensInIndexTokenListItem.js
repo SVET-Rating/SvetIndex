@@ -7,7 +7,7 @@ import getTokensByIndex from '../../ethvtx_config/actions/getTokensByIndex';
 const TokensInIndexTokenListItem = (props) => {
     //get active index token from list
         if (props.indexList === undefined) {
-            return <div><li className="right-list-item"><p>Tokens are absent !</p></li></div>
+            return <div><li className="right-list-item"><p>Click on index token name to view it portfolio </p></li></div>
         } else {
         props.tokens(props.indexList);
         var getTokensByActiveIndexToken = props.indexList.map((item,key) => {
