@@ -37,7 +37,7 @@ const IndexTokensListItem =  (props) => {
         <p>
             {/* VERY GOOD INDEX TOKEN */}
             {item.name}
-            <br /> <span style={{'fontSize':'65%'}}>
+            <br /> <span style={{'fontSize':'65%'}} className="address_in_list">
             {item.addr} </span>
         </p>
         

@@ -165,6 +165,9 @@ li>i {
     min-width: 5rem;
     
   }
+  .address_in_list {
+    display: none;
+  }
 }
 
 .navbar {
