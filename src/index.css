@@ -25,6 +25,7 @@ button.invest {
   border: none;
   cursor: pointer;
   border-radius: 50px;
+  margin: 4px;
 }
 
 button.payment-method {
@@ -168,4 +169,8 @@ li>i {
 
 .navbar {
   display: none !important;
+}
+
+.left-list-item {
+  cursor: pointer;
 }
