@@ -46,10 +46,13 @@ const IndexTokensListItem =  (props) => {
             return (
             <li className="left-list-item" id={item.addr} style={styleSelect}
             onClick={(e) => {
-                setTimeout(function(){
-                    let objControl=document.getElementById(item.addr);
-                    objControl.scrollIntoView({behavior: "smooth"});
-                   },500);
+                if (matches) {
+                    setTimeout(function(){
+                        let objControl=document.getElementById(item.addr);
+                        objControl.scrollIntoView({behavior: "smooth"});
+                       },500);
+                }
+                
                 props.changeActiveElement(item.addr,item.name,item.balance/1000000000000000000)
             }}
             >
