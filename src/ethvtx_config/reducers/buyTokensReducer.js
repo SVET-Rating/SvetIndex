@@ -12,6 +12,7 @@ import {SELECT_INDEX_TOKEN,
         BUY_SVET_PAYMENT_FORM,
         BUY_INDEX_TOKEN } from '../processStates/buyTokenProcessStates';
 import { DAI,ETHER,FIAT_MONEY,BITCOIN } from '../paymentMethod/paymentMethodType'
+import { RESET_INVESTMENTS } from '../processStates/resetProcessStates';
 
 
 const initialStateBuySvetTokens = {
@@ -28,6 +29,8 @@ const initialStateBuySvetTokens = {
 const buyTokensReducer = (state=initialStateBuySvetTokens, action) => {
 
     switch(action.type) {
+        case RESET_INVESTMENTS:
+            return {...state, buyTokenProcessState: SELECT_INDEX_TOKEN }
         case START_INVEST:
             return {...state, svetTokens: action.payload, buyTokenProcessState: BUY_INDEX_TOKEN}
         case START_TO_BUY_SVET_TOKENS:

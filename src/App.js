@@ -1,6 +1,6 @@
 import Navbar from './components/Navbar'
-import Investment from './pages/Invesment'
 import React from 'react';
+import {connect} from 'react-redux'
 import {
   BrowserRouter as Router,
   HashRouter,
@@ -13,8 +13,11 @@ import DashboardPage from "./pages/dashboard";
 import HomePage from "./pages/home";
 import OraculesPage from "./pages/oracules";
 import ExpertsPage from "./pages/experts";
+import resetAction from "./ethvtx_config/actions/resetInvestmentsAction";
 
-function App() {
+const App = (props) => {
+
+  
   return (
     <div className="App" >
       <HashRouter>
@@ -26,12 +29,19 @@ function App() {
         <Route exact path="/">
           <InvestmentPage /> 
         </Route>
-        <Route path="/investments">
+        {/* <Route path="/investments" >
           <InvestmentPage />
-        </Route>
-        <Route path="/dashboards">
-           <DashboardPage />
-        </Route>
+        </Route> */}
+        <Route  path="/investments" render={ (e) => {
+          props.resetToInvestment(e);
+          return <InvestmentPage />;
+        }}
+         />
+        <Route path="/dashboards" render={(e) => {
+             return <DashboardPage />;
+        }} />
+           
+       
         <Route path="/oracules">
             <OraculesPage />
         </Route>
@@ -52,5 +62,14 @@ function App() {
   );
 }
 
-export default App;
+//export default App;
+
+
+
+const mapDispatchToProps = dispatch => {
+  return {
+     resetToInvestment: (e) => dispatch(resetAction(e))
+  }
+}
+export default connect(null, mapDispatchToProps)(App)
 

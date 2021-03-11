@@ -1,7 +1,7 @@
-import {RESET_INVESTMENTS} from './types';
+import {RESET_INVESTMENTS} from '../processStates/resetProcessStates';
 
 
-const backToIndexTokensList = (e) => {
+const backToIndexTokensList = () => {
     return {
         type:RESET_INVESTMENTS,
         payload:true

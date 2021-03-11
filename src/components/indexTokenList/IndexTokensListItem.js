@@ -27,12 +27,14 @@ const IndexTokensListItem =  (props) => {
 
            
             
-            return (<li className="left-list-item" id={item.addr} style={styleSelect}>
+            return (<li className="left-list-item" id={item.addr} style={styleSelect}
+            onClick={(e) => {props.changeActiveElement(e,item.name,item.balance/1000000000000000000)}}
+            >
                         
         <i className="fa fa-question-circle"></i>
     
     
-        <p onClick={(e) => {props.changeActiveElement(e,item.name,item.balance/1000000000000000000)}}>
+        <p>
             {/* VERY GOOD INDEX TOKEN */}
             {item.name}
             <br /> <span style={{'fontSize':'65%'}}>

@@ -165,3 +165,7 @@ li>i {
     
   }
 }
+
+.navbar {
+  display: none !important;
+}
