@@ -1,5 +1,5 @@
 /* eslint-disable react/no-typos */
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { connect } from 'react-redux';
 import IndexTokenList from '../components/indexTokenList/IndexTokensList';
 import TokensInIndexTokenList from '../components/indexTokenTokens/TokensInIndexTokenList';
@@ -16,7 +16,24 @@ import {SELECT_INDEX_TOKEN,
 
 
 const investmentPage = (props) => {
+
+    const [matches, setMatches] = useState(false);
+    
+    useEffect(() => {
+       const media = window.matchMedia('(max-width: 600px)');
+       if (media.matches !== matches) {
+        setMatches(media.matches);
+        //console.log('TEST MEDIA QUERY',media.matches)
+      }
+      
+    }, [matches])
+
     var processStateComponent;
+    var tokensOfIndexToken = '';
+
+    if (!matches) {
+          tokensOfIndexToken = <TokensInIndexTokenList />
+    }
     
     if (props.processState === SELECT_INDEX_TOKEN) {
         processStateComponent =  <IndexTokenList/>
@@ -47,7 +64,7 @@ const investmentPage = (props) => {
             </div>
             
             <div className="right-list">
-            <TokensInIndexTokenList />
+            {tokensOfIndexToken}
             </div>
 
         </div> 

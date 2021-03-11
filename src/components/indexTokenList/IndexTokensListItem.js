@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { connect } from 'react-redux';
 import { Fragment } from 'react';
 import indexTokenSelect from '../../ethvtx_config/actions/indexTokenSelect';
 import startBuyIndexTokens from '../../ethvtx_config/actions/startToBuyIndexTokens';
 import startSellToken from '../../ethvtx_config/actions/startSellIndexTokens';
-
+import IndexTokens from '../indexTokenTokens/TokensInIndexTokenList';
 //import { IndexContractLoader } from '../IndexContractLoader';
 import { getContract, getContractList } from 'ethvtx/lib/contracts/helpers/getters';
 //import contracts from '../embarkArtifacts/contracts';
@@ -12,50 +12,69 @@ import { getContract, getContractList } from 'ethvtx/lib/contracts/helpers/gette
 
 const IndexTokensListItem =  (props) => {
    // console.log(props.indexList)
+   const [matches, setMatches] = useState(false);
+    
+    useEffect(() => {
+       const media = window.matchMedia('(max-width: 600px)');
+       if (media.matches !== matches) {
+        setMatches(media.matches);
+        console.log('TEST MEDIA QUERY',media.matches)
+      }
+      
+    }, [matches])
   
     if  (props.indexList !== undefined) {
         const indexJSXList = props.indexList.map((item, key) => {
 
             var styleSelect = {};
             var investStyle = {};
+            var indexListcomponent = '';
 
             if (item.addr !== props.activeToken.tokenAddress) {
                styleSelect = {boxShadow:'none'}
                investStyle = {display:'none'}
+               indexListcomponent = ''
+            } else {
+               if (matches) {
+                indexListcomponent = <div><h3>Tokens of Index Token</h3><IndexTokens /></div>
+               }
             }
 
 
            
             
-            return (<li className="left-list-item" id={item.addr} style={styleSelect}
-            onClick={(e) => {props.changeActiveElement(item.addr,item.name,item.balance/1000000000000000000)}}
+            return (
+            <li className="left-list-item" id={item.addr} style={styleSelect}
+            onClick={(e) => {
+                setTimeout(function(){
+                    let objControl=document.getElementById(item.addr);
+                    objControl.scrollIntoView({behavior: "smooth"});
+                   },500);
+                props.changeActiveElement(item.addr,item.name,item.balance/1000000000000000000)
+            }}
             >
                         
-        <i className="fa fa-question-circle"></i>
+        {/* <i className="fa fa-question-circle"></i> */}
     
-    
-        <p>
-            {/* VERY GOOD INDEX TOKEN */}
-            {item.name}
-            <br /> <span style={{'fontSize':'65%'}} className="address_in_list">
+        
+        <div className="token_info">
+            <p>{item.name}</p>
+            <p> Price: ${item.price.toFixed(4)}</p>
+            <p style={{ minWidth: '1rem' }}> Balance: {(item.balance/1000000000000000000).toFixed(4)}</p>
+        </div>
+        <div className="address_container" >
+            <span style={{'fontSize':'65%'}} className="address_in_list">{matches}
             {item.addr} </span>
-        </p>
+        </div>
+        <div className="buttons_container">
+            <p>
+            <button className="invest" onClick={() => props.startBuyToken(props.svetTokensAmount,props.svetTokenAddress)
+                } style={investStyle}>INVEST</button>
+            <button className="invest" onClick={() => props.startSellToken()} style={investStyle}>Sell</button>
+            </p>
+        </div>
         
-        <p> Price: <br />
-            ${item.price.toFixed(4)}
-        </p>
-        <p style={{ minWidth: '1rem' }}> Balance: <br />
-            {/* VERY GOOD INDEX TOKEN */}
-            {(item.balance/1000000000000000000).toFixed(4)}
-        </p>
-        <p>
-        <button className="invest" onClick={() => props.startBuyToken(props.svetTokensAmount,props.svetTokenAddress)
-            } style={investStyle}>INVEST</button>
-        
-
-        <button className="invest" onClick={() => props.startSellToken()} style={investStyle}>Sell</button>
-        </p>
-    
+        {indexListcomponent}
      </li>)
     });
     
