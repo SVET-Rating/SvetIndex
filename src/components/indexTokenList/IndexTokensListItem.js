@@ -28,7 +28,7 @@ const IndexTokensListItem =  (props) => {
            
             
             return (<li className="left-list-item" id={item.addr} style={styleSelect}
-            onClick={(e) => {props.changeActiveElement(e,item.name,item.balance/1000000000000000000)}}
+            onClick={(e) => {props.changeActiveElement(item.addr,item.name,item.balance/1000000000000000000)}}
             >
                         
         <i className="fa fa-question-circle"></i>
@@ -150,7 +150,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => {
     return {
-    changeActiveElement: (e,indexTokenName,indexTokenBalance) => dispatch(indexTokenSelect(e.target.parentElement.id,indexTokenName,indexTokenBalance)),
+    changeActiveElement: (e,indexTokenName,indexTokenBalance) => dispatch(indexTokenSelect(e,indexTokenName,indexTokenBalance)),
     startBuyToken: (svetTokensAmount,svetTokenAddress) => dispatch(startBuyIndexTokens(svetTokensAmount,svetTokenAddress)),
     startSellToken: () => dispatch(startSellToken())
   }}
