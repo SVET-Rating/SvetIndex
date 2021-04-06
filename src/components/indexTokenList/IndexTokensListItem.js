@@ -44,7 +44,7 @@ const IndexTokensListItem =  (props) => {
            
             
             return (
-            <li className="left-list-item" id={item.addr} style={styleSelect}
+            <li className="left-list-item index-li" id={item.addr} style={styleSelect}
             onClick={(e) => {
                 if (matches) {
                     setTimeout(function(){

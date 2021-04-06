@@ -12,7 +12,7 @@ const TokensInIndexTokenListItem = (props) => {
         props.tokens(props.indexList);
         var getTokensByActiveIndexToken = props.indexList.map((item,key) => {
             return (
-            <li className="right-list-item" style={{showBox:'none'}}>
+            <li className="right-list-item index-li" style={{showBox:'none'}}>
             <div><div><p>{item.name}: {item.symbol}</p>
             <div>{item.addrActive}</div>
             <p>Index share: {item.amount/100}%</p>
