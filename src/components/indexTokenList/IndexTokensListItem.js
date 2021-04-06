@@ -8,12 +8,14 @@ import IndexTokens from '../indexTokenTokens/TokensInIndexTokenList';
 //import { IndexContractLoader } from '../IndexContractLoader';
 import { getContract, getContractList } from 'ethvtx/lib/contracts/helpers/getters';
 //import contracts from '../embarkArtifacts/contracts';
+import { Jazzicon } from '@ukstv/jazzicon-react';
+
 
 
 const IndexTokensListItem =  (props) => {
    // console.log(props.indexList)
    const [matches, setMatches] = useState(false);
-    
+   
     useEffect(() => {
        const media = window.matchMedia('(max-width: 600px)');
        if (media.matches !== matches) {
@@ -22,6 +24,17 @@ const IndexTokensListItem =  (props) => {
       }
       
     }, [matches])
+
+
+    const getTokensIcons = (tokens) => {
+               return tokens.map((address,key) => {
+                    return <div style={{ width: '15px', height: '15px', marginRight:'10px' }} id={key}>
+                    <span>{address.name}</span>
+                    <Jazzicon address={address.addrActive} />
+                    </div>
+               } )
+                        
+    }
   
     if  (props.indexList !== undefined) {
         const indexJSXList = props.indexList.map((item, key) => {
@@ -75,7 +88,10 @@ const IndexTokensListItem =  (props) => {
                 } style={investStyle}>INVEST</button>
             <button className="invest" onClick={() => props.startSellToken()} style={investStyle}>Sell</button>
             </p>
+            
+            
         </div>
+        <div className="index-token-icons">{getTokensIcons(item.tokens)}</div>
         
         {indexListcomponent}
      </li>)
@@ -126,6 +142,13 @@ const getIndexPriceInSvet = (indexTokenAddress,state) => {
 }
 
 
+const getIndexList = (address,state) => {
+    if (address === "") {
+        return undefined
+    }
+    return getContract(state, 'IndexToken', address).fn.getActivesList()
+}
+
 const indexListWithBalance = (state) => {
     const indexTokensList = getContract(state, 'IndexStorage', '@indexstorage').fn.indexList();
     if (indexTokensList != undefined) {
@@ -133,14 +156,20 @@ const indexListWithBalance = (state) => {
             let currentBalance = getContract(state, 'IndexToken', item.addr).fn.balanceOf(state.contracts.web3.currentProvider.selectedAddress)
             //let currentPrice = getContract(state, 'OraclePrice', '@oracleprice').fn.getLastPrice(item.addr)
             let currentPrice = getIndexPriceInSvet(item.addr, state);
+            
             if (currentBalance == undefined || currentPrice == undefined) {
                 return undefined
             } else {
+                let tokens_addresses_list = getIndexList(item.addr,state)
+                if (tokens_addresses_list == undefined) {
+                    return undefined
+                }
                 return  {
                     addr: item.addr,
                     name: item.name,
                     balance: currentBalance,
-                    price: currentPrice
+                    price: currentPrice,
+                    tokens: tokens_addresses_list
                     //._contract.methods.balanceOf(state.contracts.web3.currentProvider.selectedAddress)
                 }
             }
