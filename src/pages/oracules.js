@@ -18,13 +18,13 @@ const oraculesPage = (props) => {
       }, []) 
 
     return (
-        // <meta http-equiv="refresh" content="0;http://svetrating.com/reports_all/Latest/" />
-        <div style={{margin: '0 auto', width:'90%'}}>
+         <meta http-equiv="refresh" content="0;/reports_all/Latest/" />
+
+    );
+ /*        <div style={{margin: '0 auto', width:'90%'}}>
         <iframe is="x-frame-bypass" src="http://svetrating.com/reports_all/Latest/"
          width="100%" height="500px" />
          </div>
-    );
- /*
     return (
         <div>
         <div className="tokens-container">

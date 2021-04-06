@@ -20,7 +20,7 @@ const dashboardPage = (props) => {
     //   }, []) 
 
     return (
-         <meta http-equiv="refresh" content="0;http://svetrating.com/coin_list" />
+         <meta http-equiv="refresh" content="0;/coin_list" />
         // <div style={{margin: '0 auto', width:'90%'}}>
         // <iframe is="x-frame-bypass" src="http://svetrating.com/coin_list"
         //  width="100%" height="500px" />

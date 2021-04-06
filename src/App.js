@@ -22,7 +22,7 @@ const App = (props) => {
     <div className="App" >
       <HashRouter>
       <header>
-        <Navbar/>
+        <Navbar/> 
     </header>
     <main>
         <Switch>

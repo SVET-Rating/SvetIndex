@@ -26,14 +26,14 @@ const expertsPage = (props) => {
       }, []) 
 
     return (        
-        //  <meta http-equiv="refresh" content="0;http://svetrating.com/about/" />
-         <div style={{margin: '0 auto', width:'90%'}}>
-        <iframe is="x-frame-bypass" src="http://svetrating.com/about/"
-         width="100%" height="500px" />
-         </div>
+          <meta http-equiv="refresh" content="0;/about/" />
+         
 
     );
-    /**
+    /**<div style={{margin: '0 auto', width:'90%'}}>
+        <iframe is="x-frame-bypass" src="/about/"
+         width="100%" height="500px" />
+         </div>
      *         <div>
         <div className="tokens-container">
          
