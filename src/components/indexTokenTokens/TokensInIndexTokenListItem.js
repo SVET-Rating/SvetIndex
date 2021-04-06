@@ -11,6 +11,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import {Pie} from 'react-chartjs-2';
+
 
 const useStyles = makeStyles({
     table: {
@@ -27,7 +29,16 @@ const TokensInIndexTokenListItem = (props) => {
             return <div><li className="right-list-item"><p>Click on index token name to view it portfolio </p></li></div>
         } else {
         props.tokens(props.indexList);
+        var labels = []
+        var data_percent = []
+        var backgroundColor = []
+        var hoverBackgroundColor = []
         var getTokensByActiveIndexToken = props.indexList.map((item,key) => {
+            labels.push(item.symbol);
+            data_percent.push(item.amount/100);
+            var randomColor = "#"+Math.floor(Math.random()*16777215).toString(16);
+            backgroundColor.push(randomColor);
+            hoverBackgroundColor.push(randomColor);
             return (
             // <li className="right-list-item index-li" style={{showBox:'none'}}>
             // <div><div><p>{item.name}: {item.symbol}</p>
@@ -37,8 +48,7 @@ const TokensInIndexTokenListItem = (props) => {
             // <i className="fa fa-question-circle"></i></div>
             // </div>               
             // </li>
-            
-            
+                
                
                     <TableRow key={item.name}>
                     <TableCell component="th" scope="row">
@@ -46,7 +56,7 @@ const TokensInIndexTokenListItem = (props) => {
                     </TableCell>
                     <TableCell align="right">{item.addrActive}</TableCell>
                     <TableCell align="right">{item.amount/100}</TableCell>
-                    <TableCell align="right">{props.balActiveFn(props.currentAddress, props.indexToken, item.addrActive) / 10**18}</TableCell>
+                    <TableCell align="right">{props.balActiveFn(props.currentAddress, props.indexToken.tokenAddress, item.addrActive) / 10**18}</TableCell>
                     </TableRow>
                 
                 
@@ -56,6 +66,7 @@ const TokensInIndexTokenListItem = (props) => {
         }   
                     
         return (
+            <React.Fragment>
             <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
                 <TableHead className={classes.tableHeader}>
@@ -72,6 +83,19 @@ const TokensInIndexTokenListItem = (props) => {
             </TableBody>
             </Table>
             </TableContainer>
+
+            <div>
+            <h2>{props.indexToken.indexTokenName}</h2>
+            <Pie data={{
+                        labels,
+                        datasets: [{
+                            data: data_percent,
+                            backgroundColor,
+                            hoverBackgroundColor
+                        }]
+                    }} />
+            </div>
+            </React.Fragment>
         )
     
 }
@@ -98,7 +122,7 @@ const balActiveFn = ( state) => {
 const mapStateToProps = (state) => {
     return {indexList: getIndexList(state.indexTokenReducer.activeToken.tokenAddress, state),
     balActiveFn: balActiveFn(state),
-    indexToken: state.indexTokenReducer.activeToken.tokenAddress,
+    indexToken: state.indexTokenReducer.activeToken,
     currentAddress: state.vtxconfig.coinbase
 
     }

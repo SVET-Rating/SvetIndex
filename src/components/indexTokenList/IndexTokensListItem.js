@@ -17,7 +17,8 @@ const tokenList = require('../../../tokenlist.json');
 const useStyles = makeStyles({
     button: {
       marginRight: '10px',
-      color: "green"
+      color: "green",
+      border: '1px solid'
     }});
 
 const IndexTokensListItem =  (props) => {
