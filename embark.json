@@ -6,7 +6,7 @@
     "index.html": "src/index.html", 
     "images/": ["src/images/**"]
   },
-  "buildDir": "dist/",
+  "buildDir": "../frisco/static/svetindex",
   "config": "config/",
   "versions": {
     "solc": "0.6.12"
