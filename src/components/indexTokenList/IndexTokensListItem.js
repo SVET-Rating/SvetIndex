@@ -28,9 +28,12 @@ const IndexTokensListItem =  (props) => {
 
     const getTokensIcons = (tokens) => {
                return tokens.map((address,key) => {
-                    return <div style={{ width: '15px', height: '15px', marginRight:'10px' }} id={key}>
+                    return <div className="icon-item">
+                    <span>&nbsp;{address.amount/100}&nbsp;%</span>
+                    <div style={{ width: '15px', height: '15px', margin:'0 5px' }} id={key}>
+                       <Jazzicon address={address.addrActive} />
+                    </div>
                     <span>{address.symbol}</span>
-                    <Jazzicon address={address.addrActive} />
                     </div>
                } )
                         
@@ -74,9 +77,12 @@ const IndexTokensListItem =  (props) => {
     
         
         <div className="token_info">
-            <p>{item.name}</p>
-            <p> Price: ${item.price.toFixed(4)}</p>
-            <p style={{ minWidth: '1rem' }}> Balance: {(item.balance/1000000000000000000).toFixed(4)}</p>
+            <p className="index-token-name">{item.name}</p>
+            <div>
+                <p> Price: ${item.price.toFixed(4)}</p>
+                <p style={{ minWidth: '1rem' }}> Balance: {(item.balance/1000000000000000000).toFixed(4)}</p>
+            </div>
+           
         </div>
         <div className="address_container" >
             <span style={{'fontSize':'65%'}} className="address_in_list">{matches}
