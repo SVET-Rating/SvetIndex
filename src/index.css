@@ -38,7 +38,7 @@ button.payment-method {
   cursor: pointer;
   border-radius: 50px;
 }
-
+/*
 header {
   width: 90%;
   margin: 2rem auto !important;
@@ -191,11 +191,11 @@ li>i {
     justify-items: center;
   }
 }
-
+/*
 .navbar {
   display: none !important;
 }
-
+*/
 .left-list-item {
   cursor: pointer;
 
