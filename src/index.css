@@ -84,8 +84,9 @@ li.index-li {
   margin: 10px 0;
   padding: 10px;
   border: 1px solid rgba(0,0,0,0);
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
-  border: 5px solid #d8d8d1 !important;
+  /* box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25); */
+  box-shadow: 0px 8px 28px rgb(167 156 32 / 39%);
+  
   border-radius: 19px;
   background-color: rgba(251,251,250,1);
 }

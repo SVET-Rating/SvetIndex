@@ -9,10 +9,19 @@ import IndexTokens from '../indexTokenTokens/TokensInIndexTokenList';
 import { getContract, getContractList } from 'ethvtx/lib/contracts/helpers/getters';
 //import contracts from '../embarkArtifacts/contracts';
 import { Jazzicon } from '@ukstv/jazzicon-react';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
 
 
+const useStyles = makeStyles({
+    button: {
+      marginRight: '10px',
+      color: "green"
+    }});
 
 const IndexTokensListItem =  (props) => {
+    const classes = useStyles();
+
    // console.log(props.indexList)
    const [matches, setMatches] = useState(false);
    
@@ -47,10 +56,11 @@ const IndexTokensListItem =  (props) => {
             var indexListcomponent = '';
 
             if (item.addr !== props.activeToken.tokenAddress) {
-               styleSelect = {boxShadow:'none'}
+               styleSelect = {boxShadow:'none',border:'unset'}
                investStyle = {display:'none'}
                indexListcomponent = ''
             } else {
+               styleSelect = {border: '1px dashed #c51f1f'} 
                if (matches) {
                 indexListcomponent = <div><h3>Tokens of Index Token</h3><IndexTokens /></div>
                }
@@ -90,9 +100,10 @@ const IndexTokensListItem =  (props) => {
         </div>
         <div className="buttons_container">
             <p>
-            <button className="invest" onClick={() => props.startBuyToken(props.svetTokensAmount,props.svetTokenAddress)
-                } style={investStyle}>INVEST</button>
-            <button className="invest" onClick={() => props.startSellToken()} style={investStyle}>Sell</button>
+            <Button variant="outlined" className={classes.button} onClick={() => props.startBuyToken(props.svetTokensAmount,props.svetTokenAddress)
+                } style={investStyle}>INVEST</Button>
+            <Button variant="outlined" className={classes.button}
+            onClick={() => props.startSellToken()} style={investStyle}>Sell</Button>
             </p>
             
             
