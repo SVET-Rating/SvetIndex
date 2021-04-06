@@ -9,13 +9,10 @@ import IndexTokens from '../indexTokenTokens/TokensInIndexTokenList';
 import { getContract, getContractList } from 'ethvtx/lib/contracts/helpers/getters';
 //import contracts from '../embarkArtifacts/contracts';
 import { Jazzicon } from '@ukstv/jazzicon-react';
-<<<<<<< HEAD
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
-=======
 const tokenList = require('../../../tokenlist.json');
->>>>>>> 5bf81ea66e96320dce4b6d0569718c70da8de3a6
 
 const useStyles = makeStyles({
     button: {

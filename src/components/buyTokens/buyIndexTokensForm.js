@@ -4,8 +4,19 @@ import { getContract, getContractList } from 'ethvtx/lib/contracts/helpers/gette
 import  checkSvetTokensForBuyIndexTokensAction  from '../../ethvtx_config/actions/checkIndexTokenAmountAction';
 import svetTokensBuyProcessStart from '../../ethvtx_config/actions/goToSvetTokenMethodPayment';
 import formBuyIndexTokens from '../../ethvtx_config/actions/buyIndexTokensAction';
+import resetAction from "../../ethvtx_config/actions/resetInvestmentsAction";
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 
+const useStyles = makeStyles({
+    button: {
+      marginRight: '10px',
+      color: "green"
+    }});
+    
 const IndexTokenPaymentForm = (props) => {
+    const classes = useStyles();
     return (
         <div>
             <div className="left-list-header">
@@ -17,19 +28,29 @@ const IndexTokenPaymentForm = (props) => {
                     </p>
                     
                 </div>
+                <div style={{textAlign:'center'}}>
+                <Button variant="outlined" className={classes.button}
+                        style={props.enoughSvetTokensForBuy ? {display:'none'}:{}}
+                        onClick={(e) => {
+                            props.resetToInvestment(e);
+                            return <InvestmentPage />;
+                          }}
+                        >GO BACK</Button>
+                </div>
                 <div className="svet-token-payment-form">
                     <p>INDEX TOKEN PRICE IN SVET TOKENS: {props.indexTokenPrice}</p>
                     <p>YOU HAVE: {props.svetTokensAmount} SVET TOKENS</p>
                     <p>YOU CAN BUY: {props.svetTokensAmount/props.indexTokenPrice}</p>
                 <div className="svet-token-payment-form-input">
                     
-                    <p style={{fontSize: '0.9rem'}}>INPUT AMOUNT </p>
-                    <input type="text" name="amount_of_svet_tokens" value={props.indexTokensAmount}
+                    {/* <p style={{fontSize: '0.9rem'}}>INPUT AMOUNT </p> <input type="text" name="amount_of_svet_tokens" */}
+                    <TextField id="outlined-basic" label="INPUT AMOUNT" variant="outlined"
+                    value={props.indexTokensAmount}
                     onChange={(e) => {props.addIndexTokenAmount(e,props.indexTokenPrice,props.svetTokensAmount)}}
                     />
                 </div>
                     <div style={props.enoughSvetTokensForBuy === undefined?{display:'none'}:{}}>
-                        <button className="payment-method" 
+                    <Button variant="outlined" className={classes.button}
                         style={props.enoughSvetTokensForBuy ? {}:{display:'none'}}
                         onClick={(e) => {props.buyIndexTokens(props.buyIndexTokensContract,
                                                               props.indexTokensAmount,
@@ -37,11 +58,11 @@ const IndexTokenPaymentForm = (props) => {
                                                               props.currentAddress,
                                                               props.svetToken,
                                                               )}}
-                        >INVEST</button>
-                        <button className="payment-method" 
+                        >INVEST</Button>
+                       <Button variant="outlined" className={classes.button}
                         style={props.enoughSvetTokensForBuy ? {display:'none'}:{}}
                         onClick={(e) => {props.buySvetTokensMethodSelect(e)}}
-                        >BUY SVET TOKENS</button>
+                        >BUY SVET TOKENS</Button>
                 </div>
             </div>
 
@@ -101,6 +122,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        resetToInvestment: (e) => dispatch(resetAction(e)),
         buySvetTokensMethodSelect:(e) => dispatch(svetTokensBuyProcessStart(e)),
         addIndexTokenAmount: (e,indexTokenPrice,svetTokensAmount) => dispatch(checkSvetTokensForBuyIndexTokensAction(e.target.value, indexTokenPrice, svetTokensAmount)),
         buyIndexTokens: (ITokContract, ITAmount, ITAddress,currentAddress, svetToken) => dispatch(formBuyIndexTokens(ITokContract, ITAmount, ITAddress, currentAddress, svetToken))

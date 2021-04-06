@@ -2,9 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getContract, getContractList } from 'ethvtx/lib/contracts/helpers/getters';
 import {sellIndexTokenAction, sellIndexTokenAmount } from '../../ethvtx_config/actions/sellIndexTokenAction';
+import resetAction from "../../ethvtx_config/actions/resetInvestmentsAction";
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 
 
+const useStyles = makeStyles({
+    button: {
+      marginRight: '10px',
+      color: "green"
+    }});
+    
 const sellIndexTokens = (props) => {
+    const classes = useStyles();
     return (
         <div>
             <div className="left-list-header">
@@ -12,25 +23,34 @@ const sellIndexTokens = (props) => {
                         YOU ARE GOING TO SELL ( {props.indexTokenName} )
                     </p>
                 </div>
+                <div style={{textAlign:'center'}}>
+                <Button variant="outlined" className={classes.button}
+                        style={props.enoughSvetTokensForBuy ? {display:'none'}:{}}
+                        onClick={(e) => {
+                            props.resetToInvestment(e);
+                            return <InvestmentPage />;
+                          }}
+                        >GO BACK</Button>
+                </div>
                 <div className="svet-token-payment-form">
                     <p>YOU HAVE: {props.indexTokenBalance} OF {props.indexTokenName}</p>
                 <div className="svet-token-payment-form-input">
                     
                     <p style={{fontSize: '0.9rem'}}>INPUT AMOUNT: </p>
-                    <input type="text" name="amount_of_index_tokens" value={props.indexTokensAmountForSell}
+                    <TextField id="outlined-basic" label="INPUT AMOUNT" variant="outlined" value={props.indexTokensAmountForSell}
                     onChange={(e) => {props.sellIndexTokenAmount(e)}}
                     />
                 </div>
                 
                     <div style={props.indexTokensAmountForSell === ""?{display:'none'}:{}}>
-                        <button className="payment-method" 
+                    <Button variant="outlined" className={classes.button}
                         
                         onClick={(e) => {props.sellIndexTokenAction(props.sellIndexTokensContract,
                                                               props.indexTokensAmountForSell,
                                                               props.indexTokenAddress,
                                                               props.currentAddress,
                                                               props.indexTokenContract)}}
-                        >SELL</button>
+                        >SELL</Button>
                        
                 </div>
             </div>
@@ -62,6 +82,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        resetToInvestment: (e) => dispatch(resetAction(e)),
         sellIndexTokenAction: (sellIndexTokensContract,
                                indexTokensAmountForSell,
                                indexTokenAddress,
