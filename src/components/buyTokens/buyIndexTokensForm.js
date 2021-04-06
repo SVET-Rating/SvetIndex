@@ -17,6 +17,7 @@ const useStyles = makeStyles({
     
 const IndexTokenPaymentForm = (props) => {
     const classes = useStyles();
+    
     return (
         <div>
             <div className="left-list-header">
@@ -33,7 +34,7 @@ const IndexTokenPaymentForm = (props) => {
                         style={props.enoughSvetTokensForBuy ? {display:'none'}:{}}
                         onClick={(e) => {
                             props.resetToInvestment(e);
-                            return <InvestmentPage />;
+                            
                           }}
                         >GO BACK</Button>
                 </div>
@@ -41,17 +42,17 @@ const IndexTokenPaymentForm = (props) => {
                     <p>INDEX TOKEN PRICE IN SVET TOKENS: {props.indexTokenPrice}</p>
                     <p>YOU HAVE: {props.svetTokensAmount} SVET TOKENS</p>
                     <p>YOU CAN BUY: {props.svetTokensAmount/props.indexTokenPrice}</p>
-                <div className="svet-token-payment-form-input">
-                    
-                    {/* <p style={{fontSize: '0.9rem'}}>INPUT AMOUNT </p> <input type="text" name="amount_of_svet_tokens" */}
+                <div className="svet-token-payment-form-input" 
+                style={props.enoughSvetTokensForBuy || props.svetTokensAmount != 0 ? {}:{display:'none'}} >
                     <TextField id="outlined-basic" label="INPUT AMOUNT" variant="outlined"
+                    
                     value={props.indexTokensAmount}
-                    onChange={(e) => {props.addIndexTokenAmount(e,props.indexTokenPrice,props.svetTokensAmount)}}
+                    onChange={(e) => {props.addIndexTokenAmount(e.target.value, props.indexTokenPrice,props.svetTokensAmount)}}
                     />
                 </div>
-                    <div style={props.enoughSvetTokensForBuy === undefined?{display:'none'}:{}}>
+                   <div >
                     <Button variant="outlined" className={classes.button}
-                        style={props.enoughSvetTokensForBuy ? {}:{display:'none'}}
+                        style={props.enoughSvetTokensForBuy || props.svetTokensAmount != 0 ? {}:{display:'none'}}
                         onClick={(e) => {props.buyIndexTokens(props.buyIndexTokensContract,
                                                               props.indexTokensAmount,
                                                               props.indexTokenAddress,
@@ -60,7 +61,7 @@ const IndexTokenPaymentForm = (props) => {
                                                               )}}
                         >INVEST</Button>
                        <Button variant="outlined" className={classes.button}
-                        style={props.enoughSvetTokensForBuy ? {display:'none'}:{}}
+                        style={props.enoughSvetTokensForBuy || props.svetTokensAmount != 0 ? {display:'none'}:{}}
                         onClick={(e) => {props.buySvetTokensMethodSelect(e)}}
                         >BUY SVET TOKENS</Button>
                 </div>
@@ -124,7 +125,7 @@ const mapDispatchToProps = dispatch => {
     return {
         resetToInvestment: (e) => dispatch(resetAction(e)),
         buySvetTokensMethodSelect:(e) => dispatch(svetTokensBuyProcessStart(e)),
-        addIndexTokenAmount: (e,indexTokenPrice,svetTokensAmount) => dispatch(checkSvetTokensForBuyIndexTokensAction(e.target.value, indexTokenPrice, svetTokensAmount)),
+        addIndexTokenAmount: (e,indexTokenPrice,svetTokensAmount) => dispatch(checkSvetTokensForBuyIndexTokensAction(e, indexTokenPrice, svetTokensAmount)),
         buyIndexTokens: (ITokContract, ITAmount, ITAddress,currentAddress, svetToken) => dispatch(formBuyIndexTokens(ITokContract, ITAmount, ITAddress, currentAddress, svetToken))
     }
 }

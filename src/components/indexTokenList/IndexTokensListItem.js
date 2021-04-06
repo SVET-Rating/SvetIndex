@@ -45,7 +45,7 @@ const IndexTokensListItem =  (props) => {
                         
                     return <div className="icon-item">
                     <span>&nbsp;{address.amount/100}&nbsp;%</span>
-                    <div style={{ width: '15px', height: '15px', margin:'0 5px' }} id={key}>
+                    <div style={{ width: '25px', height: '25px', margin:'0 5px' }} id={key}>
                         {isExist&&<img src={'https://github.com/SVET-Rating/assets/blob/master/blockchains/ethereum/assets/'+address.addrActive+'/logo.png'}/>}  
                         {!isExist&&<Jazzicon address={address.addrActive} />}
                     </div>

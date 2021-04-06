@@ -2,8 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {ETHER, FIAT_MONEY, DAI, BITCOIN} from '../../ethvtx_config/paymentMethod/paymentMethodType';
 import buySvetTokenMethodSelectAction from '../../ethvtx_config/actions/buySvetTokensMethodSelect';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import resetAction from "../../ethvtx_config/actions/resetInvestmentsAction";
+
+const useStyles = makeStyles({
+    button: {
+      marginRight: '10px',
+      color: "green"
+    }});
 
  const SvetPaymentMethods = (props) => {
+    const classes = useStyles();
     return (
         <div>
             <div className="left-list-header">
@@ -14,11 +25,24 @@ import buySvetTokenMethodSelectAction from '../../ethvtx_config/actions/buySvetT
                         PLEAS SELECT METHOD OF PAYMENT
                     </p>
                 </div>
+                <div style={{textAlign:'center'}}>
+                <Button variant="outlined" className={classes.button}
+                        style={props.enoughSvetTokensForBuy ? {display:'none'}:{}}
+                        onClick={(e) => {
+                            props.resetToInvestment(e);
+                            
+                          }}
+                        >GO BACK</Button>
+                </div>
                 <div className="svet-token-payment-methods">
-                <button className="payment-method" onClick={()=>props.buySvetTokenFiat(FIAT_MONEY)}>FIAT MONEY</button>
-                <button className="payment-method" onClick={()=>props.buySvetTokenFiat(ETHER)}>ETHER</button>
-                <button className="payment-method" onClick={()=>props.buySvetTokenFiat(BITCOIN)}>BITCOIN</button>
-                <button className="payment-method" onClick={()=>props.buySvetTokenFiat(DAI)}>DAI</button>
+                <Button variant="outlined" className={classes.button} disabled
+                onClick={()=>props.buySvetTokenFiat(FIAT_MONEY)}>FIAT MONEY</Button>
+                <Button variant="outlined" className={classes.button} 
+                onClick={()=>props.buySvetTokenFiat(ETHER)}>ETHER</Button>
+                <Button variant="outlined" className={classes.button} disabled
+                onClick={()=>props.buySvetTokenFiat(BITCOIN)}>BITCOIN</Button>
+                <Button variant="outlined" className={classes.button} disabled
+                onClick={()=>props.buySvetTokenFiat(DAI)}>DAI</Button>
                     </div>
 
         </div>
@@ -27,6 +51,7 @@ import buySvetTokenMethodSelectAction from '../../ethvtx_config/actions/buySvetT
 
 const mapDispatchToProps = dispatch => {
    return {
+      resetToInvestment: (e) => dispatch(resetAction(e)),
       buySvetTokenFiat: (payment_method) => dispatch(buySvetTokenMethodSelectAction(payment_method))
    }
 }
