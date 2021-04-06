@@ -29,7 +29,7 @@ const IndexTokensListItem =  (props) => {
     const getTokensIcons = (tokens) => {
                return tokens.map((address,key) => {
                     return <div style={{ width: '15px', height: '15px', marginRight:'10px' }} id={key}>
-                    <span>{address.name}</span>
+                    <span>{address.symbol}</span>
                     <Jazzicon address={address.addrActive} />
                     </div>
                } )
