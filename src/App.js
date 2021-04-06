@@ -20,18 +20,17 @@ const App = (props) => {
   
   return (
     <div className="App" >
-      <HashRouter>
-      <header>
+      {/* <HashRouter>
+       <header>
         <Navbar/>
-    </header>
+    </header> */}
     <main>
-        <Switch>
+    <InvestmentPage /> 
+        {/* <Switch>
         <Route exact path="/">
           <InvestmentPage /> 
         </Route>
-        {/* <Route path="/investments" >
-          <InvestmentPage />
-        </Route> */}
+        
         <Route  path="/investments" render={ (e) => {
           props.resetToInvestment(e);
           return <InvestmentPage />;
@@ -48,16 +47,16 @@ const App = (props) => {
         <Route path="/experts">
             <ExpertsPage />
         </Route>
-        </Switch>
-        <footer>
+        </Switch> */}
+        {/* <footer>
             <div className="footer-info">
                 <div className="footer-header">SVET Supply-Weighted Index (SVET-SWI)</div>
                 <p className="footer-text">Svet SWI index is fully backed with tokens. When you purchase index, smart contract buys proportional amounts of token on Uniswap (with Uniswap pricing). You can sell index everytime and smart contract sells amounts of token on Uniswap. </p>
                 <a href="http://svetrating.com/svet_index_supply/" className="footer-readmore" >READ MORE about SVWT-SWI</a>
             </div>
-        </footer>
+        </footer> */}
     </main>
-    </HashRouter>
+    {/* </HashRouter> */}
     </div>
   );
 }

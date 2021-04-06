@@ -44,7 +44,7 @@ header {
   margin: 2rem auto !important;
 }
 
-nav {
+/* nav {
   display: grid;
   grid-auto-flow: column;
   grid-gap: 1rem;
@@ -61,7 +61,7 @@ nav>div {
 nav>div>a {
   color:#8e8e8e;
   text-decoration: none;
-}
+} */
 
 .tokens-container {
   display: grid;
