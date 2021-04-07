@@ -152,8 +152,11 @@ li>i {
 
 .buttons_container {
   display: grid;
-  grid-auto-flow: row;
+  grid-auto-flow: column;
   justify-items: center;
+  width: 50%;
+  margin: 0 auto;
+  padding: 15px;
 }
 
 .token_info {
@@ -215,6 +218,8 @@ li>i {
     grid-template-columns: repeat(3,1fr);
     justify-content: center;
     justify-items: center;
+    padding: 10px;
+    
 }
 
 .icon-item {
@@ -230,4 +235,6 @@ li>i {
     border: 1px dashed;
     padding: 8px;
     border-radius: 11px;
+    display: grid;
+    grid-auto-flow: column;
 }

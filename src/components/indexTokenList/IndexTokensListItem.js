@@ -94,7 +94,18 @@ const IndexTokensListItem =  (props) => {
     
         
         <div className="token_info">
-            <p className="index-token-name">{item.name}</p>
+            <div>
+                 
+               <p className="index-token-name">
+                 <div style={{ width: '25px', height: '25px', margin:'0 5px' }} id={key}>
+                  <Jazzicon address={item.addr} />
+                 </div>
+                   <div>
+                       {item.name}
+                   </div>
+                 </p> 
+            </div>
+            
             <div>
                 <p> Price: ${item.price.toFixed(4)}</p>
                 <p style={{ minWidth: '1rem' }}> Balance: {(item.balance/1000000000000000000).toFixed(4)}</p>
@@ -105,18 +116,14 @@ const IndexTokensListItem =  (props) => {
             <span style={{'fontSize':'65%'}} className="address_in_list">{matches}
             {item.addr} </span>
         </div>
+        
+        <div className="index-token-icons">{getTokensIcons(item.tokens)}</div>
         <div className="buttons_container">
-            <p>
             <Button variant="outlined" className={classes.button} onClick={() => props.startBuyToken(props.svetTokensAmount,props.svetTokenAddress)
                 } style={investStyle}>INVEST</Button>
             <Button variant="outlined" className={classes.button}
             onClick={() => props.startSellToken()} style={investStyle}>Sell</Button>
-            </p>
-            
-            
         </div>
-        <div className="index-token-icons">{getTokensIcons(item.tokens)}</div>
-        
         {indexListcomponent}
      </li>)
     });
