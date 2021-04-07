@@ -12,7 +12,7 @@ import { Jazzicon } from '@ukstv/jazzicon-react';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
-const tokenList = require('../../../tokenlist.json');
+const tokenList = require('../../../../assets/blockchains/ethereum/tokenlist.json');
 
 const useStyles = makeStyles({
     button: {
@@ -40,13 +40,12 @@ const IndexTokensListItem =  (props) => {
     const getTokensIcons = (tokens) => {
                return tokens.map((address,key) => {
                     
-                    const istokenaddr = (e) => {e.address = address.addrActive} ;
-                    var isExist = tokenList.tokens.findIndex(istokenaddr) >= 0 ? true : false; 
+                    var isExist = tokenList.tokens.findIndex(e => e.address == address.addrActive ) >= 0 ? true : false; 
                         
                     return <div className="icon-item">
                     <span>&nbsp;{address.amount/100}&nbsp;%</span>
                     <div style={{ width: '25px', height: '25px', margin:'0 5px' }} id={key}>
-                        {isExist&&<img src={'https://github.com/SVET-Rating/assets/blob/master/blockchains/ethereum/assets/'+address.addrActive+'/logo.png'}/>}  
+                        {isExist&&<img src={'/static/assets/blockchains/ethereum/assets/'+address.addrActive+'/logo.png'}/>}  
                         {!isExist&&<Jazzicon address={address.addrActive} />}
                     </div>
                     <span>{address.symbol}</span>
