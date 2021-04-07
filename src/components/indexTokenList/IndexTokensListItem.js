@@ -11,8 +11,10 @@ import { getContract, getContractList } from 'ethvtx/lib/contracts/helpers/gette
 import { Jazzicon } from '@ukstv/jazzicon-react';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+//import {readFile}  from 'commonjs fs';
+const tokenList = require("../../../../assets/blockchains/ethereum/tokenlist.json");
 
-const tokenList = require('../../../../assets/blockchains/ethereum/tokenlist.json');
+
 
 const useStyles = makeStyles({
     button: {
@@ -38,6 +40,22 @@ const IndexTokensListItem =  (props) => {
 
 
     const getTokensIcons = (tokens) => {
+              /*
+                let tokenList;
+                readFile('../../../../assets/blockchains/ethereum/tokenlist.json', 'utf8', (err, jsonString) => {
+                    if (err) {
+                        console.log("Error reading file from disk:", err)
+                        return
+                    }
+                    try {
+                        tokenList = JSON.parse(jsonString)
+
+                    }
+                    catch(errT) {
+                        console.log(errT)
+                        return
+                      }
+                }) */
                return tokens.map((address,key) => {
                     
                     var isExist = tokenList.tokens.findIndex(e => e.address == address.addrActive ) >= 0 ? true : false; 
@@ -45,7 +63,7 @@ const IndexTokensListItem =  (props) => {
                     return <div className="icon-item">
                     <span>&nbsp;{address.amount/100}&nbsp;%</span>
                     <div style={{ width: '25px', height: '25px', margin:'0 5px' }} id={key}>
-                        {isExist&&<img src={'/static/assets/blockchains/ethereum/assets/'+address.addrActive+'/logo.png'}/>}  
+                        {isExist&&<img style={{ width: '25px', height: '25px', margin:'0 5px' }} src={'/static/assets/blockchains/ethereum/assets/'+address.addrActive+'/logo.png'}/>}  
                         {!isExist&&<Jazzicon address={address.addrActive} />}
                     </div>
                     <span>{address.symbol}</span>
