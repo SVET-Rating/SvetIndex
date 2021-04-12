@@ -3,30 +3,59 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-redux": "^7.2.2",
+    "@material-ui/core": "^4.11.3",
+    "@openzeppelin/contracts": "^3.4.1",
+    "@testing-library/jest-dom": "^5.11.10",
+    "@testing-library/react": "^11.2.6",
+    "@testing-library/user-event": "^12.8.3",
+    "@truffle/hdwallet-provider": "^1.2.6",
+    "@ukstv/jazzicon-react": "^1.0.0",
+    "@uniswap/v2-core": "^1.0.1",
+    "@uniswap/v2-periphery": "^1.1.0-beta.0",
+    "chart.js": "^2.9.4",
+    "customize-cra": "^1.0.0",
+    "embark": "^6.0.0",
+    "embark-basic-pipeline": "^6.0.0",
+    "embark-geth": "^6.0.0",
+    "embark-graph": "^6.0.0",
+    "embark-ipfs": "^6.0.0",
+    "embark-parity": "^6.0.0",
+    "embark-pipeline": "^6.0.0",
+    "embark-profiler": "^6.0.0",
+    "embark-swarm": "^6.0.0",
+    "embark-whisper-geth": "^6.0.0",
+    "embarkjs": "^6.0.0",
+    "embarkjs-ens": "^6.0.0",
+    "embarkjs-ipfs": "^6.0.0",
+    "embarkjs-swarm": "^6.0.0",
+    "embarkjs-web3": "^6.0.0",
+    "embarkjs-whisper": "^6.0.0",
+    "ethvtx": "2.0.6",
+    "grommet": "^2.17.1",
+    "jazzicon": "^1.5.0",
+    "react": "^17.0.2",
+    "react-app-rewired": "^2.1.8",
+    "react-chartjs-2": "^2.11.1",
+    "react-dom": "^17.0.2",
+    "react-ethvtx": "^2.1.1",
+    "react-fragment": "^1.0.0",
+    "react-ga": "^2.7.0",
+    "react-iframe": "^1.8.0",
+    "react-redux": "^7.2.3",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
     "redux": "^4.0.5",
-    "redux-devtools-extension": "^2.13.8",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-saga": "^1.1.3",
     "redux-thunk": "^2.3.0",
     "thunks": "^4.9.6",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "eject": "react-scripts eject",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test"
   },
   "browserslist": {
     "production": [
@@ -39,5 +68,14 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.13.14",
+    "@babel/core": "^7.13.14",
+    "@babel/node": "^7.13.13",
+    "@babel/preset-env": "^7.13.12",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "nodemon": "^2.0.7"
   }
 }

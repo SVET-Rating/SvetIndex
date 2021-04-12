@@ -1,30 +1,74 @@
 import Navbar from './components/Navbar'
-import Investment from './pages/Invesment'
+import React from 'react';
+import {connect} from 'react-redux'
+import {
+  BrowserRouter as Router,
+  HashRouter,
+  Switch,
+  Route,
+} from "react-router-dom";
 
-function App() {
+import InvestmentPage from './pages/Invesment';
+import DashboardPage from "./pages/dashboard";
+import HomePage from "./pages/home";
+import OraculesPage from "./pages/oracules";
+import ExpertsPage from "./pages/experts";
+import resetAction from "./ethvtx_config/actions/resetInvestmentsAction";
+
+const App = (props) => {
+
+  
   return (
-    <div className="App">
-      <header>
+    <div className="App" >
+      {/* <HashRouter>
+       <header>
         <Navbar/>
-    </header>
+    </header> */}
     <main>
-        <Investment />
-        <footer>
+    <InvestmentPage /> 
+        {/* <Switch>
+        <Route exact path="/">
+          <InvestmentPage /> 
+        </Route>
+        
+        <Route  path="/investments" render={ (e) => {
+          props.resetToInvestment(e);
+          return <InvestmentPage />;
+        }}
+         />
+        <Route path="/dashboards" render={(e) => {
+             return <DashboardPage />;
+        }} />
+           
+       
+        <Route path="/oracules">
+            <OraculesPage />
+        </Route>
+        <Route path="/experts">
+            <ExpertsPage />
+        </Route>
+        </Switch> */}
+        {/* <footer>
             <div className="footer-info">
-                <div className="footer-header">about “BEST INDEX TOKEN”</div>
-                <p className="footer-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-                    non orci ac dui elementum blandit. Nulla facilisi. Aliquam suscipit suscipit placerat. Suspendisse
-                    euismod
-                    semper eros eget blandit. Cras erat risus, venenatis id commodo accumsan, condimentum sit amet
-                    libero.
-                    Suspendisse potenti. Cras sed purus mollis, luctus sem quis, tristique lectus. Aenean.</p>
-                <button className="footer-readmore">READ MORE</button>
+                <div className="footer-header">SVET Supply-Weighted Index (SVET-SWI)</div>
+                <p className="footer-text">Svet SWI index is fully backed with tokens. When you purchase index, smart contract buys proportional amounts of token on Uniswap (with Uniswap pricing). You can sell index everytime and smart contract sells amounts of token on Uniswap. </p>
+                <a href="http://svetrating.com/svet_index_supply/" className="footer-readmore" >READ MORE about SVWT-SWI</a>
             </div>
-        </footer>
+        </footer> */}
     </main>
+    {/* </HashRouter> */}
     </div>
   );
 }
 
-export default App;
+//export default App;
+
+
+
+const mapDispatchToProps = dispatch => {
+  return {
+     resetToInvestment: (e) => dispatch(resetAction(e))
+  }
+}
+export default connect(null, mapDispatchToProps)(App)
 
