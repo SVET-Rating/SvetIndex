@@ -154,8 +154,9 @@ li>i {
   display: grid;
   grid-auto-flow: column;
   justify-items: center;
-  width: 50%;
+  width: 70%;
   margin: 0 auto;
+  height: 4rem;
   padding: 15px;
 }
 
@@ -206,8 +207,8 @@ li>i {
 */
 .left-list-item {
   cursor: pointer;
-
-  border: 1px solid #dadada !important;
+font-size: 2rem;
+  /* border: 1px solid #dadada !important; */
 }
 
 .index-token-icons {
@@ -225,16 +226,28 @@ li>i {
 .icon-item {
     display: grid;
     grid-auto-flow: column;
-    font-size: 12px;
+    font-size: 19px;
 }
 
 .index-token-name {
   font-size: 1.5rem;
     color: #754949;
     text-decoration: none;
-    border: 1px dashed;
+    /* border: 1px dashed; */
     padding: 8px;
     border-radius: 11px;
     display: grid;
     grid-auto-flow: column;
+}
+
+.header-index {
+  font-size: 4rem;
+}
+
+.price {
+  font-size: 2rem;
+}
+
+.balance {
+  font-size: 2rem;
 }

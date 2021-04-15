@@ -11,17 +11,27 @@ import { getContract, getContractList } from 'ethvtx/lib/contracts/helpers/gette
 import { Jazzicon } from '@ukstv/jazzicon-react';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import { white } from 'chalk';
 //import {readFile}  from 'commonjs fs';
-const tokenList = require("../../../../assets/blockchains/ethereum/tokenlist.json");
+const tokenList = require("../../assets/tokenlist.json");
 
 
 
 const useStyles = makeStyles({
-    button: {
+    buttonSell: {
       marginRight: '10px',
-      color: "green",
-      border: '1px solid'
-    }});
+      color: "white",
+      backgroundColor: '#e0101099',
+      border: '1px solid',
+      minWidth: '7rem'
+    },
+    buttonBuy: {
+        color: 'white',
+        backgroundColor: '#119a1199',
+        border: '1px solid',
+        minWidth: '7rem'
+    }
+});
 
 const IndexTokensListItem =  (props) => {
     const classes = useStyles();
@@ -117,29 +127,29 @@ const IndexTokensListItem =  (props) => {
                  <div style={{ width: '25px', height: '25px', margin:'0 5px' }} id={key}>
                   <Jazzicon address={item.addr} />
                  </div>
-                   <div>
+                   <div className="price">
                        {item.name}
                    </div>
                  </p> 
             </div>
             
             <div>
-                <p> Price: ${item.price.toFixed(4)}</p>
-                <p style={{ minWidth: '1rem' }}> Balance: {(item.balance/1000000000000000000).toFixed(4)}</p>
+                <p className="price"> Index Price: ${item.price.toFixed(4)}</p>
+                <p className="balance" style={{ minWidth: '1rem' }}> Your Wallet Balance: {(item.balance/1000000000000000000).toFixed(4)}</p>
             </div>
            
         </div>
         <div className="address_container" >
             <span style={{'fontSize':'65%'}} className="address_in_list">{matches}
-            {item.addr} </span>
+            Contract Address: {item.addr.substr(0,4) + "..."+item.addr.substr(36,40)} </span>
         </div>
         
         <div className="index-token-icons">{getTokensIcons(item.tokens)}</div>
         <div className="buttons_container">
-            <Button variant="outlined" className={classes.button} onClick={() => props.startBuyToken(props.svetTokensAmount,props.svetTokenAddress)
-                } style={investStyle}>INVEST</Button>
-            <Button variant="outlined" className={classes.button}
-            onClick={() => props.startSellToken()} style={investStyle}>Sell</Button>
+            <Button variant="outlined" className={classes.buttonBuy} onClick={() => props.startBuyToken(props.svetTokensAmount,props.svetTokenAddress)
+                } style={investStyle}>BUY</Button>
+            <Button variant="outlined" className={classes.buttonSell}
+            onClick={() => props.startSellToken()} style={investStyle}>SELL</Button>
         </div>
         {indexListcomponent}
      </li>)

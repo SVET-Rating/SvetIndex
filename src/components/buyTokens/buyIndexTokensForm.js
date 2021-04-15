@@ -12,7 +12,10 @@ import TextField from '@material-ui/core/TextField';
 const useStyles = makeStyles({
     button: {
       marginRight: '10px',
-      color: "green"
+      color: 'white',
+    backgroundColor: '#119a1199',
+    border: '1px solid',
+    minWidth: '7rem'
     }});
     
 const IndexTokenPaymentForm = (props) => {
@@ -59,7 +62,7 @@ const IndexTokenPaymentForm = (props) => {
                                                               props.currentAddress,
                                                               props.svetToken,
                                                               )}}
-                        >INVEST</Button>
+                        >BUY</Button>
                        <Button variant="outlined" className={classes.button}
                         style={props.enoughSvetTokensForBuy || props.svetTokensAmount != 0 ? {display:'none'}:{}}
                         onClick={(e) => {props.buySvetTokensMethodSelect(e)}}

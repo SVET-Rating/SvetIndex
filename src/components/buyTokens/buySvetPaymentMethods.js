@@ -10,7 +10,10 @@ import resetAction from "../../ethvtx_config/actions/resetInvestmentsAction";
 const useStyles = makeStyles({
     button: {
       marginRight: '10px',
-      color: "green"
+      color: 'white',
+        backgroundColor: '#119a1199',
+        border: '1px solid',
+        minWidth: '7rem'
     }});
 
  const SvetPaymentMethods = (props) => {
