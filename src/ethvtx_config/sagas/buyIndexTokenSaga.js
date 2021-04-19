@@ -1,4 +1,4 @@
-import { call, take, put } from 'redux-saga/effects'
+import { call, take, put, fork, takeEvery, cancel } from 'redux-saga/effects'
 import { BUY_INDEX_TOKENS,
          BUY_INDEX_START_APPROVE,
          BUY_INDEX_APPROVED,
@@ -21,7 +21,8 @@ const buyIndexTokenProcess = (payload) => {
                 .send({from: payload.currentAddress})
 }
 
-export function* workerBuyIndexToken(payload) {
+export function* workerBuyIndexToken(action) {
+    const payload = action.payload
     yield put({type: BUY_INDEX_START_APPROVE})
     const ahash = yield call(approveIndexBuyProcess, payload)
     console.log(ahash.transactionHash)
@@ -29,13 +30,16 @@ export function* workerBuyIndexToken(payload) {
     yield put({type: BUY_INDEX_TRX_START})
     const bhash = yield call(buyIndexTokenProcess, payload)
     yield put({type: BUY_INDEX_TRX_PROCESSED, payload:{buyindex_hash:bhash.transactionHash}})
-    setTimeout(console.log('test timeout'), 1000);
+    //setTimeout(console.log('test timeout'), 1000);
     yield put({type: BUY_INDEX_TRX_END})
 }
 
 
 export function* watchIndexTokenBuyProcess() {
-    console.log(payload)
-    const { payload } = yield take(BUY_INDEX_TOKENS)
-    yield call(workerBuyIndexToken, payload)
+    // console.log(payload)
+    //const { payload } = yield take(BUY_INDEX_TOKENS, workerBuyIndexToken)
+    //yield call(workerBuyIndexToken, payload)
+    yield takeEvery(BUY_INDEX_TOKENS, workerBuyIndexToken)
+    
+    //yield cancel(workerBuyIndexToken)
 }
