@@ -7,6 +7,7 @@ import SvetPaymentMethods from '../components/buyTokens/buySvetPaymentMethods';
 import SvetPaymentMethodsForm from '../components/buyTokens/buySvetTokensForm';
 import IndexTokenPaymentForm from '../components/buyTokens/buyIndexTokensForm';
 import SellIndexTokenForm from '../components/sellTokens/sellIndexTokensForm';
+import BuyIndexTokensSteps from '../components/buyIndexSteps'
 
 import {SELECT_INDEX_TOKEN, 
     BUY_SVET_PAYMENT_METHOD, 
@@ -30,6 +31,7 @@ const investmentPage = (props) => {
 
     var processStateComponent;
     var tokensOfIndexToken = '';
+    var buyIndexSteps;
 
     if (!matches) {
           tokensOfIndexToken = <TokensInIndexTokenList />
@@ -55,8 +57,16 @@ const investmentPage = (props) => {
     if (props.processStateSell == SELL_INDEX_TOKEN) {
         processStateComponent = <SellIndexTokenForm />
     }
+
+    if (props.start_aprove) {
+        buyIndexSteps = <BuyIndexTokensSteps />
+    } 
+
     return (
         <div>
+            <div>
+              {buyIndexSteps}
+            </div>
            <div className="tokens-container">
             
             <div className="left-list">
@@ -74,7 +84,9 @@ const investmentPage = (props) => {
 
 const mapStatToProps = (state) => ({
     processState: state.buyTokensReducer.buyTokenProcessState,
-    processStateSell: state.sellIndexTokenReducer.sellTokenProcessState
+    processStateSell: state.sellIndexTokenReducer.sellTokenProcessState,
+    start_aprove: state.buyTokensReducer.start_aprove,
+    buyindex_end: state.buyTokensReducer.buyindex_end
 })
 
 export default connect(mapStatToProps,null)(investmentPage)

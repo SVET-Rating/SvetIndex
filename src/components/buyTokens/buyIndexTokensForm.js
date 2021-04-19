@@ -109,6 +109,12 @@ const getIndex2swap = (state) => {
     return fnIndex2swap;
   }
 
+const getEventSvetToken = (state) => {
+    const contract = getContract(state, 'ERC20', '@svettoken')
+    const events = contract.events.Approval()
+    return events
+}
+
 const mapStateToProps = (state) => {
     return {
         indexTokenName: state.indexTokenReducer.activeToken.indexTokenName,
@@ -119,8 +125,9 @@ const mapStateToProps = (state) => {
         buyIndexTokensContract: getIndex2swap(state),
         indexTokensAmount: state.buyTokensReducer.indexTokensAmount,
         currentAddress: state.vtxconfig.coinbase,
-        svetToken:getContract(state, 'ERC20', '@svettoken')
-
+        svetToken:getContract(state, 'ERC20', '@svettoken'),
+        svetTokenAprovalEvent: getEventSvetToken(state)
+        
     }
 }
 

@@ -12,6 +12,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {Pie} from 'react-chartjs-2';
+const tokenColors = require("../../assets/colors.json");
 
 
 const useStyles = makeStyles({
@@ -36,7 +37,8 @@ const TokensInIndexTokenListItem = (props) => {
         var getTokensByActiveIndexToken = props.indexList.map((item,key) => {
             labels.push(item.symbol);
             data_percent.push(item.amount/100);
-            var randomColor = "#"+Math.floor(Math.random()*16777215).toString(16);
+            // var randomColor = "#"+Math.floor(Math.random()*16777215).toString(16);
+            var randomColor = tokenColors.colors[key]
             backgroundColor.push(randomColor);
             hoverBackgroundColor.push(randomColor);
             return (
