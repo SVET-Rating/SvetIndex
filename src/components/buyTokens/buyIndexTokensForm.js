@@ -15,8 +15,13 @@ const useStyles = makeStyles({
       color: 'white',
     backgroundColor: '#119a1199',
     border: '1px solid',
-    minWidth: '7rem'
-    }});
+    minWidth: '7rem',
+    '&:hover': {
+        backgroundColor: '#119a1199',
+        color: '#FFF'
+       }
+    }
+});
     
 const IndexTokenPaymentForm = (props) => {
     const classes = useStyles();
@@ -25,35 +30,34 @@ const IndexTokenPaymentForm = (props) => {
         <div>
             <div className="left-list-header">
                     <p>
-                        YOU ARE GOING TO BUY ( {props.indexTokenName} )
+                        {props.indexTokenName}
                     </p>
-                    <p>
-                        YOU HAVE TO PAY SVET TOKENS FOR INVESTMENT
-                    </p>
+                   
                     
                 </div>
-                <div style={{textAlign:'center'}}>
-                <Button variant="outlined" className={classes.button}
-                        style={props.enoughSvetTokensForBuy ? {display:'none'}:{}}
-                        onClick={(e) => {
-                            props.resetToInvestment(e);
-                            
-                          }}
-                        >GO BACK</Button>
-                </div>
+                
                 <div className="svet-token-payment-form">
-                    <p>INDEX TOKEN PRICE IN SVET TOKENS: {props.indexTokenPrice}</p>
-                    <p>YOU HAVE: {props.svetTokensAmount} SVET TOKENS</p>
-                    <p>YOU CAN BUY: {props.svetTokensAmount/props.indexTokenPrice}</p>
+                    <p>PRICE (SVET): {props.indexTokenPrice}</p>
+                    <p>YOUR WALLET: {props.svetTokensAmount} SVETs</p>
+                    <p>MAX TO BUY: {props.svetTokensAmount/props.indexTokenPrice}</p>
                 <div className="svet-token-payment-form-input" 
                 style={props.enoughSvetTokensForBuy || props.svetTokensAmount != 0 ? {}:{display:'none'}} >
-                    <TextField id="outlined-basic" label="INPUT AMOUNT" variant="outlined"
+                    <TextField id="outlined-basic" label="AMOUNT IN SVET" variant="outlined"
                     
                     value={props.indexTokensAmount}
                     onChange={(e) => {props.addIndexTokenAmount(e.target.value, props.indexTokenPrice,props.svetTokensAmount)}}
                     />
                 </div>
                    <div >
+                  
+                <Button variant="outlined" className={classes.button}
+                        
+                        onClick={(e) => {
+                            props.resetToInvestment(e);
+                            
+                          }}
+                        >GO BACK</Button>
+                
                     <Button variant="outlined" className={classes.button}
                         style={props.enoughSvetTokensForBuy || props.svetTokensAmount != 0 ? {}:{display:'none'}}
                         onClick={(e) => {props.buyIndexTokens(props.buyIndexTokensContract,

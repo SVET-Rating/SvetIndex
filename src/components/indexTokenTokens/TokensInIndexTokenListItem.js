@@ -74,10 +74,10 @@ const TokensInIndexTokenListItem = (props) => {
                 <TableHead className={classes.tableHeader}>
                 <TableRow>
                     {/* <TableCell>Name</TableCell> */}
-                    <TableCell align="right">Symbol</TableCell>
-                    <TableCell align="right">Address</TableCell>
-                    <TableCell align="right">%</TableCell>
-                    <TableCell align="right">Ballance</TableCell>
+                    <TableCell align="right" style={{fontSize: '1.2rem'}}>SYMBOL</TableCell>
+                    <TableCell align="right" style={{fontSize: '1.2rem'}}>ADDRESS</TableCell>
+                    <TableCell align="right" style={{fontSize: '1.2rem'}}>%</TableCell>
+                    <TableCell align="right" style={{fontSize: '1.2rem'}}>BALLANCE</TableCell>
                 </TableRow>
                 </TableHead>
                 <TableBody>

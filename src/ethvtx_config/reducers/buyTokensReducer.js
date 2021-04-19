@@ -28,13 +28,11 @@ const initialStateBuySvetTokens = {
     'enoughSvetTokensForBuy': undefined,
     'etherAmount':0,
     'indexTokensAmount':0,
+    'buy_index_steps': 0,
     'start_aprove': false,
-    'end_aprove': false,
-    'start_buyindex':false,
-    'end_buyindex':false,
     'aprove_hash': "",
     'buyindex_hash': "",
-    'buyindex_end': false
+    
 
 }
 
@@ -64,23 +62,23 @@ const buyTokensReducer = (state=initialStateBuySvetTokens, action) => {
         //     }
         case BUY_INDEX_START_APPROVE:
             return {
-                ...state, start_aprove: true
+                ...state, buy_index_steps: 0, start_aprove: true
             }
         case BUY_INDEX_APPROVED:
             return {
-                ...state, end_aprove: true, aprove_hash: action.payload.aprove_hash
+                ...state, buy_index_steps: 1, aprove_hash: action.payload.aprove_hash
             }
         case BUY_INDEX_TRX_START:
              return {
-                 ...state, start_buyindex: true, end_aprove: false
+                 ...state, buy_index_steps: 2
              }
         case BUY_INDEX_TRX_PROCESSED:
             return {
-                ...state, buyindex_hash: action.payload.buyindex_hash, start_buyindex: false, aprove_hash:""
+                ...state, buyindex_hash: action.payload.buyindex_hash, buy_index_steps: 3
             }
         case BUY_INDEX_TRX_END:
             return {
-                ...state, buyindex_end: true, buyindex_hash: "",buyTokenProcessState:SELECT_INDEX_TOKEN, start_aprove: false
+                ...state, start_aprove: false, buy_index_steps: 4, buyindex_hash: "",buyTokenProcessState:SELECT_INDEX_TOKEN
             }
         default:
             return state;

@@ -134,17 +134,17 @@ li.index-li>p {
   grid-template-columns: 1fr;
   /* grid-gap: 2rem;
   min-height: 26rem; */
-  align-items: center;
-  justify-items: center;
+  align-items: right;
+  justify-items: right;
 }
 .svet-token-payment-form-input {
   display: grid;
   width: 90%;
-  margin: 1rem auto !important;
+  margin: 1rem 0 !important;
   grid-template-columns: 1fr;
   /* grid-gap: 2rem; */
   align-items: center;
-  justify-items: center;
+  justify-items: right;
 }
 li>i {
   color:#8e8e8e;

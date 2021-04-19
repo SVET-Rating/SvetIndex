@@ -29,6 +29,7 @@ export function* workerBuyIndexToken(payload) {
     yield put({type: BUY_INDEX_TRX_START})
     const bhash = yield call(buyIndexTokenProcess, payload)
     yield put({type: BUY_INDEX_TRX_PROCESSED, payload:{buyindex_hash:bhash.transactionHash}})
+    setTimeout(console.log('test timeout'), 1000);
     yield put({type: BUY_INDEX_TRX_END})
 }
 

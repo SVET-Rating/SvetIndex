@@ -34,7 +34,7 @@ function getStepContent(step) {
     case 2:
       return 'Start process of buying INDEX TOKENS';
     case 3:
-      return 'End process of bu'
+      return 'End process of buying'
     default:
       return 'Unknown step';
   }
@@ -42,28 +42,8 @@ function getStepContent(step) {
 
 const buyIndexTokensSteps = (props) => {
   const classes = useStyles();
-  var activeStep;
+  var activeStep = props.buy_index_steps;
   const steps = getSteps();
-
-  if (props.start_aprove) {
-      activeStep = 0;
-  }
-
-  if (props.end_buyindex) {
-    activeStep = 1;
-  }
-
-  if (props.start_buyindex) {
-    activeStep = 2;
-  }
-
-  if (props.end_buyindex) {
-    activeStep = 3;
-  }
-
-  if (props.buyindex_end) {
-    activeStep = 0;
-  }
 
   return (
     <div className={classes.root}>
@@ -85,17 +65,11 @@ const buyIndexTokensSteps = (props) => {
         })}
       </Stepper>
       <div>
-        {activeStep === steps.length ? (
-          <div>
-            <Typography className={classes.instructions}>
-              All steps completed - you&apos;re finished
-            </Typography>
-          </div>
-        ) : (
+        
           <div>
             <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
           </div>
-        )}
+        
       </div>
     </div>
   );
@@ -111,11 +85,7 @@ const getEventSvetToken = (state) => {
 const mapStateToProps = (state) => {
     return {
         svetTokenAprovalEvent: getEventSvetToken(state),
-        start_aprove: state.buyTokensReducer.start_aprove,
-        end_aprove: state.buyTokensReducer.end_aprove,
-        start_buyindex: state.buyTokensReducer.start_buyindex,
-        end_buyindex: state.buyTokensReducer.end_buyindex,
-        buyindex_end: state.buyTokensReducer.buyindex_end
+        buy_index_steps: state.buyTokensReducer.buy_index_steps
     }
 }
 
