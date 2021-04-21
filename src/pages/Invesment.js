@@ -14,10 +14,25 @@ import {SELECT_INDEX_TOKEN,
     BUY_SVET_PAYMENT_FORM,
     BUY_INDEX_TOKEN} from '../ethvtx_config/processStates/buyTokenProcessStates';
     import { SELECT_INDEX_TOKEN_SELL, SELL_INDEX_TOKEN } from '../ethvtx_config/processStates/sellTokenProcessStates';
+import { css } from "@emotion/react";
+import DotLoader from "react-spinners/DotLoader";
 
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: blue;
+  width: 11%;
+  height: 30%;
+  position: absolute;
+  left: 41%;
+  top: 41%;
+  z-index: 1000
+`;
 
 const investmentPage = (props) => {
 
+    let [loading, setLoading] = useState(false);
+    let [color, setColor] = useState("#ffffff");
     const [matches, setMatches] = useState(false);
     
     useEffect(() => {
@@ -59,7 +74,13 @@ const investmentPage = (props) => {
     }
 
     if (props.start_aprove) {
-        buyIndexSteps = <BuyIndexTokensSteps />
+        let loading = true
+        let color = '#23dcd5'
+        buyIndexSteps = <React.Fragment>
+                        <BuyIndexTokensSteps /> 
+                        <DotLoader color={color} loading={loading} css={override} size={150} />
+                        </React.Fragment>
+        
     } 
 
     return (

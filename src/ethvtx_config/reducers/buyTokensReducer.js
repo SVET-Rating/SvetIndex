@@ -41,7 +41,7 @@ const buyTokensReducer = (state=initialStateBuySvetTokens, action) => {
 
     switch(action.type) {
         case RESET_INVESTMENTS:
-            return {...state, buyTokenProcessState: SELECT_INDEX_TOKEN }
+            return {...state, buyTokenProcessState: SELECT_INDEX_TOKEN, start_aprove: false }
         case START_INVEST:
             return {...state, svetTokens: action.payload, buyTokenProcessState: BUY_INDEX_TOKEN}
         case START_TO_BUY_SVET_TOKENS:
@@ -78,8 +78,9 @@ const buyTokensReducer = (state=initialStateBuySvetTokens, action) => {
             }
         case BUY_INDEX_TRX_END:
             return {
-                ...state, start_aprove: false, buy_index_steps: 4, buyindex_hash: "",buyTokenProcessState:SELECT_INDEX_TOKEN
+                ...state, buy_index_steps: 4, buyindex_hash: ""
             }
+        
         default:
             return state;
     }

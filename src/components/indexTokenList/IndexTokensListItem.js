@@ -135,7 +135,7 @@ const IndexTokensListItem =  (props) => {
             
             <div>
                 <p className="price"> Index Price: ${item.price.toFixed(4)}</p>
-                <p className="balance" style={{ minWidth: '1rem' }}> Your Wallet Balance: {(item.balance/1000000000000000000).toFixed(4)}</p>
+                <p className="balance" style={{ minWidth: '1rem' }}> Your Index Balance: {(item.balance/1000000000000000000).toFixed(4)}</p>
             </div>
            
         </div>

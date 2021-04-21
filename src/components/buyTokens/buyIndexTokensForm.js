@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
+
 const useStyles = makeStyles({
     button: {
       marginRight: '10px',
@@ -20,7 +21,8 @@ const useStyles = makeStyles({
         backgroundColor: '#9a8f11b0',
         color: '#FFF'
        }
-    }
+    },
+    
 });
     
 const IndexTokenPaymentForm = (props) => {
