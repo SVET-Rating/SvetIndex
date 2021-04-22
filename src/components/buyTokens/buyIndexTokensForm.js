@@ -121,6 +121,15 @@ const getEventSvetToken = (state) => {
     return events
 }
 
+const getGasAmount = (state) => {
+    return getIndex2swap._contract.methods
+    .buyIndexforSvetEth(1, state.indexTokenReducer.activeToken.tokenAddress).estimationGas({from: state.vtxconfig.coinbase} )
+}
+
+const getTxPrice = () =>
+{
+    return getGasAmount * web3.eth.gasPrice;
+}
 const mapStateToProps = (state) => {
     return {
         indexTokenName: state.indexTokenReducer.activeToken.indexTokenName,
