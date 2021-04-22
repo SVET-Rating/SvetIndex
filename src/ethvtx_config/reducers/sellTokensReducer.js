@@ -22,7 +22,7 @@ const sellTokensReducer = (state=initialStateBuySvetTokens, action) => {
         case RESET_INVESTMENTS:
             return {...state, sellTokenProcessState: SELECT_INDEX_TOKEN_SELL, start_aprove_sell: false }
         case START_SELL_INDEX:
-            return {...state, sellTokenProcessState: action.payload, start_aprove_sell: true}
+            return {...state, sellTokenProcessState: action.payload}
         // case SELL_INDEX_TOKENS:
         //     return {...state, sellTokenProcessState: SELECT_INDEX_TOKEN_SELL }
         case SELL_INDEX_TOKENS_AMOUNT:
@@ -47,6 +47,10 @@ const sellTokensReducer = (state=initialStateBuySvetTokens, action) => {
             return {
                 ...state, sell_index_steps: 4, buyindex_hash: ""
             }
+            case SELL_INDEX_TRX_END:
+                return {
+                    ...state, sell_index_steps: 4, buyindex_hash: ""
+                }
         default:
             return state;
     }
