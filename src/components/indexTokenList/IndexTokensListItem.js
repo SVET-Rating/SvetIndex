@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { white } from 'chalk';
 //import {readFile}  from 'commonjs fs';
 const tokenList = require("../../assets/tokenlist.json");
+import { EthAddress } from "rimble-ui";
 
 
 
@@ -141,7 +142,8 @@ const IndexTokensListItem =  (props) => {
         </div>
         <div className="address_container" >
             <span style={{'fontSize':'65%'}} className="address_in_list">{matches}
-            Contract Address: {item.addr.substr(0,4) + "..."+item.addr.substr(36,40)} </span>
+            Contract Address: <EthAddress address={item.addr} />
+              </span>
         </div>
         
         <div className="index-token-icons">{getTokensIcons(item.tokens)}</div>

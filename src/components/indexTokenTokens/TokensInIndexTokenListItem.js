@@ -13,6 +13,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {Pie} from 'react-chartjs-2';
 const tokenColors = require("../../assets/colors.json");
+import { EthAddress } from "rimble-ui";
 
 
 const useStyles = makeStyles({
@@ -56,7 +57,7 @@ const TokensInIndexTokenListItem = (props) => {
                     <TableCell component="th" scope="row">
                         {item.symbol}
                     </TableCell>
-                    <TableCell align="right">{item.addrActive}</TableCell>
+                    <TableCell align="right"><EthAddress address={item.addrActive} /></TableCell>
                     <TableCell align="right">{item.amount/100}</TableCell>
                     <TableCell align="right">{props.balActiveFn(props.currentAddress, props.indexToken.tokenAddress, item.addrActive) / 10**18}</TableCell>
                     </TableRow>

@@ -8,6 +8,7 @@ import SvetPaymentMethodsForm from '../components/buyTokens/buySvetTokensForm';
 import IndexTokenPaymentForm from '../components/buyTokens/buyIndexTokensForm';
 import SellIndexTokenForm from '../components/sellTokens/sellIndexTokensForm';
 import BuyIndexTokensSteps from '../components/buyIndexSteps'
+import SellIndexTokensSteps from '../components/selllIndexSteps'
 
 import {SELECT_INDEX_TOKEN, 
     BUY_SVET_PAYMENT_METHOD, 
@@ -73,11 +74,21 @@ const investmentPage = (props) => {
         processStateComponent = <SellIndexTokenForm />
     }
 
-    if (props.start_aprove) {
+    if (props.start_approve) {
         let loading = true
         let color = '#23dcd5'
         buyIndexSteps = <React.Fragment>
                         <BuyIndexTokensSteps /> 
+                        <DotLoader color={color} loading={loading} css={override} size={150} />
+                        </React.Fragment>
+        
+    }
+    
+    if (props.start_approve_sell) {
+        let loading = true
+        let color = '#23dcd5'
+        buyIndexSteps = <React.Fragment>
+                        <SellIndexTokensSteps /> 
                         <DotLoader color={color} loading={loading} css={override} size={150} />
                         </React.Fragment>
         
@@ -106,7 +117,8 @@ const investmentPage = (props) => {
 const mapStatToProps = (state) => ({
     processState: state.buyTokensReducer.buyTokenProcessState,
     processStateSell: state.sellIndexTokenReducer.sellTokenProcessState,
-    start_aprove: state.buyTokensReducer.start_aprove,
+    start_approve: state.buyTokensReducer.start_aprove,
+    start_approve_sell: state.sellIndexTokenReducer.start_aprove_sell,
     buyindex_end: state.buyTokensReducer.buyindex_end
 })
 

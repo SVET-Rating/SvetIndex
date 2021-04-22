@@ -21,7 +21,7 @@ const buyIndexTokenProcess = (payload) => {
                 .send({from: payload.currentAddress})
 }
 
-export function* workerBuyIndexToken(action) {
+function* workerBuyIndexToken(action) {
     const payload = action.payload
     yield put({type: BUY_INDEX_START_APPROVE})
     const ahash = yield call(approveIndexBuyProcess, payload)
