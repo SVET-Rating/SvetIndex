@@ -42,7 +42,8 @@ const IndexTokenPaymentForm = (props) => {
                     <p>PRICE (SVET): {props.indexTokenPrice}</p>
                     <p>YOUR WALLET: {props.svetTokensAmount} SVETs</p>
                     <p>MAX TO BUY: {props.svetTokensAmount/props.indexTokenPrice}</p>
-                <div className="svet-token-payment-form-input" 
+                    <p>estimated gas amount: {props.gasAmount} with price:{props.gasPrice} for block {props.curBlock}</p> 
+              <div className="svet-token-payment-form-input" 
                 style={props.enoughSvetTokensForBuy || props.svetTokensAmount != 0 ? {}:{display:'none'}} >
                     <TextField id="outlined-basic" label="AMOUNT IN SVET" variant="outlined"
                     
@@ -121,15 +122,9 @@ const getEventSvetToken = (state) => {
     return events
 }
 
-const getGasAmount = (state) => {
-    return getIndex2swap._contract.methods
-    .buyIndexforSvetEth(1, state.indexTokenReducer.activeToken.tokenAddress).estimationGas({from: state.vtxconfig.coinbase} )
-}
 
-const getTxPrice = () =>
-{
-    return getGasAmount * web3.eth.gasPrice;
-}
+
+
 const mapStateToProps = (state) => {
     return {
         indexTokenName: state.indexTokenReducer.activeToken.indexTokenName,
@@ -141,7 +136,12 @@ const mapStateToProps = (state) => {
         indexTokensAmount: state.buyTokensReducer.indexTokensAmount,
         currentAddress: state.vtxconfig.coinbase,
         svetToken:getContract(state, 'ERC20', '@svettoken'),
-        svetTokenAprovalEvent: getEventSvetToken(state)
+        svetTokenAprovalEvent: getEventSvetToken(state),
+        gasPrice: web3.eth.gasPrice,
+        gasAmount: getIndex2swap(state)._contract.methods.buyIndexforSvetEth.estimateGas(1, state.indexTokenReducer.activeToken.tokenAddress, {from: state.vtxconfig.coinbase} )
+        ,
+        curBlock: web3.eth.defaultBlock
+      //  blockTimeStamp: 
         
     }
 }
