@@ -42,7 +42,7 @@ const IndexTokenPaymentForm = (props) => {
                     <p>PRICE (SVET): {props.indexTokenPrice}</p>
                     <p>YOUR WALLET: {props.svetTokensAmount} SVETs</p>
                     <p>MAX TO BUY: {props.svetTokensAmount/props.indexTokenPrice}</p>
-                    <p>estimated gas amount: {props.gasAmount} with price:{props.gasPrice} for block {props.curBlock}</p> 
+                    <p>estimated gas amount: {props.gasAmount} with price:{props.gasPrice} for block {props.curBlock} at time {props.blockTimeStamp}</p> 
               <div className="svet-token-payment-form-input" 
                 style={props.enoughSvetTokensForBuy || props.svetTokensAmount != 0 ? {}:{display:'none'}} >
                     <TextField id="outlined-basic" label="AMOUNT IN SVET" variant="outlined"
@@ -116,6 +116,24 @@ const getIndex2swap = (state) => {
     return fnIndex2swap;
   }
 
+  const getGasPrice = () => {
+      var gasPrice;
+        web3.eth.getGasPrice().then(gasPrice);
+        
+    return gasPrice;
+    
+  }
+  const getIndexGasAmout = (state) => {
+    
+    const actList = getContract(state, 'IndexToken', state.indexTokenReducer.activeToken.tokenAddress).fn.getActivesList();
+    const gasAmount = Math.round ((actList.length * 161387 + 44160 + 52010)*1.02);
+
+    //methods.buyIndexforSvetEth("1", state.indexTokenReducer.activeToken.tokenAddress ).estimateGas({value: "100", from: state.vtxconfig.coinbase});
+    //let amount_in_wei = web3.utils.toBN(_amount)
+    //const fN = fnIndex2swap._contract.methods.buyIndexforSvetEth
+    //(web3.utils.toWei(amount_in_wei), _address).send({from: state.vtxconfig.coinbase});
+    return gasAmount;
+  }  
 const getEventSvetToken = (state) => {
     const contract = getContract(state, 'ERC20', '@svettoken')
     const events = contract.events.Approval()
@@ -137,11 +155,10 @@ const mapStateToProps = (state) => {
         currentAddress: state.vtxconfig.coinbase,
         svetToken:getContract(state, 'ERC20', '@svettoken'),
         svetTokenAprovalEvent: getEventSvetToken(state),
-        gasPrice: web3.eth.gasPrice,
-        gasAmount: getIndex2swap(state)._contract.methods.buyIndexforSvetEth.estimateGas(1, state.indexTokenReducer.activeToken.tokenAddress, {from: state.vtxconfig.coinbase} )
-        ,
-        curBlock: web3.eth.defaultBlock
-      //  blockTimeStamp: 
+        gasPrice: getGasPrice() ,// web3.eth.getGasPrice(),
+        gasAmount: getIndexGasAmout(state),
+        curBlock: state.blocks.current_height,
+        blockTimeStamp: state.blocks.blocks[state.blocks.current_height].timestamp
         
     }
 }
