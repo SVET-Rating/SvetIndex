@@ -116,10 +116,10 @@ const getIndex2swap = (state) => {
     return fnIndex2swap;
   }
 
-  const getGasPrice = () => {
+  const getGasPrice = (state) => {
       var gasPrice;
-        web3.eth.getGasPrice().then(gasPrice);
-        
+        state.vtxconfig.web3.eth.getGasPrice().then(function(error, result)  {gasPrice = result});
+        //.send({from: state.vtxconfig.coinbase})
     return gasPrice;
     
   }
@@ -155,7 +155,7 @@ const mapStateToProps = (state) => {
         currentAddress: state.vtxconfig.coinbase,
         svetToken:getContract(state, 'ERC20', '@svettoken'),
         svetTokenAprovalEvent: getEventSvetToken(state),
-        gasPrice: getGasPrice() ,// web3.eth.getGasPrice(),
+        gasPrice: getGasPrice(state) ,// web3.eth.getGasPrice(),
         gasAmount: getIndexGasAmout(state),
         curBlock: state.blocks.current_height,
         blockTimeStamp: state.blocks.blocks[state.blocks.current_height].timestamp
