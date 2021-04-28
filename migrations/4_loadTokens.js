@@ -28,7 +28,7 @@ module.exports = async function(deployer,_network, addresses) {
     const ethPrice = 1600; //USD
     const svtPrice = 1; //usd
     var netKey;
-    if (_network == "ropsten" || _network == "mainnet" || _network == "ganache") {
+    if (_network == "ropsten" || _network == "mainnet" || _network == "ganache" || _network == "bsctest") {
         netKey = _network;
     } else
     {
