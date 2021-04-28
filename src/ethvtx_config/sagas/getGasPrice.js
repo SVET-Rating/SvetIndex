@@ -16,14 +16,14 @@ const getGasPriceAsync = async (stateWeb3) => {
 function* workerStartBuyIndexTokens(action) {
   //amount:svetTokensAmount,address:svetTokensAddress
   const gasPrice = yield call(getGasPriceAsync,action.payload.stateWeb3)
-  yield put({type: GET_GAS_PRICE, payload:{ gasPrice }})
+  yield put({type: GET_GAS_PRICE, payload:{ gasPrice: (gasPrice/100000000) }})
   yield put({type: START_INVEST_PROCESS, payload: action.payload})
 }
 
 function* workerStartSellIndexTokens(action) {
   console.log('test')
   const gasPrice = yield call(getGasPriceAsync,action.payload.stateWeb3)
-  yield put({type: GET_GAS_PRICE, payload:{ gasPrice }})
+  yield put({type: GET_GAS_PRICE, payload:{ gasPrice: (gasPrice/100000000)  }})
   yield put({type: START_SELL_INDEX_PROCESS, payload: {}})
 }
 

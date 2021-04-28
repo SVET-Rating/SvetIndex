@@ -24,13 +24,25 @@ const useStyles = makeStyles({
       color: "white",
       backgroundColor: '#e0101099',
       border: '1px solid',
-      minWidth: '7rem'
+      minWidth: '11rem',
+      borderRadius: '2rem',
+      fontSize: '3rem',
+      '&:hover': {
+        backgroundColor: '#9a8f11b0',
+        color: '#FFF'
+       }
     },
     buttonBuy: {
         color: 'white',
         backgroundColor: '#119a1199',
         border: '1px solid',
-        minWidth: '7rem'
+        minWidth: '11rem',
+        borderRadius: '2rem',
+        fontSize: '3rem',
+        '&:hover': {
+            backgroundColor: '#9a8f11b0',
+            color: '#FFF'
+           }
     }
 });
 
@@ -71,7 +83,7 @@ const IndexTokensListItem =  (props) => {
                     
                     var isExist = tokenList.tokens.findIndex(e => e.address == address.addrActive ) >= 0 ? true : false; 
                         
-                    return <div className="icon-item">
+                    return <div className="icon-item" key={key}>
                     <span>&nbsp;{address.amount/100}&nbsp;%</span>
                     <div style={{ width: '25px', height: '25px', margin:'0 5px' }} id={key}>
                         {isExist&&<img style={{ width: '25px', height: '25px', margin:'0 5px' }} src={'/static/assets/blockchains/ethereum/assets/'+address.addrActive+'/logo.png'}/>}  
@@ -105,7 +117,7 @@ const IndexTokensListItem =  (props) => {
            
             
             return (
-            <li className="left-list-item index-li" id={item.addr} style={styleSelect}
+            <li className="left-list-item index-li" id={item.addr} style={styleSelect} key={key}
             onClick={(e) => {
                 if (matches) {
                     setTimeout(function(){
@@ -124,14 +136,14 @@ const IndexTokensListItem =  (props) => {
         <div className="token_info">
             <div>
                  
-               <p className="index-token-name">
+               <div className="index-token-name">
                  <div style={{ width: '25px', height: '25px', margin:'0 5px' }} id={key}>
                   <Jazzicon address={item.addr} />
                  </div>
                    <div className="price">
                        {item.name}
                    </div>
-                 </p> 
+                 </div> 
             </div>
             
             <div>

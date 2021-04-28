@@ -156,7 +156,7 @@ li>i {
   justify-items: center;
   width: 70%;
   margin: 0 auto;
-  height: 4rem;
+  height: 7rem;
   padding: 15px;
 }
 
@@ -251,3 +251,17 @@ font-size: 2rem;
 .balance {
   font-size: 2rem;
 }
+
+.numbers {
+  font-size:2rem;
+
+}
+
+.field {
+  display: grid;
+}
+
+.number_left {
+  padding-left: 10px;
+}
+

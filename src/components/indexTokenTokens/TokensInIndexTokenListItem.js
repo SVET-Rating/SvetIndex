@@ -53,7 +53,7 @@ const TokensInIndexTokenListItem = (props) => {
             // </li>
                 
                
-                    <TableRow key={item.name}>
+                    <TableRow key={key}>
                     <TableCell component="th" scope="row">
                         {item.symbol}
                     </TableCell>

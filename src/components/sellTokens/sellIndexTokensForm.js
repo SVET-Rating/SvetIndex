@@ -20,27 +20,23 @@ const sellIndexTokens = (props) => {
         <div>
             <div className="left-list-header">
                     <p>
-                        YOU ARE GOING TO SELL ( {props.indexTokenName} )
+                        FOR SELL: ( {props.indexTokenName} )
                     </p>
                 </div>
                 
                 <div style={{textAlign:'center'}}>
-                <Button variant="outlined" className={classes.button}
-                        style={props.enoughSvetTokensForBuy ? {display:'none'}:{}}
-                        onClick={(e) => {
-                            props.resetToInvestment(e);
-                            return <InvestmentPage />;
-                          }}
-                        >GO BACK</Button>
-                </div>
+                
                 <div className="svet-token-payment-form">
                     <p>
-                        GAS PRICE: { props.gasPrice }
+                        GAS PRICE (gwei): <span className="number_left">{ props.gasPrice }</span>
                     </p>
                     <p>
-                        GAS AMOUNT: { props.gasAmount }
+                        GAS AMOUNT: <span className="number_left">{ props.gasAmount }</span>
                     </p>
-                    <p>YOU HAVE: {props.indexTokenBalance} OF {props.indexTokenName}</p>
+                    <p>YOU HAVE ({props.indexTokenName}):
+                    <span className="numbers number_left"> 
+                       {props.indexTokenBalance.toFixed(4)}
+                    </span> </p>
                 <div className="svet-token-payment-form-input">
                     
                     <p style={{fontSize: '0.9rem'}}>INPUT AMOUNT: </p>
@@ -49,7 +45,15 @@ const sellIndexTokens = (props) => {
                     />
                 </div>
                 
-                    <div style={props.indexTokensAmountForSell === ""?{display:'none'}:{}}>
+                    <div>
+                    <Button variant="outlined" className={classes.button}
+                        style={props.enoughSvetTokensForBuy ? {display:'none'}:{}}
+                        onClick={(e) => {
+                            props.resetToInvestment(e);
+                           
+                          }}
+                        >GO BACK</Button>
+                    
                     <Button variant="outlined" className={classes.button}
                         
                         onClick={(e) => {props.sellIndexTokenAction(props.sellIndexTokensContract,
@@ -58,7 +62,7 @@ const sellIndexTokens = (props) => {
                                                               props.currentAddress,
                                                               props.indexTokenContract)}}
                         >SELL</Button>
-                       
+                    </div>
                 </div>
             </div>
 

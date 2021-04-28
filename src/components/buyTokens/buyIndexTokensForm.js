@@ -41,12 +41,25 @@ const IndexTokenPaymentForm = (props) => {
                 </div>
                 
                 <div className="svet-token-payment-form">
-                    <p>PRICE (SVET): {props.indexTokenPrice}</p>
-                    <p>YOUR WALLET: {props.svetTokensAmount} SVETs</p>
-                    <p>MAX TO BUY: {props.svetTokensAmount/props.indexTokenPrice}</p>
-                    <p>estimated gas amount: {props.gasAmount} with price:{props.gasPrice} for block {props.curBlock}</p> 
-                    <p>estimated gas amount: {props.gasAmount} with price:{props.gasPrice} for block {props.curBlock} at time {props.blockTimeStamp}</p>
-
+                    <p className="field" >PRICE (SVET): 
+                        <span className="numbers">
+                            {props.indexTokenPrice.toFixed(4)}
+                        </span>
+                    </p>
+                    <p className="field">YOUR WALLET (SVET):  
+                        <span className="numbers">
+                            {props.svetTokensAmount.toFixed(4)}
+                        </span>
+                    </p>
+                    <p className="field">MAX TO BUY: 
+                        <span className="numbers">
+                            {(props.svetTokensAmount/props.indexTokenPrice).toFixed(4)}
+                        </span>
+                    </p>
+                    <p>GAS AMOUNT: <span className="number_left">{props.gasAmount}</span> </p>
+                    <p>GAS PRICE (gwei):<span className="number_left">{props.gasPrice}</span> </p>
+                    <p>FOR BLOCK: <span className="number_left">{props.curBlock}</span></p> 
+                    
                 <div className="svet-token-payment-form-input" 
                 style={props.enoughSvetTokensForBuy || props.svetTokensAmount != 0 ? {}:{display:'none'}} >
                     <TextField id="outlined-basic" label="AMOUNT IN SVET" variant="outlined"
