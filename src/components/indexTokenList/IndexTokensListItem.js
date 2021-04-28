@@ -148,10 +148,11 @@ const IndexTokensListItem =  (props) => {
         
         <div className="index-token-icons">{getTokensIcons(item.tokens)}</div>
         <div className="buttons_container">
-            <Button variant="outlined" className={classes.buttonBuy} onClick={() => props.startBuyToken(props.svetTokensAmount,props.svetTokenAddress)
+            <Button variant="outlined" className={classes.buttonBuy} 
+            onClick={() => props.startBuyToken(props.svetTokensAmount,props.svetTokenAddress, props.state_web3)
                 } style={investStyle}>BUY</Button>
             <Button variant="outlined" className={classes.buttonSell}
-            onClick={() => props.startSellToken()} style={investStyle}>SELL</Button>
+            onClick={() => props.startSellToken(props.state_web3)} style={investStyle}>SELL</Button>
         </div>
         {indexListcomponent}
      </li>)
@@ -253,7 +254,8 @@ const mapStateToProps = (state) => ({
     contractsList: getContractList(state),
     activeToken: state.indexTokenReducer.activeToken,
     svetTokensAmount: getContract(state, 'ERC20', '@svettoken').fn.balanceOf(state.contracts.web3.currentProvider.selectedAddress)/10**18,
-    svetTokenAddress: getContract(state, 'Exchange', '@exchange').fn.getBA()
+    svetTokenAddress: getContract(state, 'Exchange', '@exchange').fn.getBA(),
+    state_web3: state.vtxconfig.web3.eth
     //svetTokenAddress: getContract(state, 'Exchange', '@exchange').fn.getBA()
 });
 
@@ -262,8 +264,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch => {
     return {
     changeActiveElement: (e,indexTokenName,indexTokenBalance) => dispatch(indexTokenSelect(e,indexTokenName,indexTokenBalance)),
-    startBuyToken: (svetTokensAmount,svetTokenAddress) => dispatch(startBuyIndexTokens(svetTokensAmount,svetTokenAddress)),
-    startSellToken: () => dispatch(startSellToken())
+    startBuyToken: (svetTokensAmount,svetTokenAddress,stateWeb3) => dispatch(startBuyIndexTokens(svetTokensAmount,svetTokenAddress,stateWeb3)),
+    startSellToken: (stateWeb3) => dispatch(startSellToken(stateWeb3))
   }}
 
 

@@ -23,6 +23,7 @@ const sellIndexTokens = (props) => {
                         YOU ARE GOING TO SELL ( {props.indexTokenName} )
                     </p>
                 </div>
+                
                 <div style={{textAlign:'center'}}>
                 <Button variant="outlined" className={classes.button}
                         style={props.enoughSvetTokensForBuy ? {display:'none'}:{}}
@@ -33,6 +34,12 @@ const sellIndexTokens = (props) => {
                         >GO BACK</Button>
                 </div>
                 <div className="svet-token-payment-form">
+                    <p>
+                        GAS PRICE: { props.gasPrice }
+                    </p>
+                    <p>
+                        GAS AMOUNT: { props.gasAmount }
+                    </p>
                     <p>YOU HAVE: {props.indexTokenBalance} OF {props.indexTokenName}</p>
                 <div className="svet-token-payment-form-input">
                     
@@ -67,6 +74,18 @@ const getIndex2swap = (state) => {
     return fnIndex2swap;
   }
 
+  const getIndexGasAmout = (state) => {
+  
+    const actList = getContract(state, 'IndexToken', state.indexTokenReducer.activeToken.tokenAddress).fn.getActivesList();
+    
+    if (actList == undefined) {
+        return actList;
+    } else {
+      const gasAmount = Math.round ((actList.length * 161387 + 44160 + 52010)*1.02);
+      return gasAmount;
+    }
+  }  
+
 const mapStateToProps = (state) => {
     return {
         indexTokenName: state.indexTokenReducer.activeToken.indexTokenName,
@@ -75,7 +94,9 @@ const mapStateToProps = (state) => {
         sellIndexTokensContract: getIndex2swap(state),
         currentAddress: state.vtxconfig.coinbase,
         indexTokensAmountForSell: state.sellIndexTokenReducer.indexTokensAmountForSell,
-        indexTokenContract: getContract(state, 'IndexToken', state.indexTokenReducer.activeToken.tokenAddress)
+        indexTokenContract: getContract(state, 'IndexToken', state.indexTokenReducer.activeToken.tokenAddress),
+        gasPrice: state.buyTokensReducer.gasPrice,// web3.eth.getGasPrice(),
+        gasAmount: getIndexGasAmout(state)
 
     }
 }

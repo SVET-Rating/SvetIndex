@@ -11,7 +11,9 @@ import { CHECK_SVET_TOKENS,
     BUY_INDEX_APPROVED,
     BUY_INDEX_TRX_START,
     BUY_INDEX_TRX_PROCESSED,
-    BUY_INDEX_TRX_END
+    BUY_INDEX_TRX_END,
+    START_INVEST_PROCESS,
+    GET_GAS_PRICE
     } from '../actions/types';
 import {SELECT_INDEX_TOKEN, 
         BUY_SVET_PAYMENT_METHOD, 
@@ -32,6 +34,7 @@ const initialStateBuySvetTokens = {
     'start_aprove': false,
     'aprove_hash': "",
     'buyindex_hash': "",
+    'gasPrice': 0
     
 
 }
@@ -42,8 +45,11 @@ const buyTokensReducer = (state=initialStateBuySvetTokens, action) => {
     switch(action.type) {
         case RESET_INVESTMENTS:
             return {...state, buyTokenProcessState: SELECT_INDEX_TOKEN, start_aprove: false }
-        case START_INVEST:
-            return {...state, svetTokens: action.payload, buyTokenProcessState: BUY_INDEX_TOKEN}
+        case GET_GAS_PRICE:
+            return {...state, gasPrice: action.payload.gasPrice}
+        case START_INVEST_PROCESS:
+            return {...state, svetTokens: {amount:action.payload.amount,address:action.payload.address},
+             buyTokenProcessState: BUY_INDEX_TOKEN}
         case START_TO_BUY_SVET_TOKENS:
             return {...state, buyTokenProcessState: BUY_SVET_PAYMENT_METHOD }
         case SELECT_SVET_PAYMENT_METHOD:

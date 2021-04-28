@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
 import { getContract, getContractList } from 'ethvtx/lib/contracts/helpers/getters';
 import  checkSvetTokensForBuyIndexTokensAction  from '../../ethvtx_config/actions/checkIndexTokenAmountAction';
@@ -24,6 +24,8 @@ const useStyles = makeStyles({
     },
     
 });
+
+
     
 const IndexTokenPaymentForm = (props) => {
     const classes = useStyles();
@@ -42,6 +44,9 @@ const IndexTokenPaymentForm = (props) => {
                     <p>PRICE (SVET): {props.indexTokenPrice}</p>
                     <p>YOUR WALLET: {props.svetTokensAmount} SVETs</p>
                     <p>MAX TO BUY: {props.svetTokensAmount/props.indexTokenPrice}</p>
+                    <p>estimated gas amount: {props.gasAmount} with price:{props.gasPrice} for block {props.curBlock}</p> 
+                    <p>estimated gas amount: {props.gasAmount} with price:{props.gasPrice} for block {props.curBlock} at time {props.blockTimeStamp}</p>
+
                 <div className="svet-token-payment-form-input" 
                 style={props.enoughSvetTokensForBuy || props.svetTokensAmount != 0 ? {}:{display:'none'}} >
                     <TextField id="outlined-basic" label="AMOUNT IN SVET" variant="outlined"
@@ -125,6 +130,35 @@ const getGasAmount = (state) => {
     return getIndex2swap._contract.methods
     .buyIndexforSvetEth(1, state.indexTokenReducer.activeToken.tokenAddress).estimationGas({from: state.vtxconfig.coinbase} )
 }
+const getGasPriceAsync = async (state) => {
+    
+    const result = await state.vtxconfig.web3.eth.getGasPrice()
+    console.log(result)
+    return result
+}
+
+const getGasPrice = (state) => {
+    getGasPriceAsync(state).then(
+        result => {
+            if (typeof(result) == 'object') {
+                return undefined
+            } else {
+                return result
+            }
+        }
+    )
+}
+const getIndexGasAmout = (state) => {
+  
+  const actList = getContract(state, 'IndexToken', state.indexTokenReducer.activeToken.tokenAddress).fn.getActivesList();
+  
+  if (actList == undefined) {
+      return actList;
+  } else {
+    const gasAmount = Math.round ((actList.length * 161387 + 44160 + 52010)*1.02);
+    return gasAmount;
+  }
+}  
 
 const getTxPrice = () =>
 {
@@ -141,7 +175,12 @@ const mapStateToProps = (state) => {
         indexTokensAmount: state.buyTokensReducer.indexTokensAmount,
         currentAddress: state.vtxconfig.coinbase,
         svetToken:getContract(state, 'ERC20', '@svettoken'),
-        svetTokenAprovalEvent: getEventSvetToken(state)
+        svetTokenAprovalEvent: getEventSvetToken(state),
+        gasPrice: state.buyTokensReducer.gasPrice,// web3.eth.getGasPrice(),
+        gasAmount: getIndexGasAmout(state),
+        curBlock: state.blocks.current_height,
+        blockTimeStamp: state.blocks.blocks[state.blocks.current_height].timestamp
+
         
     }
 }

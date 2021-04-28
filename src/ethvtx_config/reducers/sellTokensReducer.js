@@ -2,7 +2,7 @@ import {  SELL_INDEX_TOKENS, START_SELL_INDEX,SELL_INDEX_TOKENS_AMOUNT,
             SELL_INDEX_START_APPROVE,
             SELL_INDEX_APPROVED,
             SELL_INDEX_TRX_START,
-            SELL_INDEX_TRX_PROCESSED,SELL_INDEX_TRX_END
+            SELL_INDEX_TRX_PROCESSED,SELL_INDEX_TRX_END, START_SELL_INDEX_PROCESS
           } from '../actions/types';
 import { SELECT_INDEX_TOKEN_SELL, SELL_INDEX_TOKEN } from '../processStates/sellTokenProcessStates';
 import { RESET_INVESTMENTS } from '../processStates/resetProcessStates';
@@ -21,9 +21,9 @@ const sellTokensReducer = (state=initialStateBuySvetTokens, action) => {
     switch(action.type) {
         case RESET_INVESTMENTS:
             return {...state, sellTokenProcessState: SELECT_INDEX_TOKEN_SELL, start_aprove_sell: false }
-        case START_SELL_INDEX:
-            return {...state, sellTokenProcessState: action.payload}
-        // case SELL_INDEX_TOKENS:
+        case START_SELL_INDEX_PROCESS:
+            return {...state, sellTokenProcessState: SELL_INDEX_TOKEN}
+        // case SELL_INDEX_TOKENS_PROCESS:
         //     return {...state, sellTokenProcessState: SELECT_INDEX_TOKEN_SELL }
         case SELL_INDEX_TOKENS_AMOUNT:
             return {...state, indexTokensAmountForSell:action.payload}
