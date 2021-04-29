@@ -1,4 +1,4 @@
-import { call, take, put, fork, takeEvery, cancel } from 'redux-saga/effects'
+import { call, take, put, fork, takeEvery, cancelled } from 'redux-saga/effects'
 import { SELL_INDEX_TOKENS,
          SELL_INDEX_START_APPROVE,
          SELL_INDEX_APPROVED,
@@ -23,6 +23,7 @@ const sellIndexTokenProcess = (payload) => {
 }
 
 function* workerSellIndexToken(action) {
+   try {
     const payload = action.payload
     yield put({type: SELL_INDEX_START_APPROVE})
     const ahash = yield call(approveIndexSellProcess, payload)
@@ -33,6 +34,9 @@ function* workerSellIndexToken(action) {
     yield put({type: SELL_INDEX_TRX_PROCESSED, payload:{buyindex_hash:bhash.transactionHash}})
     //setTimeout(console.log('test timeout'), 1000);
     yield put({type: SELL_INDEX_TRX_END})
+   } catch {
+    yield put({type: BUY_INDEX_TRX_END})
+   }
 }
 
 

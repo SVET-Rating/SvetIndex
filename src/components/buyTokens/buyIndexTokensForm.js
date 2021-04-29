@@ -12,15 +12,19 @@ import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles({
     button: {
-      marginRight: '10px',
-      color: 'white',
-    backgroundColor: '#119a1199',
-    border: '1px solid',
-    minWidth: '7rem',
-    '&:hover': {
-        backgroundColor: '#9a8f11b0',
-        color: '#FFF'
-       }
+        color: 'white',
+        marginLeft: '20px',
+        backgroundColor: '#119a1199',
+        border: '1px solid',
+        minWidth: '11rem',
+        borderRadius: '2rem',
+        fontSize: '3rem',
+        
+        '&:hover': {
+            backgroundColor: '#9a8f11b0',
+            color: '#FFF'
+           },
+          
     },
     
 });
