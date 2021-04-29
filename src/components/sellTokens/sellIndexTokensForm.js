@@ -42,6 +42,8 @@ const sellIndexTokens = (props) => {
                     <p>
                         GAS AMOUNT: <span className="number_left">{ props.gasAmount }</span>
                     </p>
+                    <p>APPROX. COST of TRANZACTION (ETH):<span className="number_left">{props.gasPrice * props.gasAmount / 1000000000}</span> </p>
+                    <p>FOR BLOCK: <span className="number_left">{props.curBlock}</span></p> 
                     <p>YOU HAVE ({props.indexTokenName}):
                     <span className="numbers number_left"> 
                        {props.indexTokenBalance.toFixed(4)}
@@ -109,7 +111,8 @@ const mapStateToProps = (state) => {
         indexTokensAmountForSell: state.sellIndexTokenReducer.indexTokensAmountForSell,
         indexTokenContract: getContract(state, 'IndexToken', state.indexTokenReducer.activeToken.tokenAddress),
         gasPrice: state.buyTokensReducer.gasPrice,// web3.eth.getGasPrice(),
-        gasAmount: getIndexGasAmout(state)
+        gasAmount: getIndexGasAmout(state),
+        curBlock: state.blocks.current_height
 
     }
 }

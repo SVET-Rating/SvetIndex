@@ -62,6 +62,7 @@ const IndexTokenPaymentForm = (props) => {
                     </p>
                     <p>GAS AMOUNT: <span className="number_left">{props.gasAmount}</span> </p>
                     <p>GAS PRICE (gwei):<span className="number_left">{props.gasPrice}</span> </p>
+                    <p>APPROX. COST of TRANZACTION (ETH):<span className="number_left">{props.gasPrice * props.gasAmount / 1000000000}</span> </p>
                     <p>FOR BLOCK: <span className="number_left">{props.curBlock}</span></p> 
                     
                 <div className="svet-token-payment-form-input" 
