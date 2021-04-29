@@ -33,6 +33,9 @@ const sellIndexTokens = (props) => {
                     <p>
                         GAS AMOUNT: <span className="number_left">{ props.gasAmount }</span>
                     </p>
+                    <p>APPROX. COST of TRANSACTION (ETH):<span className="number_left">{props.gasPrice} * {props.amount} / 1000000000</span> </p>
+                    <p>FOR BLOCK: <span className="number_left">{props.curBlock}</span></p> 
+
                     <p>YOU HAVE ({props.indexTokenName}):
                     <span className="numbers number_left"> 
                        {props.indexTokenBalance.toFixed(4)}
