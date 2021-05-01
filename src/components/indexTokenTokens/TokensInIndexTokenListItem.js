@@ -12,6 +12,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {Pie} from 'react-chartjs-2';
+const tokenColors = require("../../assets/colors.json");
+import { EthAddress } from "rimble-ui";
 
 
 const useStyles = makeStyles({
@@ -36,7 +38,8 @@ const TokensInIndexTokenListItem = (props) => {
         var getTokensByActiveIndexToken = props.indexList.map((item,key) => {
             labels.push(item.symbol);
             data_percent.push(item.amount/100);
-            var randomColor = "#"+Math.floor(Math.random()*16777215).toString(16);
+            // var randomColor = "#"+Math.floor(Math.random()*16777215).toString(16);
+            var randomColor = tokenColors.colors[key]
             backgroundColor.push(randomColor);
             hoverBackgroundColor.push(randomColor);
             return (
@@ -50,11 +53,11 @@ const TokensInIndexTokenListItem = (props) => {
             // </li>
                 
                
-                    <TableRow key={item.name}>
+                    <TableRow key={key}>
                     <TableCell component="th" scope="row">
                         {item.symbol}
                     </TableCell>
-                    <TableCell align="right">{item.addrActive}</TableCell>
+                    <TableCell align="right"><EthAddress address={item.addrActive} /></TableCell>
                     <TableCell align="right">{item.amount/100}</TableCell>
                     <TableCell align="right">{props.balActiveFn(props.currentAddress, props.indexToken.tokenAddress, item.addrActive) / 10**18}</TableCell>
                     </TableRow>
@@ -72,10 +75,10 @@ const TokensInIndexTokenListItem = (props) => {
                 <TableHead className={classes.tableHeader}>
                 <TableRow>
                     {/* <TableCell>Name</TableCell> */}
-                    <TableCell align="right">Symbol</TableCell>
-                    <TableCell align="right">Address</TableCell>
-                    <TableCell align="right">%</TableCell>
-                    <TableCell align="right">Ballance</TableCell>
+                    <TableCell align="right" style={{fontSize: '1.2rem'}}>SYMBOL</TableCell>
+                    <TableCell align="right" style={{fontSize: '1.2rem'}}>ADDRESS</TableCell>
+                    <TableCell align="right" style={{fontSize: '1.2rem'}}>%</TableCell>
+                    <TableCell align="right" style={{fontSize: '1.2rem'}}>BALLANCE</TableCell>
                 </TableRow>
                 </TableHead>
                 <TableBody>

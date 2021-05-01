@@ -6,6 +6,10 @@ import indexTokenReducer from './reducers/indexTokenReducer';
 import indexTokenTokens from './reducers/getTokenTokens';
 import buyTokensReducer from './reducers/buyTokensReducer';
 import sellIndexTokenReducer from './reducers/sellTokensReducer';
+import { watchIndexTokenBuyProcess } from './sagas/buyIndexTokenSaga';
+import { watchIndexTokenSellProcess } from './sagas/sellIndexTokenSaga';
+import { watchStartBuyIndexTokens } from './sagas/getGasPrice'
+import { all } from 'redux-saga/effects'
 
 export const createVtxStore = () => {
 
@@ -32,12 +36,13 @@ export const createVtxStore = () => {
     const store = createStore(
         reducers,
         initial_state,
-        composer(applyMiddleware(sagaMiddleware,thunk))
+        composer(applyMiddleware(sagaMiddleware))
     );
 
     // Recover the vortex sagas. This method takes your custom sagas and combines them with vortex's
-    const sagas = getSagas(store);
-
+    
+    const sagas = getSagas(store, [watchIndexTokenBuyProcess, watchIndexTokenSellProcess, watchStartBuyIndexTokens]);
+    
     sagaMiddleware.run(sagas);
 
     return store;

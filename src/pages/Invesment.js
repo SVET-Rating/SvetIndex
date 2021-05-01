@@ -7,16 +7,33 @@ import SvetPaymentMethods from '../components/buyTokens/buySvetPaymentMethods';
 import SvetPaymentMethodsForm from '../components/buyTokens/buySvetTokensForm';
 import IndexTokenPaymentForm from '../components/buyTokens/buyIndexTokensForm';
 import SellIndexTokenForm from '../components/sellTokens/sellIndexTokensForm';
+import BuyIndexTokensSteps from '../components/buyIndexSteps'
+import SellIndexTokensSteps from '../components/selllIndexSteps'
 
 import {SELECT_INDEX_TOKEN, 
     BUY_SVET_PAYMENT_METHOD, 
     BUY_SVET_PAYMENT_FORM,
     BUY_INDEX_TOKEN} from '../ethvtx_config/processStates/buyTokenProcessStates';
     import { SELECT_INDEX_TOKEN_SELL, SELL_INDEX_TOKEN } from '../ethvtx_config/processStates/sellTokenProcessStates';
+import { css } from "@emotion/react";
+import DotLoader from "react-spinners/DotLoader";
 
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: blue;
+  width: 11%;
+  height: 30%;
+  position: absolute;
+  left: 41%;
+  top: 41%;
+  z-index: 1000
+`;
 
 const investmentPage = (props) => {
 
+    let [loading, setLoading] = useState(false);
+    let [color, setColor] = useState("#ffffff");
     const [matches, setMatches] = useState(false);
     
     useEffect(() => {
@@ -30,6 +47,7 @@ const investmentPage = (props) => {
 
     var processStateComponent;
     var tokensOfIndexToken = '';
+    var buyIndexSteps;
 
     if (!matches) {
           tokensOfIndexToken = <TokensInIndexTokenList />
@@ -55,8 +73,32 @@ const investmentPage = (props) => {
     if (props.processStateSell == SELL_INDEX_TOKEN) {
         processStateComponent = <SellIndexTokenForm />
     }
+
+    if (props.start_approve) {
+        let loading = true
+        let color = '#23dcd5'
+        buyIndexSteps = <React.Fragment>
+                        <BuyIndexTokensSteps /> 
+                        <DotLoader color={color} loading={loading} css={override} size={150} />
+                        </React.Fragment>
+        
+    }
+    
+    if (props.start_approve_sell) {
+        let loading = true
+        let color = '#23dcd5'
+        buyIndexSteps = <React.Fragment>
+                        <SellIndexTokensSteps /> 
+                        <DotLoader color={color} loading={loading} css={override} size={150} />
+                        </React.Fragment>
+        
+    } 
+
     return (
         <div>
+            <div>
+              {buyIndexSteps}
+            </div>
            <div className="tokens-container">
             
             <div className="left-list">
@@ -74,7 +116,10 @@ const investmentPage = (props) => {
 
 const mapStatToProps = (state) => ({
     processState: state.buyTokensReducer.buyTokenProcessState,
-    processStateSell: state.sellIndexTokenReducer.sellTokenProcessState
+    processStateSell: state.sellIndexTokenReducer.sellTokenProcessState,
+    start_approve: state.buyTokensReducer.start_aprove,
+    start_approve_sell: state.sellIndexTokenReducer.start_aprove_sell,
+    buyindex_end: state.buyTokensReducer.buyindex_end
 })
 
 export default connect(mapStatToProps,null)(investmentPage)

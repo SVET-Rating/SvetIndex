@@ -10,8 +10,17 @@ import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles({
     button: {
-      marginRight: '10px',
-      color: "green"
+        color: 'white',
+        marginLeft: '20px',
+        backgroundColor: '#119a1199',
+        border: '1px solid',
+        minWidth: '11rem',
+        borderRadius: '2rem',
+        fontSize: '3rem',
+        '&:hover': {
+            backgroundColor: '#9a8f11b0',
+            color: '#FFF'
+           }
     }});
     
 const sellIndexTokens = (props) => {
@@ -20,20 +29,25 @@ const sellIndexTokens = (props) => {
         <div>
             <div className="left-list-header">
                     <p>
-                        YOU ARE GOING TO SELL ( {props.indexTokenName} )
+                        FOR SELL: ( {props.indexTokenName} )
                     </p>
                 </div>
+                
                 <div style={{textAlign:'center'}}>
-                <Button variant="outlined" className={classes.button}
-                        style={props.enoughSvetTokensForBuy ? {display:'none'}:{}}
-                        onClick={(e) => {
-                            props.resetToInvestment(e);
-                            return <InvestmentPage />;
-                          }}
-                        >GO BACK</Button>
-                </div>
+                
                 <div className="svet-token-payment-form">
-                    <p>YOU HAVE: {props.indexTokenBalance} OF {props.indexTokenName}</p>
+                    <p>
+                        GAS PRICE (gwei): <span className="number_left">{ props.gasPrice }</span>
+                    </p>
+                    <p>
+                        GAS AMOUNT: <span className="number_left">{ props.gasAmount }</span>
+                    </p>
+                    <p>APPROX. COST of TRANZACTION (ETH):<span className="number_left">{props.gasPrice * props.gasAmount / 1000000000}</span> </p>
+                    <p>FOR BLOCK: <span className="number_left">{props.curBlock}</span></p> 
+                    <p>YOU HAVE ({props.indexTokenName}):
+                    <span className="numbers number_left"> 
+                       {props.indexTokenBalance.toFixed(4)}
+                    </span> </p>
                 <div className="svet-token-payment-form-input">
                     
                     <p style={{fontSize: '0.9rem'}}>INPUT AMOUNT: </p>
@@ -42,7 +56,15 @@ const sellIndexTokens = (props) => {
                     />
                 </div>
                 
-                    <div style={props.indexTokensAmountForSell === ""?{display:'none'}:{}}>
+                    <div>
+                    <Button variant="outlined" className={classes.button}
+                        style={props.enoughSvetTokensForBuy ? {display:'none'}:{}}
+                        onClick={(e) => {
+                            props.resetToInvestment(e);
+                           
+                          }}
+                        >GO BACK</Button>
+                    
                     <Button variant="outlined" className={classes.button}
                         
                         onClick={(e) => {props.sellIndexTokenAction(props.sellIndexTokensContract,
@@ -51,7 +73,7 @@ const sellIndexTokens = (props) => {
                                                               props.currentAddress,
                                                               props.indexTokenContract)}}
                         >SELL</Button>
-                       
+                    </div>
                 </div>
             </div>
 
@@ -67,6 +89,18 @@ const getIndex2swap = (state) => {
     return fnIndex2swap;
   }
 
+  const getIndexGasAmout = (state) => {
+  
+    const actList = getContract(state, 'IndexToken', state.indexTokenReducer.activeToken.tokenAddress).fn.getActivesList();
+    
+    if (actList == undefined) {
+        return actList;
+    } else {
+      const gasAmount = Math.round ((actList.length * 161387 + 44160 + 52010)*1.02);
+      return gasAmount;
+    }
+  }  
+
 const mapStateToProps = (state) => {
     return {
         indexTokenName: state.indexTokenReducer.activeToken.indexTokenName,
@@ -75,7 +109,10 @@ const mapStateToProps = (state) => {
         sellIndexTokensContract: getIndex2swap(state),
         currentAddress: state.vtxconfig.coinbase,
         indexTokensAmountForSell: state.sellIndexTokenReducer.indexTokensAmountForSell,
-        indexTokenContract: getContract(state, 'IndexToken', state.indexTokenReducer.activeToken.tokenAddress)
+        indexTokenContract: getContract(state, 'IndexToken', state.indexTokenReducer.activeToken.tokenAddress),
+        gasPrice: state.buyTokensReducer.gasPrice,// web3.eth.getGasPrice(),
+        gasAmount: getIndexGasAmout(state),
+        curBlock: state.blocks.current_height
 
     }
 }
