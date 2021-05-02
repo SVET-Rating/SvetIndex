@@ -2,6 +2,7 @@ pragma solidity =0.6.12;
 pragma experimental ABIEncoderV2;
 import "./interfaces/iOraclePrice.sol";
 import "./interfaces/iExperts.sol";
+import "./interfaces/IUniswapV2Factory.sol"
 import "./libraries/UniswapV2OracleLibrary.sol";
 
 contract OraclePrice is iOraclePrice {
@@ -18,6 +19,7 @@ contract OraclePrice is iOraclePrice {
 
     address owner;
     address exchange;
+    address factory; 
 
     constructor () public  {
         owner =  msg.sender;
@@ -41,6 +43,11 @@ contract OraclePrice is iOraclePrice {
         owner = _newOwner;
     }
 
+    function setFactory (address _addr) public onlyOwner
+        {
+        factory = _addr;
+        }
+
 
     function addPrice   (address _addrToken, uint _price ) external override onlyExpert {
   // no functionality, just for compability
@@ -52,32 +59,11 @@ contract OraclePrice is iOraclePrice {
         owner = _addrOwner;
     }
 
+    function getPairPrice (address active1, address active2) returns(uint price12Cumulative, uint price21Cumulative, uint32 blockTimestamp) {
+        address pair =  IUniswapV2Factory (factory).pairFor (active1, active2);
 
-    function getLenPrice (address _addrToken) external override view  returns (uint) { //onlyExchange
-        // no functionality, just for compability
-
-        return 0;
+       (price12Cumulative,price21Cumulative, blockTimestamp)  = UniswapV2OracleLibrary.currentCumulativePrices(pair).
     }
-    
-    function getLastPrice (address _addrToken) external override view  returns (uint) { //onlyExchange
-        require(prices[_addrToken].length > 0, "No price for this token");
-        return prices[_addrToken][prices[_addrToken].length-1].price;
-    }
-
-
-    function getallTokens () external override view  returns (address[] memory ) {  //onlyExpert
-            // no functionality, just for compability
-
-        address[] memory tokens;
-        
-        return tokens;
-    }
-
-    function delToken   (address _addrToken) onlyOwner external override {
-        // no functionality, just for compability
-
-    }
- 
 
 
 
