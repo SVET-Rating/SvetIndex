@@ -218,37 +218,38 @@ contract Index2Swap is iIndex2Swap {
     }
 
     function buyIndexforSvetEth (uint _amount, address _indexT) public{// _amount - amount of index to buy  returns (uint  amountRes0, uint amountRes1)
-
+        uint priceIndex;
         iIndexToken index = iIndexToken(_indexT);
         for (uint8 i = 0; i<index.getActivesLen(); i++) {
-            (address addrActive, uint256 amount) = index.getActivesItem(i);
+            (address addrActive, uint256 share) = index.getActivesItem(i);
                         
             uint[] memory amountRet = fillETH (
             //    _indexT, 
                 addrActive,  //
-                amount * _amount * oraclePrice.getLastPrice(address(svetT)) / //usd
+                share * _amount * oraclePrice.getLastPrice(address(svetT)) / //usd
                  oraclePrice.getLastPrice(uniswapV2Router02.WETH()) / 10000
             );
+            priceIndex += share * oraclePrice.getLastPrice(addrActive);
             lstorage.add (msg.sender, _indexT, addrActive, amountRet[1]);
-
         }
         svetT.transferFrom(msg.sender, address(this),_amount);
-        index.mint(msg.sender, _amount);
+        index.mint(msg.sender, _amount * priceIndex / oraclePrice.getLastPrice(address(svetT)) / 10000);
 
     }
 
     function sellIndexforSvet (uint _amount, address _indexT) public returns (uint[] memory amountRet){
-
+        uint priceIndex;
         iIndexToken index = iIndexToken(_indexT);
         uint  totPriceActSv;
         for (uint8 i = 0; i<index.getActivesLen(); i++) {
-            (address addrActive, ) = index.getActivesItem(i);
+            (address addrActive, uint share) = index.getActivesItem(i);
             uint amount = _amount * lstorage.getBalance (msg.sender, _indexT, addrActive) /  index.balanceOf(msg.sender);
 
             // *_amount  /10000;
             totPriceActSv += amount * 
                         oraclePrice.getLastPrice(addrActive) /
                         oraclePrice.getLastPrice(address(svetT)); //
+             priceIndex += share * oraclePrice.getLastPrice(addrActive);
             amountRet = swapInd4Eth (
                 //_indexT, 
                 addrActive,  //
@@ -259,7 +260,7 @@ contract Index2Swap is iIndex2Swap {
             lstorage.sub (msg.sender, _indexT, addrActive, amountRet[0]);
 
             }
-        index.burnFrom(msg.sender, _amount);
+        index.burnFrom(msg.sender, _amount * priceIndex / oraclePrice.getLastPrice(address(svetT)) / 10000);
         svetT.transfer(msg.sender, totPriceActSv);
 
     }
