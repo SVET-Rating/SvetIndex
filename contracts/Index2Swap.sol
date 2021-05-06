@@ -64,20 +64,14 @@ contract Index2Swap is iIndex2Swap {
     receive() external payable {
     }
 
-    function setSwap (address _addrRout) public onlyOwner {
 
-        require( _addrRout != address (0x0), "in setIUniswapV2 all must !=0");
-      
-        uniswapV2Router02 = IUniswapV2Router02 (_addrRout);
-
-
-    }
-
-    function set ( address _svetT, address _oraclePrice, address _lstor) public onlyOwner {
+    function set ( address _svetT, address _oraclePrice, address _lstor, address _addrRout) public onlyOwner {
 
             svetT = IERC20(_svetT);
             oraclePrice = iOraclePrice (_oraclePrice);
             lstorage = iLstorage(_lstor);
+            uniswapV2Router02 = IUniswapV2Router02 (_addrRout);
+
         }
 
 /*
@@ -278,9 +272,17 @@ contract Index2Swap is iIndex2Swap {
 
     }
 
-    function upgrade (address _token, address _newContract, uint _amount ) public onlyOwner {
+    function upgrade (address payable _newContract ) public onlyOwner {
         require(_newContract != msg.sender);
-        IERC20 tok = IERC20(_token);
-        tok.transfer(_newContract, _amount);
-    }
+        address[] memory tokens  = oraclePrice.getallTokens();
+        for (uint256 t=0; t<tokens.length; t++){
+            IERC20 tok = IERC20(t);
+            if (tok.balanceOf(address(this)) > 0) {
+                tok.transfer(_newContract, tok.balanceOf(address(this)));
+            }
+        }
+          (_newContract).transfer(address(this).balance);
+    }    
+
+
 }
