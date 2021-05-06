@@ -18,7 +18,7 @@ const approveIndexSellProcess = (payload) => {
 const sellIndexTokenProcess = (payload) => {
     let amount_in_wei = web3.utils.toWei(payload.indexTokensAmountForSell);
     return payload.sellIndexTokensContract._contract.methods
-           .sellIndexforSvet(amount_in_wei, payload.indexTokenAddress)
+           .sellIndexforSvet(amount_in_wei, payload.indexTokenAddress, "600", "100")
            .send({from: payload.currentAddress})
 }
 

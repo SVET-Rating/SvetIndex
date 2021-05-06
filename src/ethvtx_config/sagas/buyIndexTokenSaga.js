@@ -24,7 +24,7 @@ const buyIndexTokenProcess = async (payload) => {
     let amount_in_wei = await web3.utils.toWei(payload.ITAmount);
     try {
         const hash = payload.ITokContract._contract.methods
-                .buyIndexforSvetEth(amount_in_wei, payload.ITAddress)
+                .buyIndexforSvetEth(amount_in_wei, payload.ITAddress, "600", "100")
                 .send({from: payload.currentAddress})
         return hash
     } catch {

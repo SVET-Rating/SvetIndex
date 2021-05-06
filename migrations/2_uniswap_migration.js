@@ -58,7 +58,7 @@ for (contractName of Object.keys(contracts[netKey]["deploy"])) {
     await  deplContract["Exchange"].setPriceOracle(deplContract["OraclePrice"].address);  
 
     
-    await  deplContract["Index2Swap"].setSwap(deplContract["UniswapV2Router02"].address, 99, 30 ),
+    await  deplContract["Index2Swap"].setSwap(deplContract["UniswapV2Router02"].address ),
    // await index2swap.set(SvetToken.address, oracle_price.address, lstorage.address );
     await deplContract["IndexFactory"].setPriceOracle(deplContract["OraclePrice"].address);
     await deplContract["IndexFactory"].setAmountOracle(deplContract["OracleCircAmount"].address);
