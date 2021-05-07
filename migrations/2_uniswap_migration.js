@@ -16,6 +16,13 @@ if (_network == "ropsten" || _network == "mainnet" || _network == "ganache") {
     netKey = "cloudflare"
 }
 
+
+// File destination.txt will be created or overwritten by default.
+fs.copyFile('../embark4Contracts.json', '../embark4Contracts_old.json', (err) => {
+  if (err) throw err;
+  console.log('embark4Contracts.json was copied to embark4Contracts_old.json');
+});
+
 for (contractName of Object.keys(contracts[netKey]["deploy"])) {
   var contract = contracts[netKey]["deploy"][contractName];
   const curContract =  artifacts.require(contractName+'.sol');

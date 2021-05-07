@@ -99,11 +99,11 @@ console.log(trIndex5.tx);
 console.log("testing work");
     await index2swap.buySvet4Eth({from:admin, value: web3.utils.toWei('0.01','ether')});
     
-    const buyIndexforSvetEth = await index2swap.buyIndexforSvetEth(web3.utils.toWei('0.01','ether'),index_token1.address, "600", "100", {from:admin});
+    const buyIndexforSvetEth = await index2swap.buyIndexforSvetEth(web3.utils.toWei('0.01','ether'),index_token1.address , {from:admin});
     console.log("buyIndexforSvetEth", buyIndexforSvetEth.tx);
     //sell
     await index_token1.approve(index2swap.address, web3.utils.toWei('0.01','ether'), {from:admin});
-    const sellIndexforSvet=await index2swap.sellIndexforSvet(web3.utils.toWei('0.005','ether'),index_token1.address, "600", "100",{from:admin});
+    const sellIndexforSvet=await index2swap.sellIndexforSvet(web3.utils.toWei('0.005','ether'),index_token1.address, {from:admin});
     console.log("sellIndexforSvet", sellIndexforSvet.tx);
 
     await index2swap.withdrEth4Svet(web3.utils.toWei('0.004','ether'), {from:admin});
