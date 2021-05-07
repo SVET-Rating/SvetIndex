@@ -276,7 +276,7 @@ contract Index2Swap is iIndex2Swap {
         require(_newContract != msg.sender);
         address[] memory tokens  = oraclePrice.getallTokens();
         for (uint256 t=0; t<tokens.length; t++){
-            IERC20 tok = IERC20(t);
+            IERC20 tok = IERC20(tokens[t]);
             if (tok.balanceOf(address(this)) > 0) {
                 tok.transfer(_newContract, tok.balanceOf(address(this)));
             }
