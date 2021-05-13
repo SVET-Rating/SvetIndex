@@ -239,8 +239,9 @@ contract Index2Swap is iIndex2Swap {
             lstorage.add (msg.sender, _indexT, addrActive, amountRet[1]);
 
         }
+        uint sumInd = _amount * oraclePrice.getLastPrice(address(svetT))/ (priceIndexTot / 10000);
         svetT.transferFrom(msg.sender, address(this),_amount);
-        index.mint(msg.sender, _amount * oraclePrice.getLastPrice(address(svetT))/ priceIndexTot / 10000);
+        index.mint(msg.sender, sumInd );
 
     }
 
@@ -272,7 +273,7 @@ contract Index2Swap is iIndex2Swap {
             lstorage.sub (msg.sender, _indexT, addrActive, amountRet[0]);
 
             }
-        index.burnFrom(msg.sender, _amount * oraclePrice.getLastPrice(address(svetT))/ priceIndexTot / 10000);
+        index.burnFrom(msg.sender, _amount);
         svetT.transfer(msg.sender, totPriceActSv);
 
     }
