@@ -71,13 +71,6 @@ const trIndex4 = await index_factory.makeIndex(index_token4.address,
 console.log(trIndex4.tx);
 await deployer.deploy(IndexToken,'SVET Perspective Index', 'SVI5');
 const index_token5 = await IndexToken.deployed();
-/* console.log( index_token1.address,
-  index_token2.address,
-  index_token3.address,
-  index_token4.address,
-  index_token5.address );
-console.log('create index token1'); */
-
 
 
 console.log('create index token5');
@@ -99,11 +92,11 @@ console.log(trIndex5.tx);
 console.log("testing work");
     await index2swap.buySvet4Eth({from:admin, value: web3.utils.toWei('0.01','ether')});
     
-    const buyIndexforSvetEth = await index2swap.buyIndexforSvetEth(web3.utils.toWei('0.01','ether'),index_token1.address , "600", "99", {from:admin});
+    const buyIndexforSvetEth = await index2swap.buyIndexforSvetEth(web3.utils.toWei('0.01','ether'),index_token1.address , "600", "90", {from:admin});
     console.log("buyIndexforSvetEth", buyIndexforSvetEth.tx);
     //sell
     await index_token1.approve(index2swap.address, web3.utils.toWei('0.01','ether'), {from:admin});
-    const sellIndexforSvet=await index2swap.sellIndexforSvet(web3.utils.toWei('0.005','ether'),index_token1.address, "600", "99", {from:admin});
+    const sellIndexforSvet=await index2swap.sellIndexforSvet(web3.utils.toWei('0.005','ether'),index_token1.address, "600", "90", {from:admin});
     console.log("sellIndexforSvet", sellIndexforSvet.tx);
 
     await index2swap.withdrEth4Svet(web3.utils.toWei('0.004','ether'), {from:admin});

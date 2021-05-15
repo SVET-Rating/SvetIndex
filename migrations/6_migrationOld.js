@@ -23,18 +23,21 @@ module.exports = async function(deployer,_network, addresses) {
 
     const oracleprice = await OraclePrice.at(oraclePriceAaddr);
     const tokens = await oracleprice.getallTokens ();
+    const index2swapold = await Index2Swap.at(oldIndexSwapaddr);
+    await index2swapold.upgrade(newIndexSwapaddr,  {from:admin});  //new version
+
     for (let t=0; t<tokens.length; t++){
         const tok = await MockERC20.at(tokens[t]);
         const bal = await tok.balanceOf(oldIndexSwapaddr);
         if (bal > 0) {
-            await tok.transfer(newIndexSwapaddr,  bal, {from:admin});
+         //   await index2swapold.upgrade(newIndexSwapaddr,  bal, {from:admin}); // working on ropsten version
             let newBal = await tok.balanceOf(newIndexSwapaddr)
             console.log ("transferred to ", newIndexSwapaddr, tokens[t], newBal.toString())
         }
     }
-    const index2swapold = await Index2Swap.at(oldIndexSwapaddr);
+    
     const index2swapnew = await Index2Swap.at(newIndexSwapaddr);
     let balEth = await index2swapold.balance;
-    await index2swapnew.sendTransaction ({from:index2swapold, value:balEth});
+    //await index2swapnew.sendTransaction ({from:index2swapold, value:balEth});
 
 }

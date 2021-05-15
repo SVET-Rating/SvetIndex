@@ -25,8 +25,8 @@ module.exports = async function(deployer,_network, addresses) {
     const admin = addresses[0];
 
     const ethLiq = 0.1;
-    const ethPrice = 1600; //USD
-    const svtPrice = 1; //usd
+    const ethPrice = 1; //prices in eth
+    const svtPrice = "0.000027027027" //0.1/3700; //usd
     var netKey;
     if (_network == "ropsten" || _network == "mainnet" || _network == "ganache") {
         netKey = _network;
@@ -49,36 +49,36 @@ module.exports = async function(deployer,_network, addresses) {
     for (tokenName of Object.keys(tokens[netKey])) {
         var token = tokens[netKey][tokenName];
 
-        var  contract ;
+        var  contractTok ;
         
         if (token.address == '') {
                 const totAm = web3.utils.toWei(token['totAmount']);
                 console.log("couldn't find, deploy tokens as new:",  tokenName);
-                contract  = await MockERC20.new (tokenName, token['symbol'], totAm, {from:admin});            
-                await factory.createPair(weth.address, contract.address);
-                var tAmount = (ethLiq * ethPrice / token.priceUSD).toString().slice(0, 18) ;
+                contractTok  = await MockERC20.new (tokenName, token['symbol'], totAm, {from:admin});            
+                await factory.createPair(weth.address, contractTok.address);
+                var tAmount =  web3.utils.toWei( (ethLiq / token.priceETH).toString() , "ether")  ; // web3.utils.toBN(token.priceETH.toString().slice(0, 18)).mul(ethLiq );  ;
         
-                await   contract.approve (router.address, web3.utils.toWei(tAmount, "ether"));
+                await   contractTok.approve (router.address,tAmount.toString()) ;
                 console.log ("adding liquidity", tokenName );
-                await router.addLiquidityETH(contract.address,
-                    web3.utils.toWei(tAmount),
-                    web3.utils.toWei(tAmount),
-                    web3.utils.toWei(ethLiq.toString()),
+                await router.addLiquidityETH(contractTok.address,
+                    tAmount.toString(),
+                    tAmount.toString(),
+                    web3.utils.toWei(ethLiq.toString(),'ether'),
                     admin, 
                     Math.round(Date.now()/1000)+100*60,
                     {from:admin, value: web3.utils.toWei(ethLiq.toString(),'ether')});  
-                tokens[netKey][tokenName].address = contract.address;
+                tokens[netKey][tokenName].address = contractTok.address;
            
                 fs.writeFileSync("tokens.json", JSON.stringify (tokens));                
 
                 } 
         else {
                 console.log("try to find token",  tokenName, token.address);
-                contract = await   MockERC20.at(token.address);
+                contractTok = await   MockERC20.at(token.address);
                 }  
         console.log ("adding price", tokenName );    
 
-        await oracle_price.addPrice( tokens[netKey][tokenName].address,  web3.utils.toWei(token.priceUSD.toString(), "ether")) ;
+        await oracle_price.addPrice( tokens[netKey][tokenName].address,  web3.utils.toWei(token.priceETH.toString(), "ether")) ;
                     //await oracle_circ_amount.addamount(token.address,  web3.utils.toBN(1374417194));
                 //    await oracle_tot_supply.addamount(token.address,  web3.utils.toBN(2100000000));
     }
