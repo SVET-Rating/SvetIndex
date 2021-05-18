@@ -67,11 +67,12 @@ const IndexTokenPaymentForm = (props) => {
                     
                 <div className="svet-token-payment-form-input" 
                 style={props.enoughSvetTokensForBuy || props.svetTokensAmount != 0 ? {}:{display:'none'}} >
-                    <TextField id="outlined-basic" label="AMOUNT IN SVET" variant="outlined"
+                    <TextField id="outlined-basic" label="AMOUNT of SVETS to invest" variant="outlined"
                     
                     value={props.indexTokensAmount}
                     onChange={(e) => {props.addIndexTokenAmount(e.target.value, props.indexTokenPrice,props.svetTokensAmount)}}
                     />
+                      <p>Sum of Index:  <span className="number_left">{(props.indexTokensAmount / props.indexTokenPrice).toFixed(4) }</span></p> 
                 </div>
                    <div >
                   

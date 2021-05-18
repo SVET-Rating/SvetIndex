@@ -113,8 +113,8 @@ contract Index2Swap is iIndex2Swap {
     }
 */
     function fillETH (//address _addrIndex,                        
-                        address _addrActive2,  // token
-                        uint256 _amount1,
+                        address _addrActive1,  // token
+                        uint256 _amount0,
                         uint256 _miningDelay,
                         uint256 _discount
                         ) internal   returns (uint[] memory amountRet) { 
@@ -122,24 +122,25 @@ contract Index2Swap is iIndex2Swap {
         // here wee need connection to Uniswap
         address[] memory path = new address[](2);
         path[0] = uniswapV2Router02.WETH();
-        path[1] = _addrActive2;
-        (uint reserve0,uint reserve1,) = IUniswapV2Pair (
+        path[1] = _addrActive1;
+        /*(uint reserve0,uint reserve1,) = IUniswapV2Pair (
                     IUniswapV2Factory (uniswapV2Router02.factory()
-                ).getPair(uniswapV2Router02.WETH(), _addrActive2)
+                ).getPair(uniswapV2Router02.WETH(), _addrActive1)
             ).getReserves(); 
-        amountRet = uniswapV2Router02.getAmountsOut(_amount1, path);
-        require (reserve1 >= amountRet[1], "No enought tokenTo in pair");
+            */
+        amountRet = uniswapV2Router02.getAmountsOut(_amount0, path);
+      //  require (reserve1 >= amountRet[1], "No enought tokenTo in pair");
 
-        amountRet = uniswapV2Router02.swapExactETHForTokens{ value: _amount1 }( amountRet[1] * _discount/100, path, address (this), block.timestamp + _miningDelay);
+        amountRet = uniswapV2Router02.swapExactETHForTokens{ value: _amount0 }( amountRet[1] * _discount/100, path, address (this), block.timestamp + _miningDelay);
         // todo: to realize disco
         //send liquidity  
  /*       uint liqCurr;
         ( amountRes1, amountRes2, liqCurr) = uniswapV2Router02.addLiquidity(
                      path[0],
-                     _addrActive2,
-                    0,// _amount1, //uint amountADesired,
+                     _addrActive1,
+                    0,// _amount0, //uint amountADesired,
                      amountRet[1], //uint amountBDesired,
-                    0,// _amount1 * uint256(discount) /100,
+                    0,// _amount0 * uint256(discount) /100,
                     amountRet[1]*discount/100,
                     address (this),
                      block.timestamp + miningDelay
@@ -175,14 +176,14 @@ contract Index2Swap is iIndex2Swap {
 
 
 /*
-        uint needLiq = _amount1.mul(curPair.totalSupply()).div(reserve1);
+        uint needLiq = _amount0.mul(curPair.totalSupply()).div(reserve1);
         
         
         ( amountRes1, amountRes2) = uniswapV2Router02.removeLiquidity(
                      _addrActive1,
-                     _addrActive2,
+                     _addrActive1,
                      needLiq,
-                     _amount1, //gets DAI directly
+                     _amount0, //gets DAI directly
                       0, 
                      _whom,
                      block.timestamp + miningDelay
@@ -260,22 +261,22 @@ contract Index2Swap is iIndex2Swap {
         for (uint8 i = 0; i<index.getActivesLen(); i++) {
             (address addrActive, uint256 share) = index.getActivesItem(i);
 
-            uint256  sumEth4Act = share * _amount * oraclePrice.getLastPrice(addrActive) /  10**21;   // oracle in ether
+            uint256  sumEth4Act = share * _amount * oraclePrice.getLastPrice(address(svetT));   // oracle in ether
             uint[] memory amountRet = fillETH (
             //    _indexT,                 
                 addrActive,
-                 sumEth4Act,  //
+                 sumEth4Act / 10**22,  //
                 _miningDelay,
                 _discount
             );
-            priceIndexTot += sumEth4Act; // price of bougth index in ethers
+            priceIndexTot += share * oraclePrice.getLastPrice(addrActive) ; // price of bougth index in ethers
 
             lstorage.add (msg.sender, _indexT, addrActive, amountRet[1]);
 
         }
-        uint sumInd = priceIndexTot / oraclePrice.getLastPrice(address(svetT)); //ether->svet
-        svetT.transferFrom(msg.sender, address(this), sumInd);
-        index.mint(msg.sender, _amount  );
+        uint sumInd =  _amount * oraclePrice.getLastPrice(address(svetT)) / (priceIndexTot /10000 ); //ether->svet
+        svetT.transferFrom(msg.sender, address(this), _amount);
+        index.mint(msg.sender, sumInd  );
 
     }
 

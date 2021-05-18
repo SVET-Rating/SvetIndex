@@ -26,7 +26,7 @@ module.exports = async function(deployer,_network, addresses) {
 
     const ethLiq = 0.1;
     const ethPrice = 1; //prices in eth
-    const svtPrice = "0.000027027027" //0.1/3700; //usd
+    const svtPrice = "0.000027027027" //0.1/3700; eth
     var netKey;
     if (_network == "ropsten" || _network == "mainnet" || _network == "ganache") {
         netKey = _network;
@@ -53,16 +53,17 @@ module.exports = async function(deployer,_network, addresses) {
         
         if (token.address == '') {
                 const totAm = web3.utils.toWei(token['totAmount']);
-                console.log("couldn't find, deploy tokens as new:",  tokenName);
+                console.log("couldn't find, deploy tokens as new:",  );
                 contractTok  = await MockERC20.new (tokenName, token['symbol'], totAm, {from:admin});            
                 await factory.createPair(weth.address, contractTok.address);
-                var tAmount =  web3.utils.toWei( (ethLiq / token.priceETH).toString() , "ether")  ; // web3.utils.toBN(token.priceETH.toString().slice(0, 18)).mul(ethLiq );  ;
-        
-                await   contractTok.approve (router.address,tAmount.toString()) ;
+                let tAmount0 = (ethLiq / token.priceETH) // web3.utils.toBN(token.priceETH.toString().slice(0, 18)).mul(ethLiq );  ;
+                let tAmount =  web3.utils.toWei( tAmount0.toString(), "ether")
+                console.log("tokenName:", tokenName, "tAmount:", tAmount0, tAmount);
+                await   contractTok.approve (router.address,tAmount) ;
                 console.log ("adding liquidity", tokenName );
                 await router.addLiquidityETH(contractTok.address,
-                    tAmount.toString(),
-                    tAmount.toString(),
+                    tAmount,
+                    tAmount,
                     web3.utils.toWei(ethLiq.toString(),'ether'),
                     admin, 
                     Math.round(Date.now()/1000)+100*60,
