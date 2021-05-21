@@ -47,7 +47,7 @@ const useStyles = makeStyles({
                   
                 <Button variant="outlined" className={classes.button}
                 onClick={(e)=>{props.buySvetTokens(props.index2swap,props.etherAmount,props.currentAddress)}}>
-                    BUY TOKENS</Button>
+                    BUY {(props.etherAmount / props.svetTokenPrice *10**18).toFixed(6)} TOKENS</Button>
                 </div>
 
         </div>
