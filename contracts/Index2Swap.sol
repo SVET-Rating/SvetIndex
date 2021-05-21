@@ -43,8 +43,8 @@ contract Index2Swap is iIndex2Swap {
 
     IUniswapV2Router02 uniswapV2Router02;
     
-    uint16 miningDelay = 600; //secs
-    uint8 discount = 99; //% 
+   // uint16 miningDelay = 600; //secs
+   // uint8 discount = 99; //% 
     
 
 
@@ -64,21 +64,14 @@ contract Index2Swap is iIndex2Swap {
     receive() external payable {
     }
 
-    function setSwap (address _addrRout, uint8 _discount, uint16 _miningDelay) public onlyOwner {
 
-        require(_discount  > 0 && _addrRout != address (0x0), "in setIUniswapV2 all must !=0");
-      
-        uniswapV2Router02 = IUniswapV2Router02 (_addrRout);
-        miningDelay = _miningDelay;
-        discount = _discount;
-
-    }
-
-    function set ( address _svetT, address _oraclePrice, address _lstor) public onlyOwner {
+    function set ( address _svetT, address _oraclePrice, address _lstor, address _addrRout) public onlyOwner {
 
             svetT = IERC20(_svetT);
             oraclePrice = iOraclePrice (_oraclePrice);
             lstorage = iLstorage(_lstor);
+            uniswapV2Router02 = IUniswapV2Router02 (_addrRout);
+
         }
 
 /*
@@ -120,31 +113,34 @@ contract Index2Swap is iIndex2Swap {
     }
 */
     function fillETH (//address _addrIndex,                        
-                        address _addrActive2,  // token
-                        uint256 _amount1
+                        address _addrActive1,  // token
+                        uint256 _amount0,
+                        uint256 _miningDelay,
+                        uint256 _discount
                         ) internal   returns (uint[] memory amountRet) { 
 
         // here wee need connection to Uniswap
         address[] memory path = new address[](2);
         path[0] = uniswapV2Router02.WETH();
-        path[1] = _addrActive2;
-   /*     (,uint reserve1,) = IUniswapV2Pair (
+        path[1] = _addrActive1;
+        /*(uint reserve0,uint reserve1,) = IUniswapV2Pair (
                     IUniswapV2Factory (uniswapV2Router02.factory()
-                ).getPair(uniswapV2Router02.WETH(), _addrActive2)
-            ).getReserves(); */
-        amountRet = uniswapV2Router02.getAmountsOut(_amount1, path);
-    //    require (reserve1 >= amountRet[1], "No enought tokenTo in pair");
+                ).getPair(uniswapV2Router02.WETH(), _addrActive1)
+            ).getReserves(); 
+            */
+        amountRet = uniswapV2Router02.getAmountsOut(_amount0, path);
+      //  require (reserve1 >= amountRet[1], "No enought tokenTo in pair");
 
-        amountRet = uniswapV2Router02.swapExactETHForTokens{ value: _amount1 }( amountRet[1], path, address (this), block.timestamp + miningDelay);
-        
+        amountRet = uniswapV2Router02.swapExactETHForTokens{ value: _amount0 }( amountRet[1] * _discount/100, path, address (this), block.timestamp + _miningDelay);
+        // todo: to realize disco
         //send liquidity  
  /*       uint liqCurr;
         ( amountRes1, amountRes2, liqCurr) = uniswapV2Router02.addLiquidity(
                      path[0],
-                     _addrActive2,
-                    0,// _amount1, //uint amountADesired,
+                     _addrActive1,
+                    0,// _amount0, //uint amountADesired,
                      amountRet[1], //uint amountBDesired,
-                    0,// _amount1 * uint256(discount) /100,
+                    0,// _amount0 * uint256(discount) /100,
                     amountRet[1]*discount/100,
                     address (this),
                      block.timestamp + miningDelay
@@ -155,7 +151,9 @@ contract Index2Swap is iIndex2Swap {
 
     function swapInd4Eth (//address _addrIndex,
                         address addrActive,  //token
-                        uint256 _amount 
+                        uint256 _amount,
+                        uint256 _miningDelay,
+                        uint256 _discount 
                         //address _whom                        
                         ) public payable returns (uint[] memory amountRet) { 
 
@@ -174,18 +172,18 @@ contract Index2Swap is iIndex2Swap {
         amountRet = uniswapV2Router02.getAmountsOut(_amount, path);
       //  require (reserve1 >= amountRet[1], "No enought tokenTo in pair");
         IERC20(addrActive).approve(address(uniswapV2Router02), amountRet[0]);
-        amountRet = uniswapV2Router02.swapExactTokensForETH(  amountRet[0] , amountRet[1]*discount / 100, path, address (this), block.timestamp + miningDelay);
+        amountRet = uniswapV2Router02.swapExactTokensForETH(  amountRet[0] , amountRet[1]* _discount / 100, path, address (this), block.timestamp + _miningDelay);
 
 
 /*
-        uint needLiq = _amount1.mul(curPair.totalSupply()).div(reserve1);
+        uint needLiq = _amount0.mul(curPair.totalSupply()).div(reserve1);
         
         
         ( amountRes1, amountRes2) = uniswapV2Router02.removeLiquidity(
                      _addrActive1,
-                     _addrActive2,
+                     _addrActive1,
                      needLiq,
-                     _amount1, //gets DAI directly
+                     _amount0, //gets DAI directly
                       0, 
                      _whom,
                      block.timestamp + miningDelay
@@ -216,33 +214,84 @@ contract Index2Swap is iIndex2Swap {
         payable(msg.sender).transfer(amount);
 
     }
+/*
 
-    function buyIndexforSvetEth (uint _amount, address _indexT) public{// _amount - amount of index to buy  returns (uint  amountRes0, uint amountRes1)
+    function buyIndexforSvetEth (uint _amount,  //in svet token
+                                address _indexT,                     
+                                uint256 _miningDelay,
+                                uint256 _discount) public{// _amount - amount of index to buy  returns (uint  amountRes0, uint amountRes1)
+        uint256 priceIndexTot;
 
         iIndexToken index = iIndexToken(_indexT);
         for (uint8 i = 0; i<index.getActivesLen(); i++) {
-            (address addrActive, uint256 amount) = index.getActivesItem(i);
-                        
+            (address addrActive, uint256 share) = index.getActivesItem(i);
+
+            uint256  sumEth4Act = share * _amount * oraclePrice.getLastPrice(address(svetT)) / //usd
+                 oraclePrice.getLastPrice(uniswapV2Router02.WETH()) / 10000;  
             uint[] memory amountRet = fillETH (
-            //    _indexT, 
-                addrActive,  //
-                amount * _amount * oraclePrice.getLastPrice(address(svetT)) / //usd
-                 oraclePrice.getLastPrice(uniswapV2Router02.WETH()) / 10000
+            //    _indexT,                 
+                addrActive,
+                 sumEth4Act,  //
+                _miningDelay,
+                _discount
             );
+            priceIndexTot += share * oraclePrice.getLastPrice(addrActive);
+
             lstorage.add (msg.sender, _indexT, addrActive, amountRet[1]);
 
         }
+        uint sumInd = _amount * oraclePrice.getLastPrice(address(svetT))/ (priceIndexTot / 10000);
         svetT.transferFrom(msg.sender, address(this),_amount);
-        index.mint(msg.sender, _amount);
+        index.mint(msg.sender, sumInd );
 
     }
 
-    function sellIndexforSvet (uint _amount, address _indexT) public returns (uint[] memory amountRet){
+    */
+
+
+
+
+    function buyIndexforSvetEth (uint _amount,  //index token
+                                address _indexT,                     
+                                uint256 _miningDelay,
+                                uint256 _discount) public{// _amount - amount of index to buy  returns (uint  amountRes0, uint amountRes1)
+        uint256 priceIndexTot;
 
         iIndexToken index = iIndexToken(_indexT);
-        uint  totPriceActSv;
         for (uint8 i = 0; i<index.getActivesLen(); i++) {
-            (address addrActive, ) = index.getActivesItem(i);
+            (address addrActive, uint256 share) = index.getActivesItem(i);
+
+            uint256  sumEth4Act = share * _amount * oraclePrice.getLastPrice(address(svetT));   // oracle in ether
+            uint[] memory amountRet = fillETH (
+            //    _indexT,                 
+                addrActive,
+                 sumEth4Act / 10**22,  //
+                _miningDelay,
+                _discount
+            );
+            priceIndexTot += share * oraclePrice.getLastPrice(addrActive) ; // price of bougth index in ethers
+
+            lstorage.add (msg.sender, _indexT, addrActive, amountRet[1]);
+
+        }
+        uint sumInd =  _amount * oraclePrice.getLastPrice(address(svetT)) / (priceIndexTot /10000 ); //ether->svet
+        svetT.transferFrom(msg.sender, address(this), _amount);
+        index.mint(msg.sender, sumInd  );
+
+    }
+
+   
+
+
+
+    function sellIndexforSvet (uint _amount,
+                             address _indexT,
+                             uint256 _miningDelay,
+                             uint256 _discount) public returns (uint[] memory amountRet){
+        iIndexToken index = iIndexToken(_indexT);
+        uint256  totPriceActSv;
+        for (uint8 i = 0; i<index.getActivesLen(); i++) {
+            (address addrActive, uint share) = index.getActivesItem(i);
             uint amount = _amount * lstorage.getBalance (msg.sender, _indexT, addrActive) /  index.balanceOf(msg.sender);
 
             // *_amount  /10000;
@@ -252,8 +301,10 @@ contract Index2Swap is iIndex2Swap {
             amountRet = swapInd4Eth (
                 //_indexT, 
                 addrActive,  //
-                amount //tokens to get 
+                amount, //tokens to get 
                 //address (this)
+                _miningDelay,
+                _discount
                 ) ;
 
             lstorage.sub (msg.sender, _indexT, addrActive, amountRet[0]);
@@ -264,9 +315,17 @@ contract Index2Swap is iIndex2Swap {
 
     }
 
-    function upgrade (address _token, address _newContract, uint _amount ) public onlyOwner {
+    function upgrade (address payable _newContract ) public onlyOwner {
         require(_newContract != msg.sender);
-        IERC20 tok = IERC20(_token);
-        tok.transfer(_newContract, _amount);
-    }
+        address[] memory tokens  = oraclePrice.getallTokens();
+        for (uint256 t=0; t<tokens.length; t++){
+            IERC20 tok = IERC20(tokens[t]);
+            if (tok.balanceOf(address(this)) > 0) {
+                tok.transfer(_newContract, tok.balanceOf(address(this)));
+            }
+        }
+          (_newContract).transfer(address(this).balance);
+    }    
+
+
 }

@@ -78,7 +78,7 @@ const TokensInIndexTokenListItem = (props) => {
                     <TableCell align="right" style={{fontSize: '1.2rem'}}>SYMBOL</TableCell>
                     <TableCell align="right" style={{fontSize: '1.2rem'}}>ADDRESS</TableCell>
                     <TableCell align="right" style={{fontSize: '1.2rem'}}>%</TableCell>
-                    <TableCell align="right" style={{fontSize: '1.2rem'}}>BALLANCE</TableCell>
+                    <TableCell align="right" style={{fontSize: '1.2rem'}}>BALANCE</TableCell>
                 </TableRow>
                 </TableHead>
                 <TableBody>

@@ -49,7 +49,7 @@ contract IndexToken is iIndexToken, ERC20 {
         }
     
     function setActivesList ( address[] memory _activesAddr, uint[] memory _activAm) public {
-        //require(enableSetActvs, "Actives already filled"); TODO: commented  for test, remove comment on prod! 
+        require(enableSetActvs, "Actives already filled");// TODO: commented  for test, remove comment on prod! 
         if (enableSetActvs) {
         for (uint8 i=0; i<_activesAddr.length; i++) {
             ERC20 activeT = ERC20(_activesAddr[i]);

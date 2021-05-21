@@ -16,6 +16,10 @@ if (_network == "ropsten" || _network == "mainnet" || _network == "ganache") {
     netKey = "cloudflare"
 }
 
+
+// File destination.txt will be created or overwritten by default.
+/* 
+*/
 for (contractName of Object.keys(contracts[netKey]["deploy"])) {
   var contract = contracts[netKey]["deploy"][contractName];
   const curContract =  artifacts.require(contractName+'.sol');
@@ -58,7 +62,7 @@ for (contractName of Object.keys(contracts[netKey]["deploy"])) {
     await  deplContract["Exchange"].setPriceOracle(deplContract["OraclePrice"].address);  
 
     
-    await  deplContract["Index2Swap"].setSwap(deplContract["UniswapV2Router02"].address, 99, 30 ),
+   // await  deplContract["Index2Swap"].setSwap(deplContract["UniswapV2Router02"].address ),
    // await index2swap.set(SvetToken.address, oracle_price.address, lstorage.address );
     await deplContract["IndexFactory"].setPriceOracle(deplContract["OraclePrice"].address);
     await deplContract["IndexFactory"].setAmountOracle(deplContract["OracleCircAmount"].address);
@@ -71,7 +75,7 @@ for (contractName of Object.keys(contracts[netKey]["deploy"])) {
     await deplContract["Exchange"].setBA(deplContract["SVTtst"].address);
     await deplContract["SVTtst"].transfer(deplContract["Index2Swap"].address, web3.utils.toWei("20000", "ether"));
     await deplContract["SVTtst"].approve(deplContract["Index2Swap"].address, web3.utils.toWei('0.02','ether'), {from:admin});
-    await deplContract["Index2Swap"].set(deplContract["SVTtst"].address, deplContract["OraclePrice"].address, deplContract["Lstorage"].address);
+    await deplContract["Index2Swap"].set(deplContract["SVTtst"].address, deplContract["OraclePrice"].address, deplContract["Lstorage"].address, deplContract["UniswapV2Router02"].address );
     
 
   
