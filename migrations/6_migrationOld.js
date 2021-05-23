@@ -1,5 +1,6 @@
 const MockERC20 = artifacts.require('SVTtst.sol');
 const Index2Swap = artifacts.require('Index2Swap.sol');
+const Index2Swap_old = artifacts.require('Index2Swap_old.sol');
 const OraclePrice = artifacts.require('OraclePrice.sol');
 const contracts_old = require("../embark4Contracts_old.json");
 const contracts = require("../embark4Contracts.json");
@@ -23,14 +24,14 @@ module.exports = async function(deployer,_network, addresses) {
 
     const oracleprice = await OraclePrice.at(oraclePriceAaddr);
     const tokens = await oracleprice.getallTokens ();
-    const index2swapold = await Index2Swap.at(oldIndexSwapaddr);
-    await index2swapold.upgrade(newIndexSwapaddr,  {from:admin});  //new version
+    const index2swapold = await Index2Swap_old.at(oldIndexSwapaddr);
+   // await index2swapold.upgrade(newIndexSwapaddr,  {from:admin});  //new version
 
     for (let t=0; t<tokens.length; t++){
         const tok = await MockERC20.at(tokens[t]);
         const bal = await tok.balanceOf(oldIndexSwapaddr);
         if (bal > 0) {
-         //   await index2swapold.upgrade(newIndexSwapaddr,  bal, {from:admin}); // working on ropsten version
+            await index2swapold.upgrade(tokens[t], newIndexSwapaddr,  bal, {from:admin}); // working on ropsten version before 2101
             let newBal = await tok.balanceOf(newIndexSwapaddr)
             console.log ("transferred to ", newIndexSwapaddr, tokens[t], newBal.toString())
         }

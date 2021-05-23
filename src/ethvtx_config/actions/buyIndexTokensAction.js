@@ -37,7 +37,7 @@ const buyIndexProcess = (ITokContract, ITAmount, ITAddress,currentAddress, svetT
     var buyindex_hash = ""
     let amount_in_wei = web3.utils.toWei(ITAmount);
     ITokContract._contract.methods
-                .buyIndexforSvetEth(amount_in_wei, ITAddress,  "600", "100")
+                .buyIndexforSvetEth(amount_in_wei, ITAddress,  "600", "95")
                 .send({from: currentAddress}).then((reciept) => {
                    buyindex_hash = reciept.transactionHash
                    
