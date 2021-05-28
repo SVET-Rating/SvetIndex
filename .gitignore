@@ -26,3 +26,5 @@ yarn-error.log*
 .embark
 embarkArtifacts
 src/contracts
+
+.editorconfig
