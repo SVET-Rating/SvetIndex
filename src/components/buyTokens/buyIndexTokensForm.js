@@ -29,12 +29,19 @@ const useStyles = makeStyles({
 
 const IndexTokenPaymentForm = (props) => {
   const classes = useStyles();
-  const [isDisable, setIsDisable] = useState(true);
+  const [isDisable, setIsDisable] = useState(() => (
+    props.indexTokensAmount <= 0 || props.indexTokensAmount > props.svetTokensAmount
+  ));
 
   const handleTextField = (e) => {
     const { value } = e.target;
     setIsDisable(() => Number.isNaN(Number(value)) || value <= 0 || value > props.svetTokensAmount);
     props.addIndexTokenAmount(value, props.indexTokenPrice, props.svetTokensAmount);
+  };
+
+  const handleGoBack = (e) => {
+    props.addIndexTokenAmount(0, props.indexTokenPrice, props.svetTokensAmount);
+    props.resetToInvestment(e);
   };
 
   const handleBuyToken = () => {
@@ -64,9 +71,9 @@ const IndexTokenPaymentForm = (props) => {
         </p>
         <p className="field">
           Available in YOUR WALLET (SVET):
-            <span className="numbers">
-              {props.svetTokensAmount.toFixed(4)}
-            </span>
+          <span className="numbers">
+            {props.svetTokensAmount.toFixed(4)}
+          </span>
           </p>
         <p className="field">
           MAX TO BUY:
@@ -100,21 +107,21 @@ const IndexTokenPaymentForm = (props) => {
 
         <div >
           <Button variant="outlined" className={classes.button}
-            onClick={(e) => props.resetToInvestment(e)}
-          >GO BACK</Button>
+            onClick={handleGoBack}
+          >Go Back</Button>
 
           <Button variant="outlined" className={classes.button}
             style={props.enoughSvetTokensForBuy || props.svetTokensAmount != 0 ? {} : {display:'none'}}
             onClick={handleBuyToken}
             disabled={isDisable}
           >
-            {isDisable ? 'BUY' : `BUY ${(props.indexTokensAmount / props.indexTokenPrice).toFixed(4)} Index`}
+            {isDisable ? 'Buy' : `Buy: ${(props.indexTokensAmount / props.indexTokenPrice).toFixed(4)} Index`}
           </Button>
 
           <Button variant="outlined" className={classes.button}
             style={props.enoughSvetTokensForBuy || props.svetTokensAmount != 0 ? {display:'none'} : {}}
             onClick={handleBuySVET}
-          >BUY SVET TOKENS</Button>
+          >Buy SVET Tokens</Button>
         </div>
       </div>
     </div>
@@ -122,111 +129,114 @@ const IndexTokenPaymentForm = (props) => {
 }
 
 const getIndexPriceInSvet = (tokens,state) => {
-    var tokenPrice;
+  var tokenPrice;
 
-    var tokensPrice = tokens.map((item,key) => {
-
-        var tokenPriceCurrent = getContract(state, 'OraclePrice', '@oracleprice').fn.getLastPrice(item[0])
-        if (tokenPriceCurrent === undefined) {
-            return tokenPriceCurrent;
-        }
-        tokenPrice = tokenPriceCurrent/10**item[2]*item[1]/10000
-        ///10^item[4]
-        return tokenPrice
-    });
-    var svetTokenPrice = getContract(state, 'OraclePrice', '@oracleprice').fn.getLastPrice(state.buyTokensReducer.svetTokens.address)
-    if (svetTokenPrice === undefined) {
-        return svetTokenPrice;
+  var tokensPrice = tokens.map((item, key) => {
+    var tokenPriceCurrent = getContract(state, 'OraclePrice', '@oracleprice').fn.getLastPrice(item[0]);
+    if (tokenPriceCurrent === undefined) {
+      return tokenPriceCurrent;
     }
-    if (tokensPrice.indexOf(undefined) !== -1) {
-        return undefined;
-    }
+    tokenPrice = tokenPriceCurrent / 10**item[2] * item[1] / 10000;
+    ///10^item[4]
+    return tokenPrice;
+  });
 
-    var resultIndexTokenPriceUSD = tokensPrice.reduce((a, b) => a + b, 0)
-    return resultIndexTokenPriceUSD/(svetTokenPrice/10**18)
+  var svetTokenPrice = getContract(state, 'OraclePrice', '@oracleprice')
+    .fn.getLastPrice(state.buyTokensReducer.svetTokens.address);
 
-}
+  if (svetTokenPrice === undefined) {
+    return svetTokenPrice;
+  }
+
+  if (tokensPrice.indexOf(undefined) !== -1) {
+    return undefined;
+  }
+
+  var resultIndexTokenPriceUSD = tokensPrice.reduce((a, b) => a + b, 0);
+  return resultIndexTokenPriceUSD / (svetTokenPrice / 10**18);
+};
 
 const getIndex2swap = (state) => {
-    const fnIndex2swap = getContract(state, 'IndexSwap', '@indexswap');
-    //let amount_in_wei = web3.utils.toBN(_amount)
-    //const fN = fnIndex2swap._contract.methods.buyIndexforSvetEth
-    //(web3.utils.toWei(amount_in_wei), _address).send({from: state.vtxconfig.coinbase});
-    return fnIndex2swap;
-  }
+  const fnIndex2swap = getContract(state, 'IndexSwap', '@indexswap');
+  //let amount_in_wei = web3.utils.toBN(_amount)
+  //const fN = fnIndex2swap._contract.methods.buyIndexforSvetEth
+  //(web3.utils.toWei(amount_in_wei), _address).send({from: state.vtxconfig.coinbase});
+  return fnIndex2swap;
+};
 
 const getEventSvetToken = (state) => {
-    const contract = getContract(state, 'ERC20', '@svettoken')
-    const events = contract.events.Approval()
-    return events
-}
+  const contract = getContract(state, 'ERC20', '@svettoken')
+  const events = contract.events.Approval()
+  return events;
+};
 
 const getGasAmount = (state) => {
-    return getIndex2swap._contract.methods
-    .buyIndexforSvetEth(1, state.indexTokenReducer.activeToken.tokenAddress).estimationGas({from: state.vtxconfig.coinbase} )
-}
-const getGasPriceAsync = async (state) => {
+  return getIndex2swap._contract.methods
+    .buyIndexforSvetEth(1, state.indexTokenReducer.activeToken.tokenAddress)
+    .estimationGas({ from: state.vtxconfig.coinbase });
+};
 
-    const result = await state.vtxconfig.web3.eth.getGasPrice()
-    console.log(result)
-    return result
-}
+const getGasPriceAsync = async (state) => {
+  const result = await state.vtxconfig.web3.eth.getGasPrice();
+  console.log(result);
+  return result;
+};
 
 const getGasPrice = (state) => {
-    getGasPriceAsync(state).then(
-        result => {
-            if (typeof(result) == 'object') {
-                return undefined
-            } else {
-                return result
-            }
-        }
-    )
-}
-const getIndexGasAmout = (state) => {
+  getGasPriceAsync(state).then((result) => {
+      if (typeof(result) == 'object') {
+        return undefined;
+      } else {
+        return result;
+      }
+    }
+  );
+};
 
-  const actList = getContract(state, 'IndexToken', state.indexTokenReducer.activeToken.tokenAddress).fn.getActivesList();
+const getIndexGasAmout = (state) => {
+  const actList = getContract(state, 'IndexToken', state.indexTokenReducer.activeToken.tokenAddress)
+    .fn.getActivesList();
 
   if (actList == undefined) {
-      return actList;
+    return actList;
   } else {
-    const gasAmount = Math.round ((actList.length * 161387 + 44160 + 52010)*1.02);
+    const gasAmount = Math.round((actList.length * 161387 + 44160 + 52010) * 1.02);
     return gasAmount;
   }
-}
+};
 
-const getTxPrice = () =>
-{
-    return getGasAmount * web3.eth.gasPrice;
-}
+const getTxPrice = () => getGasAmount * web3.eth.gasPrice;
+
 const mapStateToProps = (state) => {
-    return {
-        indexTokenName: state.indexTokenReducer.activeToken.indexTokenName,
-        indexTokenAddress:state.indexTokenReducer.activeToken.tokenAddress,
-        enoughSvetTokensForBuy: state.buyTokensReducer.enoughSvetTokensForBuy,
-        indexTokenPrice: getIndexPriceInSvet(state.indexTokenTokens.tokens,state),
-        svetTokensAmount: state.buyTokensReducer.svetTokens.amount,
-        buyIndexTokensContract: getIndex2swap(state),
-        indexTokensAmount: state.buyTokensReducer.indexTokensAmount,
-        currentAddress: state.vtxconfig.coinbase,
-        svetToken:getContract(state, 'ERC20', '@svettoken'),
-        svetTokenAprovalEvent: getEventSvetToken(state),
-        gasPrice: state.buyTokensReducer.gasPrice,// web3.eth.getGasPrice(),
-        gasAmount: getIndexGasAmout(state),
-        curBlock: state.blocks.current_height,
-        blockTimeStamp: state.blocks.blocks[state.blocks.current_height].timestamp
-
-
-    }
-}
+  return {
+    indexTokenName: state.indexTokenReducer.activeToken.indexTokenName,
+    indexTokenAddress:state.indexTokenReducer.activeToken.tokenAddress,
+    enoughSvetTokensForBuy: state.buyTokensReducer.enoughSvetTokensForBuy,
+    indexTokenPrice: getIndexPriceInSvet(state.indexTokenTokens.tokens,state),
+    svetTokensAmount: state.buyTokensReducer.svetTokens.amount,
+    buyIndexTokensContract: getIndex2swap(state),
+    indexTokensAmount: state.buyTokensReducer.indexTokensAmount,
+    currentAddress: state.vtxconfig.coinbase,
+    svetToken:getContract(state, 'ERC20', '@svettoken'),
+    svetTokenAprovalEvent: getEventSvetToken(state),
+    gasPrice: state.buyTokensReducer.gasPrice,// web3.eth.getGasPrice(),
+    gasAmount: getIndexGasAmout(state),
+    curBlock: state.blocks.current_height,
+    blockTimeStamp: state.blocks.blocks[state.blocks.current_height].timestamp,
+  };
+};
 
 const mapDispatchToProps = dispatch => {
-    return {
-        resetToInvestment: (e) => dispatch(resetAction(e)),
-        buySvetTokensMethodSelect:(e) => dispatch(svetTokensBuyProcessStart(e)),
-        addIndexTokenAmount: (e,indexTokenPrice,svetTokensAmount) => dispatch(checkSvetTokensForBuyIndexTokensAction(e, indexTokenPrice, svetTokensAmount)),
-        buyIndexTokens: (ITokContract, ITAmount, ITAddress,currentAddress, svetToken) => dispatch(formBuyIndexTokens(ITokContract, ITAmount, ITAddress, currentAddress, svetToken))
-    }
-}
+  return {
+    resetToInvestment: (e) => dispatch(resetAction(e)),
+    buySvetTokensMethodSelect:(e) => dispatch(svetTokensBuyProcessStart(e)),
+    addIndexTokenAmount: (e, indexTokenPrice, svetTokensAmount) => (
+      dispatch(checkSvetTokensForBuyIndexTokensAction(e, indexTokenPrice, svetTokensAmount))
+    ),
+    buyIndexTokens: (ITokContract, ITAmount, ITAddress, currentAddress, svetToken) => (
+      dispatch(formBuyIndexTokens(ITokContract, ITAmount, ITAddress, currentAddress, svetToken))
+    ),
+  };
+};
 
 export default connect(mapStateToProps,mapDispatchToProps)(IndexTokenPaymentForm);
