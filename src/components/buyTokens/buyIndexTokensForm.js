@@ -1,109 +1,125 @@
-import React, {useEffect} from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { getContract, getContractList } from 'ethvtx/lib/contracts/helpers/getters';
-import  checkSvetTokensForBuyIndexTokensAction  from '../../ethvtx_config/actions/checkIndexTokenAmountAction';
+import { getContract } from 'ethvtx/lib/contracts/helpers/getters';
+import checkSvetTokensForBuyIndexTokensAction  from '../../ethvtx_config/actions/checkIndexTokenAmountAction';
 import svetTokensBuyProcessStart from '../../ethvtx_config/actions/goToSvetTokenMethodPayment';
 import formBuyIndexTokens from '../../ethvtx_config/actions/buyIndexTokensAction';
 import resetAction from "../../ethvtx_config/actions/resetInvestmentsAction";
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
-    button: {
-        color: 'white',
-        marginLeft: '20px',
-        backgroundColor: '#119a1199',
-        border: '1px solid',
-        minWidth: '11rem',
-        borderRadius: '2rem',
-        fontSize: '3rem',
-        
-        '&:hover': {
-            backgroundColor: '#9a8f11b0',
-            color: '#FFF'
-           },
-          
+  button: {
+    marginLeft: '20px',
+    padding: '1rem',
+    minWidth: '10rem',
+    color: 'white',
+    fontSize: '2rem',
+    lineHeight: 1,
+    border: '1px solid',
+    borderRadius: '0.5rem',
+    backgroundColor: '#119a1199',
+    '&:hover': {
+      backgroundColor: '#9a8f11b0',
+      color: '#FFF'
     },
-    
+  },
 });
 
-
-    
 const IndexTokenPaymentForm = (props) => {
-    const classes = useStyles();
-    
-    return (
-        <div>
-            <div className="left-list-header">
-                    <p>
-                        {props.indexTokenName}
-                    </p>
-                   
-                    
-                </div>
-                
-                <div className="svet-token-payment-form">
-                    <p className="field" >PRICE (SVET): 
-                        <span className="numbers">
-                            {props.indexTokenPrice.toFixed(4)}
-                        </span>
-                    </p>
-                    <p className="field">YOUR WALLET (SVET):  
-                        <span className="numbers">
-                            {props.svetTokensAmount.toFixed(4)}
-                        </span>
-                    </p>
-                    <p className="field">MAX TO BUY: 
-                        <span className="numbers">
-                            {(props.svetTokensAmount/props.indexTokenPrice).toFixed(4)}
-                        </span>
-                    </p>
-                    <p>GAS AMOUNT: <span className="number_left">{props.gasAmount}</span> </p>
-                    <p>GAS PRICE (gwei):<span className="number_left">{props.gasPrice}</span> </p>
-                    <p>APPROX. COST of TRANZACTION (ETH):<span className="number_left">{props.gasPrice * props.gasAmount / 1000000000}</span> </p>
-                    <p>FOR BLOCK: <span className="number_left">{props.curBlock}</span></p> 
-                    
-                <div className="svet-token-payment-form-input" 
-                style={props.enoughSvetTokensForBuy || props.svetTokensAmount != 0 ? {}:{display:'none'}} >
-                    <TextField id="outlined-basic" label="AMOUNT of SVETS to invest" variant="outlined"
-                    
-                    value={props.indexTokensAmount}
-                    onChange={(e) => {props.addIndexTokenAmount(e.target.value, props.indexTokenPrice,props.svetTokensAmount)}}
-                    />
-                      <p>Sum of Index:  <span className="number_left">{(props.indexTokensAmount / props.indexTokenPrice).toFixed(4) }</span></p> 
-                </div>
-                   <div >
-                  
-                <Button variant="outlined" className={classes.button}
-                        
-                        onClick={(e) => {
-                            props.resetToInvestment(e);
-                            
-                          }}
-                        >GO BACK</Button>
-                
-                    <Button variant="outlined" className={classes.button}
-                        style={props.enoughSvetTokensForBuy || props.svetTokensAmount != 0 ? {}:{display:'none'}}
-                        onClick={(e) => {props.buyIndexTokens(props.buyIndexTokensContract,
-                                                              props.indexTokensAmount,
-                                                              props.indexTokenAddress,
-                                                              props.currentAddress,
-                                                              props.svetToken,
-                                                              )}}
-                        >BUY</Button>
-                       <Button variant="outlined" className={classes.button}
-                        style={props.enoughSvetTokensForBuy || props.svetTokensAmount != 0 ? {display:'none'}:{}}
-                        onClick={(e) => {props.buySvetTokensMethodSelect(e)}}
-                        >BUY SVET TOKENS</Button>
-                </div>
-            </div>
+  const classes = useStyles();
+  const [isDisable, setIsDisable] = useState(true);
 
-        </div> 
+  const handleTextField = (e) => {
+    const { value } = e.target;
+    setIsDisable(() => Number.isNaN(Number(value)) || value <= 0 || value > props.svetTokensAmount);
+    props.addIndexTokenAmount(value, props.indexTokenPrice, props.svetTokensAmount);
+  };
+
+  const handleBuyToken = () => {
+    props.buyIndexTokens(
+      props.buyIndexTokensContract,
+      props.indexTokensAmount,
+      props.indexTokenAddress,
+      props.currentAddress,
+      props.svetToken,
     );
-}
+  };
 
+  const handleBuySVET = (e) => props.buySvetTokensMethodSelect(e);
+
+  return (
+    <div>
+      <div className="left-list-header">
+        <p>{props.indexTokenName}</p>
+      </div>
+
+      <div className="svet-token-payment-form">
+        <p className="field">
+          PRICE (SVET):
+          <span className="numbers">
+            {props.indexTokenPrice.toFixed(4)}
+          </span>
+        </p>
+        <p className="field">
+          Available in YOUR WALLET (SVET):
+            <span className="numbers">
+              {props.svetTokensAmount.toFixed(4)}
+            </span>
+          </p>
+        <p className="field">
+          MAX TO BUY:
+          <span className="numbers">
+            {(props.svetTokensAmount/props.indexTokenPrice).toFixed(4)}
+          </span>
+        </p>
+        <p>GAS AMOUNT: <span className="number_left">{props.gasAmount}</span></p>
+        <p>GAS PRICE (gwei):<span className="number_left">{props.gasPrice}</span></p>
+        <p>APPROX. COST of TRANSACTION (ETH):
+          <span className="number_left">{props.gasPrice * props.gasAmount / 1000000000}</span>
+        </p>
+        <p>FOR BLOCK: <span className="number_left">{props.curBlock}</span></p>
+
+        <div className="svet-token-payment-form-input"
+          style={props.enoughSvetTokensForBuy || props.svetTokensAmount != 0 ? {} : {display:'none'}}
+        >
+          <TextField
+            id="outlined-basic"
+            label="AMOUNT of SVETS to invest"
+            variant="outlined"
+            value={props.indexTokensAmount}
+            onChange={handleTextField}
+          />
+          <p>Sum of Index:
+            <span className="number_left">
+              {isDisable ? '0' : (props.indexTokensAmount / props.indexTokenPrice).toFixed(4)}
+            </span>
+          </p>
+        </div>
+
+        <div >
+          <Button variant="outlined" className={classes.button}
+            onClick={(e) => props.resetToInvestment(e)}
+          >GO BACK</Button>
+
+          <Button variant="outlined" className={classes.button}
+            style={props.enoughSvetTokensForBuy || props.svetTokensAmount != 0 ? {} : {display:'none'}}
+            onClick={handleBuyToken}
+            disabled={isDisable}
+          >
+            {isDisable ? 'BUY' : `BUY ${(props.indexTokensAmount / props.indexTokenPrice).toFixed(4)} Index`}
+          </Button>
+
+          <Button variant="outlined" className={classes.button}
+            style={props.enoughSvetTokensForBuy || props.svetTokensAmount != 0 ? {display:'none'} : {}}
+            onClick={handleBuySVET}
+          >BUY SVET TOKENS</Button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const getIndexPriceInSvet = (tokens,state) => {
     var tokenPrice;
@@ -125,10 +141,10 @@ const getIndexPriceInSvet = (tokens,state) => {
     if (tokensPrice.indexOf(undefined) !== -1) {
         return undefined;
     }
-    
+
     var resultIndexTokenPriceUSD = tokensPrice.reduce((a, b) => a + b, 0)
     return resultIndexTokenPriceUSD/(svetTokenPrice/10**18)
-    
+
 }
 
 const getIndex2swap = (state) => {
@@ -150,7 +166,7 @@ const getGasAmount = (state) => {
     .buyIndexforSvetEth(1, state.indexTokenReducer.activeToken.tokenAddress).estimationGas({from: state.vtxconfig.coinbase} )
 }
 const getGasPriceAsync = async (state) => {
-    
+
     const result = await state.vtxconfig.web3.eth.getGasPrice()
     console.log(result)
     return result
@@ -168,16 +184,16 @@ const getGasPrice = (state) => {
     )
 }
 const getIndexGasAmout = (state) => {
-  
+
   const actList = getContract(state, 'IndexToken', state.indexTokenReducer.activeToken.tokenAddress).fn.getActivesList();
-  
+
   if (actList == undefined) {
       return actList;
   } else {
     const gasAmount = Math.round ((actList.length * 161387 + 44160 + 52010)*1.02);
     return gasAmount;
   }
-}  
+}
 
 const getTxPrice = () =>
 {
@@ -200,7 +216,7 @@ const mapStateToProps = (state) => {
         curBlock: state.blocks.current_height,
         blockTimeStamp: state.blocks.blocks[state.blocks.current_height].timestamp
 
-        
+
     }
 }
 
@@ -214,4 +230,3 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(IndexTokenPaymentForm);
-
