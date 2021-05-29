@@ -92,6 +92,7 @@ const IndexTokenPaymentForm = (props) => {
           style={props.enoughSvetTokensForBuy || props.svetTokensAmount != 0 ? {} : {display:'none'}}
         >
           <TextField
+            autoComplete="off"
             id="outlined-basic"
             label="AMOUNT of SVETS to invest"
             variant="outlined"
@@ -119,7 +120,7 @@ const IndexTokenPaymentForm = (props) => {
           </Button>
 
           <Button variant="outlined" className={classes.button}
-            style={props.enoughSvetTokensForBuy || props.svetTokensAmount != 0 ? {display:'none'} : {}}
+            // style={props.enoughSvetTokensForBuy || props.svetTokensAmount != 0 ? {display:'none'} : {}}
             onClick={handleBuySVET}
           >Buy SVET Tokens</Button>
         </div>

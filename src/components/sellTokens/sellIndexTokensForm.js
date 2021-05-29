@@ -83,6 +83,7 @@ const sellIndexTokens = (props) => {
           <div className="svet-token-payment-form-input">
             <p style={{fontSize: '0.9rem'}}>INPUT AMOUNT: </p>
             <TextField
+              autoComplete="off"
               id="outlined-basic"
               label="INPUT AMOUNT"
               variant="outlined"
