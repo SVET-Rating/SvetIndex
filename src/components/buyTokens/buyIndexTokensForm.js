@@ -112,7 +112,7 @@ const IndexTokenPaymentForm = (props) => {
           >Go Back</Button>
 
           <Button variant="outlined" className={classes.button}
-            style={props.enoughSvetTokensForBuy || props.svetTokensAmount != 0 ? {} : {display:'none'}}
+            // style={props.enoughSvetTokensForBuy || props.svetTokensAmount != 0 ? {} : {display:'none'}}
             onClick={handleBuyToken}
             disabled={isDisable}
           >
@@ -120,7 +120,7 @@ const IndexTokenPaymentForm = (props) => {
           </Button>
 
           <Button variant="outlined" className={classes.button}
-            // style={props.enoughSvetTokensForBuy || props.svetTokensAmount != 0 ? {display:'none'} : {}}
+            style={props.enoughSvetTokensForBuy || props.svetTokensAmount != 0 ? {display:'none'} : {}}
             onClick={handleBuySVET}
           >Buy SVET Tokens</Button>
         </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { etherToSvetTokens, changeEtherForBuyAmount } from '../../ethvtx_config/actions/buySvetTokenAction';
-import { getContract } from 'ethvtx/lib/contracts/helpers/getters';
+import { getContract, getAccount } from 'ethvtx/lib/getters';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -27,13 +27,13 @@ const useStyles = makeStyles({
 
 const SvetPaymentMethodsForm = (props) => {
   const classes = useStyles();
-  // const [isDisable, setIsDisable] = useState(() => (
-  //   props.etherAmount <= 0 || props.etherAmount > props.I
-  // ));
+  const [isDisable, setIsDisable] = useState(() => (
+    props.etherAmount <= 0 || props.etherAmount > props.etherBalance
+  ));
 
   const handleTextField = (e) => {
     const { value } = e.target;
-    // setIsDisable(() => Number.isNaN(Number(value)) || value <= 0 || value > props.I);
+    setIsDisable(() => Number.isNaN(Number(value)) || value <= 0 || value > props.etherBalance);
     props.buySvetTokenEtherAmount(value);
   };
 
@@ -57,6 +57,7 @@ const SvetPaymentMethodsForm = (props) => {
 
       <div className="svet-token-payment-form">
         <p>You selected {props.paymentMethod} like payment method</p>
+        <p>Your wallet balance: {Number(props.etherBalance).toFixed(6)} ETHER</p>
         <div className="svet-token-payment-form-input">
           <p style={{ fontSize: '0.9rem' }}>INPUT AMOUNT OF {props.paymentMethod}</p>
           <TextField
@@ -71,9 +72,10 @@ const SvetPaymentMethodsForm = (props) => {
 
         <Button variant="outlined" className={classes.button}
           onClick={handleBuy}
-          // disabled={isDisable}
-        // >{isDisable ? 'Buy' : `Buy ${(props.etherAmount / props.svetTokenPrice * 10**18).toFixed(6)} tokens`}</Button>
-        >Buy {(props.etherAmount / props.svetTokenPrice * 10**18).toFixed(6)} tokens</Button>
+          disabled={isDisable}
+        >
+          {isDisable ? 'Buy' : `Buy ${(props.etherAmount / props.svetTokenPrice * 10**18).toFixed(4)} tokens`}
+        </Button>
       </div>
     </div>
   );
@@ -98,10 +100,19 @@ const getIndex2swap = (state) => {
   return fnIndex2swap;
 };
 
+const getEtherBalance = (state) => {
+  const coinBase = getAccount(state, '@coinbase');
+  if (!coinBase) {
+    return;
+  }
+  return coinBase.balance;
+};
+
 const mapStateToProps = (state) => {
   return {
     paymentMethod: state.buyTokensReducer.buySvetTokenMethod,
     svetTokenPrice: getSvetTokenPrice(state),
+    etherBalance: getEtherBalance(state).absoluteValue() / 10**18,
     etherAmount: state.buyTokensReducer.etherAmount,
     index2swap: getIndex2swap(state),
     currentAddress: state.vtxconfig.coinbase,
