@@ -56,6 +56,7 @@ for (contractName of Object.keys(contracts[netKey]["deploy"])) {
     
     await deplContract["Experts"].addExpert(admin);
     await deplContract["OraclePrice"].setExpertsContr(deplContract["Experts"].address);
+    await deplContract["OraclePrice"].setRouter(deplContract["UniswapV2Router02"].address);
     await deplContract["OracleTotSupply"].setExpertsContr(deplContract["Experts"].address);
     await deplContract["OracleCircAmount"].setExpertsContr(deplContract["Experts"].address);
 
