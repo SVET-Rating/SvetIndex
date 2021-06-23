@@ -1,9 +1,9 @@
-import { CHECK_SVET_TOKENS, 
-    BUY_SVET_TOKENS, 
-    SELECT_SVET_PAYMENT_METHOD, 
-    CHECK_SVET_TOKENS_FOR_BUY_INDEX_TOKEN, 
+import { CHECK_SVET_TOKENS,
+    BUY_SVET_TOKENS,
+    SELECT_SVET_PAYMENT_METHOD,
+    CHECK_SVET_TOKENS_FOR_BUY_INDEX_TOKEN,
     START_INVEST,
-    START_TO_BUY_SVET_TOKENS, 
+    START_TO_BUY_SVET_TOKENS,
     BUY_SVET_TOKEN_ETHER_AMOUNT,
     BUY_INDEX_TOKENS,
     BUY_SVET_TOKENS_BY_ETHER,
@@ -12,11 +12,12 @@ import { CHECK_SVET_TOKENS,
     BUY_INDEX_TRX_START,
     BUY_INDEX_TRX_PROCESSED,
     BUY_INDEX_TRX_END,
+    BUY_INDEX_TRX_FAILED,
     START_INVEST_PROCESS,
     GET_GAS_PRICE
     } from '../actions/types';
-import {SELECT_INDEX_TOKEN, 
-        BUY_SVET_PAYMENT_METHOD, 
+import {SELECT_INDEX_TOKEN,
+        BUY_SVET_PAYMENT_METHOD,
         BUY_SVET_PAYMENT_FORM,
         BUY_INDEX_TOKEN } from '../processStates/buyTokenProcessStates';
 import { DAI,ETHER,FIAT_MONEY,BITCOIN } from '../paymentMethod/paymentMethodType'
@@ -34,9 +35,8 @@ const initialStateBuySvetTokens = {
     'start_aprove': false,
     'aprove_hash': "",
     'buyindex_hash': "",
-    'gasPrice': 0
-    
-
+    'gasPrice': 0,
+    hasError: false,
 }
 
 
@@ -44,7 +44,13 @@ const buyTokensReducer = (state=initialStateBuySvetTokens, action) => {
 
     switch(action.type) {
         case RESET_INVESTMENTS:
-            return {...state, buyTokenProcessState: SELECT_INDEX_TOKEN, start_aprove: false }
+            // return {...state, buyTokenProcessState: SELECT_INDEX_TOKEN, start_aprove: false }
+            return {
+              ...state,
+              buyTokenProcessState: SELECT_INDEX_TOKEN,
+              start_aprove: false,
+              hasError: false,
+            }
         case GET_GAS_PRICE:
             return {...state, gasPrice: action.payload.gasPrice}
         case START_INVEST_PROCESS:
@@ -86,7 +92,10 @@ const buyTokensReducer = (state=initialStateBuySvetTokens, action) => {
             return {
                 ...state, buy_index_steps: 4, buyindex_hash: ""
             }
-        
+        case BUY_INDEX_TRX_FAILED:
+            return {
+                ...state, buy_index_steps: 4, buyindex_hash: "", hasError: action.payload.hasError,
+            }
         default:
             return state;
     }
