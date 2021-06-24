@@ -19,7 +19,7 @@ const approveIndexBuyProcess = async (payload) => {
 
       // Если может вернуться не валидный 'hash',
       // то здесь нужно выполнить проверку и выкинуть ошибку ('throw new Error()')
-
+        console.log(hash);
         return hash
     } catch {
       throw new Error(APPROVE_ERROR_MSG);
@@ -35,7 +35,7 @@ const buyIndexTokenProcess = async (payload) => {
 
         // Если может вернуться не валидный 'hash',
         // то здесь нужно выполнить проверку и выкинуть ошибку ('throw new Error()')
-
+        console.log(hash);
         return hash
     } catch {
       throw new Error(PROCESS_ERROR_MSG);
