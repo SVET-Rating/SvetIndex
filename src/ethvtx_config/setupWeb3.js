@@ -21,7 +21,7 @@ export const setupWeb3 = async (store) => {
                 const web3_getter = () => {
 
                     const web3 = new Web3(EmbarkJs.Blockchain.Providers.web3.getCurrentProvider());
-
+                    web3.eth.handleRevert = true
                     return web3;
 
                 };
@@ -38,6 +38,7 @@ export const setupWeb3 = async (store) => {
                 // Extract the provider to build a very specific version of web3 (in our case web3@1.0.0-beta.32 is the best working version)
                 const provider = embark_web3.currentProvider;
                 const web3 = new Web3(provider);
+                web3.eth.handleRevert = true
                 // Set the web3 instance in the store
                 setWeb3(store.dispatch, web3);
             }

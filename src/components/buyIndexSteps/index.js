@@ -73,15 +73,15 @@ const buyIndexTokensSteps = (props) => {
   const steps = getSteps();
   var open = false;
 
-  if (activeStep == 4) {
+  if (activeStep == 4 && !props.hasError) {
     open = true;
   }
 
-   
+
   return (
     <div className={classes.root}>
-      
-      <Stepper activeStep={activeStep}>
+
+      <Stepper activeStep={props.hasError ? 0 : activeStep}>
         {steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};
@@ -99,11 +99,11 @@ const buyIndexTokensSteps = (props) => {
         })}
       </Stepper>
       <div>
-          <div>
+          {!props.hasError && <div>
             <Typography className={classes.instructions}>
             <marquee behavior="alternate" direction="right">{getStepContent(activeStep)}</marquee>
             </Typography>
-          </div>
+          </div>}
       </div>
       <Modal
               aria-labelledby="transition-modal-title"
@@ -140,7 +140,8 @@ const getEventSvetToken = (state) => {
 const mapStateToProps = (state) => {
     return {
         svetTokenAprovalEvent: getEventSvetToken(state),
-        buy_index_steps: state.buyTokensReducer.buy_index_steps
+        buy_index_steps: state.buyTokensReducer.buy_index_steps,
+        hasError: state.buyTokensReducer.hasError
     }
 }
 
