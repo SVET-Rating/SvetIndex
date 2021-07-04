@@ -26,7 +26,7 @@ module.exports = async function(deployer,_network, addresses) {
 
     const ethLiq = 0.1;
     const ethPrice = 1; //prices in eth
-    const svtPrice = "0.000027027027" //0.1/3700; eth
+    const svtPrice = "0.000017391"//0.04/2337 eth
     var netKey;
     if (_network == "ropsten" || _network == "mainnet" || _network == "ganache") {
         netKey = _network;

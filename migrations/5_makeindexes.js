@@ -37,7 +37,7 @@ const index_factory = await IndexFactory.at(contracts[netKey]["deploy"]["IndexFa
 const index2swap = await Index2Swap.at(contracts[netKey]["deploy"] ["Index2Swap"]["address"]);
 
 if (_network != "ropsten" || _network != "mainnet") {
-  console.log('create index token1');
+ /*  console.log('create index token1');
 await deployer.deploy(IndexToken,'Svet index 1', 'SVI1');
  const index_token1 = await IndexToken.deployed();
  const trIndex1 = await index_factory.makeIndex(index_token1.address,
@@ -88,6 +88,68 @@ const trIndex5 = await index_factory.makeIndex(index_token5.address,
   ],
   [1000, 1000, 1000, 1000,1000, 1000,1000, 1000,1000, 1000]); //in shares 1/10000
 console.log(trIndex5.tx);
+ */
+
+/**
+ * Svyat Sv, [02.07.21 08:58]
+Economic Class Index
+33% Shiba Inu (SHIB), Price: 0.00000814: 0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce
+33% Amp (AMP), Price: 0.055411: 0xff20817765cb7f73d4bde2e66e067e58d11095c2
+33% Telcoin (TEL), Price: 0.02366776: 0x467bccd9d29f223bce8043b84e8c8b282827790f
+
+ */
+await deployer.deploy(IndexToken,'EconomicClassIndex', 'SECI');
+const index_tokenSECI = await IndexToken.deployed();
+console.log('create index Economic Class Index');
+const trIndex5 = await index_factory.makeIndex(index_tokenSECI.address,
+   [tokens[netKey]["Shiba Inu"]["address"],
+    tokens[netKey]["Amp"]["address"],
+    tokens[netKey]["Telcoin"]["address"],
+    contracts[netKey]["deploy"] ["SVTtst"]["address"],
+
+  ],
+  [3150, 3150, 3150, 550]); //in shares 1/10000
+console.log(trIndex5.tx);
+
+/**
+ * Svyat Sv, [02.07.21 08:59]
+Mare Tranquillitatis (The Sea of Tranquillity) Index
+33% Dai (DAI), Price: 1.00: 0x6b175474e89094c44da98b954eedeac495271d0f
+33% cDAI (CDAI), Price: 0.02156891: 0x5d3a536e4d6dbd6114cc1ead35777bab948e3643
+33% cUSDT (CUSDT), Price: 0.02127915: 0xf650c3d88d12db855b8bf7d11be6c55a4e07dcc9
+ */
+
+await deployer.deploy(IndexToken,'The Sea of Tranquillity) Index', 'SSTI');
+const index_tokenSSTI = await IndexToken.deployed();
+console.log('create index Economic Class Index');
+const trIndex6 = await index_factory.makeIndex(index_tokenSSTI.address,
+   [tokens[netKey]["DAI"]["address"],
+    tokens[netKey]["cDAI"]["address"],
+    tokens[netKey]["cUSDT"]["address"],
+    contracts[netKey]["deploy"] ["SVTtst"]["address"],
+
+  ],
+  [3150, 3150, 3150, 550]); //in shares 1/10000
+console.log(trIndex6.tx);
+
+/**
+ * Svyat Sv, [02.07.21 08:59]
+50 Cents Index
+50% Basic Attention Token (BAT), Price: 0.563579: 0x0d8775f648430679a709e98d2b0cb6250d2887ef
+50% Decentraland (MANA), Price: 0.524011: 0x0f5d2fb29fb7d3cfee444a200298f468908cc942
+ */
+
+await deployer.deploy(IndexToken,'50CentsIndex', 'S50I');
+const index_tokenS50I = await IndexToken.deployed();
+console.log('50 Cents Index');
+const trIndex7 = await index_factory.makeIndex(index_tokenS50I.address,
+   [tokens[netKey]["Basic Attention Token"]["address"],
+    tokens[netKey]["Decentraland"]["address"],
+    contracts[netKey]["deploy"] ["SVTtst"]["address"],
+
+  ],
+  [4750, 4750,  500]); //in shares 1/10000
+console.log(trIndex7.tx);
 
 console.log("testing work");
     await index2swap.buySvet4Eth({from:admin, value: web3.utils.toWei('0.01','ether')});
@@ -95,7 +157,7 @@ console.log("testing work");
     const buyIndexforSvetEth = await index2swap.buyIndexforSvetEth(web3.utils.toWei('0.01','ether'),index_token1.address , "600", "90", {from:admin});
     console.log("buyIndexforSvetEth", buyIndexforSvetEth.tx);
     //sell
-    await index_token1.approve(index2swap.address, web3.utils.toWei('0.01','ether'), {from:admin});
+    await index_tokenSECI.approve(index2swap.address, web3.utils.toWei('0.01','ether'), {from:admin});
     const sellIndexforSvet=await index2swap.sellIndexforSvet(web3.utils.toWei('0.005','ether'),index_token1.address, "600", "90", {from:admin});
     console.log("sellIndexforSvet", sellIndexforSvet.tx);
 
