@@ -1,5 +1,5 @@
 const MockERC20 = artifacts.require('SVTtst.sol');
-const Index2Swap = artifacts.require('Index2Swap.sol');
+const Index2Swap = artifacts.require('Index2SwapEth.sol');
 const OraclePrice = artifacts.require('OraclePrice.sol');
 const contracts_old = require("../embark4Contracts_old.json");
 const contracts = require("../embark4Contracts.json");
@@ -17,8 +17,8 @@ module.exports = async function(deployer,_network, addresses) {
     } 
 
     const oraclePriceAaddr = contracts_old[netKey]["deploy"]["OraclePrice"]["address"]
-    const oldIndexSwapaddr =  contracts_old[netKey]["deploy"]["Index2Swap"]["address"]
-    const newIndexSwapaddr = contracts[netKey]["deploy"]["Index2Swap"]["address"]
+    const oldIndexSwapaddr =  contracts_old[netKey]["deploy"]["Index2SwapEth"]["address"]
+    const newIndexSwapaddr = contracts[netKey]["deploy"]["Index2SwapEth"]["address"]
 
 
     const oracleprice = await OraclePrice.at(oraclePriceAaddr);
