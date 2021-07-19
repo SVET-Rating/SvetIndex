@@ -1,11 +1,13 @@
-import React from 'react'
-import TokensInIndexTokenListItem from './TokensInIndexTokenListItem'
+import React from 'react';
+import { Box } from '@material-ui/core';
+import AssetItemTokensTable from '../AssetItemTokensTable/AssetItemTokensTable';
 
-export default function TokensInIndexTokenList() {
-    return (
-            <ul className="right-list-items">
-                   <TokensInIndexTokenListItem/> 
-                   
-            </ul>
-    )
-}
+const TokensInIndexTokenList = () => {
+  return (
+    <Box className="right-list-items">
+      <AssetItemTokensTable/>
+    </Box>
+  );
+};
+
+export default TokensInIndexTokenList;

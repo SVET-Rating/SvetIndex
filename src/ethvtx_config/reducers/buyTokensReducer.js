@@ -14,7 +14,11 @@ import { CHECK_SVET_TOKENS,
     BUY_INDEX_TRX_END,
     BUY_INDEX_TRX_FAILED,
     START_INVEST_PROCESS,
-    GET_GAS_PRICE
+    GET_GAS_PRICE,
+    SET_SLIPPAGE,
+    SET_DELAY,
+    SET_SWAP_AMOUNT,
+    SET_SWAP_OUT_AMOUNT,
     } from '../actions/types';
 import {SELECT_INDEX_TOKEN,
         BUY_SVET_PAYMENT_METHOD,
@@ -23,25 +27,26 @@ import {SELECT_INDEX_TOKEN,
 import { DAI,ETHER,FIAT_MONEY,BITCOIN } from '../paymentMethod/paymentMethodType'
 import { RESET_INVESTMENTS } from '../processStates/resetProcessStates';
 
+const initialState = {
+  svetTokens: {},
+  buyTokenProcessState: SELECT_INDEX_TOKEN,
+  buySvetTokenMethod: ETHER,
+  enoughSvetTokensForBuy: undefined,
+  etherAmount: '0.56398568',
+  indexTokensAmount: '0',
+  buy_index_steps: 0,
+  start_aprove: false,
+  aprove_hash: '',
+  buyindex_hash: '',
+  gasPrice: '0',
+  hasError: false,
+  slippage: 3,
+  delay: 1,
+  swapAmount: '0',
+  swapOutAmount: '0',
+};
 
-const initialStateBuySvetTokens = {
-    'svetTokens':{},
-    'buyTokenProcessState': SELECT_INDEX_TOKEN,
-    'buySvetTokenMethod': ETHER,
-    'enoughSvetTokensForBuy': undefined,
-    'etherAmount':0,
-    'indexTokensAmount':0,
-    'buy_index_steps': 0,
-    'start_aprove': false,
-    'aprove_hash': "",
-    'buyindex_hash': "",
-    'gasPrice': 0,
-    hasError: false,
-}
-
-
-const buyTokensReducer = (state=initialStateBuySvetTokens, action) => {
-
+const buyTokensReducer = (state = initialState, action) => {
     switch(action.type) {
         case RESET_INVESTMENTS:
             // return {...state, buyTokenProcessState: SELECT_INDEX_TOKEN, start_aprove: false }
@@ -96,10 +101,25 @@ const buyTokensReducer = (state=initialStateBuySvetTokens, action) => {
             return {
                 ...state, buy_index_steps: 4, buyindex_hash: "", hasError: action.payload.hasError,
             }
+        case SET_SLIPPAGE:
+          return {
+            ...state, slippage: action.payload.slippage,
+          }
+        case SET_DELAY:
+          return {
+            ...state, delay: action.payload.delay,
+          }
+        case SET_SWAP_AMOUNT:
+          return {
+            ...state, swapAmount: action.payload.swapAmount,
+          }
+        case SET_SWAP_OUT_AMOUNT:
+          return {
+            ...state, swapOutAmount: action.payload.swapOutAmount,
+          }
         default:
             return state;
     }
-
 }
 
 export default buyTokensReducer;

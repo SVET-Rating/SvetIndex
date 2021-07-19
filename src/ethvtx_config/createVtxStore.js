@@ -1,50 +1,47 @@
 import { applyMiddleware, compose, createStore } from 'redux';
-import { getSagas, getReducers, getInitialState, configureVtx } from 'ethvtx';
 import createSagaMiddleware from 'redux-saga';
-import thunk from 'redux-thunk'
+import { getSagas, getReducers, getInitialState, configureVtx } from 'ethvtx';
 import indexTokenReducer from './reducers/indexTokenReducer';
 import indexTokenTokens from './reducers/getTokenTokens';
 import buyTokensReducer from './reducers/buyTokensReducer';
 import sellIndexTokenReducer from './reducers/sellTokensReducer';
 import { watchIndexTokenBuyProcess } from './sagas/buyIndexTokenSaga';
 import { watchIndexTokenSellProcess } from './sagas/sellIndexTokenSaga';
-import { watchStartBuyIndexTokens } from './sagas/getGasPrice'
-import { all } from 'redux-saga/effects'
+import { watchStartBuyIndexTokens } from './sagas/getGasPrice';
 
 export const createVtxStore = () => {
+  const composer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-    const composer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  // You can configure some parameters here to inject them with the initial state
+  const initial_state = configureVtx(getInitialState(), {
+    poll_timer: 500,
+    confirmation_treshold: 5,
+  });
 
-    // You can configure some parameters here to inject them with the initial state
-    const initial_state = configureVtx(getInitialState(), {
-        poll_timer: 100,
-        confirmation_treshold: 3
-    });
+  // Recover the vortex reducers. This method takes your custom reducers and combines them with vortex's
+  const reducers = getReducers({
+    indexTokenReducer,
+    indexTokenTokens,
+    sellIndexTokenReducer,
+    buyTokensReducer,
+  });
 
-    const additionReducers  = {
-        indexTokenReducer,
-        indexTokenTokens,
-        sellIndexTokenReducer,
-        buyTokensReducer
-    }
+  const sagaMiddleware = createSagaMiddleware();
 
-    // Recover the vortex reducers. This method takes your custom reducers and combines them with vortex's
-    const reducers = getReducers(additionReducers);
+  const store = createStore(
+    reducers,
+    initial_state,
+    composer(applyMiddleware(sagaMiddleware)),
+  );
 
-    const sagaMiddleware = createSagaMiddleware();
+  // Recover the vortex sagas. This method takes your custom sagas and combines them with vortex's
+  const sagas = getSagas(store, [
+    watchIndexTokenBuyProcess,
+    watchIndexTokenSellProcess,
+    watchStartBuyIndexTokens,
+  ]);
 
-    const store = createStore(
-        reducers,
-        initial_state,
-        composer(applyMiddleware(sagaMiddleware))
-    );
+  sagaMiddleware.run(sagas);
 
-    // Recover the vortex sagas. This method takes your custom sagas and combines them with vortex's
-    
-    const sagas = getSagas(store, [watchIndexTokenBuyProcess, watchIndexTokenSellProcess, watchStartBuyIndexTokens]);
-    
-    sagaMiddleware.run(sagas);
-
-    return store;
-
+  return store;
 };

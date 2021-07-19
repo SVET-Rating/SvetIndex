@@ -76,7 +76,7 @@ const sellIndexTokens = (props) => {
           <p>
             YOU HAVE ({props.indexTokenName}):
             <span className="numbers number_left">
-                {props.indexTokenBalance.toFixed(4)}
+                {Number(props.indexTokenBalance).toFixed(4)}
             </span>
           </p>
 

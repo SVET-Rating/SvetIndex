@@ -7,9 +7,19 @@ import formBuyIndexTokens from '../../ethvtx_config/actions/buyIndexTokensAction
 import resetAction from "../../ethvtx_config/actions/resetInvestmentsAction";
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import SlippageTolerance from '../SlippageTolerance/SlippageTolerance';
+import TransactionDelay from '../TransactionDelay/TransactionDelay';
+import SwapInAssetBalance from '../SwapInAssetBalance/SwapInAssetBalance';
+import SwapOutAssetBalance from '../SwapOutAssetBalance/SwapOutAssetBalance';
+import ChangeSwapAssetsIcon from '../icons/ChangeSwapAssetsIcon/ChangeSwapAssetsIcon';
+import TransactionDetails from '../TransactionDetails/TransactionDetails';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
+  root: {
+    padding: '1rem',
+    border: '1px solid',
+  },
   button: {
     marginLeft: '20px',
     padding: '1rem',
@@ -57,13 +67,20 @@ const IndexTokenPaymentForm = (props) => {
   const handleBuySVET = (e) => props.buySvetTokensMethodSelect(e);
 
   return (
-    <div>
+    <div className={classes.root}>
       <div className="left-list-header">
         <p>{props.indexTokenName}</p>
       </div>
 
+      <SlippageTolerance />
+      <TransactionDelay />
+      <SwapInAssetBalance />
+      <ChangeSwapAssetsIcon />
+      <SwapOutAssetBalance />
+      <TransactionDetails />
+
       <div className="svet-token-payment-form">
-        <p className="field">
+        {/* <p className="field">
           PRICE (SVET):
           <span className="numbers">
             {props.indexTokenPrice.toFixed(4)}
@@ -80,13 +97,13 @@ const IndexTokenPaymentForm = (props) => {
           <span className="numbers">
             {(props.svetTokensAmount/props.indexTokenPrice).toFixed(4)}
           </span>
-        </p>
-        <p>GAS AMOUNT: <span className="number_left">{props.gasAmount}</span></p>
+        </p> */}
+        {/* <p>GAS AMOUNT: <span className="number_left">{props.gasAmount}</span></p>
         <p>GAS PRICE (gwei):<span className="number_left">{props.gasPrice}</span></p>
         <p>APPROX. COST of TRANSACTION (ETH):
           <span className="number_left">{props.gasPrice * props.gasAmount / 1000000000}</span>
         </p>
-        <p>FOR BLOCK: <span className="number_left">{props.curBlock}</span></p>
+        <p>FOR BLOCK: <span className="number_left">{props.curBlock}</span></p> */}
 
         <div className="svet-token-payment-form-input"
           style={props.enoughSvetTokensForBuy || props.svetTokensAmount != 0 ? {} : {display:'none'}}
