@@ -1,50 +1,48 @@
 import { applyMiddleware, compose, createStore } from 'redux';
-import { getSagas, getReducers, getInitialState, configureVtx } from 'ethvtx';
 import createSagaMiddleware from 'redux-saga';
-import thunk from 'redux-thunk'
-import indexTokenReducer from './reducers/indexTokenReducer';
-import indexTokenTokens from './reducers/getTokenTokens';
-import buyTokensReducer from './reducers/buyTokensReducer';
-import sellIndexTokenReducer from './reducers/sellTokensReducer';
-import { watchIndexTokenBuyProcess } from './sagas/buyIndexTokenSaga';
-import { watchIndexTokenSellProcess } from './sagas/sellIndexTokenSaga';
-import { watchStartBuyIndexTokens } from './sagas/getGasPrice'
-import { all } from 'redux-saga/effects'
+import { getSagas, getReducers, getInitialState, configureVtx } from 'ethvtx';
+import { swapAssetReducer } from './reducers/swapAssetReducer';
+import { swapProcessReducer } from './reducers/swapProcessReducer';
+import { watchInitialData } from './sagas/initializationSaga';
+import { watchAssetsSwap } from './sagas/swapAssetsSaga';
+import { watchGasPrice } from './sagas/gasPriceSaga';
+// import { watchIndexTokenBuyProcess } from './sagas/buyIndexTokenSaga';
+// import { watchIndexTokenSellProcess } from './sagas/sellIndexTokenSaga';
 
 export const createVtxStore = () => {
+  const composer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-    const composer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-    // You can configure some parameters here to inject them with the initial state
-    const initial_state = configureVtx(getInitialState(), {
-        poll_timer: 100,
-        confirmation_treshold: 3
-    });
-
-    const additionReducers  = {
-        indexTokenReducer,
-        indexTokenTokens,
-        sellIndexTokenReducer,
-        buyTokensReducer
+  // You can configure some parameters here to inject them with the initial state
+  const initial_state = configureVtx(
+    getInitialState(),
+    {
+      poll_timer: 500,
+      confirmation_treshold: 5,
     }
+  );
 
-    // Recover the vortex reducers. This method takes your custom reducers and combines them with vortex's
-    const reducers = getReducers(additionReducers);
+  // Recover the vortex reducers. This method takes your custom reducers and combines them with vortex's
+  const reducers = getReducers({
+    swapAssetReducer,
+    swapProcessReducer,
+  });
 
-    const sagaMiddleware = createSagaMiddleware();
+  const sagaMiddleware = createSagaMiddleware();
 
-    const store = createStore(
-        reducers,
-        initial_state,
-        composer(applyMiddleware(sagaMiddleware))
-    );
+  const store = createStore(
+    reducers,
+    initial_state,
+    composer(applyMiddleware(sagaMiddleware)),
+  );
 
-    // Recover the vortex sagas. This method takes your custom sagas and combines them with vortex's
-    
-    const sagas = getSagas(store, [watchIndexTokenBuyProcess, watchIndexTokenSellProcess, watchStartBuyIndexTokens]);
-    
-    sagaMiddleware.run(sagas);
+  // Recover the vortex sagas. This method takes your custom sagas and combines them with vortex's
+  const sagas = getSagas(store, [
+    watchInitialData,
+    watchGasPrice,
+    watchAssetsSwap,
+  ]);
 
-    return store;
+  sagaMiddleware.run(sagas);
 
+  return store;
 };
