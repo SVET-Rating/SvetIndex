@@ -17,23 +17,9 @@ const useStyles = makeStyles((theme) => ({
   label: {
     color: 'inherit',
     fontWeight: 700,
-    cursor: 'pointer',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-  },
-  input: {
-    flexShrink: 0,
-    width: theme.spacing(15),
-    padding: theme.spacing(0.5),
-    marginLeft: theme.spacing(2),
-    border: 'none',
-    borderRadius: theme.shape.borderRadius,
-    background: 'linear-gradient(#383C47, #2C2F38)',
-    color: theme.palette.common.white,
-    fontSize: 'inherit',
-    fontWeight: 700,
-    textAlign: 'right',
   },
   balance: {
     display: 'flex',
@@ -44,8 +30,14 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   maxButton: {
+    minWidth: 'unset',
     padding: theme.spacing(0, 0.5),
     color: theme.palette.secondary.main,
+    textTransform: 'none',
+    '&:disabled': {
+      opacity: 0.25,
+      color: theme.palette.secondary.main,
+    },
   },
 }));
 

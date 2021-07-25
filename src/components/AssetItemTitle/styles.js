@@ -8,11 +8,7 @@ const useStyles = makeStyles((theme) => ({
     userSelect: 'none',
   },
   icon: {
-    flexShrink: 0,
-    width: theme.spacing(4),
-    height: theme.spacing(4),
     marginRight: theme.spacing(0.5),
-    borderRadius: '50%',
   },
   text: {
     color: theme.palette.common.white,

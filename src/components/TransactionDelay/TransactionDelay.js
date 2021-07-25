@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Box, Typography } from '@material-ui/core';
 import { setDelay } from '../../ethvtx_config/actions/buyIndexTokensAction';
+import Input from '../Input/Input';
 import useStyles from './styles';
 
 const INPUT_ID = 'TransactionDelayId';
@@ -25,7 +26,7 @@ const TransactionDelay = ({ delay, setDelay }) => {
       >Transaction deadline?</label>
 
       <Typography>
-        <input
+        <Input
           className={classes.input}
           id={INPUT_ID}
           value={delay}

@@ -1,9 +1,10 @@
 import React from 'react';
-import { Box, Button, ListItem } from '@material-ui/core';
+import { Box, ListItem } from '@material-ui/core';
 import AssetItemTitle from '../AssetItemTitle/AssetItemTitle';
 import AssetItemAddress from '../AssetItemAddress/AssetItemAddress';
 import AssetItemTokens from '../AssetItemTokens/AssetItemTokens';
 import AssetItemBalance from '../AssetItemBalance/AssetItemBalance';
+import Button from '../Button/Button';
 import useStyles from './styles';
 
 const AssetItem = ({ item, startBuyToken, startSellToken }) => {

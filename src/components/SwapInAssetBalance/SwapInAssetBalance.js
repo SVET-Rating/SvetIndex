@@ -2,12 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Box, Button, Typography } from '@material-ui/core';
 import { setSwapAmount } from '../../ethvtx_config/actions/buyIndexTokensAction';
+import Input from '../Input/Input';
 import useStyles from './styles';
 
 const ID = 'swapInAsset';
 
 const SwapInAssetBalance = ({
-  balance, swapAmount, setSwapAmount, isReadonly = false,
+  assetName, balance, swapAmount, setSwapAmount, mode,
 }) => {
   const classes = useStyles();
 
@@ -19,7 +20,7 @@ const SwapInAssetBalance = ({
     setSwapAmount(value);
   };
 
-  const handleMaxButton = () => {
+  const handleAllButton = () => {
     if (balance) {
       setSwapAmount(balance);
     }
@@ -31,13 +32,14 @@ const SwapInAssetBalance = ({
         <label
           className={classes.label}
           htmlFor={ID}
-        >ETH</label>
+        >
+          {assetName}
+        </label>
 
-        <input
+        <Input
           className={classes.input}
           id={ID}
           value={swapAmount}
-          readOnly={isReadonly}
           onChange={handleChange}
         />
       </Typography>
@@ -45,21 +47,25 @@ const SwapInAssetBalance = ({
       <Typography className={classes.balance}>
         Balance:
         &nbsp;
-        <span>{balance ? balance : '0.0'}</span>
+        <span>{balance ? Number(balance).toFixed(8) : '0.0'}</span>
         &nbsp;
-        <Button
+        {mode === 'sell' && <Button
           className={classes.maxButton}
-          onClick={handleMaxButton}
-          disabled={!balance}
-        >(max)</Button>
+          onClick={handleAllButton}
+          disabled={!Number(balance)}
+        >
+          (all)
+        </Button>}
       </Typography>
     </Box>
   );
 };
 
 const mapStateToProps = (state) => ({
-  balance: state.buyTokensReducer.etherAmount,
+  assetName: state.indexTokenReducer.activeToken.indexTokenName,
+  balance: state.indexTokenReducer.activeToken.indexTokenBalance,
   swapAmount: state.buyTokensReducer.swapAmount,
+  mode: 'sell',
 });
 
 const mapDispatchToProps = (dispatch) => ({

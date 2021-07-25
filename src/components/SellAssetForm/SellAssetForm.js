@@ -15,7 +15,7 @@ import TransactionDetails from '../TransactionDetails/TransactionDetails';
 import Button from '../Button/Button';
 import useStyles from './styles';
 
-const BuyAssetForm = ({
+const SellAssetForm = ({
   buyAsset, resetToInvestment,
   ITokContract, ITAmount, ITAddress, currentAddress, svetToken,
   setSwapAmount, swapInAmount, swapOutAmount, swapOutBalance,
@@ -27,7 +27,7 @@ const BuyAssetForm = ({
     resetToInvestment(e);
   };
 
-  const handleClickBuy = () => {
+  const handleClickSell = () => {
     buyAsset(ITokContract, ITAmount, ITAddress, currentAddress, svetToken);
   };
 
@@ -55,9 +55,9 @@ const BuyAssetForm = ({
 
         <Button
           className={classes.button}
-          onClick={handleClickBuy}
+          onClick={handleClickSell}
           disabled={!Number(swapInAmount) || swapOutAmount > swapOutBalance}
-        >Buy</Button>
+        >Sell</Button>
       </Box>
     </Box>
   );
@@ -82,4 +82,4 @@ const mapDispatchToProps = (dispatch) => ({
   setSwapAmount: (value) => dispatch(setSwapAmount(value)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(BuyAssetForm);
+export default connect(mapStateToProps, mapDispatchToProps)(SellAssetForm);

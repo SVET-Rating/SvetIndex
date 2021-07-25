@@ -12,14 +12,6 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     width: theme.spacing(5),
-    padding: theme.spacing(0.5),
-    border: 'none',
-    borderRadius: theme.shape.borderRadius,
-    background: 'linear-gradient(#383C47, #2C2F38)',
-    color: theme.palette.common.white,
-    fontSize: 'inherit',
-    fontWeight: 700,
-    textAlign: 'right',
   },
 }));
 

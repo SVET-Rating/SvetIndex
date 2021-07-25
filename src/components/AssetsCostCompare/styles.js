@@ -3,15 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    justifyContent: 'center',
   },
+  costCompare: {},
   label: {
-    color: 'inherit',
-    cursor: 'pointer',
-  },
-  input: {
-    width: theme.spacing(5),
+    opacity: 0.5,
   },
 }));
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Box, Typography } from '@material-ui/core';
 import { setSlippage } from '../../ethvtx_config/actions/buyIndexTokensAction';
+import Input from '../Input/Input';
 import useStyles from './styles';
 
 const INPUT_ID = 'SlippageToleranceId';
@@ -11,10 +12,10 @@ const SlippageTolerance = ({ slippage, setSlippage }) => {
 
   const handleChange = (e) => {
     const { value } = e.target;
-    if (Number.isNaN(Number(value)) || !Number.isInteger(Number(value)) || value < 0 || value > 25) {
+    if (Number.isNaN(Number(value)) || !Number.isInteger(Number(value)) || value < 1 || value > 25) {
       return;
     }
-    setSlippage(Number.parseInt(value) || 0);
+    setSlippage(Number.parseInt(value) || 1);
   };
 
   return (
@@ -25,7 +26,7 @@ const SlippageTolerance = ({ slippage, setSlippage }) => {
       >Slippage tolerance?</label>
 
       <Typography>
-        <input
+        <Input
           className={classes.input}
           id={INPUT_ID}
           value={slippage}

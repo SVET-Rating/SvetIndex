@@ -11,21 +11,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'stretch',
     borderRadius: `${2 * theme.shape.borderRadius}px`,
     backgroundColor: '#26272F',
-    color: theme.palette.common.white,
     '& > * + *': {
       marginTop: theme.spacing(2),
     },
-  },
-  swapBlock: {
-    padding: theme.spacing(4, 2),
-    display: 'flex',
-    flexDirection: 'column',
-    '& > * + *': {
-      marginTop: theme.spacing(2),
-    },
-  },
-  swapIcon: {
-    textAlign: 'center',
   },
   actionSection: {
     display: 'flex',
@@ -36,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     flexGrow: 1,
-    width: '30%',
   },
 }));
 

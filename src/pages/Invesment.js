@@ -1,16 +1,19 @@
 /* eslint-disable react/no-typos */
 import React from 'react';
 import { connect } from 'react-redux';
-import IndexTokenList from '../components/indexTokenList/IndexTokensList';
+// import IndexTokenList from '../components/indexTokenList/IndexTokensList';
 import TokensInIndexTokenList from '../components/indexTokenTokens/TokensInIndexTokenList';
 // import SvetPaymentMethods from '../components/buyTokens/buySvetPaymentMethods';
 // import SvetPaymentMethodsForm from '../components/buyTokens/buySvetTokensForm';
 // import IndexTokenPaymentForm from '../components/buyTokens/buyIndexTokensForm';
+// import SellIndexTokenForm from '../components/sellTokens/sellIndexTokensForm';
+import AssetsList from '../components/AssetsList/AssetsList';
 import BuyAssetForm from '../components/BuyAssetForm/BuyAssetForm';
-import SellIndexTokenForm from '../components/sellTokens/sellIndexTokensForm';
+import SellAssetForm from '../components/SellAssetForm/SellAssetForm';
 import BuyIndexTokensSteps from '../components/buyIndexSteps';
 import SellIndexTokensSteps from '../components/selllIndexSteps';
 import TransactionFailModal from '../components/TransactionFailModal';
+import Header from '../components/Header/Header';
 import {
   SELECT_INDEX_TOKEN,
   // BUY_SVET_PAYMENT_METHOD,
@@ -39,7 +42,7 @@ const investmentPage = (props) => {
 
   if (props.processState === SELECT_INDEX_TOKEN) {
     processStateComponent = (
-      <IndexTokenList/>
+      <AssetsList />
     );
   }
 
@@ -70,7 +73,7 @@ const investmentPage = (props) => {
     processStateComponent = (
       <div className="tokens-container">
         <div className="left-list">
-          <SellIndexTokenForm />
+          <SellAssetForm />
         </div>
 
         <div className="right-list">
@@ -104,6 +107,8 @@ const investmentPage = (props) => {
 
   return (
     <div>
+      <Header />
+
       <div>
         {buyIndexSteps}
         <TransactionFailModal />
