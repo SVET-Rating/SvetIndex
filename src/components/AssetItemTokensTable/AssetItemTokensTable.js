@@ -10,17 +10,15 @@ import {
   TableRow,
 } from '@material-ui/core';
 import { getContract } from 'ethvtx/lib/contracts/helpers/getters';
-import getTokensByIndex from '../../ethvtx_config/actions/getTokensByIndex';
+// import getTokensByIndex from '../../ethvtx_config/actions/getTokensByIndex';
 import AssetItemTokensTableChart from '../AssetItemTokensTableChart/AssetItemTokensTableChart';
 import AssetItemTokensTableShare from '../AssetItemTokensTableShare/AssetItemTokensTableShare';
 import useStyles from './styles';
 
-const AssetItemTokensTable = (props) => {
+const AssetItemTokensTable = ({ tokensList }) => {
   const classes = useStyles();
 
-  // props.tokens(props.indexList);
-
-  const tokens = props.indexList.map((item) => (
+  const tokens = tokensList.map((item) => (
     <AssetItemTokensTableShare key={item.symbol} token={item}/>
   ));
 
@@ -42,35 +40,35 @@ const AssetItemTokensTable = (props) => {
         </Table>
       </TableContainer>
 
-      <AssetItemTokensTableChart items={props.indexList} />
+      <AssetItemTokensTableChart items={tokensList} />
     </>
   );
 };
 
 const getIndexList = (address, state) => {
-  if (address === "") {
+  if (!address) {
     return undefined;
   }
   return getContract(state, 'IndexToken', address).fn.getActivesList();
 };
 
-const balActiveFn = ( state) => {
-  const LS = getContract(state,'Lstorage', '@lstorage');
-  if (LS == undefined) {
-    return undefined;
-  }
-  return LS.fn.getBalance;
-};
+// const balActiveFn = ( state) => {
+//   const LS = getContract(state,'Lstorage', '@lstorage');
+//   if (LS == undefined) {
+//     return undefined;
+//   }
+//   return LS.fn.getBalance;
+// };
 
 const mapStateToProps = (state) => ({
-  indexList: getIndexList(state.indexTokenReducer.activeToken.tokenAddress, state),
-  balActiveFn: balActiveFn(state),
-  indexToken: state.indexTokenReducer.activeToken,
-  currentAddress: state.vtxconfig.coinbase,
+  tokensList: getIndexList(state.swapAssetReducer.asset, state),
+  // balActiveFn: balActiveFn(state),
+  // indexToken: state.swapAssetReducer.asset,
+  // currentAddress: state.vtxconfig.coinbase,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  tokens: (tokens) => dispatch(getTokensByIndex(tokens)),
-});
+// const mapDispatchToProps = (dispatch) => ({
+//   tokens: (tokens) => dispatch(getTokensByIndex(tokens)),
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AssetItemTokensTable);
+export default connect(mapStateToProps)(AssetItemTokensTable);

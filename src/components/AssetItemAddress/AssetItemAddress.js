@@ -3,6 +3,8 @@ import { Box, Typography } from '@material-ui/core';
 import EtherAddress from '../EtherAddress/EtherAddress';
 import useStyles from './styles';
 
+const ETHERSCAN_ADDRESS_URL = 'https://etherscan.io/address';
+
 const AssetItemAddress = ({ address }) => {
   const classes = useStyles();
 
@@ -14,7 +16,7 @@ const AssetItemAddress = ({ address }) => {
         <span>go to</span>
         &nbsp;
         <a className={classes.link}
-          href="https://etherscan.io/tokens"
+          href={`${ETHERSCAN_ADDRESS_URL}/${address}`}
           target="_blank"
         >explorer</a>
       </Typography>

@@ -2,6 +2,10 @@ import { applyMiddleware, compose, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { getSagas, getReducers, getInitialState, configureVtx } from 'ethvtx';
 import { swapAssetReducer } from './reducers';
+// import indexTokenReducer from './reducers/indexTokenReducer';
+// import indexTokenTokens from './reducers/getTokenTokens';
+// import buyTokensReducer from './reducers/buyTokensReducer';
+// import sellIndexTokenReducer from './reducers/sellTokensReducer';
 import { watchIndexTokenBuyProcess } from './sagas/buyIndexTokenSaga';
 import { watchIndexTokenSellProcess } from './sagas/sellIndexTokenSaga';
 import { watchStartBuyIndexTokens } from './sagas/getGasPrice';
@@ -17,6 +21,10 @@ export const createVtxStore = () => {
 
   // Recover the vortex reducers. This method takes your custom reducers and combines them with vortex's
   const reducers = getReducers({
+    // indexTokenReducer,
+    // indexTokenTokens,
+    // sellIndexTokenReducer,
+    // buyTokensReducer,
     swapAssetReducer,
   });
 

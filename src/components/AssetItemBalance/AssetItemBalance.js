@@ -1,5 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { getContract, getAccount, getWeb3 } from 'ethvtx/lib/getters';
+// import BN from 'bn.js';
 import { Box, Divider, Typography } from '@material-ui/core';
+import AssetAmount from '../AssetAmount/AssetAmount';
 import useStyles from './styles';
 
 const AssetItemBalance = ({ balance, price }) => {
@@ -9,21 +13,76 @@ const AssetItemBalance = ({ balance, price }) => {
     <Box className={classes.root}>
       <Box className={classes.block}>
         <Typography className={classes.text}>Index in wallet:</Typography>
-        <Typography className={classes.value}>
-          {Number(balance).toFixed(8)}
-        </Typography>
+        <AssetAmount className={classes.value} amount={balance} precision={2} />
       </Box>
 
       <Divider className={classes.divider}/>
 
-      <Box className={classes.block}>
-        <Typography className={classes.text}>Index price:</Typography>
-        <Typography className={classes.value}>
-          {Number(price).toFixed(8)}&nbsp;ETH
-        </Typography>
+      <Box className={classes.blockPrice}>
+        <Box className={classes.price}>
+          <Typography className={classes.text}>Index price:</Typography>
+          <AssetAmount className={classes.value} amount={price} symbol={'ETH'} precision={6} />
+        </Box>
+        <Box className={classes.price}>
+          <AssetAmount className={classes.value} amount={'126.35'} symbol={'$'} withParentheses />
+        </Box>
       </Box>
     </Box>
   );
 }
 
-export default AssetItemBalance;
+// const getPrice = (state, AssetAddress) => {
+//   let tokenPrice;
+
+//   const baseAddress = getContract(state, 'Exchange', '@exchange').fn.getBA();
+//   if (!baseAddress) {
+//     return undefined;
+//   }
+
+//   const tokensList = getContract(state, 'IndexToken', AssetAddress).fn.getActivesList();
+//   if (!tokensList) {
+//     return undefined;
+//   }
+
+//   const tokensPrice = tokensList.map(({ addrActive, amount, decimals }) => {
+//     const tokenPrice = getContract(state, 'OraclePrice', '@oracleprice').fn.getLastPrice(addrActive);
+//     console.log('tokenPrice ---', tokenPrice)
+//     if (!tokenPrice) {
+//       return undefined;
+//     }
+//     return tokenPriceCurrent / 10**decimals * amount / 10000;
+//   });
+
+//   const svetTokenPrice = getContract(state, 'OraclePrice', '@oracleprice').fn.getLastPrice(baseAddress);
+//   if (svetTokenPrice === undefined) {
+//     return svetTokenPrice;
+//   }
+//   if (tokensPrice.indexOf(undefined) !== -1) {
+//     return undefined;
+//   }
+
+//   const resultIndexTokenPriceUSD = tokensPrice.reduce((a, b) => a + b, 0);
+//   return resultIndexTokenPriceUSD / (svetTokenPrice / 10**18);
+// };
+
+const getPrice = (state) => {
+  const baseAddress = getContract(state, 'Exchange', '@exchange').fn.getBA();
+  if (!baseAddress) {
+    return undefined;
+  }
+  return getContract(state, 'OraclePrice', '@oracleprice').fn.getLastPrice(baseAddress);
+};
+
+const getBalance = (state, AssetAddress) => {
+  const { address } = getAccount(state, '@coinbase');
+  return getContract(state, 'IndexToken', AssetAddress).fn.balanceOf(address);
+};
+
+const mapStateToProps = (state, { address }) => ({
+  balance: getBalance(state, address),
+  price: getPrice(state),
+  web3Instance: getWeb3(state),
+  // price: getPrice(state, address),
+});
+
+export default connect(mapStateToProps)(AssetItemBalance);

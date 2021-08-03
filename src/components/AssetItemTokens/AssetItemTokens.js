@@ -1,28 +1,40 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { getContract } from 'ethvtx/lib/getters';
 import { Box, List, ListItem, Typography } from '@material-ui/core';
 import AssetItemTokensShare from '../AssetItemTokensShare/AssetItemTokensShare';
 import useStyles from './styles';
 
-const AssetItemTokens = ({ tokens }) => {
+const AssetItemTokens = ({ tokens = [] }) => {
   const classes = useStyles();
 
-  const assets = tokens.map((address) => (
-    <ListItem key={address.addrActive}>
-      <AssetItemTokensShare address={address} />
+  const items = tokens.map((token) => (
+    <ListItem key={token.addrActive}>
+      <AssetItemTokensShare token={token} />
     </ListItem>
   ));
 
   return (
     <Box className={classes.root}>
       <List className={classes.list}>
-        {assets}
+        {items}
       </List>
 
       <Typography className={classes.text}>
-        All ({assets.length})
+        All ({items.length})
       </Typography>
     </Box>
   );
 }
 
-export default AssetItemTokens;
+const getAssetTokenList = (state, assetAddress) => {
+  if (assetAddress) {
+    return getContract(state, 'IndexToken', assetAddress).fn.getActivesList();
+  }
+};
+
+const mapStateToProps = (state, { address }) => ({
+  tokens: getAssetTokenList(state, address),
+});
+
+export default connect(mapStateToProps)(AssetItemTokens);

@@ -3,23 +3,23 @@ import { Box, Typography } from '@material-ui/core';
 import TokenAddressIdenticon from '../TokenAddressIdenticon/TokenAddressIdenticon'
 import useStyles from './styles';
 
-const AssetItemTokensShare = ({ address }) => {
+const AssetItemTokensShare = ({ token }) => {
   const classes = useStyles();
 
   return (
     <Box className={classes.root}>
       <TokenAddressIdenticon
         className={classes.icon}
-        address={address.addrActive}
+        address={token.addrActive}
         size="2rem"
       />
 
       <Typography className={classes.text}>
-        {address.symbol}
+        {token.symbol}
       </Typography>
 
       <Typography className={classes.text}>
-        {(address.amount / 100).toFixed(2)}%
+        {(token.amount / 100).toFixed(2)}%
       </Typography>
     </Box>
   );

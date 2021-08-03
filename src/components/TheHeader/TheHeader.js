@@ -7,7 +7,7 @@ import HeaderLogo from '../HeaderLogo/HeaderLogo';
 import HeaderWallet from '../HeaderWallet/HeaderWallet';
 import useStyles from './styles';
 
-const Header = () => {
+const TheHeader = () => {
   const classes = useStyles();
 
   return (
@@ -29,4 +29,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default TheHeader;

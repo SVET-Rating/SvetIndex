@@ -2,7 +2,7 @@ import React from 'react';
 import { Button as MUIButton} from '@material-ui/core';
 import useStyles from './styles';
 
-const Button = ({ className, children, ...props }) => {
+const AppButton = ({ className, children, ...props }) => {
   const classes = useStyles();
 
   return (
@@ -15,4 +15,4 @@ const Button = ({ className, children, ...props }) => {
   );
 };
 
-export default Button;
+export default AppButton;

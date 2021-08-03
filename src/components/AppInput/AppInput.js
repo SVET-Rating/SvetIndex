@@ -1,7 +1,7 @@
 import React from 'react';
 import useStyles from './styles';
 
-const Input = ({ className, children, ...props }) => {
+const AppInput = ({ className, children, ...props }) => {
   const classes = useStyles();
 
   return (
@@ -12,4 +12,4 @@ const Input = ({ className, children, ...props }) => {
   );
 };
 
-export default Input;
+export default AppInput;

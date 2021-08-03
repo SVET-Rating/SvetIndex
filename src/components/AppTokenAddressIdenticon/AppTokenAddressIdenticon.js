@@ -3,7 +3,7 @@ import { Box } from '@material-ui/core';
 import { Jazzicon } from '@ukstv/jazzicon-react';
 import useStyles from './styles';
 
-const TokenAddressIdenticon = ({ address = '', size = '1rem', className = '' }) => {
+const AppTokenAddressIdenticon = ({ address = '', size = '1rem', className = '' }) => {
   const classes = useStyles();
 
   return (
@@ -16,4 +16,4 @@ const TokenAddressIdenticon = ({ address = '', size = '1rem', className = '' }) 
   );
 }
 
-export default TokenAddressIdenticon;
+export default AppTokenAddressIdenticon;

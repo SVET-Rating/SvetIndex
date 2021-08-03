@@ -2,7 +2,7 @@ import React from 'react';
 import { EthAddress } from 'rimble-ui';
 import useStyles from './styles';
 
-const EtherAddress = ({ address, className = '' }) => {
+const AppEtherAddress = ({ address, className = '' }) => {
   const classes = useStyles();
 
   return (
@@ -13,4 +13,4 @@ const EtherAddress = ({ address, className = '' }) => {
   );
 }
 
-export default EtherAddress;
+export default AppEtherAddress;

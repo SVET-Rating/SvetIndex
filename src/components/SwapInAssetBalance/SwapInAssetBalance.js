@@ -1,20 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { getContract } from 'ethvtx/lib/getters';
 import { Box, Button, Typography } from '@material-ui/core';
-import { setSwapAmount } from '../../ethvtx_config/actions/buyIndexTokensAction';
-import Input from '../Input/Input';
+import { setSwapInAmount } from '../../ethvtx_config/actions';
+import { SWAP_MODE } from '../../ethvtx_config/reducers';
+import { isNumber } from '../../helpers';
+import AppInput from '../AppInput/AppInput';
 import useStyles from './styles';
 
 const ID = 'swapInAsset';
 
 const SwapInAssetBalance = ({
-  assetName, balance, swapAmount, setSwapAmount, mode,
+  assetSymbol, balance, swapAmount, setSwapAmount, mode,
 }) => {
   const classes = useStyles();
 
   const handleChange = (e) => {
     const { value } = e.target;
-    if (Number.isNaN(Number(value)) || value < 0 /*|| value > balance*/) {
+    if (!isNumber(value) || value < 0) {
       return;
     }
     setSwapAmount(value);
@@ -33,10 +36,10 @@ const SwapInAssetBalance = ({
           className={classes.label}
           htmlFor={ID}
         >
-          {assetName}
+          {assetSymbol}
         </label>
 
-        <Input
+        <AppInput
           className={classes.input}
           id={ID}
           value={swapAmount}
@@ -47,9 +50,9 @@ const SwapInAssetBalance = ({
       <Typography className={classes.balance}>
         Balance:
         &nbsp;
-        <span>{balance ? Number(balance).toFixed(8) : '0.0'}</span>
+        <AssetAmount amount={balance || '0.0'} precision={8} />
         &nbsp;
-        {mode === 'sell' && <Button
+        {mode === SWAP_MODE.sell && <Button
           className={classes.maxButton}
           onClick={handleAllButton}
           disabled={!Number(balance)}
@@ -61,15 +64,31 @@ const SwapInAssetBalance = ({
   );
 };
 
+const getBalance = (state) => {
+  const address = state.swapAssetReducer.asset;
+  if (!address) {
+    return;
+  }
+  return getContract(state, 'IndexToken', address).fn.balanceOf(address);
+};
+
+const getSymbol = (state) => {
+  const address = state.swapAssetReducer.asset;
+  if (!address) {
+    return;
+  }
+  return getContract(state, 'IndexToken', address).fn.balanceOf(address);
+};
+
 const mapStateToProps = (state) => ({
-  assetName: state.indexTokenReducer.activeToken.indexTokenName,
-  balance: state.indexTokenReducer.activeToken.indexTokenBalance,
-  swapAmount: state.buyTokensReducer.swapAmount,
-  mode: 'sell',
+  assetSymbol: getSymbol(state),
+  balance: getBalance(state),
+  swapAmount: state.swapAssetReducer.swapInAmount,
+  mode: state.swapAssetReducer.mode,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setSwapAmount: (value) => dispatch(setSwapAmount(value)),
+  setSwapAmount: (value) => dispatch(setSwapInAmount(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SwapInAssetBalance);
