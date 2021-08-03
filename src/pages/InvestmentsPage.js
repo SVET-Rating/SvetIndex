@@ -4,10 +4,10 @@ import { SWAP_MODE } from '../ethvtx_config/reducers';
 import AssetsBlock from '../components/AssetsBlock/AssetsBlock';
 import BuyAssetForm from '../components/BuyAssetForm/BuyAssetForm';
 import SellAssetForm from '../components/SellAssetForm/SellAssetForm';
-import TransactionFailModal from '../components/TransactionFailModal';
-import TokensInIndexTokenList from '../components/indexTokenTokens/TokensInIndexTokenList';
-import BuyIndexTokensSteps from '../components/buyIndexSteps';
-import SellIndexTokensSteps from '../components/selllIndexSteps';
+// import TransactionFailModal from '../components/TransactionFailModal';
+import AssetItemTokensBlock from '../components/AssetItemTokensBlock/AssetItemTokensBlock';
+// import BuyIndexTokensSteps from '../components/buyIndexSteps';
+// import SellIndexTokensSteps from '../components/selllIndexSteps';
 import { css } from "@emotion/react";
 import DotLoader from "react-spinners/DotLoader";
 
@@ -43,7 +43,7 @@ const InvestmentsPage = ({ mode, state }) => {
         </div>
 
         <div className="right-list">
-          <TokensInIndexTokenList />
+          <AssetItemTokensBlock />
         </div>
       </div>
     );
@@ -54,9 +54,9 @@ const InvestmentsPage = ({ mode, state }) => {
     let color = '#23dcd5'
     buyIndexSteps = (
       <>
-        {mode === SWAP_MODE.buy
+        {/* {mode === SWAP_MODE.buy
           ? <BuyIndexTokensSteps />
-          : <SellIndexTokensSteps />}
+          : <SellIndexTokensSteps />} */}
         <DotLoader color={color} loading={loading} css={override} size={150} />
       </>
     );
@@ -66,7 +66,7 @@ const InvestmentsPage = ({ mode, state }) => {
     <div>
       <div>
         {buyIndexSteps}
-        <TransactionFailModal />
+        {/* <TransactionFailModal /> */}
       </div>
       {processStateComponent}
     </div>

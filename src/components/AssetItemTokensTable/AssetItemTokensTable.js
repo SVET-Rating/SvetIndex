@@ -9,8 +9,7 @@ import {
   TableHead,
   TableRow,
 } from '@material-ui/core';
-import { getContract } from 'ethvtx/lib/contracts/helpers/getters';
-// import getTokensByIndex from '../../ethvtx_config/actions/getTokensByIndex';
+import { getContract } from 'ethvtx/lib/getters';
 import AssetItemTokensTableChart from '../AssetItemTokensTableChart/AssetItemTokensTableChart';
 import AssetItemTokensTableShare from '../AssetItemTokensTableShare/AssetItemTokensTableShare';
 import useStyles from './styles';
@@ -25,7 +24,7 @@ const AssetItemTokensTable = ({ tokensList }) => {
   return (
     <>
       <TableContainer className={classes.root} component={Paper}>
-        <Table className={classes.table} aria-label="simple table">
+        <Table className={classes.table}>
           <TableHead className={classes.tableHeader}>
             <TableRow>
               <TableCell align="left">SYMBOL</TableCell>

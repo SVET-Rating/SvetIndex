@@ -1,6 +1,7 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import appRoutes from './routes';
+import paths from './paths';
 // import NotFoundPage from '../../pages/not-found-page';
 
 const TheRouter = () => {
@@ -16,6 +17,7 @@ const TheRouter = () => {
   return (
     <Switch>
       {routes}
+      <Redirect to={paths.INVESTMENTS} />
       {/* <Route component={NotFoundPage} /> */}
     </Switch>
   );

@@ -2,13 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Box, ListItem } from '@material-ui/core';
 // import { getContract, getContractList } from 'ethvtx/lib/getters';
-import { SWAP_MODE } from '../../ethvtx_config/reducers';
-import { setSwapMode } from '../../ethvtx_config/actions';
+import reducers from '../../ethvtx_config/reducers';
+import actions from '../../ethvtx_config/actions';
 import AssetItemTitle from '../AssetItemTitle/AssetItemTitle';
 import AssetItemAddress from '../AssetItemAddress/AssetItemAddress';
 import AssetItemTokens from '../AssetItemTokens/AssetItemTokens';
 import AssetItemBalance from '../AssetItemBalance/AssetItemBalance';
-import Button from '../Button/Button';
+import AppButton from '../AppButton/AppButton';
 import useStyles from './styles';
 
 const AssetItem = ({ item, onBuy, onSell }) => {
@@ -33,15 +33,15 @@ const AssetItem = ({ item, onBuy, onSell }) => {
       <AssetItemBalance address={item.addr} />
 
       <Box className={classes.actionSection}>
-        <Button
+        <AppButton
           className={classes.button}
           onClick={handleClickBuy}
-        >Buy</Button>
+        >Buy</AppButton>
 
-        <Button
+        <AppButton
           className={classes.button}
           onClick={handleClickSell}
-        >Sell</Button>
+        >Sell</AppButton>
       </Box>
     </ListItem>
   );
@@ -53,8 +53,8 @@ const AssetItem = ({ item, onBuy, onSell }) => {
 // });
 
 const mapDispatchToProps = (dispatch) => ({
-  onBuy: (asset) => dispatch(setSwapMode({ asset, mode: SWAP_MODE.buy })),
-  onSell: (asset) => dispatch(setSwapMode({ asset, mode: SWAP_MODE.sell })),
+  onBuy: (asset) => dispatch(actions.setSwapMode({ asset, mode: reducers.SWAP_MODE.buy })),
+  onSell: (asset) => dispatch(actions.setSwapMode({ asset, mode: reducers.SWAP_MODE.sell })),
 });
 
 export default connect(null, mapDispatchToProps)(AssetItem);

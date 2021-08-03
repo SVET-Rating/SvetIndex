@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import indexTokenSelect from '../../ethvtx_config/actions/indexTokenSelect';
 import startBuyIndexTokens from '../../ethvtx_config/actions/startToBuyIndexTokens';
 import startSellToken from '../../ethvtx_config/actions/startSellIndexTokens';
-import IndexTokens from '../indexTokenTokens/TokensInIndexTokenList';
+import IndexTokens from '../../indexTokenTokens/TokensInIndexTokenList';
 //import { IndexContractLoader } from '../IndexContractLoader';
 import { getContract, getContractList } from 'ethvtx/lib/contracts/helpers/getters';
 //import contracts from '../embarkArtifacts/contracts';
 import { Box, List } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 // import tokenList from '../../assets/tokenlist.json';
-import AssetItem from '../AssetItem/AssetItem';
+import AssetItem from '../../AssetItem/AssetItem';
 
 const useStyles = makeStyles((theme) => ({
   root: {

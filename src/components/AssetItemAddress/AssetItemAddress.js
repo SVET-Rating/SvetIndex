@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Typography } from '@material-ui/core';
-import EtherAddress from '../EtherAddress/EtherAddress';
+import AppEtherAddress from '../AppEtherAddress/AppEtherAddress';
 import useStyles from './styles';
 
 const ETHERSCAN_ADDRESS_URL = 'https://etherscan.io/address';
@@ -10,7 +10,7 @@ const AssetItemAddress = ({ address }) => {
 
   return (
     <Box className={classes.root}>
-      <EtherAddress address={address} />
+      <AppEtherAddress address={address} />
 
       <Typography className={classes.text}>
         <span>go to</span>

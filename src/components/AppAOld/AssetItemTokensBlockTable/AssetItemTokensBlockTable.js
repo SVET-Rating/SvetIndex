@@ -11,24 +11,23 @@ import {
   TableRow,
   Typography,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import { Pie } from 'react-chartjs-2';
 import { EthAddress } from "rimble-ui";
 import { getContract } from 'ethvtx/lib/contracts/helpers/getters';
 import getTokensByIndex from '../../ethvtx_config/actions/getTokensByIndex';
 import tokenColors from '../../assets/colors.json';
-// const tokenColors = require("../../assets/colors.json");
+import useStyles from './styles';
 
-const useStyles = makeStyles({
-  table: {
-    width: '100%',
-  },
-  tableHeader: {
-    backgroundColor: 'beige',
-  },
-});
+// const useStyles = makeStyles({
+//   table: {
+//     width: '100%',
+//   },
+//   tableHeader: {
+//     backgroundColor: 'beige',
+//   },
+// });
 
-const TokensInIndexTokenListItem = (props) => {
+const AssetItemTokensBlockTable = (props) => {
   const classes = useStyles();
 
   let getTokensByActiveIndexToken;
@@ -128,4 +127,4 @@ const mapDispatchToProps = (dispatch) => ({
   tokens: (tokens) => dispatch(getTokensByIndex(tokens)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TokensInIndexTokenListItem);
+export default connect(mapStateToProps, mapDispatchToProps)(AssetItemTokensBlockTable);

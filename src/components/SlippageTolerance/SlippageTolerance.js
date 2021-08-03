@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Box, Typography } from '@material-ui/core';
-import { setSlippage } from '../../ethvtx_config/actions/buyIndexTokensAction';
+import { setSlippage } from '../../ethvtx_config/actions';
 import AppInput from '../AppInput/AppInput';
 import useStyles from './styles';
 

@@ -1,22 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getAccount } from 'ethvtx/lib/getters';
-import Button from '../Button/Button';
-import EtherAddress from '../EtherAddress/EtherAddress';
+import AppButton from '../AppButton/AppButton';
+import AppEtherAddress from '../AppEtherAddress/AppEtherAddress';
 import useStyles from './styles';
 
 const HeaderWallet = ({ coinbase = {} }) => {
   const classes = useStyles();
 
   return coinbase.address ? (
-      <EtherAddress
+      <AppEtherAddress
         className={classes.root}
         address={coinbase.address}
       />
     ) : (
-      <Button disabled>
+      <AppButton disabled>
         Connect wallet
-      </Button>
+      </AppButton>
     );
 };
 

@@ -52,8 +52,10 @@ const getIndexGasAmount = (state) => {
 };
 
 const mapStateToProps = (state) => ({
-  gasAmount: getIndexGasAmount(state),
-  gasPrice: state.buyTokensReducer.gasPrice,
+  gasAmount: '50000',
+  gasPrice: '18',
+  // gasAmount: getIndexGasAmount(state),
+  // gasPrice: state.buyTokensReducer.gasPrice,
   currentBlock: state.blocks.current_height,
 });
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Typography } from '@material-ui/core';
-import TokenAddressIdenticon from '../TokenAddressIdenticon/TokenAddressIdenticon';
+import AppTokenAddressIdenticon from '../AppTokenAddressIdenticon/AppTokenAddressIdenticon';
 import useStyles from './styles';
 
 const AssetItemTitle = ({ asset = {} }) => {
@@ -8,7 +8,7 @@ const AssetItemTitle = ({ asset = {} }) => {
 
   return (
     <Box className={classes.root}>
-      <TokenAddressIdenticon
+      <AppTokenAddressIdenticon
         className={classes.icon}
         address={asset.addr}
         size="2rem"

@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Box } from '@material-ui/core';
-import { getContract } from 'ethvtx/lib/contracts/helpers/getters';
-import formBuyIndexTokens from '../../ethvtx_config/actions/buyIndexTokensAction';
-import { setSwapInAmount, cancelSwap } from '../../ethvtx_config/actions';
+// import { getContract } from 'ethvtx/lib/contracts/helpers/getters';
+// import formBuyIndexTokens from '../../ethvtx_config/actions/buyIndexTokensAction';
+import { cancelSwap } from '../../ethvtx_config/actions';
 import SlippageTolerance from '../SlippageTolerance/SlippageTolerance';
 import TransactionDelay from '../TransactionDelay/TransactionDelay';
 import SwapInAssetBalance from '../SwapInAssetBalance/SwapInAssetBalance';
@@ -15,9 +15,9 @@ import AppButton from '../AppButton/AppButton';
 import useStyles from './styles';
 
 const BuyAssetForm = ({
-  buyAsset, cancelSwap,
-  ITokContract, ITAmount, ITAddress, currentAddress, svetToken,
-  setSwapInAmount, swapInAmount, swapOutAmount, swapOutBalance,
+  cancelSwap,
+  swapInAmount, swapOutAmount, swapOutBalance,
+  // buyAsset, ITokContract, ITAmount, ITAddress, currentAddress, svetToken,
 }) => {
   const classes = useStyles();
 
@@ -26,7 +26,8 @@ const BuyAssetForm = ({
   };
 
   const handleClickBuy = () => {
-    buyAsset(ITokContract, ITAmount, ITAddress, currentAddress, svetToken);
+    console.log('--- click buy button ---')
+    // buyAsset(ITokContract, ITAmount, ITAddress, currentAddress, svetToken);
   };
 
   return (
@@ -74,10 +75,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   cancelSwap: () => dispatch(cancelSwap()),
-  buyAsset: (ITokContract, ITAmount, ITAddress, currentAddress, svetToken) => (
-    dispatch(formBuyIndexTokens(ITokContract, ITAmount, ITAddress, currentAddress, svetToken))
-  ),
-  setSwapInAmount: (value) => dispatch(setSwapInAmount(value)),
+  // buyAsset: (ITokContract, ITAmount, ITAddress, currentAddress, svetToken) => (
+  //   dispatch(formBuyIndexTokens(ITokContract, ITAmount, ITAddress, currentAddress, svetToken))
+  // ),
+  // setSwapInAmount: (value) => dispatch(setSwapInAmount(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BuyAssetForm);

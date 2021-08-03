@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { getContract, getAccount, getWeb3 } from 'ethvtx/lib/getters';
 // import BN from 'bn.js';
 import { Box, Divider, Typography } from '@material-ui/core';
-import AssetAmount from '../AssetAmount/AssetAmount';
+import AppAssetAmount from '../AppAssetAmount/AppAssetAmount';
 import useStyles from './styles';
 
 const AssetItemBalance = ({ balance, price }) => {
@@ -13,7 +13,7 @@ const AssetItemBalance = ({ balance, price }) => {
     <Box className={classes.root}>
       <Box className={classes.block}>
         <Typography className={classes.text}>Index in wallet:</Typography>
-        <AssetAmount className={classes.value} amount={balance} precision={2} />
+        <AppAssetAmount className={classes.value} amount={balance} precision={2} />
       </Box>
 
       <Divider className={classes.divider}/>
@@ -21,10 +21,10 @@ const AssetItemBalance = ({ balance, price }) => {
       <Box className={classes.blockPrice}>
         <Box className={classes.price}>
           <Typography className={classes.text}>Index price:</Typography>
-          <AssetAmount className={classes.value} amount={price} symbol={'ETH'} precision={6} />
+          <AppAssetAmount className={classes.value} amount={price} symbol={'ETH'} precision={6} />
         </Box>
         <Box className={classes.price}>
-          <AssetAmount className={classes.value} amount={'126.35'} symbol={'$'} withParentheses />
+          <AppAssetAmount className={classes.value} amount={'126.35'} symbol={'$'} withParentheses />
         </Box>
       </Box>
     </Box>
