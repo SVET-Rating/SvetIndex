@@ -1,20 +1,23 @@
 import React from 'react';
-import { AppBar, Typography, Link } from '@material-ui/core';
+import { Typography, Link } from '@material-ui/core';
 import useStyles from './styles';
 
 const TheFooter = () => {
   const classes = useStyles();
 
   return (
-    <AppBar className={classes.root} position="static">
+    <footer className={classes.root}>
       <Typography>
         SVET Supply-Weighted Index (SVET-SWI)
       </Typography>
 
-      <Link href="http://svetrating.com/svet_index_supply/">
+      <Link
+        href="http://svetrating.com/svet_index_supply/"
+        target="_blank"
+      >
         READ MORE about SVET-SWI
       </Link>
-    </AppBar>
+    </footer>
   );
 };
 

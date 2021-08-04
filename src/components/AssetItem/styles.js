@@ -4,7 +4,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexShrink: 0,
     width: theme.spacing(40),
-    padding: theme.spacing(3, 2),
+    padding: theme.spacing(2.5, 1.5),
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',

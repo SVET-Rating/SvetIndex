@@ -1,25 +1,15 @@
 import * as TYPES from '../actions/types';
-
-export const SWAP_MODE = {
-  sell: 'sell',
-  buy: 'buy',
-};
-
-export const STATE_MODE = {
-  start: 'start',
-  end: 'end',
-  error: 'error',
-};
+import { WETH_ADDRESS } from './reducers-constants';
 
 const initialState = {
-  assetIn: null,
-  assetOut: null,
   mode: null,
   state: null,
   slippage: 3,
   delay: 1,
+  assetIn: null,
+  assetOut: null,
   swapInAmount: '0',
-  swapOutAmount: '0',
+  network: null,
 };
 
 export const swapAssetReducer = (state = initialState, action) => {
@@ -27,8 +17,14 @@ export const swapAssetReducer = (state = initialState, action) => {
     case TYPES.SET_SWAP_MODE:
       return {
         ...state,
-        asset: action.payload.asset,
+        assetIn: action.payload.assetIn,
+        assetOut: action.payload.assetOut,
         mode: action.payload.mode,
+      };
+    case TYPES.SET_NETWORK:
+      return {
+        ...state,
+        network: action.payload.network,
       };
     case TYPES.SET_SLIPPAGE:
       return {
@@ -45,18 +41,14 @@ export const swapAssetReducer = (state = initialState, action) => {
         ...state,
         swapInAmount: action.payload.swapAmount,
       };
-    case TYPES.SET_SWAP_OUT_AMOUNT:
+    case TYPES.CANCEL_SWAP_ASSETS:
       return {
         ...state,
-        swapOutAmount: action.payload.swapOutAmount,
-      };
-    case TYPES.CANCEL_SWAP_ASSET:
-      return {
-        ...state,
-        asset: null,
+        assetIn: null,
+        assetOut: null,
         mode: null,
+        state: null,
         swapInAmount: '0',
-        swapOutAmount: '0',
       };
     default:
       return state;

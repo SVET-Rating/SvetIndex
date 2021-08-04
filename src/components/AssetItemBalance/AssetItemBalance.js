@@ -6,6 +6,10 @@ import { Box, Divider, Typography } from '@material-ui/core';
 import AppAssetAmount from '../AppAssetAmount/AppAssetAmount';
 import useStyles from './styles';
 
+const ETHER_SYMBOL = 'ETH';
+const WETHER_SYMBOL = 'WETH';
+const USD_SYMBOL = '$';
+
 const AssetItemBalance = ({ balance, price }) => {
   const classes = useStyles();
 
@@ -13,7 +17,11 @@ const AssetItemBalance = ({ balance, price }) => {
     <Box className={classes.root}>
       <Box className={classes.block}>
         <Typography className={classes.text}>Index in wallet:</Typography>
-        <AppAssetAmount className={classes.value} amount={balance} precision={2} />
+        <AppAssetAmount
+          className={classes.value}
+          amount={balance}
+          precision={2}
+        />
       </Box>
 
       <Divider className={classes.divider}/>
@@ -21,10 +29,20 @@ const AssetItemBalance = ({ balance, price }) => {
       <Box className={classes.blockPrice}>
         <Box className={classes.price}>
           <Typography className={classes.text}>Index price:</Typography>
-          <AppAssetAmount className={classes.value} amount={price} symbol={'ETH'} precision={6} />
+          <AppAssetAmount
+            className={classes.value}
+            amount={price}
+            symbol={ETHER_SYMBOL}
+            precision={6}
+          />
         </Box>
         <Box className={classes.price}>
-          <AppAssetAmount className={classes.value} amount={'126.35'} symbol={'$'} withParentheses />
+          <AppAssetAmount
+            className={classes.value}
+            amount={'126.35'}
+            symbol={USD_SYMBOL}
+            withParentheses
+          />
         </Box>
       </Box>
     </Box>
@@ -70,7 +88,14 @@ const getPrice = (state) => {
   if (!baseAddress) {
     return undefined;
   }
-  return getContract(state, 'OraclePrice', '@oracleprice').fn.getLastPrice(baseAddress);
+
+  // it is temporary and wrong !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  const priceInWei = getContract(state, 'OraclePrice', '@oracleprice').fn.getLastPrice(baseAddress);
+  if (!priceInWei) {
+    return undefined;
+  }
+
+  return getWeb3(state).utils.fromWei(priceInWei);
 };
 
 const getBalance = (state, AssetAddress) => {
@@ -81,7 +106,6 @@ const getBalance = (state, AssetAddress) => {
 const mapStateToProps = (state, { address }) => ({
   balance: getBalance(state, address),
   price: getPrice(state),
-  web3Instance: getWeb3(state),
   // price: getPrice(state, address),
 });
 

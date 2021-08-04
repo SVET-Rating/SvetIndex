@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   costCompare: {},
-  label: {
+  symbol: {
     opacity: 0.5,
   },
 }));

@@ -13,11 +13,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#26272F',
     color: theme.palette.common.white,
     '& > * + *': {
-      marginTop: theme.spacing(2),
+      marginTop: theme.spacing(1.5),
     },
   },
   swapBlock: {
-    padding: theme.spacing(4, 2),
+    padding: theme.spacing(2, 2),
     display: 'flex',
     flexDirection: 'column',
     '& > * + *': {

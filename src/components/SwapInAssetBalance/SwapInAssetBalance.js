@@ -1,17 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getContract } from 'ethvtx/lib/getters';
-import { Box, Button, Typography } from '@material-ui/core';
-import { setSwapInAmount } from '../../ethvtx_config/actions';
-import { SWAP_MODE } from '../../ethvtx_config/reducers';
+import { Box, Typography } from '@material-ui/core';
+import { setSwapInAmount } from '../../ethvtx_config/actions/actions';
+import { SWAP_MODE } from '../../ethvtx_config/reducers/reducers-constants';
 import { isNumber } from '../../helpers';
 import AppInput from '../AppInput/AppInput';
+import AppAssetAmount from '../AppAssetAmount/AppAssetAmount';
+import AppButtonInline from '../AppButtonInline/AppButtonInline';
 import useStyles from './styles';
 
 const ID = 'swapInAsset';
 
 const SwapInAssetBalance = ({
-  assetSymbol, balance, swapAmount, setSwapAmount, mode,
+  symbol, balance, swapAmount, setSwapAmount, mode,
 }) => {
   const classes = useStyles();
 
@@ -31,12 +33,12 @@ const SwapInAssetBalance = ({
 
   return (
     <Box className={classes.root}>
-      <Typography className={classes.amount}>
+      <Box className={classes.amount}>
         <label
           className={classes.label}
           htmlFor={ID}
         >
-          {assetSymbol}
+          {symbol}
         </label>
 
         <AppInput
@@ -45,27 +47,25 @@ const SwapInAssetBalance = ({
           value={swapAmount}
           onChange={handleChange}
         />
-      </Typography>
+      </Box>
 
-      <Typography className={classes.balance}>
-        Balance:
-        &nbsp;
-        <AssetAmount amount={balance || '0.0'} precision={8} />
-        &nbsp;
-        {mode === SWAP_MODE.sell && <Button
+      <Box className={classes.balance}>
+        <Typography>Balance:</Typography>
+        <AppAssetAmount amount={balance || '0.0'} precision={8} />
+        {mode === SWAP_MODE.sell && <AppButtonInline
           className={classes.maxButton}
           onClick={handleAllButton}
           disabled={!Number(balance)}
         >
           (all)
-        </Button>}
-      </Typography>
+        </AppButtonInline>}
+      </Box>
     </Box>
   );
 };
 
 const getBalance = (state) => {
-  const address = state.swapAssetReducer.asset;
+  const address = state.swapAssetReducer.assetIn;
   if (!address) {
     return;
   }
@@ -73,15 +73,16 @@ const getBalance = (state) => {
 };
 
 const getSymbol = (state) => {
-  const address = state.swapAssetReducer.asset;
+  const address = state.swapAssetReducer.assetIn;
   if (!address) {
     return;
   }
-  return getContract(state, 'IndexToken', address).fn.balanceOf(address);
+
+  return getContract(state, 'IndexToken', address).fn.symbol();
 };
 
 const mapStateToProps = (state) => ({
-  assetSymbol: getSymbol(state),
+  symbol: getSymbol(state),
   balance: getBalance(state),
   swapAmount: state.swapAssetReducer.swapInAmount,
   mode: state.swapAssetReducer.mode,

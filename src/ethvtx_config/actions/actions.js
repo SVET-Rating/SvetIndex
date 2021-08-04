@@ -1,5 +1,10 @@
 import * as TYPES from './types';
 
+export const setNetwork = (network) => ({
+  type: TYPES.SET_NETWORK,
+  payload: { network },
+});
+
 export const setSlippage = (slippage) => ({
   type: TYPES.SET_SLIPPAGE,
   payload: { slippage },
@@ -10,21 +15,16 @@ export const setDelay = (delay) => ({
   payload: { delay },
 });
 
-export const setSwapInAmount = (swapInAmount) => ({
+export const setSwapInAmount = (swapAmount) => ({
   type: TYPES.SET_SWAP_IN_AMOUNT,
-  payload: { swapInAmount },
+  payload: { swapAmount },
 });
 
-export const setSwapOutAmount = (swapOutAmount) => ({
-  type: TYPES.SET_SWAP_OUT_AMOUNT,
-  payload: { swapOutAmount },
-});
-
-export const setSwapMode = ({ asset, mode }) => ({
-  type: TYPES.SET_SWAP_OUT_AMOUNT,
-  payload: { asset, mode },
+export const setSwapMode = ({ assetIn, assetOut, mode }) => ({
+  type: TYPES.SET_SWAP_MODE,
+  payload: { assetIn, assetOut, mode },
 });
 
 export const cancelSwap = () => ({
-  type: TYPES.CANCEL_SWAP_ASSET,
+  type: TYPES.CANCEL_SWAP_ASSETS,
 });

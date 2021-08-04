@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Box, ListItem } from '@material-ui/core';
-// import { getContract, getContractList } from 'ethvtx/lib/getters';
-import reducers from '../../ethvtx_config/reducers';
-import actions from '../../ethvtx_config/actions';
+import { SWAP_MODE, WETH_ADDRESS } from '../../ethvtx_config/reducers/reducers-constants';
+import { setSwapMode } from '../../ethvtx_config/actions/actions';
 import AssetItemTitle from '../AssetItemTitle/AssetItemTitle';
 import AssetItemAddress from '../AssetItemAddress/AssetItemAddress';
 import AssetItemTokens from '../AssetItemTokens/AssetItemTokens';
@@ -47,14 +46,17 @@ const AssetItem = ({ item, onBuy, onSell }) => {
   );
 }
 
-// const mapStateToProps = (state, { item }) => ({
-//   contract: getContract(state, 'OraclePrice', '@oracleprice'),
-//   contractList: getContractList(state),
-// });
-
 const mapDispatchToProps = (dispatch) => ({
-  onBuy: (asset) => dispatch(actions.setSwapMode({ asset, mode: reducers.SWAP_MODE.buy })),
-  onSell: (asset) => dispatch(actions.setSwapMode({ asset, mode: reducers.SWAP_MODE.sell })),
+  onBuy: (asset) => dispatch(setSwapMode({
+    assetIn: asset,
+    assetOut: WETH_ADDRESS,
+    mode: SWAP_MODE.buy,
+  })),
+  onSell: (asset) => dispatch(setSwapMode({
+    assetIn: asset,
+    assetOut: WETH_ADDRESS,
+    mode: SWAP_MODE.sell
+  })),
 });
 
 export default connect(null, mapDispatchToProps)(AssetItem);

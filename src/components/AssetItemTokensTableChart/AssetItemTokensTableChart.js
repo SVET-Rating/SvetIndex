@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { getContract } from 'ethvtx/lib/getters';
 import { Box } from '@material-ui/core';
 import { Pie } from 'react-chartjs-2';
 import useStyles from './styles';
@@ -23,6 +25,17 @@ const AssetItemTokensTableChart = ({ items }) => {
       />
     </Box>
   );
-}
+};
 
-export default AssetItemTokensTableChart;
+const getTokensList = (state, address) => {
+  if (!address) {
+    return undefined;
+  }
+  return getContract(state, 'IndexToken', address).fn.getActivesList();
+};
+
+const mapStateToProps = (state) => ({
+  items: getTokensList(state, state.swapAssetReducer.assetIn),
+});
+
+export default connect(mapStateToProps)(AssetItemTokensTableChart);

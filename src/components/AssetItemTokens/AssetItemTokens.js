@@ -31,6 +31,8 @@ const getAssetTokenList = (state, assetAddress) => {
   if (assetAddress) {
     return getContract(state, 'IndexToken', assetAddress).fn.getActivesList();
   }
+
+  return undefined;
 };
 
 const mapStateToProps = (state, { address }) => ({

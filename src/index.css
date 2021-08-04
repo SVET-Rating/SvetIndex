@@ -4,7 +4,22 @@ html {
   list-style-type: none;
 }
 
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0.5rem;
+  min-height: 100vh;
+}
 
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.app-main {
+  flex-grow: 1;
+}
 
 .list-icon-container {
   width: 18px;

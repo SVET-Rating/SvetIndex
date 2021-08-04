@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     '& > li': {
       width: 'unset',
       padding: '0',
-      margin: theme.spacing(0.5),
+      margin: theme.spacing(0.25),
     },
   },
   text: {

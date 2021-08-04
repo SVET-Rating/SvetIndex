@@ -18,7 +18,7 @@ const AssetItemTokensTableShare = ({ token: { symbol, addrActive, amount }}) => 
       </TableCell>
 
       <TableCell align="center">
-        <AppEtherAddress address={addrActive} />
+        <AppEtherAddress className={classes.address} address={addrActive} />
       </TableCell>
 
       <TableCell align="center">

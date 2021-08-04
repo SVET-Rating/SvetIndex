@@ -10,7 +10,6 @@ import {
   TableRow,
 } from '@material-ui/core';
 import { getContract } from 'ethvtx/lib/getters';
-import AssetItemTokensTableChart from '../AssetItemTokensTableChart/AssetItemTokensTableChart';
 import AssetItemTokensTableShare from '../AssetItemTokensTableShare/AssetItemTokensTableShare';
 import useStyles from './styles';
 
@@ -22,29 +21,25 @@ const AssetItemTokensTable = ({ tokensList }) => {
   ));
 
   return (
-    <>
-      <TableContainer className={classes.root} component={Paper}>
-        <Table className={classes.table}>
-          <TableHead className={classes.tableHeader}>
-            <TableRow>
-              <TableCell align="left">SYMBOL</TableCell>
-              <TableCell align="center">ADDRESS</TableCell>
-              <TableCell align="center">%</TableCell>
-              <TableCell align="right">BALANCE</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {tokens}
-          </TableBody>
-        </Table>
-      </TableContainer>
-
-      <AssetItemTokensTableChart items={tokensList} />
-    </>
+    <TableContainer className={classes.root} component={Paper}>
+      <Table className={classes.table}>
+        <TableHead className={classes.tableHeader}>
+          <TableRow>
+            <TableCell align="left">SYMBOL</TableCell>
+            <TableCell align="center">ADDRESS</TableCell>
+            <TableCell align="center">%</TableCell>
+            <TableCell align="right">BALANCE</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {tokens}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 
-const getIndexList = (address, state) => {
+const getTokensList = (state, address) => {
   if (!address) {
     return undefined;
   }
@@ -60,7 +55,7 @@ const getIndexList = (address, state) => {
 // };
 
 const mapStateToProps = (state) => ({
-  tokensList: getIndexList(state.swapAssetReducer.asset, state),
+  tokensList: getTokensList(state, state.swapAssetReducer.assetIn),
   // balActiveFn: balActiveFn(state),
   // indexToken: state.swapAssetReducer.asset,
   // currentAddress: state.vtxconfig.coinbase,

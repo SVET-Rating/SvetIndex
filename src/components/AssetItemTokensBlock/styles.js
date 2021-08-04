@@ -3,8 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    flexDirection: 'column',
     justifyContent: 'center',
-    padding: theme.spacing(2),
+    // padding: theme.spacing(2),
   },
 }));
 

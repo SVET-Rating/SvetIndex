@@ -1,57 +1,71 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Box, Button, Typography } from '@material-ui/core';
-import { setSwapOutAmount } from '../../ethvtx_config/actions';
-import { SWAP_MODE } from '../../ethvtx_config/reducers';
+import { getWeb3, getContract } from 'ethvtx/lib/getters';
+import { Box, Typography } from '@material-ui/core';
+import { setSwapInAmount } from '../../ethvtx_config/actions/actions';
+import { SWAP_MODE } from '../../ethvtx_config/reducers/reducers-constants';
 import AppAssetAmount from '../AppAssetAmount/AppAssetAmount';
+import AppButtonInline from '../AppButtonInline/AppButtonInline';
 import useStyles from './styles';
 
 const SwapOutAssetBalance = ({
-  assetSymbol, balance, swapAmount, setSwapAmount, mode,
+  symbol, balance, swapAmount, setSwapAmount, mode,
 }) => {
   const classes = useStyles();
 
   const handleMaxButton = () => {
-    if (balance) {
-      setSwapAmount(balance);
-    }
+    console.log('click max button ---')
+    // if (balance) {
+    //   setSwapAmount(balance);
+    // }
   };
 
   return (
     <Box className={classes.root}>
-      <Typography className={classes.amount}>
+      <Box className={classes.amount}>
         <Typography className={classes.label}>
-          {assetSymbol}
+          {symbol}
         </Typography>
         <AppAssetAmount amount={swapAmount || '0.0'} />
-      </Typography>
+      </Box>
 
-      <Typography className={classes.balance}>
-        Balance:
-        &nbsp;
-        <AppAssetAmount amount={balance || '0.0'} precision={8} />
-        &nbsp;
-        {mode === SWAP_MODE.buy && <Button
+      <Box className={classes.balance}>
+        <Typography>Balance:</Typography>
+        <AppAssetAmount
+          amount={balance || '0.0'}
+          precision={8}
+        />
+        {mode === SWAP_MODE.buy && <AppButtonInline
           className={classes.maxButton}
           onClick={handleMaxButton}
           disabled={!Number(balance)}
         >
           (max)
-        </Button>}
-      </Typography>
+        </AppButtonInline>}
+      </Box>
     </Box>
   );
 };
 
+// const getSymbol = (state) => {
+//   const address = state.swapAssetReducer.assetOut;
+//   if (!address) {
+//     return;
+//   }
+//   console.log(state)
+//   return getContract(state, 'IndexToken', address).fn.symbol();
+// };
+
 const mapStateToProps = (state) => ({
-  assetSymbol: 'ETH',
+  symbol: 'WETH',
+  // symbol: getSymbol(state),
   balance: '1.236587458962875632',
   swapAmount: state.swapAssetReducer.swapOutAmount,
   mode: state.swapAssetReducer.mode,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setSwapAmount: (value) => dispatch(setSwapOutAmount(value)),
+  setSwapAmount: (value) => dispatch(setSwapInAmount(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SwapOutAssetBalance);

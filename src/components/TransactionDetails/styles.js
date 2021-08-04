@@ -1,9 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    paddingTop: theme.spacing(1),
-  },
+  root: {},
   block: {
     display: 'flex',
     justifyContent: 'space-between',

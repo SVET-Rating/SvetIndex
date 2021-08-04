@@ -4,7 +4,7 @@ import { Box } from '@material-ui/core';
 // import { getContract } from 'ethvtx/lib/getters';
 // import formBuyIndexTokens from '../../ethvtx_config/actions/buyIndexTokensAction';
 // import resetAction from "../../ethvtx_config/actions/resetInvestmentsAction";
-import { cancelSwap } from '../../ethvtx_config/actions';
+import { cancelSwap } from '../../ethvtx_config/actions/actions';
 import SlippageTolerance from '../SlippageTolerance/SlippageTolerance';
 import TransactionDelay from '../TransactionDelay/TransactionDelay';
 import SwapInAssetBalance from '../SwapInAssetBalance/SwapInAssetBalance';
@@ -18,7 +18,6 @@ import useStyles from './styles';
 const SellAssetForm = ({
   cancelSwap,
   swapInAmount, swapOutAmount, swapOutBalance,
-  // buyAsset, ITokContract, ITAmount, ITAddress, currentAddress, svetToken, setSwapAmount,
 }) => {
   const classes = useStyles();
 
@@ -28,7 +27,6 @@ const SellAssetForm = ({
 
   const handleClickSell = () => {
     console.log('--- click sell button ---')
-    // buyAsset(ITokContract, ITAmount, ITAddress, currentAddress, svetToken);
   };
 
   return (
@@ -64,11 +62,6 @@ const SellAssetForm = ({
 }
 
 const mapStateToProps = (state) => ({
-  // ITokContract: getContract(state, 'IndexSwap', '@indexswap'),
-  // ITAmount: state.buyTokensReducer.indexTokensAmount,
-  // ITAddress: state.indexTokenReducer.activeToken.tokenAddress,
-  // currentAddress: state.vtxconfig.coinbase,
-  // svetToken: getContract(state, 'ERC20', '@svettoken'),
   swapInAmount: state.swapAssetReducer.swapInAmount,
   swapOutAmount: state.swapAssetReducer.swapOutAmount,
   swapOutBalance: '1.236587458962875632',
@@ -76,11 +69,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   cancelSwap: () => dispatch(cancelSwap()),
-  // resetToInvestment: (e) => dispatch(resetAction(e)),
   // buyAsset: (ITokContract, ITAmount, ITAddress, currentAddress, svetToken) => (
   //   dispatch(formBuyIndexTokens(ITokContract, ITAmount, ITAddress, currentAddress, svetToken))
   // ),
-  // setSwapAmount: (value) => dispatch(setSwapAmount(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SellAssetForm);

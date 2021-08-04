@@ -43,16 +43,7 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.primary.main,
     },
   },
-  maxButton: {
-    minWidth: 'unset',
-    padding: theme.spacing(0, 0.5),
-    color: theme.palette.secondary.main,
-    textTransform: 'none',
-    '&:disabled': {
-      opacity: 0.25,
-      color: theme.palette.secondary.main,
-    }
-  },
+  maxButton: {},
 }));
 
 export default useStyles;

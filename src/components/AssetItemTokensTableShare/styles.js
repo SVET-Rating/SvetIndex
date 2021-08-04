@@ -9,6 +9,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
+  address: {
+    minWidth: theme.spacing(25),
+  }
 }));
 
 export default useStyles;

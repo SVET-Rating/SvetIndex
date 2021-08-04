@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Box, Typography } from '@material-ui/core';
-import { setSlippage } from '../../ethvtx_config/actions';
+import { setSlippage } from '../../ethvtx_config/actions/actions';
+import { SETTINGS } from '../../ethvtx_config/reducers/reducers-constants';
 import AppInput from '../AppInput/AppInput';
 import useStyles from './styles';
 
@@ -12,7 +13,7 @@ const SlippageTolerance = ({ slippage, setSlippage }) => {
 
   const handleChange = (e) => {
     const { value } = e.target;
-    if (Number.isNaN(Number(value)) || !Number.isInteger(Number(value)) || value < 1 || value > 25) {
+    if (Number.isNaN(Number(value)) || !Number.isInteger(Number(value)) || value < 1 || value > SETTINGS.maxSlippage) {
       return;
     }
     setSlippage(Number.parseInt(value) || 1);
@@ -39,7 +40,7 @@ const SlippageTolerance = ({ slippage, setSlippage }) => {
 };
 
 const mapStateToProps = (state) => ({
-  slippage: state.buyTokensReducer.slippage,
+  slippage: state.swapAssetReducer.slippage,
 });
 
 const mapDispatchToProps = (dispatch) => ({

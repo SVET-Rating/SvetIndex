@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { SWAP_MODE } from '../ethvtx_config/reducers';
+import { SWAP_MODE } from '../ethvtx_config/reducers/reducers-constants';
 import AssetsBlock from '../components/AssetsBlock/AssetsBlock';
 import BuyAssetForm from '../components/BuyAssetForm/BuyAssetForm';
 import SellAssetForm from '../components/SellAssetForm/SellAssetForm';
@@ -64,10 +64,8 @@ const InvestmentsPage = ({ mode, state }) => {
 
   return (
     <div>
-      <div>
-        {buyIndexSteps}
-        {/* <TransactionFailModal /> */}
-      </div>
+      {/* <TransactionFailModal /> */}
+      {buyIndexSteps}
       {processStateComponent}
     </div>
   );
