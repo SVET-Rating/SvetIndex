@@ -1,6 +1,6 @@
 const { assert } = require("console");
 
-const Index2Swap = artifacts.require('Index2SwapEth.sol');
+const Index2Swap = artifacts.require('Index2SwapEthMarket.sol');
 const IndexStorage = artifacts.require('IndexStorage.sol');
 const IndexToken = artifacts.require('IndexToken.sol');
 const contracts = require("../embark4Contracts.json");
@@ -10,10 +10,10 @@ netKey = "cloudflare"; //testing only on localchain
 
 console.log("tests");
 
-contract ("Index2swapEth", async accounts => {
+contract ("Index2SwapEthMarket", async accounts => {
 
     it ("1. Buy index 1", async () => { 
-      const index2swap = await Index2Swap.at(contracts[netKey]["deploy"] ["Index2SwapEth"]["address"]);
+      const index2swap = await Index2Swap.at(contracts[netKey]["deploy"] ["Index2SwapEthMarket"]["address"]);
       const indexstorage = await IndexStorage.at(contracts[netKey]["deploy"] ["IndexStorage"]["address"]);
       const indexList = await indexstorage.indexList();
    // console.log(indexList);
@@ -30,7 +30,7 @@ contract ("Index2swapEth", async accounts => {
     }) ,
     
     it ("2. Sell index 1", async () => { 
-      const index2swap = await Index2Swap.at(contracts[netKey]["deploy"] ["Index2SwapEth"]["address"]);
+      const index2swap = await Index2Swap.at(contracts[netKey]["deploy"] ["Index2SwapEthMarket"]["address"]);
       const indexstorage = await IndexStorage.at(contracts[netKey]["deploy"] ["IndexStorage"]["address"]);
       const indexList = await indexstorage.indexList();
       const index_token1 = await IndexToken.at(indexList[0].addr);
@@ -45,7 +45,7 @@ contract ("Index2swapEth", async accounts => {
        
     })/* , 
     it ("3. Withdraw ether", async () => { 
-      const index2swap = await Index2Swap.at(contracts[netKey]["deploy"] ["Index2SwapEth"]["address"]);
+      const index2swap = await Index2Swap.at(contracts[netKey]["deploy"] ["Index2SwapEthMarket"]["address"]);
       const indexstorage = await IndexStorage.at(contracts[netKey]["deploy"] ["IndexStorage"]["address"]);
       const indexList = await indexstorage.indexList();
       const index_token1 = await IndexToken.at(indexList[0].addr);

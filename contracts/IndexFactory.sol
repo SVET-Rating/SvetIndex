@@ -81,5 +81,10 @@ contract IndexFactory  {
             indexT.setTransfer (_trans);
         }
 
+     function setFactory (address _index, address _addrFactory, address _lstorage) public onlyOwner
+        {
+            IndexToken indexT =   IndexToken (_index);
+            indexT.setFactory (_addrFactory, _lstorage);
+        }
 
 }

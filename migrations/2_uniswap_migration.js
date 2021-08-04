@@ -63,21 +63,21 @@ for (contractName of Object.keys(contracts[netKey]["deploy"])) {
     await  deplContract["Exchange"].setPriceOracle(deplContract["OraclePrice"].address);  
 
     
-   // await  deplContract["Index2SwapEth"].setSwap(deplContract["UniswapV2Router02"].address ),
+   // await  deplContract["Index2SwapEthMarket"].setSwap(deplContract["UniswapV2Router02"].address ),
    // await index2swap.set(SvetToken.address, oracle_price.address, lstorage.address );
     await deplContract["IndexFactory"].setPriceOracle(deplContract["OraclePrice"].address);
     await deplContract["IndexFactory"].setAmountOracle(deplContract["OracleCircAmount"].address);
     await deplContract["IndexFactory"].setIndexStorage(deplContract["IndexStorage"].address);
     await deplContract["IndexFactory"].setTotSupply(deplContract["OracleTotSupply"].address);
     // Lstorage
-    await deplContract["Lstorage"].setswap(deplContract["Index2SwapEth"].address);
+    await deplContract["Lstorage"].setswap(deplContract["Index2SwapEthMarket"].address);
     await deplContract["IndexStorage"].setFactory(deplContract["IndexFactory"].address);
     
     await deplContract["Exchange"].setBA(deplContract["SVTtst"].address);
-    await deplContract["SVTtst"].transfer(deplContract["Index2SwapEth"].address, web3.utils.toWei("20000", "ether"));
-    await deplContract["SVTtst"].approve(deplContract["Index2SwapEth"].address, web3.utils.toWei('0.02','ether'), {from:admin});
-    await deplContract["Index2SwapEth"].set(deplContract["SVTtst"].address, deplContract["OraclePrice"].address, deplContract["Lstorage"].address, deplContract["UniswapV2Router02"].address );
-  //  await deplContract["Index2SwapEth"].setFees(100, 100); //0.1% for buy and sell
+    await deplContract["SVTtst"].transfer(deplContract["Index2SwapEthMarket"].address, web3.utils.toWei("20000", "ether"));
+    await deplContract["SVTtst"].approve(deplContract["Index2SwapEthMarket"].address, web3.utils.toWei('0.02','ether'), {from:admin});
+    await deplContract["Index2SwapEthMarket"].set(deplContract["SVTtst"].address, deplContract["OraclePrice"].address, deplContract["Lstorage"].address, deplContract["UniswapV2Router02"].address );
+  //  await deplContract["Index2SwapEthMarket"].setFees(100, 100); //0.1% for buy and sell
 
   
 };

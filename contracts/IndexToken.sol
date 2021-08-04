@@ -1,6 +1,7 @@
-pragma solidity =0.6.12;
+pragma solidity >= 0.6.12;
 pragma experimental ABIEncoderV2;
 import "./interfaces/iIndextoken.sol";
+import "./interfaces/iLstorage.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract IndexToken is iIndexToken, ERC20 {
@@ -10,7 +11,8 @@ contract IndexToken is iIndexToken, ERC20 {
      */
 
     address factory;
-    
+    iLstorage lstorage;
+
     uint8 private _decimals;
     bool transferEnable;
     bool enableSetActvs;
@@ -29,9 +31,10 @@ contract IndexToken is iIndexToken, ERC20 {
         _;
     }
 
-    function setFactory (address _addr) public onlyFactory
+    function setFactory (address _addr, address _lstorage) public onlyFactory
         {
         factory = _addr;
+        lstorage = iLstorage(_lstorage);
         }
 
     function setTransfer (bool _trans) public onlyFactory
@@ -39,13 +42,14 @@ contract IndexToken is iIndexToken, ERC20 {
             transferEnable = _trans;
         }
 
-    constructor (string memory name, string memory symbol ) public ERC20(name, symbol) {
+    constructor (string memory name, string memory symbol, address _lstorage ) public ERC20(name, symbol) {
                         
 
         factory = msg.sender;
         transferEnable = false;
         enableSetActvs = true;
-        
+        lstorage = iLstorage(_lstorage);
+
         }
     
     function setActivesList ( address[] memory _activesAddr, uint[] memory _activAm) public {
@@ -108,19 +112,31 @@ contract IndexToken is iIndexToken, ERC20 {
 
         _approve(account, _msgSender(), decreasedAllowance);
         _burn(account, amount);
+        
     }
 
     function transfer(address recipient, uint amount)  public  override (ERC20, IERC20) returns (bool) { 
         require(transferEnable, "Transfers not given for token" );
         super.transfer(recipient, amount);
+         transferActives (msg.sender, recipient, amount);
 
     }
 
     function transferFrom(address sender, address recipient, uint256 amount) public virtual override(ERC20, IERC20)  returns (bool) {
         require(transferEnable, "Transfers not given for token" );
         super.transferFrom(sender, recipient, amount);
+        transferActives (sender, recipient, amount);
     }
 
+    function transferActives (address _sender, address _recipient, uint256 _amount)  internal {
+        for (uint8 _i = 0; _i<activesList.length; _i++) {
+            
+            uint amountOfActive = _amount * lstorage.getBalance (_sender, address(this),  activesList[_i].addrActive) /  balanceOf(_sender);
+            lstorage.sub (_sender, address(this), activesList[_i].addrActive, amountOfActive);
+            lstorage.add (_recipient, address(this), activesList[_i].addrActive, amountOfActive); 
+        }
+
+    }
 
     /**
      * @dev Returns the number of decimals used to get its user representation.

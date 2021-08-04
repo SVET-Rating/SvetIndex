@@ -5,7 +5,7 @@ const Router = artifacts.require('UniswapV2Router02.sol');
 const WETH = artifacts.require('WETH.sol');
 const Experts = artifacts.require('Experts.sol');
 const Exchange = artifacts.require('Exchange.sol');
-const Index2Swap = artifacts.require('Index2SwapEth.sol');
+const Index2Swap = artifacts.require('Index2SwapEthMarket.sol');
 const IndexFactory = artifacts.require('IndexFactory.sol');
 const IndexStorage = artifacts.require('IndexStorage.sol');
 const IndexToken = artifacts.require('IndexToken.sol');
@@ -36,7 +36,7 @@ const index_factory = await IndexFactory.at(contracts[netKey]["deploy"]["IndexFa
 const indexstorage = await IndexStorage.at(contracts[netKey]["deploy"] ["IndexStorage"]["address"]);
 
 //const exchanges = await Exchange.at(contracts[netKey]["deploy"]["Exchange"]["address"]);
-const index2swap = await Index2Swap.at(contracts[netKey]["deploy"] ["Index2SwapEth"]["address"]);
+const index2swap = await Index2Swap.at(contracts[netKey]["deploy"] ["Index2SwapEthMarket"]["address"]);
 
 if (_network != "ropsten" || _network != "mainnet") {
  /*  console.log('create index token1');
