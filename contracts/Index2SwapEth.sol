@@ -18,16 +18,17 @@ contract Index2SwapEth  {
   //  using SafeMathUniswap for uint;
 
     /**
-    Index2SwapEth
-    1. Client wants to buy an index. 
+    Index2SwapEth Limited order, minting indexes 
+    1. Client wants to buy an index 
     2. He choose preconfigured index 
-    3. He pays Ethers to us +  buying fee in SVETs to Index2SwapEth
+    3. He pays Ethers to us and buying fee in SVETs (if fee>0) to Index2SwapEth
     4. We send Ethers to Uniswap AMM for choosed pairs,  
-      proportionally shares in index
-    5. We sends index portfolio tokens to client
+      proportionally shares (in tokens) in index
+    5. We minting index portfolio tokens and sending to client
     6. If client wants to sell index, he sends index tokens to smart contract Index2SwapEth
-    7. smart contract sends tokens to uniswap and gets Ethers
-    8.  we return to him Eth at current  price from Uniswap minus selling  fee in SVET
+    7. smart contract sends tokens to uniswap and gets Ethers proportionally real bought activites
+    8.  we return to him Eth at current  price from Uniswap minus selling  fee in SVET (if fee>0) , 
+    9. index token burns
      */
 
     address owner;
@@ -99,10 +100,10 @@ contract Index2SwapEth  {
 
     }
 
-       function buyIndexforSvetEth (uint _amount,  //in ether 
+       function buyIndexforSvetEth (uint _amount,  //_amount in ether - limited order scenario
                                 address _indexT,                     
                                 uint256 _miningDelay,
-                                uint256 _discount) payable public{// _amount - amount of index to buy  returns (uint  amountRes0, uint amountRes1)
+                                uint256 _discount) payable public{
         uint256 priceIndexTot;
 
         iIndexToken index = iIndexToken(_indexT);
@@ -110,8 +111,7 @@ contract Index2SwapEth  {
 
         if (buyFee > 0)  {   
             uint fee = _amount * uint(buyFee) / svetPrice /10000;
-       //     (bool success, bytes memory result) = address(svetT).delegatecall(abi.encodeWithSignature("transfer(address,uint)",  address(this), fee));
-       //     require(success, string (result));
+
             svetT.transferFrom(msg.sender, address(this), fee );
         }
         for (uint8 i = 0; i<index.getActivesLen(); i++) {
@@ -133,11 +133,7 @@ contract Index2SwapEth  {
         }
         uint sumInd =  _amount * priceIndexTot /10000 ; //ether->svet
         //accept ethers 
-      //  (bool successE, bytes memory returnData) = address(msg.sender).delegatecall{value: msg.value}(abi.encodeWithSignature(signatureString, arg);("transfer()"))));
-        //transfer()
-    //    require(successE, string(returnData));
-
-        index.mint(msg.sender, sumInd  );
+         index.mint(msg.sender, sumInd  );
 
     }
 
@@ -151,8 +147,8 @@ contract Index2SwapEth  {
                         ) public payable returns (uint[] memory amountRet) { 
 
         // here wee need connection to Uniswap        
-        //return liquidity  
-     
+        //return reserves (using  for debugging only, can be deleted in production)  
+
         (uint reserve0, uint reserve1,) = IUniswapV2Pair (
                     IUniswapV2Factory (uniswapV2Router02.factory()
                 ).getPair(uniswapV2Router02.WETH(), addrActive)
@@ -163,14 +159,13 @@ contract Index2SwapEth  {
         path[1] = uniswapV2Router02.WETH(); //eth
 
         amountRet = uniswapV2Router02.getAmountsOut(_amount, path);
-      //  require (reserve1 >= amountRet[1], "No enought tokenTo in pair");
         IERC20(addrActive).approve(address(uniswapV2Router02), amountRet[0]);
         amountRet = uniswapV2Router02.swapExactTokensForETH(  amountRet[0] , amountRet[1]* _discount / 100, path, address (this), block.timestamp + _miningDelay);
 
 
     }
 
-    function sellIndexforEth (uint _amount, // in index
+    function sellIndexforEth (uint _amount, //_amount  in index tokesn
                              address _indexT,
                              uint256 _miningDelay,
                              uint256 _discount) public returns (uint[] memory amountRet){
@@ -194,14 +189,13 @@ contract Index2SwapEth  {
                 _discount
                 ) ;
 
-            lstorage.sub (msg.sender, _indexT, addrActive, amountRet[0]);
+            lstorage.sub (msg.sender, _indexT, addrActive, amount);
             amountEth +=amountRet[1];
             }
         index.burnFrom(msg.sender, _amount);
         if (sellFee > 0)  {   
             uint fee = totPriceActSv * uint(sellFee) /10000;
-       //     (bool success, bytes memory result) = address(svetT).delegatecall(abi.encodeWithSignature("transfer(address,uint)",  address(this), fee));
-    //        require(success, string (result));
+  
            svetT.transferFrom(msg.sender, address(this), fee);
 
             }

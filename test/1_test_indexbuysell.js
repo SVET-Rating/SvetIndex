@@ -23,7 +23,7 @@ contract ("Index2swapEth", async accounts => {
         //TODO add test  to check approve when buyfee > 0    
       } */
       
-      const buyIndexforSvetEth = await index2swap.buyIndexforSvetEth(web3.utils.toWei('0.01','ether'),index_token1.address , "600", "90", {from:accounts[0], value: web3.utils.toWei('0.01','ether')});
+      const buyIndexforSvetEth = await index2swap.buyIndexforSvetEth(web3.utils.toWei('0.1','ether'),index_token1.address , "600", "90", {from:accounts[0], value: web3.utils.toWei('0.1','ether')});
 
     console.log("buyIndexforSvetEth", buyIndexforSvetEth.tx);
 //    assert (false); //TODO add checks
@@ -34,8 +34,8 @@ contract ("Index2swapEth", async accounts => {
       const indexstorage = await IndexStorage.at(contracts[netKey]["deploy"] ["IndexStorage"]["address"]);
       const indexList = await indexstorage.indexList();
       const index_token1 = await IndexToken.at(indexList[0].addr);
-      await index_token1.approve(index2swap.address,web3.utils.toWei('0.005','ether'));
-      const sellIndexforSvet=await index2swap.sellIndexforEth(web3.utils.toWei('0.005','ether'),index_token1.address, "600", "90", {from:accounts[0]});
+      await index_token1.approve(index2swap.address,web3.utils.toWei('0.1','ether'));
+      const sellIndexforSvet=await index2swap.sellIndexforEth(web3.utils.toWei('0.1','ether'),index_token1.address, "600", "90", {from:accounts[0]});
       console.log("sellIndexforSvet", sellIndexforSvet.tx);
   /*       const buyFee = await index2swap.buyFee();
       if (buyFee.toNumber() > 0) {
