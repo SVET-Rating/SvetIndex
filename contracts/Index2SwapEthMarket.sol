@@ -77,7 +77,7 @@ contract Index2SwapEthMarket  {
 
     function fillETH (//address _addrIndex,                        
                         address _addrActive1,  // token
-                        uint256 _amount0,
+                        uint256 _amount1,
                         uint256 _miningDelay,
                         uint256 _discount
                         ) internal   returns (uint[] memory amountRet) { 
@@ -91,49 +91,56 @@ contract Index2SwapEthMarket  {
                 ).getPair(uniswapV2Router02.WETH(), _addrActive1)
             ).getReserves(); 
             
-        amountRet = uniswapV2Router02.getAmountsOut(_amount0, path);
+        amountRet = uniswapV2Router02.getAmountsIn(_amount1, path);
       //  require (reserve1 >= amountRet[1], "No enought tokenTo in pair");
 
-        amountRet = uniswapV2Router02.swapExactETHForTokens{ value: _amount0 }( amountRet[1] * _discount/100, path, address (this), block.timestamp + _miningDelay);
-        // todo: to realize disco
+        amountRet = uniswapV2Router02.swapETHForExactTokens{ value: amountRet[0] }( amountRet[1], path, address (this), block.timestamp + _miningDelay);
+        
 
 
     }
 
-       function buyIndexforSvetEth (uint _amount,  //_amount in ether - limited order scenario
+       function buyIndexforSvetEth (uint _amount,  //_amount in INdex - market order scenario
                                 address _indexT,                     
                                 uint256 _miningDelay,
                                 uint256 _discount) payable public{
         uint256 priceIndexTot;
-
+        uint256 spendedEth;
         iIndexToken index = iIndexToken(_indexT);
         uint svetPrice = oraclePrice.getLastPrice(address(svetT));
 
         if (buyFee > 0)  {   
-            uint fee = _amount * uint(buyFee) / svetPrice /10000;
+            uint fee = _amount * uint(buyFee) / svetPrice /10000; //buyFee in %%  * 100
 
             svetT.transferFrom(msg.sender, address(this), fee );
         }
         for (uint8 i = 0; i<index.getActivesLen(); i++) {
+        {            
             (address addrActive, uint256 share) = index.getActivesItem(i);
 
-            uint256  sumEth4Act = share * _amount /10000 ;   // oracle in ether
-            priceIndexTot += share * oraclePrice.getLastPrice(addrActive) ; // price of bougth index in ethers
+             // oracle in ether
+            priceIndexTot += share * oraclePrice.getLastPrice(addrActive)/10**18  ;
+
             uint[] memory amountRet = fillETH (
             //    _indexT,                 
                 addrActive,
-                 sumEth4Act,  // 10**22,  //
+                share * _amount /10**18,  // 10**22,  //
                 _miningDelay,
                 _discount
             );
-
+            spendedEth += amountRet[0];
 
             lstorage.add (msg.sender, _indexT, addrActive, amountRet[1]);
+            }
 
         }
-        uint sumInd =  _amount * priceIndexTot /10000 ; //ether->svet
+        //returning odds
+        if (msg.value > spendedEth ) {
+            payable(msg.sender).transfer(msg.value - spendedEth);
+        }
+        
         //accept ethers 
-         index.mint(msg.sender, sumInd  );
+         index.mint(msg.sender, _amount * priceIndexTot /10000  ); //ether->svet
 
     }
 

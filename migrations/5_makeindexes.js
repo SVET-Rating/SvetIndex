@@ -100,11 +100,11 @@ Economic Class Index
 33% Telcoin (TEL), Price: 0.02366776: 0x467bccd9d29f223bce8043b84e8c8b282827790f
 
  */
-var isindexexist = await indexstorage.indexes('EconomicClassIndex', 'SECI') ;
+var isindexexist = await indexstorage.indexes('EconomicClassIndex', 'SECI' ) ;
 console.log ("EconomicClassIndex ",  isindexexist);
 if (isindexexist == "0x0000000000000000000000000000000000000000") 
   {
-  await deployer.deploy(IndexToken,'EconomicClassIndex', 'SECI');
+  await deployer.deploy(IndexToken,'EconomicClassIndex', 'SECI', contracts[netKey]["deploy"]["Lstorage"]["address"]);
   const index_tokenSECI = await IndexToken.deployed();
   console.log('create index Economic Class Index');
   const trIndex5 = await index_factory.makeIndex(index_tokenSECI.address,
@@ -128,7 +128,7 @@ var isindexexist = await indexstorage.indexes('The Sea of Tranquillity) Index', 
 console.log ("The Sea of Tranquillity) Index: ",  isindexexist);
 if ( isindexexist == "0x0000000000000000000000000000000000000000") 
   {
-  await deployer.deploy(IndexToken,'The Sea of Tranquillity) Index', 'SSTI');
+  await deployer.deploy(IndexToken,'The Sea of Tranquillity) Index', 'SSTI', contracts[netKey]["deploy"]["Lstorage"]["address"]);
   const index_tokenSSTI = await IndexToken.deployed();
   console.log('create index Economic Class Index');
   const trIndex6 = await index_factory.makeIndex(index_tokenSSTI.address,
@@ -152,7 +152,7 @@ console.log ("50CentsIndex ",  isindexexist);
 
 if (isindexexist == "0x0000000000000000000000000000000000000000") 
   {
-await deployer.deploy(IndexToken,'50CentsIndex', 'S50I');
+await deployer.deploy(IndexToken,'50CentsIndex', 'S50I', contracts[netKey]["deploy"]["Lstorage"]["address"]);
 const index_tokenS50I = await IndexToken.deployed();
 console.log('50 Cents Index');
 const trIndex7 = await index_factory.makeIndex(index_tokenS50I.address,

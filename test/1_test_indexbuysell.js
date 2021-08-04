@@ -22,8 +22,10 @@ contract ("Index2SwapEthMarket", async accounts => {
       if (buyFee.toNumber() > 0) {
         //TODO add test  to check approve when buyfee > 0    
       } */
-      
-      const buyIndexforSvetEth = await index2swap.buyIndexforSvetEth(web3.utils.toWei('0.1','ether'),index_token1.address , "600", "90", {from:accounts[0], value: web3.utils.toWei('0.1','ether')});
+
+      // calculation in ethers !!
+
+      const buyIndexforSvetEth = await index2swap.buyIndexforSvetEth(web3.utils.toWei('0.1','ether'),index_token1.address , "600", "90", {from:accounts[0], value: web3.utils.toWei('0.1','ether')}); //
 
     console.log("buyIndexforSvetEth", buyIndexforSvetEth.tx);
 //    assert (false); //TODO add checks

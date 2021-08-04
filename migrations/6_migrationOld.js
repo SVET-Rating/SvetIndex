@@ -3,7 +3,7 @@ const Index2Swap = artifacts.require('Index2SwapEthMarket.sol');
 const OraclePrice = artifacts.require('OraclePrice.sol');
 const contracts_old = require("../embark4Contracts_old.json");
 const contracts = require("../embark4Contracts.json");
-const  { forContractAt } = require ("@truffle/decoder"); 
+
 const provider = web3.currentProvider;
 
 module.exports = async function(deployer,_network, addresses) {
@@ -39,9 +39,7 @@ module.exports = async function(deployer,_network, addresses) {
             }
         }
         
-        const index2swapnew = await Index2Swap.at(newIndexSwapaddr);
-        let balEth = await index2swapold.balance;
-        await index2swapnew.sendTransaction ({from:index2swapold, value:balEth});
+  
         }
     catch (err) {
         console.log ("error when upgrade:", err);
