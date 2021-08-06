@@ -48,7 +48,7 @@ await deployer.deploy(IndexToken,'Svet index 1', 'SVI1');
           tokens[netKey].Kyber.address], 
           [ 2624,
             3774,
-            3601] ); //in shares 1/10000
+            3601] ); //in WEI
 console.log(trIndex1.tx);       
 
  //const index_token2 = await deployer.deploy(IndexToken,'Svet index 2', 'SVI2');
@@ -60,7 +60,7 @@ const trIndex3 = await index_factory.makeIndex(index_token3.address,
   [tokens[netKey].WBTC.address,
     tokens[netKey].cDAI.address,
     tokens[netKey].cUSDC.address,  ],
-  [5000, 2500, 2500 ]); //in shares 1/10000
+  [5000, 2500, 2500 ]); //in WEI
 console.log(trIndex3.tx);
 await deployer.deploy(IndexToken,'SVET Saving Index', 'SVI4');
 const index_token4 = await IndexToken.deployed();
@@ -69,7 +69,7 @@ console.log('create index token4');
 const trIndex4 = await index_factory.makeIndex(index_token4.address,
   [tokens[netKey].cDAI.address,
     tokens[netKey].cUSDC.address],
-  [5000, 5000 ]); //in shares 1/10000
+  [5000, 5000 ]); //in WEI
 console.log(trIndex4.tx);
 await deployer.deploy(IndexToken,'SVET Perspective Index', 'SVI5');
 const index_token5 = await IndexToken.deployed();
@@ -88,7 +88,7 @@ const trIndex5 = await index_factory.makeIndex(index_token5.address,
     tokens[netKey]["Decentraland"]["address"], 
     tokens[netKey]["Trustswap"]["address"]
   ],
-  [1000, 1000, 1000, 1000,1000, 1000,1000, 1000,1000, 1000]); //in shares 1/10000
+  [1000, 1000, 1000, 1000,1000, 1000,1000, 1000,1000, 1000]); //in WEI
 console.log(trIndex5.tx);
  */
 
@@ -114,7 +114,9 @@ if (isindexexist == "0x0000000000000000000000000000000000000000")
     // contracts[netKey]["deploy"] ["SVTtst"]["address"],
 
     ],
-    [3333, 3333, 3334]); //in shares 1/10000
+    [web3.utils.toWei('0.3','ether'), 
+    web3.utils.toWei('0.4','ether'),
+     web3.utils.toWei('0.3','ether')]); //in WEI web3.utils.toWei('0.1','ether')
 console.log(trIndex5.tx);}
 
 /**
@@ -138,7 +140,9 @@ if ( isindexexist == "0x0000000000000000000000000000000000000000")
     // contracts[netKey]["deploy"] ["SVTtst"]["address"],
 
     ],
-    [3333, 3333, 3334]); //in shares 1/10000
+    [web3.utils.toWei('0.3','ether'), 
+    web3.utils.toWei('0.4','ether'),
+     web3.utils.toWei('0.3','ether')]); //in WEI
   console.log(trIndex6.tx);
   }
 /**
@@ -161,7 +165,9 @@ const trIndex7 = await index_factory.makeIndex(index_tokenS50I.address,
     contracts[netKey]["deploy"] ["SVTtst"]["address"],
 
   ],
-  [4750, 4750,  500]); //in shares 1/10000
+  [web3.utils.toWei('0.47','ether'), 
+  web3.utils.toWei('0.47','ether'),
+   web3.utils.toWei('1','ether')]); //in WEI
 console.log(trIndex7.tx);
 
   }

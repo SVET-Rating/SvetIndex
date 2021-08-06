@@ -18,15 +18,17 @@ contract Index2SwapEthMarket  {
   //  using SafeMathUniswap for uint;
 
     /**
-    Index2SwapEthMarket (market order), minting index tokens,  index tokens not transferable
-    1. Client wants to buy an index 
+
+    Index2SwapEthMarket (market order), minting indexes, index tokens CAN BE  transferable
+    1. Client wants to buy an index portfolio token with exact amount of actives
     2. He choose preconfigured index 
     3. He order amount of index portfolo and pays Ethers+slippage  to us and buying fee in SVETs (if fee>0) to Index2SwapEthMarket
     4. We caclulating needed amount of  Ethers and sending  to Uniswap AMM for choosed pairs,  
-      proportionally shares (in tokens) in index, ordered to buy concrete amounts of actiives.
+      4.1 proportionally shares (in tokens) in index, ordered to buy concrete amounts of actiives.
+      4.2 if fact spent ether little then sent by client, difference returned to client
     5. We minting index portfolio tokens and sending to client
     6. If client wants to sell index, he sends index tokens to smart contract Index2SwapEthMarket
-    7. smart contract sends tokens to uniswap and gets Ethers proportionally bought activites
+    7. smart contract sends tokens to uniswap and gets Ethers proportionally bought activites with current price
     8.  we return to him  Eth proceeds from sale at current  price from Uniswap minus selling  fee in SVET (if fee>0) , 
     9. index token burns
      */
@@ -140,7 +142,7 @@ contract Index2SwapEthMarket  {
         }
         
         //accept ethers 
-         index.mint(msg.sender, _amount * priceIndexTot /10000  ); //ether->svet
+         index.mint(msg.sender, _amount ); //index
 
     }
 

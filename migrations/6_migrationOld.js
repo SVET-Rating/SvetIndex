@@ -21,12 +21,12 @@ module.exports = async function(deployer,_network, addresses) {
     const oraclePriceAaddr = contracts_old[netKey]["deploy"]["OraclePrice"]["address"]
     const oldIndexSwapaddr =  contracts_old[netKey]["deploy"]["Index2SwapEthMarket"]["address"]
     const newIndexSwapaddr = contracts[netKey]["deploy"]["Index2SwapEthMarket"]["address"]
-    const oracleprice = await OraclePrice.at(oraclePriceAaddr);
-    const tokens = await oracleprice.getallTokens ();
-    const index2swapold = await Index2Swap.at(oldIndexSwapaddr);
+
     
     try {
-
+        const oracleprice = await OraclePrice.at(oraclePriceAaddr);
+        const tokens = await oracleprice.getallTokens ();
+        const index2swapold = await Index2Swap.at(oldIndexSwapaddr);
         await index2swapold.upgrade(newIndexSwapaddr,  {from:admin});  //new version
 
         for (let t=0; t<tokens.length; t++){
