@@ -76,9 +76,25 @@ contract ("Index2SwapEthMarket", async accounts => {
       const indexstorage = await IndexStorage.at(contracts[netKey]["deploy"] ["IndexStorage"]["address"]);
       const indexList = await indexstorage.indexList();
       const index_token1 = await IndexToken.at(indexList[0].addr);
-      await index_token1.approve(index2swap.address,web3.utils.toWei('0.1','ether'));
+      await index_token1.approve(index2swap.address,web3.utils.toWei('0.1','ether'),{from:accounts[1]});
       const sellIndexforSvet=await index2swap.sellIndexforEth(web3.utils.toWei('0.1','ether'),index_token1.address, "600", "90", {from:accounts[1]});
       console.log("sellIndexforSvet", sellIndexforSvet.tx);
+
+      const actList = await index_token1.getActivesList();
+      for (var i  in  actList) {
+                        
+        const act  = await index_token1.getActivesItem(i);
+        
+        const amount = web3.utils.fromWei(act.amount, 'ether')
+        
+        const token = await Erc20.at(act.addr);
+        const bougthAmount = await token.balanceOf(contracts[netKey]["deploy"] ["Index2SwapEthMarket"]["address"]);
+       // console.log ("bougthAmount:", bougthAmount)
+        assert (0  ==  web3.utils.fromWei(bougthAmount, 'ether'), "Not right amounts: " + 0 +"<>" +  web3.utils.fromWei(bougthAmount, 'ether'));
+        
+        } 
+        const indbougthAmount = await  index_token1.balanceOf(accounts[1]);
+        assert (0 == web3.utils.fromWei(indbougthAmount, 'ether'), "Not right index amounts: " + 0  + "<>" +  web3.utils.fromWei(indbougthAmount, 'ether'));
   /*       const buyFee = await index2swap.buyFee();
       if (buyFee.toNumber() > 0) {
         //TODO add test  to check approve when buyfee > 0    
