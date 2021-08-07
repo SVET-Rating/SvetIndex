@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getContract } from 'ethvtx/lib/getters';
 import { Box, List, ListItem, Typography } from '@material-ui/core';
+import { selectAssetTokenListByAddress } from '../../ethvtx_config/selectors/selectors';
 import AssetItemTokensShare from '../AssetItemTokensShare/AssetItemTokensShare';
 import useStyles from './styles';
 
@@ -27,16 +27,8 @@ const AssetItemTokens = ({ tokens = [] }) => {
   );
 }
 
-const getAssetTokenList = (state, assetAddress) => {
-  if (assetAddress) {
-    return getContract(state, 'IndexToken', assetAddress).fn.getActivesList();
-  }
-
-  return undefined;
-};
-
 const mapStateToProps = (state, { address }) => ({
-  tokens: getAssetTokenList(state, address),
+  tokens: selectAssetTokenListByAddress(state, address),
 });
 
 export default connect(mapStateToProps)(AssetItemTokens);

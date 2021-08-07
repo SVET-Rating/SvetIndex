@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getContract } from 'ethvtx/lib/getters';
 import { Box, Typography } from '@material-ui/core';
+import { selectAssetInSymbol } from '../../ethvtx_config/selectors/selectors';
 import useStyles from './styles';
 
 const ASSET_IN_AMOUNT = '1';
@@ -21,17 +21,8 @@ const AssetsCostCompare = ({ assetInSymbol, assetOutSymbol, assetOutAmount }) =>
   );
 };
 
-const getSymbol = (state) => {
-  const address = state.swapAssetReducer.assetIn;
-  if (!address) {
-    return;
-  }
-
-  return getContract(state, 'IndexToken', address).fn.symbol();
-};
-
 const mapStateToProps = (state) => ({
-  assetInSymbol: getSymbol(state),
+  assetInSymbol: selectAssetInSymbol(state),
   assetOutSymbol: 'ETH',
   assetOutAmount: '0.01256',
 });

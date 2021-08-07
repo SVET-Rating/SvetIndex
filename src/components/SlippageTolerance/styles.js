@@ -7,6 +7,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   label: {
+    font: 'inherit',
     color: 'inherit',
     cursor: 'pointer',
   },

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Box, Typography } from '@material-ui/core';
+import { selectSlippage } from '../../ethvtx_config/selectors/selectors';
 import { setSlippage } from '../../ethvtx_config/actions/actions';
 import { SETTINGS } from '../../ethvtx_config/reducers/reducers-constants';
 import AppInput from '../AppInput/AppInput';
@@ -40,7 +41,7 @@ const SlippageTolerance = ({ slippage, setSlippage }) => {
 };
 
 const mapStateToProps = (state) => ({
-  slippage: state.swapAssetReducer.slippage,
+  slippage: selectSlippage(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

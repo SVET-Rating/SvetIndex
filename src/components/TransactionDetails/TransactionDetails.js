@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { getContract, getBlock } from 'ethvtx/lib/getters';
 import { Box, Typography } from '@material-ui/core';
+import { setGasPrice } from '../../ethvtx_config/actions/actions';
+import { selectGasPrice, selectCurrentBlock } from '../../ethvtx_config/selectors/selectors';
 import useStyles from './styles';
 
-const TransactionDetails = ({ gasAmount, gasPrice, currentBlock }) => {
+const TransactionDetails = ({ gasAmount, gasPrice, currentBlock, setCurrentGasPrice }) => {
   const classes = useStyles();
+
+  useEffect(() => {
+    setCurrentGasPrice();
+  }, [currentBlock]);
 
   return (
     <Box className={classes.root}>
@@ -52,11 +57,14 @@ const TransactionDetails = ({ gasAmount, gasPrice, currentBlock }) => {
 // };
 
 const mapStateToProps = (state) => ({
-  gasAmount: '50000',
-  gasPrice: '18',
   // gasAmount: getIndexGasAmount(state),
-  // gasPrice: state.buyTokensReducer.gasPrice,
-  currentBlock: getBlock(state, state.blocks.current_height),
+  gasAmount: '50000',
+  gasPrice: selectGasPrice(state),
+  currentBlock: selectCurrentBlock(state),
 });
 
-export default connect(mapStateToProps)(TransactionDetails);
+const mapDispatchToProps = (dispatch) => ({
+  setCurrentGasPrice: () => dispatch(setGasPrice()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TransactionDetails);

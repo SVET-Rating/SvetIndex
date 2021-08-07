@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Box, Typography } from '@material-ui/core';
+import { selectDelay } from '../../ethvtx_config/selectors/selectors';
 import { setDelay } from '../../ethvtx_config/actions/actions';
 import { SETTINGS } from '../../ethvtx_config/reducers/reducers-constants';
 import AppInput from '../AppInput/AppInput';
@@ -40,7 +41,7 @@ const TransactionDelay = ({ delay, setDelay }) => {
 };
 
 const mapStateToProps = (state) => ({
-  delay: state.swapAssetReducer.delay,
+  delay: selectDelay(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

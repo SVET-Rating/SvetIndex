@@ -1,9 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Box } from '@material-ui/core';
-// import { getContract } from 'ethvtx/lib/getters';
-// import formBuyIndexTokens from '../../ethvtx_config/actions/buyIndexTokensAction';
-// import resetAction from "../../ethvtx_config/actions/resetInvestmentsAction";
+import { selectSwapInAmount } from '../../ethvtx_config/selectors/selectors';
 import { cancelSwap } from '../../ethvtx_config/actions/actions';
 import SlippageTolerance from '../SlippageTolerance/SlippageTolerance';
 import TransactionDelay from '../TransactionDelay/TransactionDelay';
@@ -62,16 +60,13 @@ const SellAssetForm = ({
 }
 
 const mapStateToProps = (state) => ({
-  swapInAmount: state.swapAssetReducer.swapInAmount,
-  swapOutAmount: state.swapAssetReducer.swapOutAmount,
+  swapInAmount: selectSwapInAmount(state),
+  swapOutAmount: '0.632569845236',
   swapOutBalance: '1.236587458962875632',
 });
 
 const mapDispatchToProps = (dispatch) => ({
   cancelSwap: () => dispatch(cancelSwap()),
-  // buyAsset: (ITokContract, ITAmount, ITAddress, currentAddress, svetToken) => (
-  //   dispatch(formBuyIndexTokens(ITokContract, ITAmount, ITAddress, currentAddress, svetToken))
-  // ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SellAssetForm);

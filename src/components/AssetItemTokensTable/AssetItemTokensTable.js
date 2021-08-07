@@ -9,7 +9,7 @@ import {
   TableHead,
   TableRow,
 } from '@material-ui/core';
-import { getContract } from 'ethvtx/lib/getters';
+import { selectAssetInTokensList } from '../../ethvtx_config/selectors/selectors';
 import AssetItemTokensTableShare from '../AssetItemTokensTableShare/AssetItemTokensTableShare';
 import useStyles from './styles';
 
@@ -39,30 +39,8 @@ const AssetItemTokensTable = ({ tokensList }) => {
   );
 };
 
-const getTokensList = (state, address) => {
-  if (!address) {
-    return undefined;
-  }
-  return getContract(state, 'IndexToken', address).fn.getActivesList();
-};
-
-// const balActiveFn = ( state) => {
-//   const LS = getContract(state,'Lstorage', '@lstorage');
-//   if (LS == undefined) {
-//     return undefined;
-//   }
-//   return LS.fn.getBalance;
-// };
-
 const mapStateToProps = (state) => ({
-  tokensList: getTokensList(state, state.swapAssetReducer.assetIn),
-  // balActiveFn: balActiveFn(state),
-  // indexToken: state.swapAssetReducer.asset,
-  // currentAddress: state.vtxconfig.coinbase,
+  tokensList: selectAssetInTokensList(state),
 });
-
-// const mapDispatchToProps = (dispatch) => ({
-//   tokens: (tokens) => dispatch(getTokensByIndex(tokens)),
-// });
 
 export default connect(mapStateToProps)(AssetItemTokensTable);

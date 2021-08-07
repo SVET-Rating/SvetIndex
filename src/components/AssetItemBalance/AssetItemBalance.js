@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getContract, getAccount, getWeb3 } from 'ethvtx/lib/getters';
+import { getContract, getWeb3 } from 'ethvtx/lib/getters';
 // import BN from 'bn.js';
 import { Box, Divider, Typography } from '@material-ui/core';
+import { selectAssetBalanceByAddress } from '../../ethvtx_config/selectors/selectors';
 import AppAssetAmount from '../AppAssetAmount/AppAssetAmount';
 import useStyles from './styles';
 
@@ -98,13 +99,8 @@ const getPrice = (state) => {
   return getWeb3(state).utils.fromWei(priceInWei);
 };
 
-const getBalance = (state, AssetAddress) => {
-  const { address } = getAccount(state, '@coinbase');
-  return getContract(state, 'IndexToken', AssetAddress).fn.balanceOf(address);
-};
-
 const mapStateToProps = (state, { address }) => ({
-  balance: getBalance(state, address),
+  balance: selectAssetBalanceByAddress(state, address),
   price: getPrice(state),
   // price: getPrice(state, address),
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getContract } from 'ethvtx/lib/getters';
 import { Box, Typography } from '@material-ui/core';
+import * as selectors from '../../ethvtx_config/selectors/selectors';
 import { setSwapInAmount } from '../../ethvtx_config/actions/actions';
 import { SWAP_MODE } from '../../ethvtx_config/reducers/reducers-constants';
 import { isNumber } from '../../helpers';
@@ -64,28 +64,11 @@ const SwapInAssetBalance = ({
   );
 };
 
-const getBalance = (state) => {
-  const address = state.swapAssetReducer.assetIn;
-  if (!address) {
-    return;
-  }
-  return getContract(state, 'IndexToken', address).fn.balanceOf(address);
-};
-
-const getSymbol = (state) => {
-  const address = state.swapAssetReducer.assetIn;
-  if (!address) {
-    return;
-  }
-
-  return getContract(state, 'IndexToken', address).fn.symbol();
-};
-
 const mapStateToProps = (state) => ({
-  symbol: getSymbol(state),
-  balance: getBalance(state),
-  swapAmount: state.swapAssetReducer.swapInAmount,
-  mode: state.swapAssetReducer.mode,
+  symbol:selectors.selectAssetInSymbol(state),
+  balance: selectors.selectAssetInBalance(state),
+  swapAmount: selectors.selectSwapInAmount(state),
+  mode: selectors.selectSwapMode(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

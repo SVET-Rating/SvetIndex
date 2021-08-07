@@ -1,5 +1,4 @@
 import * as TYPES from '../actions/types';
-import { WETH_ADDRESS } from './reducers-constants';
 
 const initialState = {
   mode: null,
@@ -10,6 +9,8 @@ const initialState = {
   assetOut: null,
   swapInAmount: '0',
   network: null,
+  gasPrice: '0',
+  error: null,
 };
 
 export const swapAssetReducer = (state = initialState, action) => {
@@ -40,6 +41,16 @@ export const swapAssetReducer = (state = initialState, action) => {
       return {
         ...state,
         swapInAmount: action.payload.swapAmount,
+      };
+    case TYPES.SET_ERROR:
+      return {
+        ...state,
+        error: action.payload.error,
+      };
+    case TYPES.SET_GAS_PRICE:
+      return {
+        ...state,
+        gasPrice: action.payload.gasPrice,
       };
     case TYPES.CANCEL_SWAP_ASSETS:
       return {

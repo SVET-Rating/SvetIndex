@@ -1,15 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getWeb3, getContract } from 'ethvtx/lib/getters';
 import { Box, Typography } from '@material-ui/core';
-import { setSwapInAmount } from '../../ethvtx_config/actions/actions';
+import * as selectors from '../../ethvtx_config/selectors/selectors';
+// import { setSwapInAmount } from '../../ethvtx_config/actions/actions';
 import { SWAP_MODE } from '../../ethvtx_config/reducers/reducers-constants';
 import AppAssetAmount from '../AppAssetAmount/AppAssetAmount';
 import AppButtonInline from '../AppButtonInline/AppButtonInline';
 import useStyles from './styles';
 
 const SwapOutAssetBalance = ({
-  symbol, balance, swapAmount, setSwapAmount, mode,
+  symbol, balance, swapAmount, mode,
+  // setSwapAmount,
 }) => {
   const classes = useStyles();
 
@@ -58,14 +59,13 @@ const SwapOutAssetBalance = ({
 
 const mapStateToProps = (state) => ({
   symbol: 'WETH',
-  // symbol: getSymbol(state),
   balance: '1.236587458962875632',
-  swapAmount: state.swapAssetReducer.swapOutAmount,
-  mode: state.swapAssetReducer.mode,
+  swapAmount: '0.632569854',
+  mode: selectors.selectSwapMode(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setSwapAmount: (value) => dispatch(setSwapInAmount(value)),
+  // setSwapAmount: (value) => dispatch(setSwapInAmount(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SwapOutAssetBalance);

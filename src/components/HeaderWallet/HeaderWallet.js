@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Box, Typography } from '@material-ui/core';
-import { getAccount } from 'ethvtx/lib/getters';
+import { selectCoinbaseAccount, selectNetworkType } from '../../ethvtx_config/selectors/selectors';
 import AppButton from '../AppButton/AppButton';
 import AppEtherAddress from '../AppEtherAddress/AppEtherAddress';
 import useStyles from './styles';
 
-const HeaderWallet = ({ network = null, coinbase = {} }) => {
+const HeaderWallet = ({ network, coinbase = {} }) => {
   const classes = useStyles();
 
   return coinbase.address ? (
@@ -25,8 +25,8 @@ const HeaderWallet = ({ network = null, coinbase = {} }) => {
 };
 
 const mapStateToProps = (state) => ({
-  coinbase: getAccount(state, '@coinbase'),
-  network: state.swapAssetReducer.network,
+  coinbase: selectCoinbaseAccount(state),
+  network: selectNetworkType(state),
 });
 
 export default connect(mapStateToProps)(HeaderWallet);

@@ -1,15 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import indexTokenSelect from '../../ethvtx_config/actions/indexTokenSelect';
-// import startBuyIndexTokens from '../../ethvtx_config/actions/startToBuyIndexTokens';
-// import startSellToken from '../../ethvtx_config/actions/startSellIndexTokens';
-// import IndexTokens from '../indexTokenTokens/TokensInIndexTokenList';
-//import { IndexContractLoader } from '../IndexContractLoader';
-import { getContract } from 'ethvtx/lib/getters';
-// import { getContract, getContractList } from 'ethvtx/lib/getters';
-//import contracts from '../embarkArtifacts/contracts';
-import { Box, List } from '@material-ui/core';
+// import contracts from '../embarkArtifacts/contracts';
 // import tokenList from '../../assets/tokenlist.json';
+import { Box, List } from '@material-ui/core';
+import { selectAssetsList } from '../../ethvtx_config/selectors/selectors';
 import AssetItem from '../AssetItem/AssetItem';
 import useStyles from './styles';
 
@@ -113,29 +107,14 @@ const AssetsList = ({ assetsList = [] }) => {
 // };
 
 const mapStateToProps = (state) => ({
-  assetsList: getContract(state, 'IndexStorage', '@indexstorage').fn.indexList(),
+  assetsList: selectAssetsList(state),
   // indexList: indexListWithBalance(state),
   // contractsList: getContractList(state),
-  // activeToken: state.indexTokenReducer.activeToken,
   // svetTokensAmount: getContract(
   //     state, 'ERC20', '@svettoken'
   //   ).fn.balanceOf(state.contracts.web3.currentProvider.selectedAddress) / 10**18,
   // svetTokenAddress: getContract(state, 'Exchange', '@exchange').fn.getBA(),
-  // state_web3: state.vtxconfig.web3.eth,
   //svetTokenAddress: getContract(state, 'Exchange', '@exchange').fn.getBA()
 });
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     changeActiveElement: (e, indexTokenName, indexTokenBalance) => (
-//       dispatch(indexTokenSelect(e, indexTokenName, indexTokenBalance))
-//     ),
-//     startBuyToken: (svetTokensAmount, svetTokenAddress, stateWeb3) => (
-//       dispatch(startBuyIndexTokens(svetTokensAmount, svetTokenAddress, stateWeb3))
-//     ),
-//     startSellToken: (stateWeb3) => dispatch(startSellToken(stateWeb3)),
-//   };
-// };
-
-// export default connect(mapStateToProps,mapDispatchToProps)(AssetsListAssetItem);
 export default connect(mapStateToProps)(AssetsList);
