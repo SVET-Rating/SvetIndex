@@ -6,6 +6,7 @@ import {
 } from 'ethvtx/lib/getters';
 
 const SECONDS_IN_MINUTES = 60;
+const FULL_COUNT = 100;
 
 export const selectDelay = (state) => state.swapAssetReducer.delay;
 export const selectSlippage = (state) => state.swapAssetReducer.slippage;
@@ -21,8 +22,19 @@ export const selectSwapProcessError = (state) => state.swapProcessReducer.error;
 export const selectWeb3Instance = (state) => getWeb3(state);
 export const selectCurrentBlock = (state) => getBlock(state, state.blocks.current_height);
 export const selectCoinbaseAccount = (state) => getAccount(state, '@coinbase');
-export const selectAssetsList = (state) => getContract(state, 'IndexStorage', '@indexstorage').fn.indexList();
-export const selectSwapContract = (state) => getContract(state, 'Index2Swap', '@indexswap');
+
+export const selectERC20Contract = (state) => getContract(state, 'ERC20', '@svettoken');
+export const selectExpertsContract = (state) => getContract(state, 'Experts', '@experts');
+export const selectExchangeContract = (state) => getContract(state, 'Exchange', '@exchange');
+export const selectOraclePriceContract = (state) => getContract(state, 'OraclePrice', '@oracleprice');
+export const selectOracleCircAmountContract = (state) => getContract(state, 'OracleCircAmount', '@oraclecircamount');
+export const selectOracleTotSupplyContract = (state) => getContract(state, 'OracleTotSupply', '@oracletotsupply');
+export const selectIndexSwapContract = (state) => getContract(state, 'IndexSwap', '@indexswap');
+export const selectIndexFactoryContract = (state) => getContract(state, 'IndexFactory', '@indexfactory');
+export const selectLstorageContract = (state) => getContract(state, 'Lstorage', '@lstorage');
+export const selectIndexStorageContract = (state) => getContract(state, 'IndexStorage', '@indexstorage');
+
+export const selectAssetsList = (state) => selectIndexStorageContract(state).fn.indexList();
 
 export const selectAssetBalanceByAddress = (state, assetAddress) => {
   const { address } = getAccount(state, '@coinbase');
@@ -66,12 +78,57 @@ export const selectDelayInSeconds = (state) => {
   return String(delayInMinutes * SECONDS_IN_MINUTES);
 };
 
+export const selectDiscount = (state) => {
+  const slippage = selectSlippage(state);
+  return String(FULL_COUNT - slippage);
+};
+
 export const selectDataToSwap = (state) => ({
-  assetInAddress: selectAssetInAddress(state),
-  swapInAmount: selectSwapInAmountInWei(state),
+  assetAddress: selectAssetInAddress(state),
+  swapAmount: selectSwapInAmountInWei(state),
   delay: selectDelayInSeconds(state),
-  slippage: selectSlippage(state),
+  discount: selectDiscount(state),
   swapMode: selectSwapMode(state),
   coinbaseAddress: selectCoinbaseAccount(state).address,
-  swapContract: selectSwapContract(state),
+  IndexSwapContract: selectIndexSwapContract(state),
+  ERC20Contract: selectERC20Contract(state),
 });
+
+// ERC20:
+//  - isExpert
+
+// Experts:
+//  - isExpert
+
+// Exchange:
+//  - getBA
+
+// OraclePrice:
+//  - getLastPrice
+//  - getLenPrice
+//  - getallTokens
+
+// OracleCircAmount:
+//  - getLastamount
+//  - getLenamount
+//  - getallTokens
+
+// OracleTotSupply:
+//  - getLastamount
+//  - getLenamount
+//  - getallTokens
+
+// IndexSwap:
+//  - buyFee
+//  - sellFee
+
+// IndexFactory:
+//  -
+
+// Lstorage:
+//  - getBalance
+
+// IndexStorage:
+//  - getLenIndexes
+//  - indexList
+//  - indexes

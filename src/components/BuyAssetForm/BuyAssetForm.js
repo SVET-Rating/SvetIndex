@@ -24,7 +24,7 @@ const BuyAssetForm = ({
   };
 
   const handleClickBuy = () => {
-    // startSwap();
+    startSwap();
   };
 
   return (
@@ -60,10 +60,6 @@ const BuyAssetForm = ({
 }
 
 const mapStateToProps = (state) => ({
-  // ITokContract: getContract(state, 'IndexSwap', '@indexswap'),
-  // ITAmount: state.buyTokensReducer.indexTokensAmount,
-  // ITAddress: state.indexTokenReducer.activeToken.tokenAddress,
-  // svetToken: getContract(state, 'ERC20', '@svettoken'),
   swapInAmount: selectSwapInAmount(state),
   swapOutAmount: '0.65284698523654582',
   swapOutBalance: '1.236587458962875632',

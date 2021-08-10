@@ -1,33 +1,36 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
 import * as TYPES from '../actions/types';
 import * as actions from '../actions/actions';
+import { selectDataToSwap } from '../selectors/selectors';
 import { SWAP_STATE, SWAP_MODE } from '../reducers/reducers-constants';
 
 const APPROVE_ERROR_MSG = 'Error with approve process';
 const PROCESS_ERROR_MSG = 'Error with swap process';
 
 const approveSwapProcess = async ({
-  swapContract, swapInAmount, coinbaseAddress,
+  ERC20Contract, assetAddress, swapAmount, coinbaseAddress,
 }) => {
+  console.log(swapAmount)
   try {
-    return (await swapContract.fn
-      .approve(swapContract.address, swapInAmount)
+    return (await ERC20Contract._contract.methods
+      .approve(assetAddress, swapAmount)
       .send({ from: coinbaseAddress }));
   } catch (e) {
+    console.log(e)
     throw new Error(APPROVE_ERROR_MSG);
   }
 };
 
 const swapProcess = async ({
-  assetInAddress, swapInAmount, delay, slippage, swapMode, coinbaseAddress,
+  IndexSwapContract, assetAddress, swapAmount, delay, discount, swapMode, coinbaseAddress,
 }) => {
   try {
     return swapMode === SWAP_MODE.buy
-      ? (await ITokContract._contract.methods
-          .buyIndexforSvetEth(swapInAmount, assetInAddress, delay, slippage)
+      ? (await IndexSwapContract._contract.methods
+          .swapInd4Eth(assetAddress, swapAmount, delay, discount)
           .send({ from: coinbaseAddress }))
-      : (await sellIndexTokensContract._contract.methods
-          .sellIndexforSvet(swapInAmount, assetInAddress, delay, slippage)
+      : (await IndexSwapContract._contract.methods
+          .sellIndexforEth(swapAmount, assetAddress, delay, discount)
           .send({ from: coinbaseAddress }))
   } catch (e) {
     throw new Error(PROCESS_ERROR_MSG);
@@ -36,12 +39,6 @@ const swapProcess = async ({
 
 function* workerSwapAssets() {
   try {
-    // const ahash = yield call(approveIndexSellProcess, payload);
-    // yield put({ type: SELL_INDEX_APPROVED, payload: { approve_hash: ahash.transactionHash }});
-    // yield put({ type: SELL_INDEX_TRX_START });
-    // const bhash = yield call(sellIndexTokenProcess, payload);
-    // yield put({ type: SELL_INDEX_TRX_PROCESSED, payload: { buyindex_hash: bhash.transactionHash }});
-    // yield put({ type: SELL_INDEX_TRX_END });
     yield put(actions.setSwapProcessState(SWAP_STATE.start));
     const swapData = yield select(selectDataToSwap);
     yield call(approveSwapProcess, swapData);
