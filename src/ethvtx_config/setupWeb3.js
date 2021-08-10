@@ -9,7 +9,7 @@ import {
 } from 'ethvtx/lib/dispatchers';
 import {
   OraclePrice, OracleCircAmount,  OracleTotSupply,
-  Index2Swap, IndexFactory, Lstorage, IndexStorage,
+  Index2SwapEthMarket, IndexFactory, Lstorage, IndexStorage,
   ERC20, IndexToken, Experts, Exchange, SVTtst,
 } from "../embarkArtifacts/contracts";
 
@@ -51,7 +51,7 @@ export const setupWeb3 = async (store) => {
           loadContractSpec(store.dispatch, ...embark.loadSpec(OraclePrice, 'OraclePrice', true, true));
           loadContractSpec(store.dispatch, ...embark.loadSpec(OracleCircAmount, 'OracleCircAmount', true, true));
           loadContractSpec(store.dispatch, ...embark.loadSpec(OracleTotSupply, 'OracleTotSupply', true, true));
-          loadContractSpec(store.dispatch, ...embark.loadSpec(Index2Swap, 'IndexSwap', true, true));
+          loadContractSpec(store.dispatch, ...embark.loadSpec(Index2SwapEthMarket, 'IndexSwap', true, true));
           loadContractSpec(store.dispatch, ...embark.loadSpec(IndexFactory, 'IndexFactory', true, true));
           loadContractSpec(store.dispatch, ...embark.loadSpec(Lstorage, 'Lstorage', true, true));
           loadContractSpec(store.dispatch, ...embark.loadSpec(IndexStorage, 'IndexStorage', true, true));
@@ -89,7 +89,7 @@ export const setupWeb3 = async (store) => {
             permanent: true,
             balance: true,
           });
-          loadContractInstance(store.dispatch, 'IndexSwap', Index2Swap.address, {
+          loadContractInstance(store.dispatch, 'IndexSwap', Index2SwapEthMarket.address, {
             alias: '@indexswap',
             permanent: true,
             balance: true,
