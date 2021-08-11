@@ -8,6 +8,8 @@ import "./interfaces/IUniswapV2Pair.sol";
 import './libraries/FixedPoint.sol';
 
 import "./interfaces/IUniswapV2Router02.sol";
+import "./interfaces/iIndextoken.sol";
+
 
 contract OraclePrice is iOraclePrice {
 
@@ -70,7 +72,7 @@ contract OraclePrice is iOraclePrice {
         return prices[_addrToken].length;
     }
     
-    function getLastPrice (address _addrToken) external override view  returns (uint256 lastPrice) { //onlyExchange
+    function getLastPrice (address _addrToken) public override view  returns (uint256 lastPrice) { //onlyExchange
         if ( prices[_addrToken][prices[_addrToken].length-1].price > 0) {
             lastPrice = prices[_addrToken][prices[_addrToken].length-1].price;
         }
@@ -91,7 +93,19 @@ contract OraclePrice is iOraclePrice {
         
     }
 
+    function getIndexPrice (address _indexT) public returns (uint) {
+        iIndexToken index = iIndexToken(_indexT);
+        uint256 priceIndexTot;
 
+        for (uint8 i = 0; i<index.getActivesLen(); i++) {
+        {            
+            (address addrActive, uint256 share) = index.getActivesItem(i);
+            priceIndexTot += share * getLastPrice(addrActive)/10**18  ;
+   
+        }
+        return priceIndexTot;
+        }
+    }
     function getallTokens () external override view  returns (address[] memory ) {  //onlyExpert
         return tokens;
     }
