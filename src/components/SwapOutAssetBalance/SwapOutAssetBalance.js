@@ -10,9 +10,12 @@ import useStyles from './styles';
 
 const SwapOutAssetBalance = ({
   symbol, balance, swapAmount, mode,
+  token
   // setSwapAmount,
 }) => {
   const classes = useStyles();
+
+  console.log(token)
 
   const handleMaxButton = () => {
     console.log('click max button ---')
@@ -60,8 +63,11 @@ const SwapOutAssetBalance = ({
 const mapStateToProps = (state) => ({
   symbol: 'WETH',
   balance: '1.236587458962875632',
+  token: state.swapAssetReducer.assetOut,
+  // token: selectors.selectSwapOutAsset(state),
   swapAmount: '0.632569854',
-  mode: selectors.selectSwapMode(state),
+  mode: state.swapAssetReducer.mode,
+  // mode: selectors.selectSwapMode(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

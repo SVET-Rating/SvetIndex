@@ -15,6 +15,7 @@ export const selectGasPrice = (state) => state.swapAssetReducer.gasPrice;
 export const selectNetworkType = (state) => state.swapAssetReducer.network;
 export const selectSwapMode = (state) => state.swapAssetReducer.mode;
 export const selectAssetInAddress = (state) => state.swapAssetReducer.assetIn;
+export const selectAssetOutAddress = (state) => state.swapAssetReducer.assetOut;
 
 export const selectSwapProcessState = (state) => state.swapProcessReducer.processState;
 export const selectSwapProcessError = (state) => state.swapProcessReducer.error;
@@ -37,7 +38,7 @@ export const selectIndexStorageContract = (state) => getContract(state, 'IndexSt
 export const selectAssetsList = (state) => selectIndexStorageContract(state).fn.indexList();
 
 export const selectAssetBalanceByAddress = (state, assetAddress) => {
-  const { address } = getAccount(state, '@coinbase');
+  const { address } = selectCoinbaseAccount(state);
   return getContract(state, 'IndexToken', assetAddress).fn.balanceOf(address);
 };
 
@@ -48,7 +49,7 @@ export const selectAssetTokenListByAddress = (state, address) => {
 };
 
 export const selectAssetInTokensList = (state) => {
-  const address = state.swapAssetReducer.assetIn;
+  const address = selectAssetInAddress(state);
   if (address) {
     return getContract(state, 'IndexToken', address).fn.getActivesList();
   }
@@ -68,9 +69,24 @@ export const selectAssetInBalance = (state) => {
   }
 };
 
+export const selectAssetTokenShare = (state, token) => {
+  const web3Instance = selectWeb3Instance(state);
+  return web3Instance.utils.fromWei(token.amount);
+};
+
+export const selectSwapOutAsset = (state) => {
+  const address = selectAssetOutAddress(state);
+  console.log(address)
+  return address
+  // const token = getContract(state, 'ERC20', address);
+  // console.log(token)
+  // return web3Instance.utils.fromWei(token.amount);
+};
+
 export const selectSwapInAmountInWei = (state) => {
   const swapInAmount = selectSwapInAmount(state);
-  return getWeb3(state).utils.toWei(swapInAmount);
+  const web3Instance = selectWeb3Instance(state);
+  return web3Instance.utils.toWei(swapInAmount);
 };
 
 export const selectDelayInSeconds = (state) => {

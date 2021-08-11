@@ -1,9 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Box, Typography } from '@material-ui/core';
+import { selectAssetTokenShare } from '../../ethvtx_config/selectors/selectors';
 import AppTokenAddressIdenticon from '../AppTokenAddressIdenticon/AppTokenAddressIdenticon'
 import useStyles from './styles';
 
-const AssetItemTokensShare = ({ token }) => {
+const AssetItemTokensShare = ({ token, share }) => {
   const classes = useStyles();
 
   return (
@@ -19,10 +21,14 @@ const AssetItemTokensShare = ({ token }) => {
       </Typography>
 
       <Typography className={classes.text}>
-        {(token.amount / 100).toFixed(2)}%
+        {share}%
       </Typography>
     </Box>
   );
-}
+};
 
-export default AssetItemTokensShare;
+const mapStateToProps = (state, { token }) => ({
+  share: selectAssetTokenShare(state, token),
+});
+
+export default connect(mapStateToProps)(AssetItemTokensShare);
