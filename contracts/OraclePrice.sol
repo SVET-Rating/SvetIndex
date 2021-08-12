@@ -93,17 +93,14 @@ contract OraclePrice is iOraclePrice {
         
     }
 
-    function getIndexPrice (address _indexT) public returns (uint) {
+    function getIndexPrice (address _indexT) public returns (uint priceIndexTot, uint [] memory allPrices) {
         iIndexToken index = iIndexToken(_indexT);
-        uint256 priceIndexTot;
 
         for (uint8 i = 0; i<index.getActivesLen(); i++) {
-        {            
             (address addrActive, uint256 share) = index.getActivesItem(i);
-            priceIndexTot += share * getLastPrice(addrActive)/10**18  ;
-   
-        }
-        return priceIndexTot;
+            allPrices[i] = getLastPrice(addrActive);
+            priceIndexTot += share *  allPrices[i] /10**18  ;
+
         }
     }
     function getallTokens () external override view  returns (address[] memory ) {  //onlyExpert
