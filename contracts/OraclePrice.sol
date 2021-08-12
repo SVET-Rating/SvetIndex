@@ -103,6 +103,26 @@ contract OraclePrice is iOraclePrice {
 
         }
     }
+
+    function getPriceEthforAmount (address _addrToken,  uint256 _amount ) public returns (uint price) {
+        address [] memory path; 
+        path[0] = uniswapV2Router02.WETH();
+        path[1] = _addrToken;
+        uint[] memory amounts = uniswapV2Router02.getAmountsIn(_amount, path);
+        price = amounts[0]*10**18/amounts[1];
+    }
+
+    function getIndexPriceforAmount (address _indexT, uint256 _amount) public returns (uint priceIndexTot, uint [] memory allPrices) {
+        iIndexToken index = iIndexToken(_indexT);
+
+        for (uint8 i = 0; i<index.getActivesLen(); i++) {
+            (address addrActive, uint256 share) = index.getActivesItem(i);
+            allPrices[i] = getPriceEthforAmount(addrActive, _amount*share / 10**18);
+            priceIndexTot += share *  allPrices[i] /10**18  ;
+
+        }
+    }
+
     function getallTokens () external override view  returns (address[] memory ) {  //onlyExpert
         return tokens;
     }
