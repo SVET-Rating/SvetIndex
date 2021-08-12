@@ -1,9 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getContract, getWeb3 } from 'ethvtx/lib/getters';
-// import BN from 'bn.js';
 import { Box, Divider, Typography } from '@material-ui/core';
-import { selectAssetBalanceByAddress } from '../../ethvtx_config/selectors/selectors';
+import * as ss from '../../ethvtx_config/selectors/selectors';
 import AppAssetAmount from '../AppAssetAmount/AppAssetAmount';
 import useStyles from './styles';
 
@@ -13,6 +11,7 @@ const USD_SYMBOL = '$';
 
 const AssetItemBalance = ({ balance, price }) => {
   const classes = useStyles();
+  // console.log(price)
 
   return (
     <Box className={classes.root}>
@@ -32,7 +31,8 @@ const AssetItemBalance = ({ balance, price }) => {
           <Typography className={classes.text}>Index price:</Typography>
           <AppAssetAmount
             className={classes.value}
-            amount={price}
+            // amount={price}
+            amount={'111'}
             symbol={ETHER_SYMBOL}
             precision={6}
           />
@@ -84,25 +84,24 @@ const AssetItemBalance = ({ balance, price }) => {
 //   return resultIndexTokenPriceUSD / (svetTokenPrice / 10**18);
 // };
 
-const getPrice = (state) => {
-  const baseAddress = getContract(state, 'Exchange', '@exchange').fn.getBA();
-  if (!baseAddress) {
-    return undefined;
-  }
+// const getPrice = (state) => {
+//   const baseAddress = getContract(state, 'Exchange', '@exchange').fn.getBA();
+//   if (!baseAddress) {
+//     return undefined;
+//   }
 
-  // it is temporary and wrong !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  const priceInWei = getContract(state, 'OraclePrice', '@oracleprice').fn.getLastPrice(baseAddress);
-  if (!priceInWei) {
-    return undefined;
-  }
+//   // it is temporary and wrong !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//   const priceInWei = getContract(state, 'OraclePrice', '@oracleprice').fn.getLastPrice(baseAddress);
+//   if (!priceInWei) {
+//     return undefined;
+//   }
 
-  return getWeb3(state).utils.fromWei(priceInWei);
-};
+//   return getWeb3(state).utils.fromWei(priceInWei);
+// };
 
 const mapStateToProps = (state, { address }) => ({
-  balance: selectAssetBalanceByAddress(state, address),
-  price: getPrice(state),
-  // price: getPrice(state, address),
+  balance: ss.selectAssetBalanceByAddress(state, address),
+  // price: ss.selectAssetPriceByAddress(state, address),
 });
 
 export default connect(mapStateToProps)(AssetItemBalance);

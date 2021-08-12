@@ -51,3 +51,13 @@ export const setSwapProcessState = (processState) => ({
   type: TYPES.SET_SWAP_PROCESS_STATE,
   payload: { processState },
 });
+
+export const getAssetPrice = (address) => ({
+  type: TYPES.GET_ASSET_PRICE,
+  payload: { address },
+});
+
+export const setAssetPrice = ({ address, price }) => ({
+  type: TYPES.SET_ASSET_PRICE,
+  payload: { address, price },
+});

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Box, Typography } from '@material-ui/core';
-import * as selectors from '../../ethvtx_config/selectors/selectors';
+import * as s from '../../ethvtx_config/selectors/selectors';
 // import { setSwapInAmount } from '../../ethvtx_config/actions/actions';
 import { SWAP_MODE } from '../../ethvtx_config/reducers/reducers-constants';
 import AppAssetAmount from '../AppAssetAmount/AppAssetAmount';
@@ -51,23 +51,12 @@ const SwapOutAssetBalance = ({
   );
 };
 
-// const getSymbol = (state) => {
-//   const address = state.swapAssetReducer.assetOut;
-//   if (!address) {
-//     return;
-//   }
-//   console.log(state)
-//   return getContract(state, 'IndexToken', address).fn.symbol();
-// };
-
 const mapStateToProps = (state) => ({
   symbol: 'WETH',
-  balance: '1.236587458962875632',
-  token: state.swapAssetReducer.assetOut,
-  // token: selectors.selectSwapOutAsset(state),
+  balance: s.selectSwapOutAssetAmount(state),
   swapAmount: '0.632569854',
-  mode: state.swapAssetReducer.mode,
-  // mode: selectors.selectSwapMode(state),
+  mode: s.selectSwapMode(state),
+  token: s.selectSwapOutAsset(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

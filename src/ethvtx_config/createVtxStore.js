@@ -6,8 +6,7 @@ import { swapProcessReducer } from './reducers/swapProcessReducer';
 import { watchInitialData } from './sagas/initializationSaga';
 import { watchAssetsSwap } from './sagas/swapAssetsSaga';
 import { watchGasPrice } from './sagas/gasPriceSaga';
-// import { watchIndexTokenBuyProcess } from './sagas/buyIndexTokenSaga';
-// import { watchIndexTokenSellProcess } from './sagas/sellIndexTokenSaga';
+import { watchAssetPrice } from './sagas/assetPriceSaga';
 
 export const createVtxStore = () => {
   const composer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -40,6 +39,7 @@ export const createVtxStore = () => {
     watchInitialData,
     watchGasPrice,
     watchAssetsSwap,
+    watchAssetPrice,
   ]);
 
   sagaMiddleware.run(sagas);

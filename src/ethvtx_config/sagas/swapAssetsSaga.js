@@ -8,30 +8,34 @@ const APPROVE_ERROR_MSG = 'Error with approve process';
 const PROCESS_ERROR_MSG = 'Error with swap process';
 
 const approveSwapProcess = async ({
-  ERC20Contract, assetAddress, swapAmount, coinbaseAddress,
+  svetTokenContract, swapContract, assetInContract, swapMode, swapAmount, coinbaseAddress,
 }) => {
-  console.log(swapAmount)
   try {
-    return (await ERC20Contract._contract.methods
-      .approve(assetAddress, swapAmount)
-      .send({ from: coinbaseAddress }));
+    const result = (swapMode === SWAP_MODE.buy)
+      ? (await svetTokenContract._contract.methods
+        .approve(swapContract._address, swapAmount)
+        .send({ from: coinbaseAddress }))
+      : (await assetInContract._contract.methods
+        .approve(swapContract._address, swapAmount)
+        .send({ from: coinbaseAddress }));
+    return result;
   } catch (e) {
-    console.log(e)
     throw new Error(APPROVE_ERROR_MSG);
   }
 };
 
 const swapProcess = async ({
-  IndexSwapContract, assetAddress, swapAmount, delay, discount, swapMode, coinbaseAddress,
+  swapContract, assetAddress, swapAmount, delay, discount, swapMode, coinbaseAddress,
 }) => {
   try {
-    return swapMode === SWAP_MODE.buy
-      ? (await IndexSwapContract._contract.methods
-          .swapInd4Eth(assetAddress, swapAmount, delay, discount)
-          .send({ from: coinbaseAddress }))
-      : (await IndexSwapContract._contract.methods
-          .sellIndexforEth(swapAmount, assetAddress, delay, discount)
-          .send({ from: coinbaseAddress }))
+    const result = (swapMode === SWAP_MODE.buy)
+      ? (await swapContract._contract.methods
+        .buyIndexforSvetEth(swapAmount, assetAddress, delay, discount)
+        .send({ from: coinbaseAddress }))
+      : (await swapContract._contract.methods
+        .sellIndexforSvet(swapAmount, assetAddress, delay, discount)
+        .send({ from: coinbaseAddress }));
+    return result;
   } catch (e) {
     throw new Error(PROCESS_ERROR_MSG);
   }

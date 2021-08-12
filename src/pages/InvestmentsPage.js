@@ -12,7 +12,7 @@ import AssetItemTokensBlock from '../components/AssetItemTokensBlock/AssetItemTo
 import { css } from "@emotion/react";
 import DotLoader from "react-spinners/DotLoader";
 import {
-  selectERC20Contract,
+  selectSvetTokenContract,
   selectExpertsContract,
   selectExchangeContract,
   selectOraclePriceContract,
@@ -119,7 +119,7 @@ const mapStatToProps = (state) => ({
   // start_approve: state.buyTokensReducer.start_aprove,
   // start_approve_sell: state.sellIndexTokenReducer.start_aprove_sell,
   // buyindex_end: state.buyTokensReducer.buyindex_end,
-  contract1: selectERC20Contract(state),
+  contract1: selectSvetTokenContract(state),
   contract2: selectExpertsContract(state),
   contract3: selectExchangeContract(state),
   contract4: selectOraclePriceContract(state),

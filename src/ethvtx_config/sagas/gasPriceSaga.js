@@ -6,8 +6,12 @@ import { selectWeb3Instance } from '../selectors/selectors';
 const ERROR_MSG = 'Network error in determining the gas price';
 
 const getGasPrice = async (web3Instance) => {
-  const wei = await web3Instance.eth.getGasPrice();
-  return web3Instance.utils.fromWei(wei, 'gwei');
+  try {
+    const wei = await web3Instance.eth.getGasPrice();
+    return web3Instance.utils.fromWei(wei, 'gwei');
+  } catch (e) {
+    throw new Error(ERROR_MSG);
+  }
 };
 
 function* workerGetGasPrice() {
