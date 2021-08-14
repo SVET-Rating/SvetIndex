@@ -1,26 +1,20 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
-import * as TYPES from '../actions/types';
-import * as actions from '../actions/actions';
-import { selectDataToSwap } from '../selectors/selectors';
+import * as t from '../actions/types';
+import * as a from '../actions/actions';
+import * as s from '../selectors/selectors';
 import { SWAP_STATE, SWAP_MODE } from '../reducers/reducers-constants';
 
-const APPROVE_ERROR_MSG = 'Error with approve process';
 const PROCESS_ERROR_MSG = 'Error with swap process';
 
-const approveSwapProcess = async ({
-  svetTokenContract, swapContract, assetInContract, swapMode, swapAmount, coinbaseAddress,
+const swapProcessApprove = async ({
+  swapContract, assetInContract, swapAmount, coinbaseAddress,
 }) => {
   try {
-    const result = (swapMode === SWAP_MODE.buy)
-      ? (await svetTokenContract._contract.methods
-        .approve(swapContract._address, swapAmount)
-        .send({ from: coinbaseAddress }))
-      : (await assetInContract._contract.methods
-        .approve(swapContract._address, swapAmount)
-        .send({ from: coinbaseAddress }));
-    return result;
+    return (await assetInContract._contract.methods
+      .approve(swapContract._address, swapAmount)
+      .send({ from: coinbaseAddress }));
   } catch (e) {
-    throw new Error(APPROVE_ERROR_MSG);
+    throw new Error(PROCESS_ERROR_MSG);
   }
 };
 
@@ -31,10 +25,11 @@ const swapProcess = async ({
     const result = (swapMode === SWAP_MODE.buy)
       ? (await swapContract._contract.methods
         .buyIndexforSvetEth(swapAmount, assetAddress, delay, discount)
-        .send({ from: coinbaseAddress }))
+        .send({ from: coinbaseAddress, value: '1000000000000000000' }))
       : (await swapContract._contract.methods
-        .sellIndexforSvet(swapAmount, assetAddress, delay, discount)
+        .sellIndexforEth(swapAmount, assetAddress, delay, discount)
         .send({ from: coinbaseAddress }));
+
     return result;
   } catch (e) {
     throw new Error(PROCESS_ERROR_MSG);
@@ -42,19 +37,20 @@ const swapProcess = async ({
 };
 
 function* workerSwapAssets() {
+  yield put(a.setSwapProcessState(SWAP_STATE.start));
   try {
-    yield put(actions.setSwapProcessState(SWAP_STATE.start));
-    const swapData = yield select(selectDataToSwap);
-    yield call(approveSwapProcess, swapData);
-    yield put(actions.setSwapProcessState(SWAP_STATE.approve));
+    const swapData = yield select(s.selectDataToSwap);
+    if (swapData.swapMode === SWAP_MODE.sell) {
+      yield call(swapProcessApprove, swapData);
+    }
     yield call(swapProcess, swapData);
   } catch (e) {
-    yield put(actions.setError(e.message));
+    yield put(a.setError(e.message));
   } finally {
-    yield put(actions.setSwapProcessState(SWAP_STATE.end));
+    yield put(a.setSwapProcessState(SWAP_STATE.end));
   }
 }
 
 export function* watchAssetsSwap() {
-  yield takeEvery(TYPES.SET_START_SWAP, workerSwapAssets);
+  yield takeEvery(t.SET_START_SWAP, workerSwapAssets);
 }

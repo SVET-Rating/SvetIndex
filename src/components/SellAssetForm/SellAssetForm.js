@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Box } from '@material-ui/core';
-import { selectSwapInAmount } from '../../ethvtx_config/selectors/selectors';
-import { cancelSwap, setStartSwap } from '../../ethvtx_config/actions/actions';
+import * as s from '../../ethvtx_config/selectors/selectors';
+import * as a from '../../ethvtx_config/actions/actions';
 import SlippageTolerance from '../SlippageTolerance/SlippageTolerance';
 import TransactionDelay from '../TransactionDelay/TransactionDelay';
 import SwapInAssetBalance from '../SwapInAssetBalance/SwapInAssetBalance';
@@ -19,12 +19,12 @@ const SellAssetForm = ({
 }) => {
   const classes = useStyles();
 
-  const handleClickCancel = (e) => {
+  const handleClickCancel = () => {
     cancelSwap();
   };
 
   const handleClickSell = () => {
-    // startSwap();
+    startSwap();
   };
 
   return (
@@ -60,14 +60,14 @@ const SellAssetForm = ({
 }
 
 const mapStateToProps = (state) => ({
-  swapInAmount: selectSwapInAmount(state),
+  swapInAmount: s.selectSwapInAmount(state),
   swapOutAmount: '0.632569845236',
   swapOutBalance: '1.236587458962875632',
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  cancelSwap: () => dispatch(cancelSwap()),
-  startSwap: () => dispatch(setStartSwap()),
+  cancelSwap: () => dispatch(a.cancelSwap()),
+  startSwap: () => dispatch(a.setStartSwap()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SellAssetForm);
