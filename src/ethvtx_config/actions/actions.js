@@ -34,6 +34,10 @@ export const setError = (error) => ({
   payload: { error },
 });
 
+export const getGasPrice = () => ({
+  type: TYPES.GET_GAS_PRICE,
+});
+
 export const setGasPrice = (gasPrice) => ({
   type: TYPES.SET_GAS_PRICE,
   payload: { gasPrice },
@@ -52,12 +56,6 @@ export const setSwapProcessState = (processState) => ({
   payload: { processState },
 });
 
-export const getAssetPrice = (address) => ({
-  type: TYPES.GET_ASSET_PRICE,
-  payload: { address },
-});
-
-export const setAssetPrice = ({ address, price }) => ({
-  type: TYPES.SET_ASSET_PRICE,
-  payload: { address, price },
+export const resetSwapProcessState = () => ({
+  type: TYPES.RESET_SWAP_PROCESS_STATE,
 });

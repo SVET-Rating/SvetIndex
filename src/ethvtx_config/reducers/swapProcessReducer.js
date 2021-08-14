@@ -17,6 +17,12 @@ export const swapProcessReducer = (state = initialState, action) => {
         ...state,
         processState: action.payload.processState,
       };
+    case TYPES.RESET_SWAP_PROCESS_STATE:
+      return {
+        ...state,
+        processState: null,
+        error: null,
+      };
     default:
       return state;
   }

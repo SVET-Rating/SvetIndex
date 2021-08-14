@@ -9,7 +9,6 @@ const initialState = {
   swapInAmount: '0',
   network: null,
   gasPrice: '0',
-  prices: {},
 };
 
 export const swapAssetReducer = (state = initialState, action) => {
@@ -45,11 +44,6 @@ export const swapAssetReducer = (state = initialState, action) => {
       return {
         ...state,
         gasPrice: action.payload.gasPrice,
-      };
-    case TYPES.SET_ASSET_PRICE:
-      return {
-        ...state,
-        prices: { ...state.prices, [action.payload.address]: action.payload.price },
       };
     case TYPES.CANCEL_SWAP_ASSETS:
       return {

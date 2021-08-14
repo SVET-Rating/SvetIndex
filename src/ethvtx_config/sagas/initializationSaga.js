@@ -1,7 +1,7 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
-import * as TYPES from '../actions/types';
-import { setNetwork, setError } from '../actions/actions';
-import { selectWeb3Instance } from '../selectors/selectors';
+import * as t from '../actions/types';
+import * as a from '../actions/actions';
+import * as s from '../selectors/selectors';
 
 const ERROR_MSG = 'Network error in determining the network type';
 
@@ -11,14 +11,14 @@ const getNetworkType = async (web3Instance) => {
 
 function* workerSetInitialData() {
   try {
-    const web3Instance = yield select(selectWeb3Instance);
+    const web3Instance = yield select(s.selectWeb3Instance);
     const network = yield call(getNetworkType, web3Instance);
-    yield put(setNetwork(network));
+    yield put(a.setNetwork(network));
   } catch (e) {
-    yield put(setError(ERROR_MSG));
+    yield put(a.setError(ERROR_MSG));
   }
 }
 
 export function* watchInitialData() {
-  yield takeEvery(TYPES.SET_INITIAL_DATA, workerSetInitialData);
+  yield takeEvery(t.SET_INITIAL_DATA, workerSetInitialData);
 }

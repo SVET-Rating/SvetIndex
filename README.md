@@ -11,11 +11,14 @@ Run to deploy system on your localnet:
 ```
 node utils/resetcontracts.js cloudflare all && node utils/resettokens.js cloudflare all
 
-ganache-cli -m "clutch captain shoe salt awake harvest setup primary inmate ugly among become" -i 999 -u 0xa0df350d2637096571F7A701CBc1C5fdE30dF76A --db ../ganache_local --allowUnlimitedContractSize -g 10 -e 1000 -b 1
+ganache-cli -m "clutch captain shoe salt awake harvest setup primary inmate ugly among become" -i 999 -u 0xa0df350d2637096571F7A701CBc1C5fdE30dF76A --db ../ganache_local --allowUnlimitedContractSize -g 18000000000 -e 1000 -b 1
 
 truffle migrate --reset --compile-all --network cloudflare
+truffle test --network cloudflare
 
 embark run --nodashboard cloudflare
 ```
 
 Open http://localhost:8000
+
+truffle debug --network cloudflare 0x2a144e4a8d89ea66e3647a87b2affcd2f202f06b7fd4ac76b36658c91438f9b4

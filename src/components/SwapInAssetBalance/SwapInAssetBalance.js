@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Box, Typography } from '@material-ui/core';
-import * as selectors from '../../ethvtx_config/selectors/selectors';
-import { setSwapInAmount } from '../../ethvtx_config/actions/actions';
+import * as s from '../../ethvtx_config/selectors/selectors';
+import * as a from '../../ethvtx_config/actions/actions';
 import { SWAP_MODE } from '../../ethvtx_config/reducers/reducers-constants';
 import { isNumber } from '../../helpers';
 import AppInput from '../AppInput/AppInput';
@@ -65,14 +65,14 @@ const SwapInAssetBalance = ({
 };
 
 const mapStateToProps = (state) => ({
-  symbol:selectors.selectAssetInSymbol(state),
-  balance: selectors.selectAssetInBalance(state),
-  swapAmount: selectors.selectSwapInAmount(state),
-  mode: selectors.selectSwapMode(state),
+  symbol: s.selectAssetInSymbol(state),
+  balance: s.selectAssetInBalance(state),
+  swapAmount: s.selectSwapInAmount(state),
+  mode: s.selectSwapMode(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setSwapAmount: (value) => dispatch(setSwapInAmount(value)),
+  setSwapAmount: (value) => dispatch(a.setSwapInAmount(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SwapInAssetBalance);

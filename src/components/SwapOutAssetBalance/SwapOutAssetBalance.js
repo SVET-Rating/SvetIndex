@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Box, Typography } from '@material-ui/core';
 import * as s from '../../ethvtx_config/selectors/selectors';
-// import { setSwapInAmount } from '../../ethvtx_config/actions/actions';
+import * as a from '../../ethvtx_config/actions/actions';
 import { SWAP_MODE } from '../../ethvtx_config/reducers/reducers-constants';
 import AppAssetAmount from '../AppAssetAmount/AppAssetAmount';
 import AppButtonInline from '../AppButtonInline/AppButtonInline';
@@ -15,7 +15,7 @@ const SwapOutAssetBalance = ({
 }) => {
   const classes = useStyles();
 
-  console.log(token)
+  console.log('token ---', token)
 
   const handleMaxButton = () => {
     console.log('click max button ---')
@@ -56,11 +56,11 @@ const mapStateToProps = (state) => ({
   balance: s.selectSwapOutAssetAmount(state),
   swapAmount: '0.632569854',
   mode: s.selectSwapMode(state),
-  token: s.selectSwapOutAsset(state),
+  // token: s.selectSwapOutAsset(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  // setSwapAmount: (value) => dispatch(setSwapInAmount(value)),
+  // setSwapAmount: (value) => dispatch(a.setSwapInAmount(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SwapOutAssetBalance);

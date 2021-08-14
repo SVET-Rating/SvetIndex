@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Box, Typography } from '@material-ui/core';
-import { setGasPrice } from '../../ethvtx_config/actions/actions';
-import { selectGasPrice, selectCurrentBlock } from '../../ethvtx_config/selectors/selectors';
+import * as a from '../../ethvtx_config/actions/actions';
+import * as s from '../../ethvtx_config/selectors/selectors';
 import useStyles from './styles';
 
-const TransactionDetails = ({ gasAmount, gasPrice, currentBlock, setCurrentGasPrice }) => {
-  const classes = useStyles();
-
+const TransactionDetails = ({ gasAmount, gasPrice, currentBlock, getGasPrice }) => {
   useEffect(() => {
-    setCurrentGasPrice();
+    getGasPrice();
   }, [currentBlock]);
+
+  const classes = useStyles();
 
   return (
     <Box className={classes.root}>
@@ -59,12 +59,12 @@ const TransactionDetails = ({ gasAmount, gasPrice, currentBlock, setCurrentGasPr
 const mapStateToProps = (state) => ({
   // gasAmount: getIndexGasAmount(state),
   gasAmount: '50000',
-  gasPrice: selectGasPrice(state),
-  currentBlock: selectCurrentBlock(state),
+  gasPrice: s.selectGasPrice(state),
+  currentBlock: s.selectCurrentBlock(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setCurrentGasPrice: () => dispatch(setGasPrice()),
+  getGasPrice: () => dispatch(a.getGasPrice()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TransactionDetails);
