@@ -11,7 +11,7 @@ const USD_SYMBOL = '$';
 
 const AssetItemBalance = ({ balance, price }) => {
   const classes = useStyles();
-  // console.log(price)
+  console.log(price)
 
   return (
     <Box className={classes.root}>
@@ -52,7 +52,7 @@ const AssetItemBalance = ({ balance, price }) => {
 
 const mapStateToProps = (state, { address }) => ({
   balance: s.selectAssetBalanceByAddress(state, address),
-  // price: s.selectAssetPriceByAddress(state, address),
+  price: s.selectAssetPriceByAddress(state, address),
 });
 
 export default connect(mapStateToProps)(AssetItemBalance);

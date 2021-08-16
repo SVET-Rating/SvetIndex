@@ -82,9 +82,16 @@ export const selectAssetInBalance = (state) => {
 
 export const selectAssetPriceByAddress = (state, address) => {
   const web3Instance = selectWeb3Instance(state);
-  const amount = web3Instance.utils.toWei('1');
-  if (amount && address) {
-    return selectOraclePriceContract(state).fn.getIndexPriceforAmount(address, amount);
+  const amount = web3Instance.utils.toWei('1', "ether");
+  const tokens = selectOraclePriceContract(state).fn.getallTokens()
+  if (amount && address &&tokens ) {
+    //debugger
+
+    const returns = selectOraclePriceContract(state).fn.getIndexPrice(address);
+    if (returns) {
+    debugger
+    }
+    return returns;
   }
 };
 
