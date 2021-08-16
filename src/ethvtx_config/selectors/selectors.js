@@ -81,10 +81,13 @@ export const selectAssetInBalance = (state) => {
 };
 
 export const selectAssetPriceByAddress = (state, address) => {
-  const web3Instance = selectWeb3Instance(state);
-  const amount = web3Instance.utils.toWei('1');
-  if (amount && address) {
-    return selectOraclePriceContract(state).fn.getIndexPriceforAmount(address, amount);
+  // const web3Instance = selectWeb3Instance(state);
+  // const amount = web3Instance.utils.toWei('1');
+  // if (amount && address) {
+  //   return selectOraclePriceContract(state).fn.getIndexPriceforAmount(address, amount);
+  // const tokens = selectOraclePriceContract(state).fn.getallTokens()
+  if (address) {
+    return selectOraclePriceContract(state).fn.getIndexPrice(address);
   }
 };
 

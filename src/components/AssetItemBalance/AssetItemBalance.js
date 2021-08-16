@@ -11,7 +11,7 @@ const USD_SYMBOL = '$';
 
 const AssetItemBalance = ({ balance, price }) => {
   const classes = useStyles();
-  // console.log(price)
+  console.log(price)
 
   return (
     <Box className={classes.root}>

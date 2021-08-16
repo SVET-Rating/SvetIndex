@@ -80,45 +80,62 @@ contract OraclePrice is iOraclePrice {
 
            IUniswapV2Pair pair = IUniswapV2Pair(IUniswapV2Factory (uniswapV2Router02.factory()).getPair(uniswapV2Router02.WETH(), _addrToken));
             (uint112 reserve0, uint112 reserve1,) = pair.getReserves();
+            require (reserve0 > 0, "reserve0 = 0");
+            require (reserve1 > 0, "reserve1 = 0");
 
             if (pair.token0() == _addrToken && reserve1 > 0 ) {
                 lastPrice = reserve0 *10**18/ reserve1; //uint(FixedPoint.fraction(reserve0, reserve1)._x) ;
             } else   if (pair.token1() == _addrToken && reserve0 > 0) {
                 lastPrice = reserve1 *10**18 / reserve0; // uint(FixedPoint.fraction(reserve1, reserve0)._x);
             } else {
-                revert ("No price found on swap");
+                lastPrice = 0; //no price;
             }
 
         }
 
     }
 
-    function getIndexPrice (address _indexT) public returns (uint priceIndexTot, uint [] memory allPrices) {
+    function getIndexPrice (address _indexT) public view override returns (uint256 priceIndexTot)
+    {
         iIndexToken index = iIndexToken(_indexT);
+        //uint256[] memory allPrices;
 
         for (uint8 i = 0; i<index.getActivesLen(); i++) {
             (address addrActive, uint256 share) = index.getActivesItem(i);
-            allPrices[i] = getLastPrice(addrActive);
-            priceIndexTot += share *  allPrices[i] /10**18  ;
+         //   allPrices[i] = getLastPrice(addrActive);
+            priceIndexTot = priceIndexTot + share *  getLastPrice(addrActive) /10**18  ;
 
         }
     }
 
-    function getPriceEthforAmount (address _addrToken,  uint256 _amount ) public view returns (uint price) {
+    function getAllActsIndPrices (address _indexT) public view override returns (uint256[] memory)
+    {
+        iIndexToken index = iIndexToken(_indexT);
+        uint256[] memory allPrices;
+        for (uint8 i = 0; i<index.getActivesLen(); i++) {
+            (address addrActive, uint256 share) = index.getActivesItem(i);
+            allPrices[i] = getLastPrice(addrActive) * share / 10**18;
+
+        }
+        return allPrices;
+    }
+
+    function getPriceEthforAmount (address _addrToken,  uint256 _amount ) public view override returns (uint ) {
         address [] memory path;
         path[0] = uniswapV2Router02.WETH();
         path[1] = _addrToken;
         uint[] memory amounts = uniswapV2Router02.getAmountsIn(_amount, path);
-        price = amounts[0]*10**18/amounts[1];
+        if (amounts[1] == 0) return 2**256-1; //no amounts for token
+        return  amounts[0]*10**18/amounts[1];
     }
 
-    function getIndexPriceforAmount (address _indexT, uint256 _amount) public view returns (uint priceIndexTot, uint [] memory allPrices) {
+    function getIndexPriceforAmount (address _indexT, uint256 _amount) public view override returns (uint256 priceIndexTot) {
         iIndexToken index = iIndexToken(_indexT);
-
+        uint256[] memory allPrices;
         for (uint8 i = 0; i<index.getActivesLen(); i++) {
             (address addrActive, uint256 share) = index.getActivesItem(i);
-            allPrices[i] = getPriceEthforAmount(addrActive, _amount*share / 10**18);
-            priceIndexTot += share *  allPrices[i] /10**18  ;
+           allPrices[i] = getPriceEthforAmount(addrActive, _amount*share / 10**18);
+            priceIndexTot += share *   allPrices[i] /10**18  ;
 
         }
     }
@@ -132,6 +149,30 @@ contract OraclePrice is iOraclePrice {
     }
 
 
+/* function getIndexPrice (address _indexT) public view override returns (Prices memory indPr) //uint256[] memory allPrices)
+    {
+        iIndexToken index = iIndexToken(_indexT);
+
+        for (uint8 i = 0; i<index.getActivesLen(); i++) {
+            (address addrActive, uint256 share) = index.getActivesItem(i);
+            indPr.tokenprices[i] = getLastPrice(addrActive);
+            indPr.indexprice += share *  indPr.tokenprices[i] /10**18  ;
+
+        }
+    }
+
+
+
+    function getIndexPriceforAmount (address _indexT, uint256 _amount) public view override returns (Prices memory indPr) {
+        iIndexToken index = iIndexToken(_indexT);
+        uint256[] memory allPrices;
+        for (uint8 i = 0; i<index.getActivesLen(); i++) {
+            (address addrActive, uint256 share) = index.getActivesItem(i);
+           indPr.tokenprices[i] = getPriceEthforAmount(addrActive, _amount*share / 10**18);
+            indPr.indexprice += share *   indPr.tokenprices[i] /10**18  ;
+
+        }
+    } */
 
 
 }

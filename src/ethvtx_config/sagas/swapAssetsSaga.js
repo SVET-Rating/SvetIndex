@@ -25,7 +25,7 @@ const swapProcess = async ({
     const result = (swapMode === SWAP_MODE.buy)
       ? (await swapContract._contract.methods
         .buyIndexforSvetEth(swapAmount, assetAddress, delay, discount)
-        .send({ from: coinbaseAddress, value: '10000000000000000000' }))
+        .send({ from: coinbaseAddress, value: '1000000000000000000' }))
       : (await swapContract._contract.methods
         .sellIndexforEth(swapAmount, assetAddress, delay, discount)
         .send({ from: coinbaseAddress }));
