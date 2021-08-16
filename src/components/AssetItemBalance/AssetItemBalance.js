@@ -5,13 +5,12 @@ import * as s from '../../ethvtx_config/selectors/selectors';
 import AppAssetAmount from '../AppAssetAmount/AppAssetAmount';
 import useStyles from './styles';
 
+// const WETHER_SYMBOL = 'WETH';
 const ETHER_SYMBOL = 'ETH';
-const WETHER_SYMBOL = 'WETH';
 const USD_SYMBOL = '$';
 
-const AssetItemBalance = ({ balance, price }) => {
+const AssetItemBalance = ({ balance, price, stablePrice }) => {
   const classes = useStyles();
-  console.log(price)
 
   return (
     <Box className={classes.root}>
@@ -31,8 +30,7 @@ const AssetItemBalance = ({ balance, price }) => {
           <Typography className={classes.text}>Index price:</Typography>
           <AppAssetAmount
             className={classes.value}
-            // amount={price}
-            amount={'111'}
+            amount={price || '0'}
             symbol={ETHER_SYMBOL}
             precision={6}
           />
@@ -40,8 +38,9 @@ const AssetItemBalance = ({ balance, price }) => {
         <Box className={classes.price}>
           <AppAssetAmount
             className={classes.value}
-            amount={'126.35'}
+            amount={stablePrice || '0'}
             symbol={USD_SYMBOL}
+            precision={2}
             withParentheses
           />
         </Box>
@@ -52,7 +51,8 @@ const AssetItemBalance = ({ balance, price }) => {
 
 const mapStateToProps = (state, { address }) => ({
   balance: s.selectAssetBalanceByAddress(state, address),
-  // price: s.selectAssetPriceByAddress(state, address),
+  price: s.selectAssetPriceByAddress(state, address),
+  stablePrice: s.selectAssetStablePriceByAddress(state, address),
 });
 
 export default connect(mapStateToProps)(AssetItemBalance);

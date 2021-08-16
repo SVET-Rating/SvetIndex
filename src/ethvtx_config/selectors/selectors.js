@@ -4,6 +4,7 @@ import {
   getBlock,
   getWeb3,
 } from 'ethvtx/lib/getters';
+import * as c from '../reducers/reducers-constants';
 
 const SECONDS_IN_MINUTES = 60;
 const FULL_COUNT = 100;
@@ -81,13 +82,24 @@ export const selectAssetInBalance = (state) => {
 };
 
 export const selectAssetPriceByAddress = (state, address) => {
-  // const web3Instance = selectWeb3Instance(state);
+  const web3Instance = selectWeb3Instance(state);
   // const amount = web3Instance.utils.toWei('1');
   // if (amount && address) {
   //   return selectOraclePriceContract(state).fn.getIndexPriceforAmount(address, amount);
-  // const tokens = selectOraclePriceContract(state).fn.getallTokens()
-  if (address) {
-    return selectOraclePriceContract(state).fn.getIndexPrice(address);
+  const inWei = selectOraclePriceContract(state).fn.getIndexPrice(address);
+  if (inWei) {
+    return web3Instance.utils.fromWei(inWei);
+  }
+};
+
+export const selectAssetStablePriceByAddress = (state, address) => {
+  const web3Instance = selectWeb3Instance(state);
+  const stableInWei = selectOraclePriceContract(state).fn.getLastPrice(c.STABLE_ADDRESS);
+  const assetInWei = selectOraclePriceContract(state).fn.getIndexPrice(address);
+  if (stableInWei && assetInWei) {
+    return String(
+      web3Instance.utils.fromWei(assetInWei) / web3Instance.utils.fromWei(stableInWei)
+    );
   }
 };
 
