@@ -81,12 +81,13 @@ export const selectAssetInBalance = (state) => {
   }
 };
 
+export const selectAssetPriceInWeiByAddress = (state, address) => {
+  return selectOraclePriceContract(state).fn.getIndexPrice(address);
+};
+
 export const selectAssetPriceByAddress = (state, address) => {
   const web3Instance = selectWeb3Instance(state);
-  // const amount = web3Instance.utils.toWei('1');
-  // if (amount && address) {
-  //   return selectOraclePriceContract(state).fn.getIndexPriceforAmount(address, amount);
-  const inWei = selectOraclePriceContract(state).fn.getIndexPrice(address);
+  const inWei = selectAssetPriceInWeiByAddress(state, address);
   if (inWei) {
     return web3Instance.utils.fromWei(inWei);
   }
@@ -95,8 +96,8 @@ export const selectAssetPriceByAddress = (state, address) => {
 export const selectAssetStablePriceByAddress = (state, address) => {
   const web3Instance = selectWeb3Instance(state);
   const stableInWei = selectOraclePriceContract(state).fn.getLastPrice(c.STABLE_ADDRESS);
-  const assetInWei = selectOraclePriceContract(state).fn.getIndexPrice(address);
-  if (stableInWei && assetInWei) {
+  const assetInWei = selectAssetPriceInWeiByAddress(state, address);
+  if (Number(stableInWei) && assetInWei) {
     return String(
       web3Instance.utils.fromWei(assetInWei) / web3Instance.utils.fromWei(stableInWei)
     );
@@ -116,7 +117,7 @@ export const selectSwapOutAsset = (state) => {
   }
 };
 
-export const selectSwapOutAssetAmount = (state) => {
+export const selectSwapOutAssetBalance = (state) => {
   const inWei = selectCoinbaseAccount(state).balance.toString();
   const web3Instance = selectWeb3Instance(state);
   if (inWei) {
@@ -124,11 +125,31 @@ export const selectSwapOutAssetAmount = (state) => {
   }
 };
 
-export const selectSwapInAmountInWei = (state) => {
-  const swapInAmount = selectSwapInAmount(state);
+export const selectSwapOutAssetAmount = (state) => {
   const web3Instance = selectWeb3Instance(state);
-  return web3Instance.utils.toWei(swapInAmount);
+  const assetInAmount = selectSwapInAmount(state);
+  const assetInAddress = selectAssetInAddress(state);
+  const priceAssetInInWei = selectAssetPriceInWeiByAddress(state, assetInAddress);
+  if (assetInAmount && priceAssetInInWei) {
+    const { BN } = web3Instance.utils;
+    const inWei = new BN(priceAssetInInWei).mul(new BN(assetInAmount)).toString();
+    return web3Instance.utils.fromWei(inWei);
+  }
 };
+
+export const selectOneAmountAssetPrice = (state) => {
+  const assetInAmount = selectSwapInAmount(state);
+  const assetOutAmount = selectSwapOutAssetAmount(state);
+  if (Number(assetInAmount) && assetOutAmount) {
+    return String(assetOutAmount / assetInAmount);
+  }
+};
+
+// export const selectSwapInAmountInWei = (state) => {
+//   const swapInAmount = selectSwapInAmount(state);
+//   const web3Instance = selectWeb3Instance(state);
+//   return web3Instance.utils.toWei(swapInAmount);
+// };
 
 export const selectDelayInSeconds = (state) => {
   const delayInMinutes = selectDelay(state);
@@ -140,9 +161,17 @@ export const selectDiscount = (state) => {
   return String(FULL_COUNT - slippage);
 };
 
+export const selectInWei = (state, amountInEth) => {
+  const web3Instance = selectWeb3Instance(state);
+  if (amountInEth) {
+    return web3Instance.utils.toWei(amountInEth);
+  }
+};
+
 export const selectDataToSwap = (state) => ({
   assetAddress: selectAssetInAddress(state),
-  swapAmount: selectSwapInAmountInWei(state),
+  swapInAmount: selectInWei(state, selectSwapInAmount(state)),
+  swapOutAmount: selectInWei(state, selectSwapOutAssetAmount(state)),
   delay: selectDelayInSeconds(state),
   discount: selectDiscount(state),
   swapMode: selectSwapMode(state),

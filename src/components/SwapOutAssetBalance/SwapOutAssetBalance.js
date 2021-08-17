@@ -15,7 +15,7 @@ const SwapOutAssetBalance = ({
 }) => {
   const classes = useStyles();
 
-  console.log('token ---', token)
+  // console.log('token ---', token)
 
   const handleMaxButton = () => {
     console.log('click max button ---')
@@ -30,19 +30,20 @@ const SwapOutAssetBalance = ({
         <Typography className={classes.label}>
           {symbol}
         </Typography>
-        <AppAssetAmount amount={swapAmount || '0.0'} />
+        <AppAssetAmount amount={swapAmount || '0'} />
       </Box>
 
       <Box className={classes.balance}>
         <Typography>Balance:</Typography>
         <AppAssetAmount
-          amount={balance || '0.0'}
+          amount={balance || '0'}
           precision={8}
         />
         {mode === SWAP_MODE.buy && <AppButtonInline
           className={classes.maxButton}
           onClick={handleMaxButton}
-          disabled={!Number(balance)}
+          // disabled={!Number(balance)}
+          disabled
         >
           (max)
         </AppButtonInline>}
@@ -53,8 +54,8 @@ const SwapOutAssetBalance = ({
 
 const mapStateToProps = (state) => ({
   symbol: 'WETH',
-  balance: s.selectSwapOutAssetAmount(state),
-  swapAmount: '0.632569854',
+  balance: s.selectSwapOutAssetBalance(state),
+  swapAmount: s.selectSwapOutAssetAmount(state),
   mode: s.selectSwapMode(state),
   // token: s.selectSwapOutAsset(state),
 });

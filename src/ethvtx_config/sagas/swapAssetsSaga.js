@@ -7,11 +7,11 @@ import { SWAP_STATE, SWAP_MODE } from '../reducers/reducers-constants';
 const PROCESS_ERROR_MSG = 'Error with swap process';
 
 const swapProcessApprove = async ({
-  swapContract, assetInContract, swapAmount, coinbaseAddress,
+  swapContract, assetInContract, swapInAmount, coinbaseAddress,
 }) => {
   try {
     return (await assetInContract._contract.methods
-      .approve(swapContract._address, swapAmount)
+      .approve(swapContract._address, swapInAmount)
       .send({ from: coinbaseAddress }));
   } catch (e) {
     throw new Error(PROCESS_ERROR_MSG);
@@ -19,15 +19,15 @@ const swapProcessApprove = async ({
 };
 
 const swapProcess = async ({
-  swapContract, assetAddress, swapAmount, delay, discount, swapMode, coinbaseAddress,
+  swapContract, assetAddress, swapInAmount, swapOutAmount, delay, discount, swapMode, coinbaseAddress,
 }) => {
   try {
     const result = (swapMode === SWAP_MODE.buy)
       ? (await swapContract._contract.methods
-        .buyIndexforSvetEth(swapAmount, assetAddress, delay, discount)
-        .send({ from: coinbaseAddress, value: '1000000000000000000' }))
+        .buyIndexforSvetEth(swapInAmount, assetAddress, delay, discount)
+        .send({ from: coinbaseAddress, value: swapOutAmount }))
       : (await swapContract._contract.methods
-        .sellIndexforEth(swapAmount, assetAddress, delay, discount)
+        .sellIndexforEth(swapInAmount, assetAddress, delay, discount)
         .send({ from: coinbaseAddress }));
 
     return result;

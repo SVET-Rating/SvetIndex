@@ -1,30 +1,36 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Box, Typography } from '@material-ui/core';
-import { selectAssetInSymbol } from '../../ethvtx_config/selectors/selectors';
+import { Box } from '@material-ui/core';
+import * as s from '../../ethvtx_config/selectors/selectors';
+import AppAssetAmount from '../AppAssetAmount/AppAssetAmount';
 import useStyles from './styles';
 
 const ASSET_IN_AMOUNT = '1';
+const EQUAL_SYMBOL = '=';
 
 const AssetsCostCompare = ({ assetInSymbol, assetOutSymbol, assetOutAmount }) => {
   const classes = useStyles();
 
   return (
     <Box className={classes.root}>
-      <Typography className={classes.costCompare}>
-        {ASSET_IN_AMOUNT}&nbsp;
-        <span className={classes.symbol}>{assetInSymbol}</span>
-        &nbsp;=&nbsp;{assetOutAmount}&nbsp;
-        <span className={classes.symbol}>{assetOutSymbol}</span>
-      </Typography>
+      <AppAssetAmount className={classes.compareAmount}
+        amount={ASSET_IN_AMOUNT}
+        symbol={assetInSymbol}
+      />
+      {EQUAL_SYMBOL}
+      <AppAssetAmount className={classes.compareAmount}
+        amount={assetOutAmount || '0'}
+        symbol={assetOutSymbol}
+        precision={8}
+      />
     </Box>
   );
 };
 
 const mapStateToProps = (state) => ({
-  assetInSymbol: selectAssetInSymbol(state),
   assetOutSymbol: 'ETH',
-  assetOutAmount: '0.01256',
+  assetInSymbol: s.selectAssetInSymbol(state),
+  assetOutAmount: s.selectOneAmountAssetPrice(state),
 });
 
 export default connect(mapStateToProps)(AssetsCostCompare);
