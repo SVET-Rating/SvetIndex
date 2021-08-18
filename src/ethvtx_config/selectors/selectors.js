@@ -104,11 +104,7 @@ export const selectAssetStablePriceByAddress = (state, address) => {
   }
 };
 
-export const selectAssetTokenShare = (state, token) => {
-  const web3Instance = selectWeb3Instance(state);
-  return web3Instance.utils.fromWei(token.amount);
-};
-
+// not working yet
 export const selectSwapOutAsset = (state) => {
   const address = selectAssetOutAddress(state);
   if (address) {
@@ -145,11 +141,20 @@ export const selectOneAmountAssetPrice = (state) => {
   }
 };
 
-// export const selectSwapInAmountInWei = (state) => {
-//   const swapInAmount = selectSwapInAmount(state);
-//   const web3Instance = selectWeb3Instance(state);
-//   return web3Instance.utils.toWei(swapInAmount);
-// };
+export const selectTokenShare = (state, assetAddress, tokenAddress, tokenAmountInWei) => {
+  const web3Instance = selectWeb3Instance(state);
+  const assetPriceInWei = selectAssetPriceInWeiByAddress(state, assetAddress);
+  const tokenPriceInWei = selectOraclePriceContract(state).fn.getLastPrice(tokenAddress);
+  const tokenAmount = web3Instance.utils.fromWei(tokenAmountInWei);
+  if (assetPriceInWei && tokenPriceInWei) {
+    return (tokenAmount * tokenPriceInWei) / assetPriceInWei;
+  }
+};
+
+export const selectAssetInTokenShare = (state, tokenAddress, tokenAmountInWei) => {
+  const assetAddress = selectAssetInAddress(state);
+  return selectTokenShare(state, assetAddress, tokenAddress, tokenAmountInWei);
+};
 
 export const selectDelayInSeconds = (state) => {
   const delayInMinutes = selectDelay(state);
@@ -161,17 +166,24 @@ export const selectDiscount = (state) => {
   return String(FULL_COUNT - slippage);
 };
 
-export const selectInWei = (state, amountInEth) => {
+export const selectToWei = (state, amountInEth) => {
   const web3Instance = selectWeb3Instance(state);
   if (amountInEth) {
     return web3Instance.utils.toWei(amountInEth);
   }
 };
 
+export const selectFromWei = (state, amountInWei, base = 'ether') => {
+  const web3Instance = selectWeb3Instance(state);
+  if (amountInWei) {
+    return web3Instance.utils.fromWei(amountInWei, base);
+  }
+};
+
 export const selectDataToSwap = (state) => ({
   assetAddress: selectAssetInAddress(state),
-  swapInAmount: selectInWei(state, selectSwapInAmount(state)),
-  swapOutAmount: selectInWei(state, selectSwapOutAssetAmount(state)),
+  swapInAmount: selectToWei(state, selectSwapInAmount(state)),
+  swapOutAmount: selectToWei(state, selectSwapOutAssetAmount(state)),
   delay: selectDelayInSeconds(state),
   discount: selectDiscount(state),
   swapMode: selectSwapMode(state),

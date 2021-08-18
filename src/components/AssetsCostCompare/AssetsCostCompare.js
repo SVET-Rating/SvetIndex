@@ -21,7 +21,7 @@ const AssetsCostCompare = ({ assetInSymbol, assetOutSymbol, assetOutAmount }) =>
       <AppAssetAmount className={classes.compareAmount}
         amount={assetOutAmount || '0'}
         symbol={assetOutSymbol}
-        precision={8}
+        precision={assetOutAmount ? 8 : 0}
       />
     </Box>
   );

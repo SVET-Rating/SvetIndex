@@ -11,6 +11,9 @@ const useStyles = makeStyles((theme) => ({
   },
   address: {
     minWidth: theme.spacing(25),
+  },
+  value: {
+    paddingLeft: 'unset',
   }
 }));
 
