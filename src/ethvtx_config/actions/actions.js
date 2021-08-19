@@ -55,3 +55,7 @@ export const setSwapProcessState = (processState) => ({
   type: TYPES.SET_SWAP_PROCESS_STATE,
   payload: { processState },
 });
+
+export const resetSwapProcessState = () => ({
+  type: TYPES.RESET_SWAP_PROCESS_STATE,
+});

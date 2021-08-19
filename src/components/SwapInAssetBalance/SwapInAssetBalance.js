@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Box, Typography } from '@material-ui/core';
 import * as s from '../../ethvtx_config/selectors/selectors';
@@ -8,6 +8,7 @@ import { isNumber } from '../../helpers';
 import AppInput from '../AppInput/AppInput';
 import AppAssetAmount from '../AppAssetAmount/AppAssetAmount';
 import AppButtonInline from '../AppButtonInline/AppButtonInline';
+import useDebounce from '../../hooks/useDebounce';
 import useStyles from './styles';
 
 const ID = 'swapInAsset';
@@ -15,18 +16,25 @@ const ID = 'swapInAsset';
 const SwapInAssetBalance = ({
   symbol, balance, swapAmount, setSwapAmount, mode,
 }) => {
+  const [amount, setAmount] = useDebounce('', 200);
+
+  useEffect(() => {
+    if (amount) {
+      setSwapAmount(amount);
+    }
+  }, [amount]);
+
   const classes = useStyles();
 
   const handleChange = (e) => {
     const { value } = e.target;
-    if (!isNumber(value) || value < 0) {
-      return;
+    if (isNumber(value) || value >= 0) {
+      setAmount(value);
     }
-    setSwapAmount(value);
   };
 
   const handleAllButton = () => {
-    if (balance) {
+    if (balance && balance !== swapAmount) {
       setSwapAmount(balance);
     }
   };
@@ -55,7 +63,7 @@ const SwapInAssetBalance = ({
         {mode === SWAP_MODE.sell && <AppButtonInline
           className={classes.maxButton}
           onClick={handleAllButton}
-          disabled={!Number(balance)}
+          disabled={!Number(balance) || balance === swapAmount}
         >
           (all)
         </AppButtonInline>}

@@ -9,7 +9,7 @@ import {
   TableHead,
   TableRow,
 } from '@material-ui/core';
-import { selectAssetInTokensList } from '../../ethvtx_config/selectors/selectors';
+import * as s from '../../ethvtx_config/selectors/selectors';
 import AssetItemTokensTableShare from '../AssetItemTokensTableShare/AssetItemTokensTableShare';
 import useStyles from './styles';
 
@@ -40,7 +40,7 @@ const AssetItemTokensTable = ({ tokensList }) => {
 };
 
 const mapStateToProps = (state) => ({
-  tokensList: selectAssetInTokensList(state),
+  tokensList: s.selectAssetInTokensList(state),
 });
 
 export default connect(mapStateToProps)(AssetItemTokensTable);

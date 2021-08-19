@@ -5,7 +5,7 @@ import { selectSwapMode, selectSwapProcessState } from '../ethvtx_config/selecto
 import AssetsBlock from '../components/AssetsBlock/AssetsBlock';
 import BuyAssetForm from '../components/BuyAssetForm/BuyAssetForm';
 import SellAssetForm from '../components/SellAssetForm/SellAssetForm';
-// import TransactionFailModal from '../components/TransactionFailModal';
+import SwapResultModalMessage from '../components/SwapResultModalMessage/SwapResultModalMessage';
 import AssetItemTokensBlock from '../components/AssetItemTokensBlock/AssetItemTokensBlock';
 // import BuyIndexTokensSteps from '../components/buyIndexSteps';
 // import SellIndexTokensSteps from '../components/selllIndexSteps';
@@ -104,7 +104,7 @@ const InvestmentsPage = ({
 
   return (
     <div>
-      {/* <TransactionFailModal /> */}
+      <SwapResultModalMessage />
       {buyIndexSteps}
       {processStateComponent}
     </div>

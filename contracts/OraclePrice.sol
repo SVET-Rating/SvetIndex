@@ -84,13 +84,12 @@ contract OraclePrice is iOraclePrice {
             require (reserve1 > 0, "reserve1 = 0");
 
             if (pair.token0() == _addrToken && reserve1 > 0 ) {
-                
                 lastPrice = reserve0 *10**18/ reserve1; //uint(FixedPoint.fraction(reserve0, reserve1)._x) ;
             } else   if (pair.token1() == _addrToken && reserve0 > 0) {
                 lastPrice = reserve1 *10**18 / reserve0; // uint(FixedPoint.fraction(reserve1, reserve0)._x);
             } else {
                 lastPrice = 0; //no price;
-                   }
+            }
 
         }
 
@@ -159,7 +158,8 @@ contract OraclePrice is iOraclePrice {
         delete prices[_addrToken];
     }
 
-/* function getIndexPrice (address _indexT) public view override returns (Prices memory indPr) //uint256[] memory allPrices) 
+
+/* function getIndexPrice (address _indexT) public view override returns (Prices memory indPr) //uint256[] memory allPrices)
     {
         iIndexToken index = iIndexToken(_indexT);
 
@@ -171,7 +171,7 @@ contract OraclePrice is iOraclePrice {
         }
     }
 
-   
+
 
     function getIndexPriceforAmount (address _indexT, uint256 _amount) public view override returns (Prices memory indPr) {
         iIndexToken index = iIndexToken(_indexT);

@@ -1,16 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Box, List, ListItem, Typography } from '@material-ui/core';
-import { selectAssetTokenListByAddress } from '../../ethvtx_config/selectors/selectors';
+import * as s from '../../ethvtx_config/selectors/selectors';
 import AssetItemTokensShare from '../AssetItemTokensShare/AssetItemTokensShare';
 import useStyles from './styles';
 
-const AssetItemTokens = ({ tokens = [] }) => {
+const AssetItemTokens = ({ address, tokens = [] }) => {
   const classes = useStyles();
 
   const items = tokens.map((token) => (
     <ListItem key={token.addrActive}>
-      <AssetItemTokensShare token={token} />
+      <AssetItemTokensShare assetAddress={address} token={token} />
     </ListItem>
   ));
 
@@ -28,7 +28,7 @@ const AssetItemTokens = ({ tokens = [] }) => {
 }
 
 const mapStateToProps = (state, { address }) => ({
-  tokens: selectAssetTokenListByAddress(state, address),
+  tokens: s.selectAssetTokenListByAddress(state, address),
 });
 
 export default connect(mapStateToProps)(AssetItemTokens);

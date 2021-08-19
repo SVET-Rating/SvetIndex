@@ -4,10 +4,10 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     justifyContent: 'center',
+    alignItems: 'center',
   },
-  costCompare: {},
-  symbol: {
-    opacity: 0.5,
+  compareAmount: {
+    padding: theme.spacing(0, 1),
   },
 }));
 
