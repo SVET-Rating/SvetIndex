@@ -10,11 +10,12 @@ import useStyles from './styles';
 
 const SwapOutAssetBalance = ({
   symbol, balance, swapAmount, mode,
-  token
+  token, info
   // setSwapAmount,
 }) => {
   const classes = useStyles();
 
+  console.log('info ---', info)
   // console.log('token ---', token)
 
   const handleMaxButton = () => {
@@ -57,6 +58,7 @@ const mapStateToProps = (state) => ({
   balance: s.selectSwapOutAssetBalance(state),
   swapAmount: s.selectSwapOutAssetAmount(state),
   mode: s.selectSwapMode(state),
+  info: s.selectOraclePriceContract(state).fn.getAllActsIndPrices(s.selectAssetInAddress(state)),
   // token: s.selectSwapOutAsset(state),
 });
 
