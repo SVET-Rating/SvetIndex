@@ -17,7 +17,7 @@ interface iOraclePrice {
     function getallTokens () external view  returns (address[] memory ) ;
 
     function getIndexPrice (address _indexT) external view  returns (uint256 priceIndexTot); //uint256[] memory allPrices) ;
-    function getAllActsIndPrices(address _indexT) external view returns (uint256[] memory);
+    function getAllActsIndPrices(address _indexT) external view returns (uint256[10] memory);
 
     function getPriceEthforAmount (address _addrToken,  uint256 _amount ) external view returns (uint price);
 

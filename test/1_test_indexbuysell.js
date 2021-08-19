@@ -101,16 +101,19 @@ contract ("Index2SwapEthMarket", async accounts => {
       } */
 
        
-    })/* , 
-    it ("3. Withdraw ether", async () => { 
-      const index2swap = await Index2Swap.at(contracts[netKey]["deploy"] ["Index2SwapEthMarket"]["address"]);
+    }) , 
+    it ("test price", async () => { 
+      const oraclePriceAaddr = contracts[netKey]["deploy"]["OraclePrice"]["address"]
+      const oraclePrice = await OraclePrice.at(oraclePriceAaddr);
       const indexstorage = await IndexStorage.at(contracts[netKey]["deploy"] ["IndexStorage"]["address"]);
+
       const indexList = await indexstorage.indexList();
       const index_token1 = await IndexToken.at(indexList[0].addr);
-
+      await oraclePrice.test(index_token1.address, "1000000000000000");
+      
       
      // await index2swap.withdrEth4Svet(web3.utils.toWei('0.004','ether'), {from:accounts[0]});
        
-    })  */
+    })  
   })
  
