@@ -1,3 +1,5 @@
+require('dotenv').config();
+const PRIVATE_KEY = process.env.REACT_APP_WALLET_PRIVATE_KEY;
 /**
  * Use this file to configure your truffle project. It's seeded with some
  * common settings for different networks and features like migrations,
@@ -61,16 +63,18 @@ module.exports = {
     // Useful for deploying to a public network.
     // NB: It's important to wrap the provider as a function.
     ropsten: {
-     provider: () => new HDWalletProvider({
-        privateKeys: ["622306b68d3ad3e9c73a2f847f50f97caf1eb611ac2047624959663837c4e9bd"], 
-        providerOrUrl: `https://ropsten.infura.io/v3/3362483b5eab409ea69e99f99aefd67a`}),
-     // https://ropsten.infura.io/v3/753a98a2eb6c4d64918829f47d069440", // Endpoint of an node to connect to. Can be on localhost or on the internet
-     network_id: 3,       // Ropsten's id
-     gas: 5500000,        // Ropsten has a lower block limit than mainnet
-     //confirmations: 1,    // # of confs to wait between deployments. (default: 0)
-     timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
-     skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
-     },
+      provider: () => new HDWalletProvider({
+        privateKeys: [`${PRIVATE_KEY}`],
+        providerOrUrl: `https://ropsten.infura.io/v3/3362483b5eab409ea69e99f99aefd67a`,
+        // https://ropsten.infura.io/v3/3362483b5eab409ea69e99f99aefd67a", // Endpoint of an node to connect to. Can be on localhost or on the internet
+        // https://ropsten.infura.io/v3/753a98a2eb6c4d64918829f47d069440", // Endpoint of an node to connect to. Can be on localhost or on the internet
+      }),
+      network_id: 3,       // Ropsten's id
+      gas: 5500000,        // Ropsten has a lower block limit than mainnet
+      //confirmations: 1,    // # of confs to wait between deployments. (default: 0)
+      timeoutBlocks: 5000,  // # of blocks before a deployment times out  (minimum/default: 50)
+      skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
+    },
     // Useful for private networks
     // private: {
     // provider: () => new HDWalletProvider(mnemonic, `https://network.io`),

@@ -17,6 +17,7 @@
     "@uniswap/v2-periphery": "^1.1.0-beta.0",
     "chart.js": "^2.9.4",
     "customize-cra": "^1.0.0",
+    "dotenv": "^10.0.0",
     "embark": "^6.0.0",
     "embark-basic-pipeline": "^6.0.0",
     "embark-geth": "^6.0.0",
