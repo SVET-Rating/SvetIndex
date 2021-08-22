@@ -10,11 +10,12 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     alignItems: 'stretch',
     borderRadius: `${2 * theme.shape.borderRadius}px`,
-    backgroundColor: '#26272F',
+    backgroundColor: theme.palette.background.main,
     color: theme.palette.common.white,
     '& > * + *': {
       marginTop: theme.spacing(1.5),
     },
+    boxShadow: theme.shadows[3],
   },
   swapBlock: {
     padding: theme.spacing(2, 2),

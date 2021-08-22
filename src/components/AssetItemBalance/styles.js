@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   value: {
     marginLeft: 'auto',
-    color: theme.palette.primary.main,
+    color: theme.palette.text.important,
   },
   divider: {
     backgroundColor: theme.palette.common.white,

@@ -1,3 +1,6 @@
+import tokens from '../../../tokens.json';
+import contracts from '../../../embark4Contracts.json';
+
 export const SWAP_MODE = {
   sell: 'sell',
   buy: 'buy',
@@ -14,5 +17,5 @@ export const SETTINGS = {
   maxDelay: 10,
 };
 
-export const WETH_ADDRESS = '0x5FDb4763D8e940466dd389fF8706D0740b0Ba773';
-export const STABLE_ADDRESS = '0x670Be51EFF1D341eFA65F6d4d2E297503847b8e5';
+export const WETH_ADDRESS = contracts.cloudflare.deploy.WETH.address;
+export const STABLE_ADDRESS = tokens.cloudflare.DAI.address;

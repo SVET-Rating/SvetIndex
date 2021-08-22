@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Box } from '@material-ui/core';
-import { selectSwapInAmount } from '../../ethvtx_config/selectors/selectors';
-import { cancelSwap, setStartSwap } from '../../ethvtx_config/actions/actions';
+import * as s from '../../ethvtx_config/selectors/selectors';
+import * as a from '../../ethvtx_config/actions/actions';
 import SlippageTolerance from '../SlippageTolerance/SlippageTolerance';
 import TransactionDelay from '../TransactionDelay/TransactionDelay';
 import SwapInAssetBalance from '../SwapInAssetBalance/SwapInAssetBalance';
@@ -34,10 +34,13 @@ const BuyAssetForm = ({
 
       <Box className={classes.swapBlock}>
         <SwapInAssetBalance />
+
         <Box className={classes.swapIcon}>
           <ChangeSwapAssetsIcon />
         </Box>
+
         <SwapOutAssetBalance />
+
         <AssetsCostCompare />
       </Box>
 
@@ -52,7 +55,7 @@ const BuyAssetForm = ({
         <AppButton
           className={classes.button}
           onClick={handleClickBuy}
-          disabled={!Number(swapInAmount) || swapOutAmount > swapOutBalance}
+          disabled={!Number(swapInAmount) || Number(swapOutAmount) > Number(swapOutBalance)}
         >Buy</AppButton>
       </Box>
     </Box>
@@ -60,14 +63,14 @@ const BuyAssetForm = ({
 }
 
 const mapStateToProps = (state) => ({
-  swapInAmount: selectSwapInAmount(state),
-  swapOutAmount: '0.65284698523654582',
-  swapOutBalance: '1.236587458962875632',
+  swapInAmount: s.selectSwapInAmount(state),
+  swapOutAmount: s.selectSwapOutAssetAmount(state),
+  swapOutBalance: s.selectSwapOutAssetBalance(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  cancelSwap: () => dispatch(cancelSwap()),
-  startSwap: () => dispatch(setStartSwap()),
+  cancelSwap: () => dispatch(a.cancelSwap()),
+  startSwap: () => dispatch(a.setStartSwap()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BuyAssetForm);

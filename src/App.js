@@ -1,31 +1,35 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router } from "react-router-dom";
 import { connect } from 'react-redux';
-import { setInitialData } from './ethvtx_config/actions/actions';
+import { Box } from '@material-ui/core';
+import * as a from './ethvtx_config/actions/actions';
 import TheHeader from './components/TheHeader/TheHeader';
 import TheFooter from './components/TheFooter/TheFooter';
 import TheRouter from './components/TheRouter/TheRouter';
+import useStyles from './styles';
 
 const App = ({ initialize }) => {
   useEffect(() => {
     initialize();
   }, []);
 
+  const classes = useStyles();
+
   return (
-    <div className="app" >
+    <Box className={classes.root} >
       <TheHeader />
-      <main className="app-main">
+      <Box component='main' className={classes.main}>
         <Router>
           <TheRouter />
         </Router>
-      </main>
+      </Box>
       <TheFooter />
-    </div>
+    </Box>
   );
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  initialize: () => dispatch(setInitialData()),
+  initialize: () => dispatch(a.setInitialData()),
 });
 
 export default connect(null, mapDispatchToProps)(App);

@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'flex-end',
     flexWrap: 'nowrap',
+    fontSize: 'inherit',
     lineHeight: 1,
   },
   amount: {

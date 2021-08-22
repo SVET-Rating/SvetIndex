@@ -4,8 +4,11 @@ const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(1, 3),
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: '#26272F',
+    backgroundColor: theme.palette.background.main,
     color: theme.palette.common.white,
+  },
+  link: {
+    color: theme.palette.text.corporate,
   },
 }));
 

@@ -1,23 +1,24 @@
 import React from 'react';
-import { Typography, Link } from '@material-ui/core';
+import { Box, Typography, Link } from '@material-ui/core';
 import useStyles from './styles';
 
 const TheFooter = () => {
   const classes = useStyles();
 
   return (
-    <footer className={classes.root}>
+    <Box component='footer' className={classes.root}>
       <Typography>
         SVET Supply-Weighted Index (SVET-SWI)
       </Typography>
 
       <Link
+        className={classes.link}
         href="http://svetrating.com/svet_index_supply/"
         target="_blank"
       >
         READ MORE about SVET-SWI
       </Link>
-    </footer>
+    </Box>
   );
 };
 

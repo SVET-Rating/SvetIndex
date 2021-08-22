@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
   },
   compareAmount: {
     padding: theme.spacing(0, 1),
+    color: theme.palette.text.important,
   },
 }));
 

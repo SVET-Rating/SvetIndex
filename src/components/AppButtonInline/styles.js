@@ -6,11 +6,11 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 0.5),
     display: 'flex',
     alignItems: 'center',
-    color: theme.palette.secondary.main,
+    color: theme.palette.text.corporate,
     textTransform: 'none',
     '&:disabled': {
       opacity: 0.25,
-      color: theme.palette.secondary.main,
+      color: theme.palette.text.corporate,
     },
   },
 }));

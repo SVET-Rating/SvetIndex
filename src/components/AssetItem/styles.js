@@ -10,10 +10,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     alignItems: 'stretch',
     borderRadius: `${2 * theme.shape.borderRadius}px`,
-    backgroundColor: '#26272F',
+    backgroundColor: theme.palette.background.main,
     '& > * + *': {
       marginTop: theme.spacing(2),
     },
+    boxShadow: theme.shadows[3],
   },
   actionSection: {
     display: 'flex',

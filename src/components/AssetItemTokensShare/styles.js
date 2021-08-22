@@ -4,7 +4,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: theme.spacing(8),
     padding: theme.spacing(0.5, 0.25),
-    background: 'linear-gradient(#383C47, #2C2F38)',
+    background: theme.palette.background.linearGradient,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',

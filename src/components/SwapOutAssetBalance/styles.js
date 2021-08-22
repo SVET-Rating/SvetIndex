@@ -1,10 +1,10 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, fade } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(1),
     borderRadius: theme.shape.borderRadius,
-    border: `1px solid ${theme.palette.primary.main}`,
+    border: `1px solid ${fade(theme.palette.text.corporate, 0.5)}`,
     '& > * + *': {
       marginTop: theme.spacing(1),
     },
@@ -25,9 +25,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    '& > span': {
-      color: theme.palette.primary.main,
-    },
+  },
+  balanceAmount: {
+    color: theme.palette.text.important,
   },
   maxButton: {},
 }));

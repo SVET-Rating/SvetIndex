@@ -10,12 +10,12 @@ import useStyles from './styles';
 
 const SwapOutAssetBalance = ({
   symbol, balance, swapAmount, mode,
-  token, info
+  // token, info
   // setSwapAmount,
 }) => {
   const classes = useStyles();
 
-  console.log('info ---', info)
+  // console.log('info ---', info)
   // console.log('token ---', token)
 
   const handleMaxButton = () => {
@@ -31,23 +31,28 @@ const SwapOutAssetBalance = ({
         <Typography className={classes.label}>
           {symbol}
         </Typography>
-        <AppAssetAmount amount={swapAmount || '0'} />
+        <AppAssetAmount
+          amount={swapAmount || '0'}
+          precision={Number(swapAmount) && 12}
+        />
       </Box>
 
       <Box className={classes.balance}>
         <Typography>Balance:</Typography>
         <AppAssetAmount
+          className={classes.balanceAmount}
           amount={balance || '0'}
-          precision={8}
+          precision={Number(balance) && 8}
         />
-        {mode === SWAP_MODE.buy && <AppButtonInline
-          className={classes.maxButton}
-          onClick={handleMaxButton}
-          // disabled={!Number(balance)}
-          disabled
-        >
-          (max)
-        </AppButtonInline>}
+        {mode === SWAP_MODE.buy && (
+          <AppButtonInline
+            className={classes.maxButton}
+            onClick={handleMaxButton}
+            disabled={!Number(balance)}
+          >
+            (max)
+          </AppButtonInline>)
+        }
       </Box>
     </Box>
   );
@@ -58,7 +63,7 @@ const mapStateToProps = (state) => ({
   balance: s.selectSwapOutAssetBalance(state),
   swapAmount: s.selectSwapOutAssetAmount(state),
   mode: s.selectSwapMode(state),
-  info: s.selectOraclePriceContract(state).fn.getAllActsIndPrices(s.selectAssetInAddress(state)),
+  // info: s.selectOraclePriceContract(state).fn.getAllActsIndPrices(s.selectAssetInAddress(state)),
   // token: s.selectSwapOutAsset(state),
 });
 

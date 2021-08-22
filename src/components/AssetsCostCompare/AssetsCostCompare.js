@@ -13,12 +13,14 @@ const AssetsCostCompare = ({ assetInSymbol, assetOutSymbol, assetOutAmount }) =>
 
   return (
     <Box className={classes.root}>
-      <AppAssetAmount className={classes.compareAmount}
+      <AppAssetAmount
+        className={classes.compareAmount}
         amount={ASSET_IN_AMOUNT}
         symbol={assetInSymbol}
       />
       {EQUAL_SYMBOL}
-      <AppAssetAmount className={classes.compareAmount}
+      <AppAssetAmount
+        className={classes.compareAmount}
         amount={assetOutAmount || '0'}
         symbol={assetOutSymbol}
         precision={assetOutAmount ? 8 : 0}

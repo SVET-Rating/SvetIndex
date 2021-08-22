@@ -59,14 +59,20 @@ const SwapInAssetBalance = ({
 
       <Box className={classes.balance}>
         <Typography>Balance:</Typography>
-        <AppAssetAmount amount={balance || '0.0'} precision={8} />
-        {mode === SWAP_MODE.sell && <AppButtonInline
-          className={classes.maxButton}
-          onClick={handleAllButton}
-          disabled={!Number(balance) || balance === swapAmount}
-        >
-          (all)
-        </AppButtonInline>}
+        <AppAssetAmount
+          className={classes.balanceAmount}
+          amount={balance || '0.0'}
+          precision={8}
+        />
+        {mode === SWAP_MODE.sell && (
+          <AppButtonInline
+            className={classes.maxButton}
+            onClick={handleAllButton}
+            disabled={!Number(balance) || balance === swapAmount}
+          >
+            (all)
+          </AppButtonInline>)
+        }
       </Box>
     </Box>
   );

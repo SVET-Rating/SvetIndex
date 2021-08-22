@@ -15,7 +15,7 @@ import useStyles from './styles';
 
 const SellAssetForm = ({
   cancelSwap, startSwap,
-  swapInAmount, swapOutAmount, swapOutBalance,
+  swapInAmount, swapInBalance,
 }) => {
   const classes = useStyles();
 
@@ -34,10 +34,13 @@ const SellAssetForm = ({
 
       <Box className={classes.swapBlock}>
         <SwapInAssetBalance />
+
         <Box className={classes.swapIcon}>
           <ChangeSwapAssetsIcon />
         </Box>
+
         <SwapOutAssetBalance />
+
         <AssetsCostCompare />
       </Box>
 
@@ -52,7 +55,7 @@ const SellAssetForm = ({
         <AppButton
           className={classes.button}
           onClick={handleClickSell}
-          disabled={!Number(swapInAmount) || swapOutAmount > swapOutBalance}
+          disabled={!Number(swapInAmount) || Number(swapInAmount) > Number(swapInBalance)}
         >Sell</AppButton>
       </Box>
     </Box>
@@ -61,8 +64,7 @@ const SellAssetForm = ({
 
 const mapStateToProps = (state) => ({
   swapInAmount: s.selectSwapInAmount(state),
-  swapOutAmount: '0.632569845236',
-  swapOutBalance: '1.236587458962875632',
+  swapInBalance: s.selectAssetInBalance(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

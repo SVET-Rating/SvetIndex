@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
     '& > * + *': {
       marginTop: theme.spacing(1.5),
     },
+    boxShadow: theme.shadows[3],
   },
   swapBlock: {
     padding: theme.spacing(2, 2),

@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.common.white,
   },
   link: {
-    color: theme.palette.primary.main,
+    color: theme.palette.text.corporate,
   },
 }));
 
