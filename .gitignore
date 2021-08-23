@@ -28,3 +28,4 @@ yarn-error.log*
 .embark
 embarkArtifacts
 src/contracts
+.env
