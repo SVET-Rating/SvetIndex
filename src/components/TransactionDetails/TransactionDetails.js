@@ -3,63 +3,78 @@ import { connect } from 'react-redux';
 import { Box, Typography } from '@material-ui/core';
 import * as a from '../../ethvtx_config/actions/actions';
 import * as s from '../../ethvtx_config/selectors/selectors';
+import AppAssetAmount from '../AppAssetAmount/AppAssetAmount';
 import useStyles from './styles';
 
-const TransactionDetails = ({ gasAmount, gasPrice, currentBlock, getGasPrice }) => {
+const ETHER_SYMBOL = 'ETH';
+const GWEI_SYMBOL = 'Gwei';
+const USD_SYMBOL = '$';
+
+const TransactionDetails = ({
+  gasAmount, gasPrice, stablePrice, currentBlock, getGasPrice,
+}) => {
   useEffect(() => {
     getGasPrice();
   }, [currentBlock]);
 
   const classes = useStyles();
 
+  const transactionCost = Number(gasAmount * gasPrice / 10 ** 9).toFixed(12);
+  const transactionCostInStable = Number(stablePrice) && String(transactionCost / stablePrice);
+
   return (
     <Box className={classes.root}>
-      <Box className={classes.block}>
+      <Box className={classes.record}>
+        <Typography className={classes.text}>Current block:</Typography>
+        <Typography className={classes.value}>
+          {currentBlock.number}
+        </Typography>
+      </Box>
+
+      <Box className={classes.record}>
         <Typography className={classes.text}>Gas amount:</Typography>
         <Typography className={classes.value}>
           {gasAmount}
         </Typography>
       </Box>
 
-      <Box className={classes.block}>
+      <Box className={classes.record}>
         <Typography className={classes.text}>Gas price:</Typography>
-        <Typography className={classes.value}>
-          {gasPrice}&nbsp;Gwei
-        </Typography>
+        <AppAssetAmount
+          className={classes.value}
+          amount={gasPrice}
+          symbol={GWEI_SYMBOL}
+        />
       </Box>
 
-      <Box className={classes.block}>
-        <Typography className={classes.text}>Transaction cost:</Typography>
-        <Typography className={classes.value}>
-          {Number(gasAmount * gasPrice / 10 ** 9).toFixed(10)}&nbsp;ETH
-        </Typography>
-      </Box>
-
-      <Box className={classes.block}>
-        <Typography className={classes.text}>Current block:</Typography>
-        <Typography className={classes.value}>
-          {currentBlock.number}
-        </Typography>
+      <Box>
+        <Box display='flex' justifyContent='space-between'>
+          <Typography className={classes.text}>Transaction cost:</Typography>
+          <AppAssetAmount
+            className={classes.value}
+            amount={transactionCost}
+            precision={Number(transactionCost) && 6}
+            symbol={ETHER_SYMBOL}
+          />
+        </Box>
+        <Box display='flex' justifyContent='flex-end'>
+          <AppAssetAmount
+            className={classes.value}
+            amount={transactionCostInStable || '0'}
+            symbol={USD_SYMBOL}
+            precision={2}
+            withParentheses
+          />
+        </Box>
       </Box>
     </Box>
   );
 }
 
-// const getIndexGasAmount = (state) => {
-//   const actList = getContract(state, 'IndexToken', state.indexTokenReducer.activeToken.tokenAddress)
-//     .fn.getActivesList();
-
-//   if (actList) {
-//     return Math.round((actList.length * 161387 + 44160 + 52010) * 1.02);
-//   }
-
-//   return 0;
-// };
-
 const mapStateToProps = (state) => ({
-  // gasAmount: getIndexGasAmount(state),
-  gasAmount: '50000',
-  gasPrice: s.selectGasPrice(state),
+  gasAmount: s.selectSwapAssetGasAmount(state) || '0',
+  gasPrice: s.selectGasPrice(state) || '0',
+  stablePrice: s.selectFromWei(state, s.selectStableTokenPrice(state)) || '0',
   currentBlock: s.selectCurrentBlock(state),
 });
 

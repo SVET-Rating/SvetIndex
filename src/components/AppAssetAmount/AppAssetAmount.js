@@ -1,5 +1,4 @@
 import React from 'react';
-// import BN from 'bn.js';
 import { Box, Typography } from '@material-ui/core';
 import { toPrecision } from '../../helpers';
 import useStyles from './styles';
@@ -24,7 +23,7 @@ const AppAssetAmount = ({
     <Box className={`${classes.root} ${className}`}>
       {withParentheses && <Typography>{LEFT_PARENTHESIS}</Typography>}
       <Typography className={classes.amount}>{normalizedAmount}</Typography>
-      {symbol && <Typography className={classes.symbol}>{symbol}</Typography>}
+      {symbol && <Typography className={classes.symbol}>&nbsp;{symbol}</Typography>}
       {withParentheses && <Typography>{RIGHT_PARENTHESIS}</Typography>}
     </Box>
   ) : null;

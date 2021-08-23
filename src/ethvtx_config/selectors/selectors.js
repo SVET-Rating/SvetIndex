@@ -68,6 +68,13 @@ export const selectAssetInTokensList = (state) => {
   }
 };
 
+export const selectSwapAssetGasAmount = (state) => {
+  const tokens = selectAssetInTokensList(state);
+  if (tokens) {
+    return Math.round((tokens.length * 161387 + 44160 + 52010) * 1.02);
+  }
+};
+
 export const selectAssetInSymbol = (state) => {
   const address = selectAssetInAddress(state);
   if (address) {
@@ -103,6 +110,10 @@ export const selectAssetStablePriceByAddress = (state, address) => {
       web3Instance.utils.fromWei(assetInWei) / web3Instance.utils.fromWei(stableInWei)
     );
   }
+};
+
+export const selectStableTokenPrice = (state) => {
+  return selectOraclePriceContract(state).fn.getLastPrice(c.STABLE_ADDRESS);
 };
 
 // not working yet

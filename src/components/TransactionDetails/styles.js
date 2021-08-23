@@ -2,7 +2,7 @@ import { makeStyles, fade } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
-  block: {
+  record: {
     display: 'flex',
     justifyContent: 'space-between',
     margin: theme.spacing(0.5, 0),
