@@ -6,8 +6,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     height: '100%',
     padding: theme.spacing(0.5),
-    backgroundColor: '#383C47',
-    // backgroundColor: fade(theme.palette.background.main, 0.75),
+    backgroundColor: fade(theme.palette.background.main, 0.85),
   },
   main: {
     flexGrow: 1,

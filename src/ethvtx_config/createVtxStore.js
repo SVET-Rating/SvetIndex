@@ -4,6 +4,7 @@ import { getSagas, getReducers, getInitialState, configureVtx } from 'ethvtx';
 import { swapAssetReducer } from './reducers/swapAssetReducer';
 import { swapProcessReducer } from './reducers/swapProcessReducer';
 import { networkReducer } from './reducers/networkReducer';
+import { chainTokensReducer } from './reducers/chainTokensReducer';
 import { watchInitialData } from './sagas/initializationSaga';
 import { watchAssetsSwap } from './sagas/swapAssetsSaga';
 import { watchGasPrice } from './sagas/gasPriceSaga';
@@ -23,6 +24,7 @@ export const createVtxStore = () => {
     swapAssetReducer,
     swapProcessReducer,
     networkReducer,
+    chainTokensReducer,
   });
 
   const sagaMiddleware = createSagaMiddleware();

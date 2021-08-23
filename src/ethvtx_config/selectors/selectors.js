@@ -4,11 +4,13 @@ import {
   getBlock,
   getWeb3,
 } from 'ethvtx/lib/getters';
-import * as c from '../reducers/reducers-constants';
+import tokens from '../../../tokens.json';
+import contracts from '../../../embark4Contracts.json';
 
 const SECONDS_IN_MINUTES = 60;
 const FULL_COUNT = 100;
 
+// swapAssetReducer
 export const selectDelay = (state) => state.swapAssetReducer.delay;
 export const selectSlippage = (state) => state.swapAssetReducer.slippage;
 export const selectSwapInAmount = (state) => state.swapAssetReducer.swapInAmount;
@@ -17,11 +19,18 @@ export const selectSwapMode = (state) => state.swapAssetReducer.mode;
 export const selectAssetInAddress = (state) => state.swapAssetReducer.assetIn;
 export const selectAssetOutAddress = (state) => state.swapAssetReducer.assetOut;
 
+// networkReducer
 export const selectNetworkType = (state) => state.networkReducer.network;
 
+// chainTokensReducer
+export const selectWEthAddress = (state) => state.chainTokensReducer.weth;
+export const selectStableTokenAddress = (state) => state.chainTokensReducer.stable;
+
+// swapProcessReducer
 export const selectSwapProcessState = (state) => state.swapProcessReducer.processState;
 export const selectSwapProcessError = (state) => state.swapProcessReducer.error;
 
+// ethvtx
 export const selectWeb3Instance = (state) => getWeb3(state);
 export const selectCurrentBlock = (state) => getBlock(state, state.blocks.current_height);
 export const selectCoinbaseAccount = (state) => getAccount(state, '@coinbase');
@@ -41,6 +50,7 @@ export const selectERC20Contract = (state, address) => getContract(state, 'ERC20
 
 export const selectAssetsList = (state) => selectIndexStorageContract(state).fn.indexList();
 
+// complex
 export const selectAssetInContract = (state) => {
   const address = selectAssetInAddress(state);
   return selectIndexTokenContract(state, address);
@@ -103,17 +113,25 @@ export const selectAssetPriceByAddress = (state, address) => {
 
 export const selectAssetStablePriceByAddress = (state, address) => {
   const web3Instance = selectWeb3Instance(state);
-  const stableInWei = selectOraclePriceContract(state).fn.getLastPrice(c.STABLE_ADDRESS);
-  const assetInWei = selectAssetPriceInWeiByAddress(state, address);
-  if (Number(stableInWei) && assetInWei) {
-    return String(
-      web3Instance.utils.fromWei(assetInWei) / web3Instance.utils.fromWei(stableInWei)
-    );
+  const stableAddress = selectStableTokenAddress(state);
+
+  if (stableAddress) {
+    const stableInWei = selectOraclePriceContract(state).fn.getLastPrice(stableAddress);
+    const assetInWei = selectAssetPriceInWeiByAddress(state, address);
+
+    if (Number(stableInWei) && assetInWei) {
+      return String(
+        web3Instance.utils.fromWei(assetInWei) / web3Instance.utils.fromWei(stableInWei)
+      );
+    }
   }
 };
 
 export const selectStableTokenPrice = (state) => {
-  return selectOraclePriceContract(state).fn.getLastPrice(c.STABLE_ADDRESS);
+  const address = selectStableTokenAddress(state);
+  if (address) {
+    return selectOraclePriceContract(state).fn.getLastPrice(address);
+  }
 };
 
 // not working yet
@@ -203,6 +221,38 @@ export const selectDataToSwap = (state) => ({
   swapContract: selectIndexSwapContract(state),
   assetInContract: selectAssetInContract(state),
 });
+
+// --------------------------------------------------------------------
+
+export const getStableTokenAddress = (network) => {
+  const networkKey = (network === 'private')
+    ? 'cloudflare'
+    : network === 'ropsten'
+      ? 'ropsten'
+      : 'mainnet';
+
+  if (networkKey === 'mainnet') {
+    throw new Error('Mainnet');
+  }
+
+  return tokens[networkKey].DAI.address;
+};
+
+export const getWEtherAddress = (network) => {
+  const networkKey = (network === 'private')
+    ? 'cloudflare'
+    : network === 'ropsten'
+      ? 'ropsten'
+      : 'mainnet';
+
+  if (networkKey === 'mainnet') {
+    throw new Error('Mainnet');
+  }
+
+  return contracts[networkKey].deploy.WETH.address;
+};
+
+// --------------------------------------------------------------------
 
 // ERC20:
 //  - isExpert

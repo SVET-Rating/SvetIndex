@@ -14,6 +14,13 @@ function* workerSetInitialData() {
     const web3Instance = yield select(s.selectWeb3Instance);
     const network = yield call(getNetworkType, web3Instance);
     yield put(a.setNetwork(network));
+
+    const wethAddress = yield call(s.getWEtherAddress, network);
+    const stableAddress = yield call(s.getStableTokenAddress, network);
+    yield put(a.setChainTokens({
+      weth: wethAddress,
+      stable: stableAddress,
+    }));
   } catch (e) {
     yield put(a.setError(ERROR_MSG));
   }

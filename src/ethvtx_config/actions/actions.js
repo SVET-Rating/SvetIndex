@@ -60,6 +60,11 @@ export const setSwapProcessState = (processState) => ({
   payload: { processState },
 });
 
+export const setChainTokens = (tokens) => ({
+  type: TYPES.SET_CHAIN_TOKENS,
+  payload: { tokens },
+});
+
 export const resetSwapProcessState = () => ({
   type: TYPES.RESET_SWAP_PROCESS_STATE,
 });

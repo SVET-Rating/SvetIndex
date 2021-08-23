@@ -43,6 +43,7 @@ const TransactionDetails = ({
         <AppAssetAmount
           className={classes.value}
           amount={gasPrice}
+          precision={1}
           symbol={GWEI_SYMBOL}
         />
       </Box>
