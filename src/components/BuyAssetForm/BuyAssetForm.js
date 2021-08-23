@@ -70,7 +70,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   cancelSwap: () => dispatch(a.cancelSwap()),
-  startSwap: () => dispatch(a.setStartSwap()),
+  startSwap: () => dispatch(a.setSwapStart()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BuyAssetForm);

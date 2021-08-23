@@ -47,8 +47,12 @@ export const cancelSwap = () => ({
   type: TYPES.CANCEL_SWAP_ASSETS,
 });
 
-export const setStartSwap = () => ({
-  type: TYPES.SET_START_SWAP,
+export const setSwapStart = () => ({
+  type: TYPES.SET_SWAP_START,
+});
+
+export const setSwapEnd = () => ({
+  type: TYPES.SET_SWAP_END,
 });
 
 export const setSwapProcessState = (processState) => ({

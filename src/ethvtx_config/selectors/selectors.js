@@ -13,10 +13,11 @@ export const selectDelay = (state) => state.swapAssetReducer.delay;
 export const selectSlippage = (state) => state.swapAssetReducer.slippage;
 export const selectSwapInAmount = (state) => state.swapAssetReducer.swapInAmount;
 export const selectGasPrice = (state) => state.swapAssetReducer.gasPrice;
-export const selectNetworkType = (state) => state.swapAssetReducer.network;
 export const selectSwapMode = (state) => state.swapAssetReducer.mode;
 export const selectAssetInAddress = (state) => state.swapAssetReducer.assetIn;
 export const selectAssetOutAddress = (state) => state.swapAssetReducer.assetOut;
+
+export const selectNetworkType = (state) => state.networkReducer.network;
 
 export const selectSwapProcessState = (state) => state.swapProcessReducer.processState;
 export const selectSwapProcessError = (state) => state.swapProcessReducer.error;

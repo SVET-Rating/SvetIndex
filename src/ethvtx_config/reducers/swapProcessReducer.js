@@ -1,4 +1,5 @@
 import * as TYPES from '../actions/types';
+import { SWAP_STATE } from './reducers-constants';
 
 const initialState = {
   processState: null,
@@ -11,6 +12,11 @@ export const swapProcessReducer = (state = initialState, action) => {
       return {
         ...state,
         error: action.payload.error,
+      };
+    case TYPES.SET_SWAP_END:
+      return {
+        ...state,
+        processState: SWAP_STATE.end,
       };
     case TYPES.SET_SWAP_PROCESS_STATE:
       return {

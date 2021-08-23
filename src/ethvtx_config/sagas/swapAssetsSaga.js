@@ -48,10 +48,10 @@ function* workerSwapAssets() {
   } catch (e) {
     yield put(a.setError(e.message));
   } finally {
-    yield put(a.setSwapProcessState(SWAP_STATE.end));
+    yield put(a.setSwapEnd());
   }
 }
 
 export function* watchAssetsSwap() {
-  yield takeEvery(t.SET_START_SWAP, workerSwapAssets);
+  yield takeEvery(t.SET_SWAP_START, workerSwapAssets);
 }

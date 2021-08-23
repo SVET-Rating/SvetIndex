@@ -7,7 +7,6 @@ const initialState = {
   assetIn: null,
   assetOut: null,
   swapInAmount: '0',
-  network: null,
   gasPrice: '0',
 };
 
@@ -19,11 +18,6 @@ export const swapAssetReducer = (state = initialState, action) => {
         assetIn: action.payload.assetIn,
         assetOut: action.payload.assetOut,
         mode: action.payload.mode,
-      };
-    case TYPES.SET_NETWORK:
-      return {
-        ...state,
-        network: action.payload.network,
       };
     case TYPES.SET_SLIPPAGE:
       return {
@@ -51,6 +45,11 @@ export const swapAssetReducer = (state = initialState, action) => {
         assetIn: null,
         assetOut: null,
         mode: null,
+        swapInAmount: '0',
+      };
+    case TYPES.SET_SWAP_END:
+      return {
+        ...state,
         swapInAmount: '0',
       };
     default:

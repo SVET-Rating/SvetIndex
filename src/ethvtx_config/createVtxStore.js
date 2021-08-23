@@ -3,6 +3,7 @@ import createSagaMiddleware from 'redux-saga';
 import { getSagas, getReducers, getInitialState, configureVtx } from 'ethvtx';
 import { swapAssetReducer } from './reducers/swapAssetReducer';
 import { swapProcessReducer } from './reducers/swapProcessReducer';
+import { networkReducer } from './reducers/networkReducer';
 import { watchInitialData } from './sagas/initializationSaga';
 import { watchAssetsSwap } from './sagas/swapAssetsSaga';
 import { watchGasPrice } from './sagas/gasPriceSaga';
@@ -21,6 +22,7 @@ export const createVtxStore = () => {
   const reducers = getReducers({
     swapAssetReducer,
     swapProcessReducer,
+    networkReducer,
   });
 
   const sagaMiddleware = createSagaMiddleware();
