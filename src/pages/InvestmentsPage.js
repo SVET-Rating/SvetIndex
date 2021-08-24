@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { SWAP_MODE, SWAP_STATE } from '../ethvtx_config/reducers/reducers-constants';
+import * as c from '../ethvtx_config/reducers/reducers-constants';
 import { selectSwapMode, selectSwapProcessState } from '../ethvtx_config/selectors/selectors';
 import AssetsBlock from '../components/AssetsBlock/AssetsBlock';
-import BuyAssetForm from '../components/BuyAssetForm/BuyAssetForm';
-import SellAssetForm from '../components/SellAssetForm/SellAssetForm';
+import SwapAssetForm from '../components/SwapAssetForm/SwapAssetForm';
 import SwapResultModalMessage from '../components/SwapResultModalMessage/SwapResultModalMessage';
 import AssetItemTokensBlock from '../components/AssetItemTokensBlock/AssetItemTokensBlock';
 // import BuyIndexTokensSteps from '../components/buyIndexSteps';
@@ -73,9 +72,7 @@ const InvestmentsPage = ({
     processStateComponent = (
       <div className="tokens-container">
         <div className="left-list">
-          {mode === SWAP_MODE.buy
-            ? <BuyAssetForm />
-            : <SellAssetForm />}
+          <SwapAssetForm />
         </div>
 
         <div className="right-list">
@@ -94,7 +91,7 @@ const InvestmentsPage = ({
           : <SellIndexTokensSteps />} */}
         <DotLoader
           color={color}
-          loading={processState !== SWAP_STATE.end}
+          loading={processState !== c.SWAP_STATE.end}
           css={override}
           size={150}
         />
@@ -114,11 +111,7 @@ const InvestmentsPage = ({
 const mapStatToProps = (state) => ({
   mode: selectSwapMode(state),
   processState: selectSwapProcessState(state),
-  // processState: state.buyTokensReducer.buyTokenProcessState,
-  // processStateSell: state.sellIndexTokenReducer.sellTokenProcessState,
-  // start_approve: state.buyTokensReducer.start_aprove,
-  // start_approve_sell: state.sellIndexTokenReducer.start_aprove_sell,
-  // buyindex_end: state.buyTokensReducer.buyindex_end,
+
   contract1: selectSvetTokenContract(state),
   contract2: selectExpertsContract(state),
   contract3: selectExchangeContract(state),

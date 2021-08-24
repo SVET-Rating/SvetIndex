@@ -20,6 +20,7 @@ truffle migrate --reset --compile-all --network ropsten
 truffle migrate --network ropsten
 
 embark run --nodashboard cloudflare
+embark run --nodashboard ropsten
 ```
 
 Open http://localhost:8000

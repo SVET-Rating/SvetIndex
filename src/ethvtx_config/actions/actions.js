@@ -24,9 +24,14 @@ export const setSwapInAmount = (swapAmount) => ({
   payload: { swapAmount },
 });
 
-export const setSwapMode = ({ assetIn, assetOut, mode }) => ({
-  type: TYPES.SET_SWAP_MODE,
+export const setInvesting = ({ assetIn, assetOut, mode }) => ({
+  type: TYPES.SET_INVESTING,
   payload: { assetIn, assetOut, mode },
+});
+
+export const setSwapMode = ({ mode }) => ({
+  type: TYPES.SET_SWAP_MODE,
+  payload: { mode },
 });
 
 export const setError = (error) => ({

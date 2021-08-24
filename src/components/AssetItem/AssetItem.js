@@ -52,12 +52,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onBuy: (asset, assetOut) => dispatch(a.setSwapMode({
+  onBuy: (asset, assetOut) => dispatch(a.setInvesting({
     assetIn: asset,
     assetOut,
     mode: SWAP_MODE.buy,
   })),
-  onSell: (asset, assetOut) => dispatch(a.setSwapMode({
+  onSell: (asset, assetOut) => dispatch(a.setInvesting({
     assetIn: asset,
     assetOut,
     mode: SWAP_MODE.sell

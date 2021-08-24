@@ -12,11 +12,16 @@ const initialState = {
 
 export const swapAssetReducer = (state = initialState, action) => {
   switch (action.type) {
-    case TYPES.SET_SWAP_MODE:
+    case TYPES.SET_INVESTING:
       return {
         ...state,
         assetIn: action.payload.assetIn,
         assetOut: action.payload.assetOut,
+        mode: action.payload.mode,
+      };
+    case TYPES.SET_SWAP_MODE:
+      return {
+        ...state,
         mode: action.payload.mode,
       };
     case TYPES.SET_SLIPPAGE:
