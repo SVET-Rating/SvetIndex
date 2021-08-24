@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as c from '../ethvtx_config/reducers/reducers-constants';
-import { selectSwapMode, selectSwapProcessState } from '../ethvtx_config/selectors/selectors';
+import * as s from '../ethvtx_config/selectors/selectors';
 import AssetsBlock from '../components/AssetsBlock/AssetsBlock';
 import SwapAssetForm from '../components/SwapAssetForm/SwapAssetForm';
 import SwapResultModalMessage from '../components/SwapResultModalMessage/SwapResultModalMessage';
@@ -10,18 +10,6 @@ import AssetItemTokensBlock from '../components/AssetItemTokensBlock/AssetItemTo
 // import SellIndexTokensSteps from '../components/selllIndexSteps';
 import { css } from "@emotion/react";
 import DotLoader from "react-spinners/DotLoader";
-import {
-  selectSvetTokenContract,
-  selectExpertsContract,
-  selectExchangeContract,
-  selectOraclePriceContract,
-  selectOracleCircAmountContract,
-  selectOracleTotSupplyContract,
-  selectIndexSwapContract,
-  selectIndexFactoryContract,
-  selectLstorageContract,
-  selectIndexStorageContract,
-} from '../ethvtx_config/selectors/selectors';
 
 const override = css`
   display: block;
@@ -51,16 +39,16 @@ const InvestmentsPage = ({
   let processStateComponent;
   let buyIndexSteps;
 
-  console.dir(contract1)
-  console.dir(contract2)
-  console.dir(contract3)
+  // console.dir(contract1)
+  // console.dir(contract2)
+  // console.dir(contract3)
   console.dir(contract4)
-  console.dir(contract5)
-  console.dir(contract6)
-  console.dir(contract7)
-  console.dir(contract8)
-  console.dir(contract9)
-  console.dir(contract10)
+  // console.dir(contract5)
+  // console.dir(contract6)
+  // console.dir(contract7)
+  // console.dir(contract8)
+  // console.dir(contract9)
+  // console.dir(contract10)
 
   if (!mode) {
     processStateComponent = (
@@ -109,19 +97,19 @@ const InvestmentsPage = ({
 };
 
 const mapStatToProps = (state) => ({
-  mode: selectSwapMode(state),
-  processState: selectSwapProcessState(state),
+  mode: s.selectSwapMode(state),
+  processState: s.selectSwapProcessState(state),
 
-  contract1: selectSvetTokenContract(state),
-  contract2: selectExpertsContract(state),
-  contract3: selectExchangeContract(state),
-  contract4: selectOraclePriceContract(state),
-  contract5: selectOracleCircAmountContract(state),
-  contract6: selectOracleTotSupplyContract(state),
-  contract7: selectIndexSwapContract(state),
-  contract8: selectIndexFactoryContract(state),
-  contract9: selectLstorageContract(state),
-  contract10: selectIndexStorageContract(state),
+  contract1: s.selectSvetTokenContract(state),
+  contract2: s.selectExpertsContract(state),
+  contract3: s.selectExchangeContract(state),
+  contract4: s.selectOraclePriceContract(state),
+  contract5: s.selectOracleCircAmountContract(state),
+  contract6: s.selectOracleTotSupplyContract(state),
+  contract7: s.selectIndexSwapContract(state),
+  contract8: s.selectIndexFactoryContract(state),
+  contract9: s.selectLstorageContract(state),
+  contract10: s.selectIndexStorageContract(state),
 });
 
 export default connect(mapStatToProps)(InvestmentsPage);

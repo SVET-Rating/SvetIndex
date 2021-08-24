@@ -4,6 +4,7 @@ import {
   getBlock,
   getWeb3,
 } from 'ethvtx/lib/getters';
+import * as c from '../reducers/reducers-constants';
 import tokens from '../../../tokens.json';
 import contracts from '../../../embark4Contracts.json';
 
@@ -59,9 +60,13 @@ export const selectAssetInContract = (state) => {
 export const selectAssetBalanceByAddress = (state, assetAddress) => {
   const web3Instance = selectWeb3Instance(state);
   const { address } = selectCoinbaseAccount(state);
-  const inWei = selectIndexTokenContract(state, assetAddress).fn.balanceOf(address);
-  if (inWei) {
-    return web3Instance.utils.fromWei(inWei);
+
+  if (address) {
+    const inWei = selectIndexTokenContract(state, assetAddress).fn.balanceOf(address);
+
+    if (inWei) {
+      return web3Instance.utils.fromWei(inWei);
+    }
   }
 };
 
@@ -73,6 +78,7 @@ export const selectAssetTokenListByAddress = (state, address) => {
 
 export const selectAssetInTokensList = (state) => {
   const address = selectAssetInAddress(state);
+
   if (address) {
     return selectIndexTokenContract(state, address).fn.getActivesList();
   }
@@ -80,6 +86,7 @@ export const selectAssetInTokensList = (state) => {
 
 export const selectSwapAssetGasAmount = (state) => {
   const tokens = selectAssetInTokensList(state);
+
   if (tokens) {
     return Math.round((tokens.length * 161387 + 44160 + 52010) * 1.02);
   }
@@ -87,6 +94,7 @@ export const selectSwapAssetGasAmount = (state) => {
 
 export const selectAssetInSymbol = (state) => {
   const address = selectAssetInAddress(state);
+
   if (address) {
     return selectIndexTokenContract(state, address).fn.symbol();
   }
@@ -94,8 +102,18 @@ export const selectAssetInSymbol = (state) => {
 
 export const selectAssetInBalance = (state) => {
   const address = selectAssetInAddress(state);
+
   if (address) {
     return selectAssetBalanceByAddress(state, address);
+  }
+};
+
+export const selectAssetPriceForAmountByAddress = (state, address, amountInEth) => {
+  const inWei = selectToWei(state, amountInEth);
+
+  if (inWei) {
+    return selectOraclePriceContract(state).fn
+      .getIndexPriceforAmount(address, inWei);
   }
 };
 
@@ -129,6 +147,7 @@ export const selectAssetStablePriceByAddress = (state, address) => {
 
 export const selectStableTokenPrice = (state) => {
   const address = selectStableTokenAddress(state);
+
   if (address) {
     return selectOraclePriceContract(state).fn.getLastPrice(address);
   }
@@ -137,6 +156,7 @@ export const selectStableTokenPrice = (state) => {
 // not working yet
 export const selectSwapOutAsset = (state) => {
   const address = selectAssetOutAddress(state);
+
   if (address) {
     // return selectERC20Contract(state, address);
     return selectIndexTokenContract(state, address);
@@ -144,8 +164,9 @@ export const selectSwapOutAsset = (state) => {
 };
 
 export const selectSwapOutAssetBalance = (state) => {
-  const inWei = selectCoinbaseAccount(state).balance.toString();
   const web3Instance = selectWeb3Instance(state);
+  const inWei = selectCoinbaseAccount(state).balance.toString();
+
   if (inWei) {
     return web3Instance.utils.fromWei(inWei);
   }
@@ -155,17 +176,39 @@ export const selectSwapOutAssetAmount = (state) => {
   const web3Instance = selectWeb3Instance(state);
   const assetInAmount = selectSwapInAmount(state);
   const assetInAddress = selectAssetInAddress(state);
-  const priceAssetInInWei = selectAssetPriceInWeiByAddress(state, assetInAddress);
-  if (assetInAmount && priceAssetInInWei) {
-    const { BN } = web3Instance.utils;
-    const inWei = new BN(priceAssetInInWei).mul(new BN(assetInAmount)).toString();
-    return web3Instance.utils.fromWei(inWei);
+
+  if (Number(assetInAmount) && assetInAddress) {
+    const priceAssetInInWei = selectAssetPriceForAmountByAddress(state, assetInAddress, assetInAmount);
+
+    if (priceAssetInInWei) {
+      const { BN } = web3Instance.utils;
+
+      const inWei = new BN(priceAssetInInWei)
+        .mul(new BN(assetInAmount))
+        .mul(new BN(c.SETTINGS.amountSlippage))
+        .toString();
+
+      return web3Instance.utils.fromWei(inWei);
+    }
   }
 };
+
+// export const selectSwapOutAssetAmount = (state) => {
+//   const web3Instance = selectWeb3Instance(state);
+//   const assetInAmount = selectSwapInAmount(state);
+//   const assetInAddress = selectAssetInAddress(state);
+//   const priceAssetInInWei = selectAssetPriceInWeiByAddress(state, assetInAddress);
+//   if (assetInAmount && priceAssetInInWei) {
+//     const { BN } = web3Instance.utils;
+//     const inWei = new BN(priceAssetInInWei).mul(new BN(assetInAmount)).toString();
+//     return web3Instance.utils.fromWei(inWei);
+//   }
+// };
 
 export const selectOneAmountAssetPrice = (state) => {
   const assetInAmount = selectSwapInAmount(state);
   const assetOutAmount = selectSwapOutAssetAmount(state);
+
   if (Number(assetInAmount) && assetOutAmount) {
     return String(assetOutAmount / assetInAmount);
   }

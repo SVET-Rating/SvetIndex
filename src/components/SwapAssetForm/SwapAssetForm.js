@@ -35,13 +35,10 @@ const SwapAssetForm = ({
       ? c.SWAP_MODE.sell
       : c.SWAP_MODE.buy;
 
-    console.log('mode ---', mode)
     changeSwapMode(mode);
   };
 
-  const action = (swapMode === c.SWAP_MODE.buy)
-    ? 'buy'
-    : 'sell';
+  const action = (swapMode === c.SWAP_MODE.buy) ? 'buy' : 'sell';
 
   const isDisable = (swapMode === c.SWAP_MODE.buy)
     ? !Number(swapInAmount) || Number(swapOutAmount) > Number(swapOutBalance)
@@ -57,7 +54,7 @@ const SwapAssetForm = ({
 
         <AppButton
           className={classes.swapIcon}
-          // onClick={handleChangeSwap}
+          onClick={handleChangeSwap}
         >
           <ChangeSwapAssetsIcon />
         </AppButton>

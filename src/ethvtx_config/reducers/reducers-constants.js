@@ -12,4 +12,5 @@ export const SWAP_STATE = {
 export const SETTINGS = {
   maxSlippage: 25,
   maxDelay: 10,
+  amountSlippage: 1.01,
 };

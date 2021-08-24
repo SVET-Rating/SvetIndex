@@ -29,7 +29,7 @@ export const setInvesting = ({ assetIn, assetOut, mode }) => ({
   payload: { assetIn, assetOut, mode },
 });
 
-export const setSwapMode = ({ mode }) => ({
+export const setSwapMode = (mode) => ({
   type: TYPES.SET_SWAP_MODE,
   payload: { mode },
 });
