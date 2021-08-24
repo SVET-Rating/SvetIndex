@@ -108,21 +108,22 @@ contract OraclePrice is iOraclePrice {
         }
     }
 
-    function getAllActsIndPrices (address _indexT) public view override returns (uint256[10] memory allPrices)
+    function getAllActsIndPrices (address _indexT) public view override returns (uint256[] memory )
     {
         iIndexToken index = iIndexToken(_indexT);
         uint len = index.getActivesLen();
-//        uint256[1000] memory allPrices;
+        uint256[] memory allPrices = new uint256[](len);
+
         for (uint256 i = 0; i<len; i++) {
             (address addrActive, uint256 share) = index.getActivesItem(i);
             allPrices[i] =   getLastPrice(addrActive) * share/10**18;
 
         }
-//        return allPrices;
+       return allPrices;
     }
 
     function getPriceEthforAmount (address _addrToken,  uint256 _amount ) public view override returns (uint ) {
-        address [] memory path;
+        address [] memory path = new address[](2);
         path[0] = uniswapV2Router02.WETH();
         path[1] = _addrToken;
         uint[] memory amounts = uniswapV2Router02.getAmountsIn(_amount, path);
@@ -139,17 +140,21 @@ contract OraclePrice is iOraclePrice {
 
         }
     }
-/* 
-   function getIndexPriceforAmount (address _indexT, uint256 _amount) public view override returns (uint256 priceIndexTot) {
+
+    function getAllActsIndPricesAmount (address _indexT, uint256 _amount) public view override returns (uint256[] memory )
+    {
         iIndexToken index = iIndexToken(_indexT);
-        uint256[] memory allPrices;
-        for (uint8 i = 0; i<index.getActivesLen(); i++) {
+        uint len = index.getActivesLen();
+        uint256[] memory allPrices = new uint256[](len);
+
+        for (uint256 i = 0; i<len; i++) {
             (address addrActive, uint256 share) = index.getActivesItem(i);
-           allPrices[i] = getPriceEthforAmount(addrActive, _amount*share / 10**18);
-            priceIndexTot = priceIndexTot + share *   allPrices[i] /10**18  ;
+            allPrices[i] =   getPriceEthforAmount(addrActive, _amount*share / 10**18) * share/10**18;
 
         }
-    } */
+       return allPrices;
+    }
+
     function getallTokens () external override view  returns (address[] memory ) {  //onlyExpert
         return tokens;
     }
@@ -159,35 +164,10 @@ contract OraclePrice is iOraclePrice {
     }
 
 
-/* function getIndexPrice (address _indexT) public view override returns (Prices memory indPr) //uint256[] memory allPrices)
-    {
-        iIndexToken index = iIndexToken(_indexT);
-
-        for (uint8 i = 0; i<index.getActivesLen(); i++) {
-            (address addrActive, uint256 share) = index.getActivesItem(i);
-            indPr.tokenprices[i] = getLastPrice(addrActive);
-            indPr.indexprice += share *  indPr.tokenprices[i] /10**18  ;
-
-        }
-    }
-
-
-
-    function getIndexPriceforAmount (address _indexT, uint256 _amount) public view override returns (Prices memory indPr) {
-        iIndexToken index = iIndexToken(_indexT);
-        uint256[] memory allPrices;
-        for (uint8 i = 0; i<index.getActivesLen(); i++) {
-            (address addrActive, uint256 share) = index.getActivesItem(i);
-           indPr.tokenprices[i] = getPriceEthforAmount(addrActive, _amount*share / 10**18);
-            indPr.indexprice += share *   indPr.tokenprices[i] /10**18  ;
-
-        }
-    } */
-
     function test (address _indexT, uint _amount) public onlyOwner {
-        uint256[10] memory pricesss = getAllActsIndPrices(_indexT);
+        uint256[] memory pricesss = getAllActsIndPrices(_indexT);
 
-        testprice = 0; //getIndexPriceforAmount(_indexT, _amount);
+        testprice = getIndexPriceforAmount(_indexT, _amount);
     }
 
 }
