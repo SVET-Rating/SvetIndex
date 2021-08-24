@@ -57,7 +57,7 @@ const SwapAssetForm = ({
 
         <AppButton
           className={classes.swapIcon}
-          onClick={handleChangeSwap}
+          // onClick={handleChangeSwap}
         >
           <ChangeSwapAssetsIcon />
         </AppButton>
