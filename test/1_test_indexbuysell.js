@@ -22,10 +22,10 @@ contract ("Index2SwapEthMarket", async accounts => {
       const indexList = await indexstorage.indexList();
    // console.log(indexList);
       const index_token1 = await IndexToken.at(indexList[0].addr);
-/*       const buyFee = await index2swap.buyFee();
-      if (buyFee.toNumber() > 0) {
-        //TODO add test  to check approve when buyfee > 0    
-      } */
+      // const buyFee = await index2swap.buyFee();
+      // if (buyFee.toNumber() > 0) {
+      //   //TODO add test  to check approve when buyfee > 0    
+      // }
       const oraclePriceAaddr = contracts[netKey]["deploy"]["OraclePrice"]["address"]
       const oraclePrice = await OraclePrice.at(oraclePriceAaddr);
       var priceIndexTot = 0;
@@ -95,10 +95,10 @@ contract ("Index2SwapEthMarket", async accounts => {
         } 
         const indbougthAmount = await  index_token1.balanceOf(accounts[1]);
         assert (0 == web3.utils.fromWei(indbougthAmount, 'ether'), "Not right index amounts: " + 0  + "<>" +  web3.utils.fromWei(indbougthAmount, 'ether'));
-  /*       const buyFee = await index2swap.buyFee();
-      if (buyFee.toNumber() > 0) {
-        //TODO add test  to check approve when buyfee > 0    
-      } */
+      //   const buyFee = await index2swap.buyFee();
+      // if (buyFee.toNumber() > 0) {
+      //   //TODO add test  to check approve when buyfee > 0    
+      // }
 
        
     }) , 
