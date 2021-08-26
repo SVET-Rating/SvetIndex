@@ -7,7 +7,9 @@ import AppAssetAmount from '../AppAssetAmount/AppAssetAmount';
 import AppTokenAddressIdenticon from '../AppTokenAddressIdenticon/AppTokenAddressIdenticon';
 import useStyles from './styles';
 
-const AssetItemTokensTableShare = ({ token: { symbol, addrActive }, amount = 0, share = 0 }) => {
+const AssetItemTokensTableShare = ({
+  token: { symbol, addrActive }, amount = '0', share = 0,
+}) => {
   const classes = useStyles();
 
   return (
@@ -25,7 +27,7 @@ const AssetItemTokensTableShare = ({ token: { symbol, addrActive }, amount = 0, 
       </TableCell>
 
       <TableCell align="center">
-        {(share * 100).toFixed(1)}%
+        {(share * 100).toFixed(2)}%
       </TableCell>
 
       <TableCell align="right">

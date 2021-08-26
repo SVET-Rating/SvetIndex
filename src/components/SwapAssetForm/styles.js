@@ -18,14 +18,16 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[3],
   },
   swapBlock: {
-    padding: theme.spacing(2, 2),
+    padding: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
     '& > * + *': {
-      marginTop: theme.spacing(2),
+      marginTop: theme.spacing(1.5),
     },
   },
   swapIcon: {
+    alignSelf: 'center',
+    padding: theme.spacing(0.5, 2),
     textAlign: 'center',
   },
   actionSection: {

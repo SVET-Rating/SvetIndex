@@ -51,7 +51,7 @@ const AssetItemBalance = ({ balance, price, stablePrice }) => {
 
 const mapStateToProps = (state, { address }) => ({
   balance: s.selectAssetBalanceByAddress(state, address),
-  price: s.selectAssetPriceByAddress(state, address),
+  price: s.selectFromWei(state, s.selectAssetPriceForAmountByAddress(state, address)),
   stablePrice: s.selectAssetStablePriceByAddress(state, address),
 });
 

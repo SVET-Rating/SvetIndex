@@ -28,7 +28,7 @@ const AssetItemTokens = ({ address, tokens = [] }) => {
 }
 
 const mapStateToProps = (state, { address }) => ({
-  tokens: s.selectAssetTokenListByAddress(state, address),
+  tokens: s.selectAssetTokensListByAddress(state, address),
 });
 
 export default connect(mapStateToProps)(AssetItemTokens);

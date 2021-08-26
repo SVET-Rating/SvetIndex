@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Box, Typography } from '@material-ui/core';
-import { selectDelay } from '../../ethvtx_config/selectors/selectors';
-import { setDelay } from '../../ethvtx_config/actions/actions';
+import * as s from '../../ethvtx_config/selectors/selectors';
+import * as a from '../../ethvtx_config/actions/actions';
 import { SETTINGS } from '../../ethvtx_config/reducers/reducers-constants';
 import AppInput from '../AppInput/AppInput';
 import useStyles from './styles';
@@ -14,10 +14,24 @@ const TransactionDelay = ({ delay, setDelay }) => {
 
   const handleChange = (e) => {
     const { value } = e.target;
-    if (Number.isNaN(Number(value)) || !Number.isInteger(Number(value)) || value < 1 || value > SETTINGS.maxDelay) {
-      return;
+
+    if (value === ''
+      || value === '0'
+      || !Number.isNaN(Number(value))
+      || Number.isInteger(Number(value))) {
+      setDelay((value === '' || value === '0') ? value : Number.parseInt(value));
     }
-    setDelay(Number.parseInt(value) || 1);
+  };
+
+  const handleBlur = (e) => {
+    const { value } = e.target;
+
+    if (Number.isNaN(Number(value))
+      || !Number.isInteger(Number(value))
+      || value < SETTINGS.minDelay
+      || value > SETTINGS.maxDelay) {
+      setDelay(value < SETTINGS.minDelay ? SETTINGS.minDelay : SETTINGS.maxDelay);
+    }
   };
 
   return (
@@ -25,7 +39,9 @@ const TransactionDelay = ({ delay, setDelay }) => {
       <label
         className={classes.label}
         htmlFor={INPUT_ID}
-      >Transaction deadline?</label>
+      >
+        Transaction deadline?
+      </label>
 
       <Typography>
         <AppInput
@@ -33,6 +49,7 @@ const TransactionDelay = ({ delay, setDelay }) => {
           id={INPUT_ID}
           value={delay}
           onChange={handleChange}
+          onBlur={handleBlur}
         />
         &nbsp;minutes
       </Typography>
@@ -41,11 +58,11 @@ const TransactionDelay = ({ delay, setDelay }) => {
 };
 
 const mapStateToProps = (state) => ({
-  delay: selectDelay(state),
+  delay: s.selectDelay(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setDelay: (value) => dispatch(setDelay(value)),
+  setDelay: (value) => dispatch(a.setDelay(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TransactionDelay);

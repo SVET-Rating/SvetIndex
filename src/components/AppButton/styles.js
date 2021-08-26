@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, fade } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -9,9 +9,13 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.corporate,
     borderRadius: theme.shape.borderRadius,
     background: theme.palette.background.linearGradient,
-    // transition: 'background 0.3s linear',
+    opacity: 0.75,
+    transition: 'opacity 0.3s linear',
     '&:hover': {
-      background: theme.palette.background.linearGradientHover,
+      opacity: 1.0,
+    },
+    '&:disabled': {
+      color: fade(theme.palette.text.corporate, 0.4),
     },
   },
 }));

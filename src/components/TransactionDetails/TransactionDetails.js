@@ -19,8 +19,8 @@ const TransactionDetails = ({
 
   const classes = useStyles();
 
-  const transactionCost = Number(gasAmount * gasPrice / 10 ** 9).toFixed(12);
-  const transactionCostInStable = Number(stablePrice) && String(transactionCost / stablePrice);
+  // const transactionCost = Number(gasAmount * gasPrice / 10 ** 9).toFixed(12);
+  // const transactionCostInStable = Number(stablePrice) && String(transactionCost / stablePrice);
 
   return (
     <Box className={classes.root}>
@@ -31,12 +31,12 @@ const TransactionDetails = ({
         </Typography>
       </Box>
 
-      <Box className={classes.record}>
+      {/* <Box className={classes.record}>
         <Typography className={classes.text}>Gas amount:</Typography>
         <Typography className={classes.value}>
           {gasAmount}
         </Typography>
-      </Box>
+      </Box> */}
 
       <Box className={classes.record}>
         <Typography className={classes.text}>Gas price:</Typography>
@@ -48,7 +48,7 @@ const TransactionDetails = ({
         />
       </Box>
 
-      <Box>
+      {/* <Box>
         <Box display='flex' justifyContent='space-between'>
           <Typography className={classes.text}>Transaction cost:</Typography>
           <AppAssetAmount
@@ -67,7 +67,7 @@ const TransactionDetails = ({
             withParentheses
           />
         </Box>
-      </Box>
+      </Box> */}
     </Box>
   );
 }

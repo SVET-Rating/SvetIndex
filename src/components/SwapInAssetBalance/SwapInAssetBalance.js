@@ -4,7 +4,6 @@ import { Box, Typography } from '@material-ui/core';
 import * as s from '../../ethvtx_config/selectors/selectors';
 import * as a from '../../ethvtx_config/actions/actions';
 import { SWAP_MODE } from '../../ethvtx_config/reducers/reducers-constants';
-import { isNumber } from '../../helpers';
 import AppInput from '../AppInput/AppInput';
 import AppAssetAmount from '../AppAssetAmount/AppAssetAmount';
 import AppButtonInline from '../AppButtonInline/AppButtonInline';
@@ -16,19 +15,22 @@ const ID = 'swapInAsset';
 const SwapInAssetBalance = ({
   symbol, balance, swapAmount, setSwapAmount, mode,
 }) => {
-  const [amount, setAmount] = useDebounce('', 200);
+  const classes = useStyles();
+
+  const [amount, setAmount] = useDebounce(null, 100);
 
   useEffect(() => {
-    if (amount) {
+    if (amount !== null) {
       setSwapAmount(amount);
     }
   }, [amount]);
 
-  const classes = useStyles();
-
   const handleChange = (e) => {
     const { value } = e.target;
-    if (isNumber(value) || value >= 0) {
+
+    if (value.startsWith('+') || value.startsWith('-')) {
+      setAmount(value.slice(1));
+    } else {
       setAmount(value);
     }
   };
@@ -51,6 +53,8 @@ const SwapInAssetBalance = ({
 
         <AppInput
           className={classes.input}
+          type='number'
+          autoComplete='off'
           id={ID}
           value={swapAmount}
           onChange={handleChange}

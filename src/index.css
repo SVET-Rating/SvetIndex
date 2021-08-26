@@ -16,12 +16,3 @@ body {
 *::before {
   box-sizing: inherit;
 }
-
-.tokens-container {
-  display: grid;
-  width: 90%;
-  margin: 1rem auto !important;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 2rem;
-  min-height: 26rem;
-}

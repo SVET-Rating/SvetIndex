@@ -21,7 +21,7 @@ const AssetItemTokensShare = ({ token, share = 0 }) => {
       </Typography>
 
       <Typography className={classes.text}>
-        {(share * 100).toFixed(1)}%
+        {(share * 100).toFixed(2)}%
       </Typography>
     </Box>
   );
@@ -29,7 +29,6 @@ const AssetItemTokensShare = ({ token, share = 0 }) => {
 
 const mapStateToProps = (state, { assetAddress, token }) => ({
   share: s.selectTokenShare(state, assetAddress, token.addrActive, token.amount),
-  // share: s.selectFromWei(state, token.amount),
 });
 
 export default connect(mapStateToProps)(AssetItemTokensShare);

@@ -4,7 +4,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    height: '100%',
+    minHeight: '100%',
     padding: theme.spacing(0.5),
     backgroundColor: fade(theme.palette.background.main, 0.85),
   },

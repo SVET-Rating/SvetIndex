@@ -26,6 +26,14 @@ const useStyles = makeStyles((theme) => ({
     flexShrink: 0,
     width: theme.spacing(15),
     marginLeft: theme.spacing(2),
+    '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
+      '-webkit-appearance': 'none',
+      margin: 0,
+    },
+    '-moz-appearance': 'textfield',
+    '&:hover, &:focus': {
+      '-moz-appearance': 'number-input',
+    },
   },
   balance: {
     display: 'flex',

@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Box } from '@material-ui/core';
 import * as c from '../ethvtx_config/reducers/reducers-constants';
 import * as s from '../ethvtx_config/selectors/selectors';
 import AssetsBlock from '../components/AssetsBlock/AssetsBlock';
@@ -10,6 +11,7 @@ import AssetItemTokensBlock from '../components/AssetItemTokensBlock/AssetItemTo
 // import SellIndexTokensSteps from '../components/selllIndexSteps';
 import { css } from "@emotion/react";
 import DotLoader from "react-spinners/DotLoader";
+import useStyles from './styles';
 
 const override = css`
   display: block;
@@ -36,6 +38,8 @@ const InvestmentsPage = ({
   contract9,
   contract10,
 }) => {
+  const classes = useStyles();
+
   let processStateComponent;
   let buyIndexSteps;
 
@@ -58,15 +62,10 @@ const InvestmentsPage = ({
 
   if (mode) {
     processStateComponent = (
-      <div className="tokens-container">
-        <div className="left-list">
-          <SwapAssetForm />
-        </div>
-
-        <div className="right-list">
-          <AssetItemTokensBlock />
-        </div>
-      </div>
+      <Box className={classes.root}>
+        <SwapAssetForm />
+        <AssetItemTokensBlock />
+      </Box>
     );
   }
 
@@ -88,11 +87,11 @@ const InvestmentsPage = ({
   }
 
   return (
-    <div>
+    <Box>
       <SwapResultModalMessage />
       {buyIndexSteps}
       {processStateComponent}
-    </div>
+    </Box>
   );
 };
 
