@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Box } from '@material-ui/core';
-import * as c from '../ethvtx_config/reducers/reducers-constants';
-import * as s from '../ethvtx_config/selectors/selectors';
-import AssetsBlock from '../components/AssetsBlock/AssetsBlock';
-import SwapAssetForm from '../components/SwapAssetForm/SwapAssetForm';
-import SwapResultModalMessage from '../components/SwapResultModalMessage/SwapResultModalMessage';
-import AssetItemTokensBlock from '../components/AssetItemTokensBlock/AssetItemTokensBlock';
+import * as c from '../../ethvtx_config/reducers/reducers-constants';
+import * as s from '../../ethvtx_config/selectors/selectors';
+import AssetsBlock from '../../components/AssetsBlock/AssetsBlock';
+import SwapAssetForm from '../../components/SwapAssetForm/SwapAssetForm';
+import SwapResultModalMessage from '../../components/SwapResultModalMessage/SwapResultModalMessage';
+import AssetItemTokensBlock from '../../components/AssetItemTokensBlock/AssetItemTokensBlock';
 // import BuyIndexTokensSteps from '../components/buyIndexSteps';
 // import SellIndexTokensSteps from '../components/selllIndexSteps';
 import { css } from "@emotion/react";
