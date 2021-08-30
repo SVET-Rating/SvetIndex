@@ -9,7 +9,7 @@ import useStyles from './styles';
 
 const INPUT_ID = 'SlippageToleranceId';
 
-const SlippageTolerance = ({ slippage, setSlippage }) => {
+const SlippageTolerance = ({ slippage, setSlippage, processState }) => {
   const classes = useStyles();
 
   const handleChange = (e) => {
@@ -34,6 +34,8 @@ const SlippageTolerance = ({ slippage, setSlippage }) => {
     }
   };
 
+  const isActionsDisabled = processState;
+
   return (
     <Box className={classes.root}>
       <label
@@ -47,6 +49,7 @@ const SlippageTolerance = ({ slippage, setSlippage }) => {
         <AppInput
           className={classes.input}
           id={INPUT_ID}
+          disabled={isActionsDisabled}
           value={slippage}
           onChange={handleChange}
           onBlur={handleBlur}
@@ -59,6 +62,7 @@ const SlippageTolerance = ({ slippage, setSlippage }) => {
 
 const mapStateToProps = (state) => ({
   slippage: s.selectSlippage(state),
+  processState: s.selectSwapProcessState(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

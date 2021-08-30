@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
     },
     boxShadow: theme.shadows[3],
   },
+  actionsDisabled: {
+    pointerEvents: 'none',
+  },
   swapBlock: {
     padding: theme.spacing(2),
     display: 'flex',

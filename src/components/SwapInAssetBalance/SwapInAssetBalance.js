@@ -13,12 +13,11 @@ import useStyles from './styles';
 const ID = 'swapInAsset';
 
 const SwapInAssetBalance = ({
-  symbol, balance, swapAmount, setSwapAmount, mode,
+  symbol, balance, swapAmount, setSwapAmount, mode, processState,
 }) => {
   const classes = useStyles();
 
   const [amount, setAmount] = useDebounce(null, 100);
-
   useEffect(() => {
     if (amount !== null) {
       setSwapAmount(amount);
@@ -41,6 +40,9 @@ const SwapInAssetBalance = ({
     }
   };
 
+  const isActionsDisabled = processState;
+  const isAllButtonDisabled = !Number(balance) || balance === swapAmount;
+
   return (
     <Box className={classes.root}>
       <Box className={classes.amount}>
@@ -56,6 +58,7 @@ const SwapInAssetBalance = ({
           type='number'
           autoComplete='off'
           id={ID}
+          disabled={isActionsDisabled}
           value={swapAmount}
           onChange={handleChange}
         />
@@ -72,7 +75,7 @@ const SwapInAssetBalance = ({
           <AppButtonInline
             className={classes.maxButton}
             onClick={handleAllButton}
-            disabled={!Number(balance) || balance === swapAmount}
+            disabled={isAllButtonDisabled || isActionsDisabled}
           >
             (all)
           </AppButtonInline>)
@@ -87,6 +90,7 @@ const mapStateToProps = (state) => ({
   balance: s.selectAssetInBalance(state),
   swapAmount: s.selectSwapInAmount(state),
   mode: s.selectSwapMode(state),
+  processState: s.selectSwapProcessState(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -20,6 +20,7 @@ const SwapAssetForm = ({
   cancelSwap, startSwap, changeSwapMode,
   swapInAmount, swapInBalance,
   swapOutAmount, swapOutBalance,
+  processState,
 }) => {
   const classes = useStyles();
 
@@ -41,12 +42,14 @@ const SwapAssetForm = ({
 
   const action = (swapMode === c.SWAP_MODE.buy) ? 'buy' : 'sell';
 
-  const isDisable = (swapMode === c.SWAP_MODE.buy)
+  const isSwapDisabled = (swapMode === c.SWAP_MODE.buy)
     ? !Number(swapInAmount) || Number(swapOutAmount) > Number(swapOutBalance)
     : !Number(swapInAmount) || Number(swapInAmount) > Number(swapInBalance);
 
-  return (
-    <Box className={classes.root}>
+  const isActionsDisabled = !!processState;
+
+    return (
+    <Box className={`${classes.root} ${isActionsDisabled && classes.actionsDisabled}`}>
       <SlippageTolerance />
       <TransactionDelay />
 
@@ -56,6 +59,7 @@ const SwapAssetForm = ({
         <AppButtonInline
           className={classes.swapIcon}
           onClick={handleChangeSwap}
+          disabled={isActionsDisabled}
         >
           <ChangeSwapAssetsIcon />
         </AppButtonInline>
@@ -71,6 +75,7 @@ const SwapAssetForm = ({
         <AppButton
           className={classes.button}
           onClick={handleClickCancel}
+          disabled={isActionsDisabled}
         >
           Cancel
         </AppButton>
@@ -78,7 +83,7 @@ const SwapAssetForm = ({
         <AppButton
           className={classes.button}
           onClick={handleClickSell}
-          disabled={isDisable}
+          disabled={isSwapDisabled || isActionsDisabled}
         >
           {action}
         </AppButton>
@@ -93,6 +98,7 @@ const mapStateToProps = (state) => ({
   swapInBalance: s.selectAssetInBalance(state),
   swapOutAmount: s.selectSwapOutAssetAmount(state),
   swapOutBalance: s.selectSwapOutAssetBalance(state),
+  processState: s.selectSwapProcessState(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

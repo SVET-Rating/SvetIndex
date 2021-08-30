@@ -9,7 +9,7 @@ import useStyles from './styles';
 
 const INPUT_ID = 'TransactionDelayId';
 
-const TransactionDelay = ({ delay, setDelay }) => {
+const TransactionDelay = ({ delay, setDelay, processState }) => {
   const classes = useStyles();
 
   const handleChange = (e) => {
@@ -34,6 +34,8 @@ const TransactionDelay = ({ delay, setDelay }) => {
     }
   };
 
+  const isActionsDisabled = processState;
+
   return (
     <Box className={classes.root}>
       <label
@@ -47,6 +49,7 @@ const TransactionDelay = ({ delay, setDelay }) => {
         <AppInput
           className={classes.input}
           id={INPUT_ID}
+          disabled={isActionsDisabled}
           value={delay}
           onChange={handleChange}
           onBlur={handleBlur}
@@ -59,6 +62,7 @@ const TransactionDelay = ({ delay, setDelay }) => {
 
 const mapStateToProps = (state) => ({
   delay: s.selectDelay(state),
+  processState: s.selectSwapProcessState(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
