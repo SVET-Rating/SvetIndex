@@ -1,5 +1,5 @@
 // import HomePage from '../../pages/HomePage';
-import InvestmentsPage from '../../pages/InvestmentsPage';
+import InvestmentsPage from '../../pages/InvestmentsPage/InvestmentsPage';
 import paths from './paths';
 
 const appRoutes = [
