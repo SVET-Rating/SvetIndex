@@ -42,7 +42,14 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     flexGrow: 1,
+    position: 'relative',
     width: '30%',
+  },
+  loader: {
+    position: 'absolute',
+    left: '50%',
+    top: '50%',
+    transform: 'translate(-50%, -50%)',
   },
 }));
 

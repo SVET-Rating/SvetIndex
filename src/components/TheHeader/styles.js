@@ -7,6 +7,12 @@ const useStyles = makeStyles((theme) => ({
   },
   grow: {
     flexGrow: 1,
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  loader: {
+    marginLeft: theme.spacing(1),
   },
   menuButton: {
     marginLeft: theme.spacing(-1.5),

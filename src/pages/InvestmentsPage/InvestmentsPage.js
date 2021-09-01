@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Box } from '@material-ui/core';
-import * as c from '../../ethvtx_config/reducers/reducers-constants';
 import * as s from '../../ethvtx_config/selectors/selectors';
 import AssetsBlock from '../../components/AssetsBlock/AssetsBlock';
 import SwapAssetForm from '../../components/SwapAssetForm/SwapAssetForm';
@@ -9,24 +8,10 @@ import SwapResultModalMessage from '../../components/SwapResultModalMessage/Swap
 import AssetItemTokensBlock from '../../components/AssetItemTokensBlock/AssetItemTokensBlock';
 // import BuyIndexTokensSteps from '../components/buyIndexSteps';
 // import SellIndexTokensSteps from '../components/selllIndexSteps';
-import { css } from "@emotion/react";
-import DotLoader from "react-spinners/DotLoader";
 import useStyles from './styles';
 
-const override = css`
-  display: block;
-  margin: 0 auto;
-  border-color: blue;
-  width: 11%;
-  height: 30%;
-  position: absolute;
-  left: 41%;
-  top: 41%;
-  z-index: 1000
-`;
-
 const InvestmentsPage = ({
-  mode, processState,
+  mode,
   contract1,
   contract2,
   contract3,
@@ -41,7 +26,6 @@ const InvestmentsPage = ({
   const classes = useStyles();
 
   let processStateComponent;
-  let buyIndexSteps;
 
   // console.dir(contract1)
   // console.dir(contract2)
@@ -69,27 +53,9 @@ const InvestmentsPage = ({
     );
   }
 
-  if (processState) {
-    let color = '#23dcd5'
-    buyIndexSteps = (
-      <>
-        {/* {mode === SWAP_MODE.buy
-          ? <BuyIndexTokensSteps />
-          : <SellIndexTokensSteps />} */}
-        <DotLoader
-          color={color}
-          loading={processState !== c.SWAP_STATE.end}
-          css={override}
-          size={150}
-        />
-      </>
-    );
-  }
-
   return (
     <Box>
       <SwapResultModalMessage />
-      {buyIndexSteps}
       {processStateComponent}
     </Box>
   );
@@ -97,7 +63,6 @@ const InvestmentsPage = ({
 
 const mapStatToProps = (state) => ({
   mode: s.selectSwapMode(state),
-  processState: s.selectSwapProcessState(state),
 
   contract1: s.selectSvetTokenContract(state),
   contract2: s.selectExpertsContract(state),

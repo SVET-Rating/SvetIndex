@@ -13,6 +13,7 @@ import AssetsCostCompare from '../AssetsCostCompare/AssetsCostCompare';
 import TransactionDetails from '../TransactionDetails/TransactionDetails';
 import AppButton from '../AppButton/AppButton';
 import AppButtonInline from '../AppButtonInline/AppButtonInline';
+import OrbitLoader from '../loaders/OrbitLoader/OrbitLoader';
 import useStyles from './styles';
 
 const SwapAssetForm = ({
@@ -86,6 +87,7 @@ const SwapAssetForm = ({
           disabled={isSwapDisabled || isActionsDisabled}
         >
           {action}
+          <OrbitLoader className={classes.loader} loading={processState} />
         </AppButton>
       </Box>
     </Box>
