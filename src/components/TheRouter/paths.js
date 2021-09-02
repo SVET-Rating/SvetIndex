@@ -1,6 +1,6 @@
 export default {
   // HOME: '/',
   // INVESTMENTS: '/investments',
-  INVESTMENTS: '/',
+  INVESTMENTS: '.',
   SWAP: '/:mode/:id',
 };
