@@ -8,6 +8,10 @@ import useStyles from './styles';
 const AssetItemTokens = ({ address, tokens = [] }) => {
   const classes = useStyles();
 
+  if (!tokens.length) {
+    return null;
+  }
+
   const items = tokens.map((token) => (
     <ListItem key={token.addrActive}>
       <AssetItemTokensShare assetAddress={address} token={token} />

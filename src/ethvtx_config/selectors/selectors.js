@@ -54,14 +54,14 @@ export const selectAssetsList = (state) => selectIndexStorageContract(state).fn.
 // convert
 export const selectToWei = (state, amountInEth) => {
   const web3Instance = selectWeb3Instance(state);
-  if (amountInEth && amountInEth) {
+  if (web3Instance && amountInEth && Number(amountInEth)) {
     return web3Instance.utils.toWei(amountInEth);
   }
 };
 
 export const selectFromWei = (state, amountInWei, base = 'ether') => {
   const web3Instance = selectWeb3Instance(state);
-  if (amountInWei && amountInWei) {
+  if (web3Instance && amountInWei && Number(amountInWei)) {
     return web3Instance.utils.fromWei(amountInWei, base);
   }
 };
@@ -69,7 +69,10 @@ export const selectFromWei = (state, amountInWei, base = 'ether') => {
 // complex
 export const selectAssetInContract = (state) => {
   const address = selectAssetInAddress(state);
-  return selectIndexTokenContract(state, address);
+
+  if (address) {
+    return selectIndexTokenContract(state, address);
+  }
 };
 
 export const selectAssetBalanceByAddress = (state, assetAddress) => {
@@ -92,7 +95,10 @@ export const selectAssetTokensListByAddress = (state, address) => {
 
 export const selectAssetInTokensList = (state) => {
   const address = selectAssetInAddress(state);
-  return selectAssetTokensListByAddress(state, address);
+
+  if (address) {
+    return selectAssetTokensListByAddress(state, address);
+  }
 };
 
 // not correct --------------------------------------------------------------------------------
@@ -103,6 +109,7 @@ export const selectSwapAssetGasAmount = (state) => {
     return Math.round((tokens.length * 161387 + 44160 + 52010) * 1.02);
   }
 };
+// not correct --------------------------------------------------------------------------------
 
 export const selectAssetInSymbol = (state) => {
   const address = selectAssetInAddress(state);
@@ -114,11 +121,14 @@ export const selectAssetInSymbol = (state) => {
 
 export const selectAssetInBalance = (state) => {
   const address = selectAssetInAddress(state);
-  return selectAssetBalanceByAddress(state, address);
+
+  if (address) {
+    return selectAssetBalanceByAddress(state, address);
+  }
 };
 
 export const selectAssetPriceForAmountByAddress = (state, address, amountInEth = '1') => {
-  if (Number(amountInEth)) {
+  if (address && Number(amountInEth)) {
     const inWei = selectToWei(state, amountInEth);
     return selectOraclePriceContract(state).fn.getIndexPriceforAmount(address, inWei);
   }
@@ -140,7 +150,7 @@ export const selectAssetStablePriceByAddress = (state, address) => {
     const stableInWei = selectStableTokenPrice(state);
     const assetInWei = selectAssetPriceForAmountByAddress(state, address);
 
-    if (Number(stableInWei) && assetInWei) {
+    if (Number(stableInWei) && Number(assetInWei)) {
       return String(
         selectFromWei(state, assetInWei) / selectFromWei(state, stableInWei)
       );
@@ -157,6 +167,7 @@ export const selectSwapOutAsset = (state) => {
     return selectIndexTokenContract(state, address);
   }
 };
+// not working yet --------------------------------------------------------------------
 
 export const selectSwapOutAssetBalance = (state) => {
   const inWei = selectCoinbaseAccount(state).balance.toString();
@@ -174,15 +185,15 @@ export const selectSwapOutAssetAmount = (state) => {
     const priceAssetInInWei = selectAssetPriceForAmountByAddress(state, assetInAddress, assetInAmount);
 
     if (priceAssetInInWei) {
-      const inEther = selectFromWei(state, priceAssetInInWei);
+      const priceAssetInInEther = selectFromWei(state, priceAssetInInWei);
       const mode = selectSwapMode(state);
-      const withSlippage = 1 + selectSlippage(state) / 100;
+      const slippage = selectSlippage(state);
 
       const ratio = (mode === c.SWAP_MODE.buy)
-        ? withSlippage
+        ? 1 + Number(slippage) / 100
         : 1;
 
-      const amount = inEther * (assetInAmount * ratio);
+      const amount = (priceAssetInInEther * assetInAmount) * ratio;
       return amount.toFixed(18);
     }
   }
@@ -192,13 +203,13 @@ export const selectOneAmountAssetPrice = (state) => {
   const assetInAmount = selectSwapInAmount(state);
   const assetOutAmount = selectSwapOutAssetAmount(state);
 
-  if (Number(assetInAmount) && assetOutAmount) {
+  if (Number(assetInAmount) && Number(assetOutAmount)) {
     return String(assetOutAmount / assetInAmount);
   }
 };
 
 export const selectTokenShare = (state, assetAddress, tokenAddress, tokenAmountInWei) => {
-  if (assetAddress && tokenAddress && tokenAmountInWei) {
+  if (assetAddress && tokenAddress && Number(tokenAmountInWei)) {
     const assetPriceInWei = selectAssetPriceForAmountByAddress(state, assetAddress);
     const tokenPriceInWei = selectOraclePriceContract(state).fn.
       getPriceEthforAmount(tokenAddress, tokenAmountInWei);
@@ -212,7 +223,10 @@ export const selectTokenShare = (state, assetAddress, tokenAddress, tokenAmountI
 
 export const selectAssetInTokenShare = (state, tokenAddress, tokenAmountInWei) => {
   const assetAddress = selectAssetInAddress(state);
-  return selectTokenShare(state, assetAddress, tokenAddress, tokenAmountInWei);
+
+  if (assetAddress) {
+    return selectTokenShare(state, assetAddress, tokenAddress, tokenAmountInWei);
+  }
 };
 
 export const selectDelayInSeconds = (state) => {

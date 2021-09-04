@@ -1,42 +1,28 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  // root: {
-  //   padding: theme.spacing(0.5),
-  //   border: 'none',
-  //   borderRadius: theme.shape.borderRadius,
-  //   background: theme.palette.background.linearGradient,
-  //   color: theme.palette.common.white,
-  //   fontSize: 'inherit',
-  //   fontWeight: 700,
-  //   textAlign: 'right',
-  // },
-  root: {
+  mainRoot: {
     width: '100%',
   },
   stepper: {
-    // marginRight: '10px',
-    // color: 'white',
-    // backgroundColor: '#119a1199',
-    // border: '1px solid',
-    // minWidth: '7rem',
-    // '&:hover': {
-    //     backgroundColor: '#9a8f11b0',
-    //     color: '#FFF'
-    //   }
+    padding: theme.spacing(2),
+    backgroundColor: 'transparent',
   },
   step: {
-    // marginTop: theme.spacing(1),
-    // marginBottom: theme.spacing(1),
-    // textAlign: 'center',
-    // fontSize: '45px',
-    // color: '#929191'
+    '& svg': {
+      color: theme.palette.text.corporate,
+    },
   },
-  label: {
-    // display: 'flex',
-    // alignItems: 'center',
-    // justifyContent: 'center',
+  root: {
+    padding: theme.spacing(1),
+    background: theme.palette.background.linearGradient,
+    borderRadius: theme.shape.borderRadius,
+    color: theme.palette.text.corporate,
+    '&$completed': {
+      color: theme.palette.text.corporate,
+    },
   },
+  completed: {},
 }));
 
 export default useStyles;

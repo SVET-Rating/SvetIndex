@@ -6,6 +6,7 @@ import * as a from './ethvtx_config/actions/actions';
 import TheHeader from './components/TheHeader/TheHeader';
 import TheFooter from './components/TheFooter/TheFooter';
 import TheRouter from './components/TheRouter/TheRouter';
+import { baseName } from './components/TheRouter/paths';
 import useStyles from './styles';
 
 const App = ({ initialize }) => {
@@ -19,7 +20,7 @@ const App = ({ initialize }) => {
     <Box className={classes.root} >
       <TheHeader />
       <Box component='main' className={classes.main}>
-        <Router>
+        <Router basename={baseName}>
           <TheRouter />
         </Router>
       </Box>

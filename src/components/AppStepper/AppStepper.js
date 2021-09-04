@@ -2,20 +2,37 @@ import React from 'react';
 import { Box, Stepper, Step, StepLabel } from '@material-ui/core';
 import useStyles from './styles';
 
-const AppStepper = ({ steps = {}, activeStep = -1, className }) => {
+const AppStepper = ({
+  steps = [],
+  activeStep = -1,
+  disabled = false,
+  className,
+}) => {
   const classes = useStyles();
 
   const stepperSteps = steps.map(({ label }) => (
-    <Step key={label} className={classes.step}>
-      <StepLabel className={classes.label}>{label}</StepLabel>
+    <Step
+      key={label}
+      classes={{ root: classes.step }}
+    >
+      <StepLabel
+        classes={{
+          root: classes.root,
+          completed: classes.completed,
+        }}
+      >
+        {label}
+      </StepLabel>
     </Step>
   ));
 
-  return (
-    <Box className={`${classes.root} ${className}`}>
+  return disabled ? null : (
+    <Box className={`${classes.mainRoot} ${className}`}>
       <Stepper
-        className={classes.stepper}
+        classes={{ root: classes.stepper }}
+        // className={classes.stepper}
         activeStep={activeStep}
+        // alternativeLabel
       >
         {stepperSteps}
       </Stepper>
