@@ -1,28 +1,32 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, fade } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  mainRoot: {
+  root: {
     width: '100%',
   },
   stepper: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(1, 0),
     backgroundColor: 'transparent',
+    pointerEvents: 'none',
   },
-  step: {
-    '& svg': {
-      color: theme.palette.text.corporate,
-    },
-  },
-  root: {
+  step: {},
+  stepLabel: {
     padding: theme.spacing(1),
     background: theme.palette.background.linearGradient,
     borderRadius: theme.shape.borderRadius,
-    color: theme.palette.text.corporate,
-    '&$completed': {
+
+    '& .MuiStepIcon-root.MuiStepIcon-completed, & .MuiStepLabel-label.MuiStepLabel-completed': {
+      color: theme.palette.text.important,
+    },
+
+    '& .MuiStepIcon-root.MuiStepIcon-active, & .MuiStepLabel-label.MuiStepLabel-active': {
       color: theme.palette.text.corporate,
     },
+
+    '& .MuiStepLabel-label': {
+      color: fade(theme.palette.common.white, 0.5),
+    },
   },
-  completed: {},
 }));
 
 export default useStyles;

@@ -38,12 +38,16 @@ const swapProcess = async ({
 
 function* workerSwapAssets() {
   yield put(a.setSwapProcessState(SWAP_STATE.start));
+
   try {
     const swapData = yield select(s.selectDataToSwap);
+
     if (swapData.swapMode === SWAP_MODE.sell) {
+      yield put(a.setSwapProcessState(SWAP_STATE.approveToSpend));
       yield call(swapProcessApprove, swapData);
-      yield put(a.setSwapProcessState(SWAP_STATE.approve));
     }
+
+    yield put(a.setSwapProcessState(SWAP_STATE.approve));
     yield call(swapProcess, swapData);
   } catch (e) {
     yield put(a.setError(e.message));

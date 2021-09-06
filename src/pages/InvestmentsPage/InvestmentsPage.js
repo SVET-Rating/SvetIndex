@@ -2,28 +2,25 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Box } from '@material-ui/core';
 import * as s from '../../ethvtx_config/selectors/selectors';
-// import * as c from '../../ethvtx_config/reducers/reducers-constants';
 import AssetsBlock from '../../components/AssetsBlock/AssetsBlock';
 import SwapAssetForm from '../../components/SwapAssetForm/SwapAssetForm';
 import SwapResultModalMessage from '../../components/SwapResultModalMessage/SwapResultModalMessage';
 import AssetItemTokensBlock from '../../components/AssetItemTokensBlock/AssetItemTokensBlock';
-// import BuyIndexTokensSteps from '../components/buyIndexSteps';
-// import SellIndexTokensSteps from '../components/selllIndexSteps';
-// import SwapStepsItem from '../../components/SwapStepsItem/SwapStepsItem';
+import SwapStepsItem from '../../components/SwapStepsItem/SwapStepsItem';
 import useStyles from './styles';
 
 const InvestmentsPage = ({
   mode,
-  contract1,
-  contract2,
-  contract3,
-  contract4,
-  contract5,
-  contract6,
-  contract7,
-  contract8,
-  contract9,
-  contract10,
+  // contract1,
+  // contract2,
+  // contract3,
+  // contract4,
+  // contract5,
+  // contract6,
+  // contract7,
+  // contract8,
+  // contract9,
+  // contract10,
 }) => {
   const classes = useStyles();
 
@@ -58,7 +55,7 @@ const InvestmentsPage = ({
   return (
     <Box>
       <SwapResultModalMessage />
-      {/* <SwapStepsItem /> */}
+      <SwapStepsItem />
       {processStateComponent}
     </Box>
   );
@@ -67,16 +64,16 @@ const InvestmentsPage = ({
 const mapStatToProps = (state) => ({
   mode: s.selectSwapMode(state),
 
-  contract1: s.selectSvetTokenContract(state),
-  contract2: s.selectExpertsContract(state),
-  contract3: s.selectExchangeContract(state),
-  contract4: s.selectOraclePriceContract(state),
-  contract5: s.selectOracleCircAmountContract(state),
-  contract6: s.selectOracleTotSupplyContract(state),
-  contract7: s.selectIndexSwapContract(state),
-  contract8: s.selectIndexFactoryContract(state),
-  contract9: s.selectLstorageContract(state),
-  contract10: s.selectIndexStorageContract(state),
+  // contract1: s.selectSvetTokenContract(state),
+  // contract2: s.selectExpertsContract(state),
+  // contract3: s.selectExchangeContract(state),
+  // contract4: s.selectOraclePriceContract(state),
+  // contract5: s.selectOracleCircAmountContract(state),
+  // contract6: s.selectOracleTotSupplyContract(state),
+  // contract7: s.selectIndexSwapContract(state),
+  // contract8: s.selectIndexFactoryContract(state),
+  // contract9: s.selectLstorageContract(state),
+  // contract10: s.selectIndexStorageContract(state),
 });
 
 export default connect(mapStatToProps)(InvestmentsPage);

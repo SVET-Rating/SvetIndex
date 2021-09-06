@@ -5,6 +5,7 @@ export const SWAP_MODE = {
 
 export const SWAP_STATE = {
   start: 'start',
+  approveToSpend: 'approve to spend',
   approve: 'approve',
   end: 'end',
 };
@@ -17,14 +18,16 @@ export const SETTINGS = {
 };
 
 export const BUY_STEPS = [
-  { label: 'start swap' },
-  { label: 'approve swap' },
-  { label: 'end swap' },
+  { step: null, label: 'prepare to swap' },
+  { step: SWAP_STATE.start, label: 'start swap' },
+  { step: SWAP_STATE.approve, label: 'approve swap' },
+  { step: SWAP_STATE.end, label: 'end swap' },
 ];
 
 export const SELL_STEPS = [
-  { label: 'start swap' },
-  { label: 'approve swap' },
-  { label: 'approve swap' },
-  { label: 'end swap' },
+  { step: null, label: 'prepare to swap' },
+  { step: SWAP_STATE.start, label: 'start swap' },
+  { step: SWAP_STATE.approveToSpend, label: 'approve to spend' },
+  { step: SWAP_STATE.approve, label: 'approve swap' },
+  { step: SWAP_STATE.end, label: 'end swap' },
 ];

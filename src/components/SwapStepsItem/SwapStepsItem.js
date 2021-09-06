@@ -12,17 +12,22 @@ const SwapStepsItem = ({
 }) => {
   const classes = useStyles();
 
-  const steps = c.BUY_STEPS
-  // const steps = (swapMode === c.SWAP_MODE.buy)
-  //   ? c.BUY_STEPS
-  //   : c.SELL_STEPS;
+  const steps = (swapMode === c.SWAP_MODE.buy)
+    ? c.BUY_STEPS
+    : c.SELL_STEPS;
 
-  // const isDisabled = !swapMode && !processState;
-  const isDisabled = false;
+  const isDisabled = !swapMode;
+
+  let activeStep = 0;
+  steps.forEach(({ step }, idx) => {
+    if (processState === step) {
+      activeStep = idx;
+    }
+  });
 
   return isDisabled ? null : (
     <Box className={classes.root}>
-      <AppStepper steps={steps} activeStep={1} />
+      <AppStepper steps={steps} activeStep={activeStep} />
     </Box>
   );
 }

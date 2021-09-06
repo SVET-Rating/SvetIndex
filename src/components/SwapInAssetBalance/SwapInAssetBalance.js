@@ -40,7 +40,7 @@ const SwapInAssetBalance = ({
     }
   };
 
-  const isActionsDisabled = processState;
+  const isActionsDisabled = !!processState;
   const isAllButtonDisabled = !Number(balance) || balance === swapAmount;
 
   return (

@@ -11,26 +11,17 @@ const AppStepper = ({
   const classes = useStyles();
 
   const stepperSteps = steps.map(({ label }) => (
-    <Step
-      key={label}
-      classes={{ root: classes.step }}
-    >
-      <StepLabel
-        classes={{
-          root: classes.root,
-          completed: classes.completed,
-        }}
-      >
+    <Step key={label} className={classes.step}>
+      <StepLabel className={classes.stepLabel}>
         {label}
       </StepLabel>
     </Step>
   ));
 
   return disabled ? null : (
-    <Box className={`${classes.mainRoot} ${className}`}>
+    <Box className={`${classes.root} ${className}`}>
       <Stepper
-        classes={{ root: classes.stepper }}
-        // className={classes.stepper}
+        className={classes.stepper}
         activeStep={activeStep}
         // alternativeLabel
       >
