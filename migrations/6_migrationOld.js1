@@ -11,7 +11,7 @@ module.exports = async function(deployer,_network, addresses) {
 
     const admin = addresses[0];
     var netkey ;
-    if (_network == "ropsten" || _network == "mainnet" || _network == "ganache") {
+    if (_network == "ropsten" || _network == "mainnet" || _network == "ganache" || _network == "p") {
          netKey = _network;
     } else
     {

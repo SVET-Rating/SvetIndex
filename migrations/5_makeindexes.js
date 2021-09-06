@@ -23,7 +23,7 @@ module.exports = async function(deployer,_network, addresses) {
 const admin = addresses[0];
 
 var netkey ;
-if (_network == "ropsten" || _network == "mainnet" || _network == "ganache") {
+if (_network == "ropsten" || _network == "mainnet" || _network == "ganache" || _network == "pl") {
      netKey = _network;
 } else
 {
@@ -100,7 +100,7 @@ Economic Class Index
 33% Telcoin (TEL), Price: 0.02366776: 0x467bccd9d29f223bce8043b84e8c8b282827790f
 
  */
-var isindexexist = await indexstorage.indexes('EconomicClassIndex', 'SECI' ) ;
+/* var isindexexist = await indexstorage.indexes('EconomicClassIndex', 'SECI' ) ;
 console.log ("EconomicClassIndex ",  isindexexist);
 if (isindexexist == "0x0000000000000000000000000000000000000000") 
   {
@@ -108,16 +108,16 @@ if (isindexexist == "0x0000000000000000000000000000000000000000")
   const index_tokenSECI = await IndexToken.deployed();
   console.log('create index Economic Class Index');
   const trIndex5 = await index_factory.makeIndex(index_tokenSECI.address,
-    [tokens[netKey]["Shiba Inu"]["address"],
-      tokens[netKey]["Amp"]["address"],
-      tokens[netKey]["Telcoin"]["address"],
+    [tokens[netKey]["WMATIC"]["address"],
+      tokens[netKey]["AAVE"]["address"],
+      tokens[netKey]["Kyber"]["address"],
     // contracts[netKey]["deploy"] ["SVTtst"]["address"],
 
     ],
     [web3.utils.toWei('0.3','ether'), 
     web3.utils.toWei('0.4','ether'),
      web3.utils.toWei('0.3','ether')]); //in WEI web3.utils.toWei('0.1','ether')
-console.log(trIndex5.tx);}
+console.log(trIndex5.tx);} */
 
 /**
  * Svyat Sv, [02.07.21 08:59]
@@ -135,14 +135,14 @@ if ( isindexexist == "0x0000000000000000000000000000000000000000")
   console.log('create index Economic Class Index');
   const trIndex6 = await index_factory.makeIndex(index_tokenSSTI.address,
     [tokens[netKey]["DAI"]["address"],
-      tokens[netKey]["cDAI"]["address"],
-      tokens[netKey]["cUSDT"]["address"],
+      tokens[netKey]["WBTC"]["address"],
+      tokens[netKey]["USDC"]["address"],
     // contracts[netKey]["deploy"] ["SVTtst"]["address"],
 
     ],
-    [web3.utils.toWei('0.3','ether'), 
-    web3.utils.toWei('0.4','ether'),
-     web3.utils.toWei('0.3','ether')]); //in WEI
+    [web3.utils.toWei('3000','ether'), 
+    web3.utils.toWei('4','ether'),
+     web3.utils.toWei('3000','ether')]); //in WEI
   console.log(trIndex6.tx);
   }
 /**
@@ -151,7 +151,7 @@ if ( isindexexist == "0x0000000000000000000000000000000000000000")
 50% Basic Attention Token (BAT), Price: 0.563579: 0x0d8775f648430679a709e98d2b0cb6250d2887ef
 50% Decentraland (MANA), Price: 0.524011: 0x0f5d2fb29fb7d3cfee444a200298f468908cc942
  */
-var isindexexist = await indexstorage.indexes('50CentsIndex', 'S50I');
+/* var isindexexist = await indexstorage.indexes('50CentsIndex', 'S50I');
 console.log ("50CentsIndex ",  isindexexist);
 
 if (isindexexist == "0x0000000000000000000000000000000000000000") 
@@ -160,9 +160,10 @@ await deployer.deploy(IndexToken,'50CentsIndex', 'S50I', contracts[netKey]["depl
 const index_tokenS50I = await IndexToken.deployed();
 console.log('50 Cents Index');
 const trIndex7 = await index_factory.makeIndex(index_tokenS50I.address,
-   [tokens[netKey]["Basic Attention Token"]["address"],
+   [tokens[netKey]["Rarible"]["address"],
     tokens[netKey]["Decentraland"]["address"],
-    contracts[netKey]["deploy"] ["SVTtst"]["address"],
+    tokens[netKey]["1INCH"]["address"],
+   // contracts[netKey]["1INCH"] ["SVTtst"]["address"],
 
   ],
   [web3.utils.toWei('0.47','ether'), 
@@ -170,6 +171,6 @@ const trIndex7 = await index_factory.makeIndex(index_tokenS50I.address,
    web3.utils.toWei('1','ether')]); //in WEI
 console.log(trIndex7.tx);
 
-  }
+  } */
 }
 }

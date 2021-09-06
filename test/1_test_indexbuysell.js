@@ -7,14 +7,14 @@ const contracts = require("../embark4Contracts.json");
 const OraclePrice = artifacts.require('OraclePrice.sol');
 const Erc20 = artifacts.require('TokTst.sol')
 
-netKey = "cloudflare"; //testing only on localchain
+netKey = "pl"; //testing only on localchain
 
 
 console.log("tests");
 
 contract ("Index2SwapEthMarket", async accounts => {
   var amountEth =0;
-  const indexAmount = 0.1;
+  const indexAmount = 1000;
   
     it ("1. Buy index 1", async () => { 
       const index2swap = await Index2Swap.at(contracts[netKey]["deploy"] ["Index2SwapEthMarket"]["address"]);
@@ -37,7 +37,7 @@ contract ("Index2SwapEthMarket", async accounts => {
             
             const price = web3.utils.fromWei(await oraclePrice.getLastPrice(act.addr), 'ether')
             const amount = web3.utils.fromWei(act.amount, 'ether')
-           // console.log ("amount:",amount , "price:", price ,  amount * price);
+            console.log ("amount:",amount , "price:", price ,  amount * price);
              // oracle in ether
             priceIndexTot = priceIndexTot + amount * price ;   
            // console.log ("priceIndexTot:", priceIndexTot);
@@ -48,7 +48,7 @@ contract ("Index2SwapEthMarket", async accounts => {
        ;
       amountEth = indexAmount * priceIndexTot;
 
-      const buyIndexforSvetEth = await index2swap.buyIndexforSvetEth(web3.utils.toWei(indexAmount.toString(),'ether'),index_token1.address , "600", "90", {from:accounts[1], value: web3.utils.toWei(amountEth.toString(),'ether')}); //
+      const buyIndexforSvetEth = await index2swap.buyIndexforSvetEth(web3.utils.toWei(indexAmount.toString(),'ether'),index_token1.address , "600", "90", {from:accounts[0], value: web3.utils.toWei(amountEth.toString(),'ether')}); //
 
       console.log("buyIndexforSvetEth", buyIndexforSvetEth.tx);
 //    assert (false); //TODO add checks
@@ -66,7 +66,7 @@ contract ("Index2SwapEthMarket", async accounts => {
         
         } 
 
-        const indbougthAmount = await  index_token1.balanceOf(accounts[1]);
+        const indbougthAmount = await  index_token1.balanceOf(accounts[0]);
         assert (indexAmount == web3.utils.fromWei(indbougthAmount, 'ether'), "Not right index amounts: " +indexAmount + "<>" +  web3.utils.fromWei(indbougthAmount, 'ether'));
 
     }) ,
@@ -76,8 +76,8 @@ contract ("Index2SwapEthMarket", async accounts => {
       const indexstorage = await IndexStorage.at(contracts[netKey]["deploy"] ["IndexStorage"]["address"]);
       const indexList = await indexstorage.indexList();
       const index_token1 = await IndexToken.at(indexList[0].addr);
-      await index_token1.approve(index2swap.address,web3.utils.toWei('0.1','ether'),{from:accounts[1]});
-      const sellIndexforSvet=await index2swap.sellIndexforEth(web3.utils.toWei('0.1','ether'),index_token1.address, "600", "90", {from:accounts[1]});
+      await index_token1.approve(index2swap.address,web3.utils.toWei('0.1','ether'),{from:accounts[0]});
+      const sellIndexforSvet=await index2swap.sellIndexforEth(web3.utils.toWei('0.1','ether'),index_token1.address, "600", "90", {from:accounts[0]});
       console.log("sellIndexforSvet", sellIndexforSvet.tx);
 
       const actList = await index_token1.getActivesList();
@@ -93,7 +93,7 @@ contract ("Index2SwapEthMarket", async accounts => {
         assert (0  ==  web3.utils.fromWei(bougthAmount, 'ether'), "Not right amounts: " + 0 +"<>" +  web3.utils.fromWei(bougthAmount, 'ether'));
         
         } 
-        const indbougthAmount = await  index_token1.balanceOf(accounts[1]);
+        const indbougthAmount = await  index_token1.balanceOf(accounts[0]);
         assert (0 == web3.utils.fromWei(indbougthAmount, 'ether'), "Not right index amounts: " + 0  + "<>" +  web3.utils.fromWei(indbougthAmount, 'ether'));
       //   const buyFee = await index2swap.buyFee();
       // if (buyFee.toNumber() > 0) {
