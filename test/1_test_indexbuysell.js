@@ -7,7 +7,7 @@ const contracts = require("../embark4Contracts.json");
 const OraclePrice = artifacts.require('OraclePrice.sol');
 const Erc20 = artifacts.require('TokTst.sol')
 
-netKey = "cloudflare"; //testing only on localchain
+netKey = "ropsten"; //testing only on localchain
 
 
 console.log("tests");
@@ -48,7 +48,7 @@ contract ("Index2SwapEthMarket", async accounts => {
        ;
       amountEth = indexAmount * priceIndexTot;
 
-      const buyIndexforSvetEth = await index2swap.buyIndexforSvetEth(web3.utils.toWei(indexAmount.toString(),'ether'),index_token1.address , "600", "90", {from:accounts[1], value: web3.utils.toWei(amountEth.toString(),'ether')}); //
+      const buyIndexforSvetEth = await index2swap.buyIndexforSvetEth(web3.utils.toWei(indexAmount.toString(),'ether'),index_token1.address , "600", "90", {from:accounts[0], value: web3.utils.toWei(amountEth.toFixed(18),'ether')}); //
 
       console.log("buyIndexforSvetEth", buyIndexforSvetEth.tx);
 //    assert (false); //TODO add checks
@@ -76,8 +76,8 @@ contract ("Index2SwapEthMarket", async accounts => {
       const indexstorage = await IndexStorage.at(contracts[netKey]["deploy"] ["IndexStorage"]["address"]);
       const indexList = await indexstorage.indexList();
       const index_token1 = await IndexToken.at(indexList[0].addr);
-      await index_token1.approve(index2swap.address,web3.utils.toWei('0.1','ether'),{from:accounts[1]});
-      const sellIndexforSvet=await index2swap.sellIndexforEth(web3.utils.toWei('0.1','ether'),index_token1.address, "600", "90", {from:accounts[1]});
+      await index_token1.approve(index2swap.address,web3.utils.toWei('0.1','ether'),{from:accounts[0]});
+      const sellIndexforSvet=await index2swap.sellIndexforEth(web3.utils.toWei('0.1','ether'),index_token1.address, "600", "90", {from:accounts[0]});
       console.log("sellIndexforSvet", sellIndexforSvet.tx);
 
       const actList = await index_token1.getActivesList();

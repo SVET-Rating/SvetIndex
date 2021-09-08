@@ -170,7 +170,7 @@ export const selectSwapOutAsset = (state) => {
 // not working yet --------------------------------------------------------------------
 
 export const selectSwapOutAssetBalance = (state) => {
-  const inWei = selectCoinbaseAccount(state).balance.toString();
+  const inWei = selectCoinbaseAccount(state).balance.toFixed();
 
   if (inWei) {
     return selectFromWei(state, inWei);
