@@ -18,7 +18,7 @@ const AssetItemBalance = ({ balance, price, stablePrice }) => {
         <Typography className={classes.text}>Index in wallet:</Typography>
         <AppAssetAmount
           className={classes.value}
-          amount={balance}
+          amount={balance || '0'}
           precision={2}
         />
       </Box>

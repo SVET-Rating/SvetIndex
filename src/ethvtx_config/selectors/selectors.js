@@ -129,7 +129,7 @@ export const selectAssetInBalance = (state) => {
 
 export const selectAssetPriceForAmountByAddress = (state, address, amountInEth = '1') => {
   if (address && Number(amountInEth)) {
-    const inWei = selectToWei(state, amountInEth);
+    const inWei = selectToWei(state, amountInEth); // todo: check 10^-18 in amountInEth
     return selectOraclePriceContract(state).fn.getIndexPriceforAmount(address, inWei);
   }
 };
@@ -138,7 +138,7 @@ export const selectStableTokenPrice = (state, amountInEth = '1') => {
   const address = selectStableTokenAddress(state);
 
   if (Number(amountInEth) && address) {
-    const inWei = selectToWei(state, amountInEth);
+    const inWei = selectToWei(state, amountInEth); // todo: check 10^-18 in amountInEth
     return selectOraclePriceContract(state).fn.getPriceEthforAmount(address, inWei);
   }
 };
@@ -215,7 +215,7 @@ export const selectTokenShare = (state, assetAddress, tokenAddress, tokenAmountI
       getPriceEthforAmount(tokenAddress, tokenAmountInWei);
 
     if (Number(assetPriceInWei) && tokenPriceInWei) {
-      const tokenAmount = selectFromWei(state, tokenAmountInWei);
+      const tokenAmount = selectFromWei(state, tokenAmountInWei); // todo: check 10^-18 in amountInEth
       return (tokenPriceInWei / assetPriceInWei) * tokenAmount;
     }
   }
@@ -225,7 +225,7 @@ export const selectAssetInTokenShare = (state, tokenAddress, tokenAmountInWei) =
   const assetAddress = selectAssetInAddress(state);
 
   if (assetAddress) {
-    return selectTokenShare(state, assetAddress, tokenAddress, tokenAmountInWei);
+    return selectTokenShare(state, assetAddress, tokenAddress, tokenAmountInWei); // todo: check 10^-18 in amountInEth
   }
 };
 
