@@ -122,26 +122,31 @@ contract OraclePrice is iOraclePrice {
        return allPrices;
     }
 
-    function getPriceEthforAmount (address _addrToken,  uint256 _amount ) public view override returns (uint ) {
+    function getPriceEthforAmount (address _addrToken,  uint256 _amount, bool _buy ) public view override returns (uint ) {
         address [] memory path = new address[](2);
-        path[0] = uniswapV2Router02.WETH();
-        path[1] = _addrToken;
+        if (_buy) {
+            path[0] = uniswapV2Router02.WETH();
+            path[1] = _addrToken;
+        } else {
+            path[1] = uniswapV2Router02.WETH();
+            path[0] = _addrToken;
+        }
         uint[] memory amounts = uniswapV2Router02.getAmountsIn(_amount, path);
         if (amounts[1] == 0) return 0; //no amounts for token
         return  amounts[0]*10**18/amounts[1];
     }
 
-    function getIndexPriceforAmount (address _indexT, uint256 _amount) public view override returns (uint256 priceIndexTot) {
+    function getIndexPriceforAmount (address _indexT, uint256 _amount, bool _buy) public view override returns (uint256 priceIndexTot) {
         iIndexToken index = iIndexToken(_indexT);
         for (uint8 i = 0; i<index.getActivesLen(); i++) {
             (address addrActive, uint256 share) = index.getActivesItem(i);
-            uint priceA = getPriceEthforAmount(addrActive, _amount*share / 10**18);
+            uint priceA = getPriceEthforAmount(addrActive, _amount*share / 10**18, bool _buy);
             priceIndexTot = priceIndexTot + share * priceA  /10**18  ;
 
         }
     }
 
-    function getAllActsIndPricesAmount (address _indexT, uint256 _amount) public view override returns (uint256[] memory )
+    function getAllActsIndPricesAmount (address _indexT, uint256 _amount, bool _buy) public view override returns (uint256[] memory )
     {
         iIndexToken index = iIndexToken(_indexT);
         uint len = index.getActivesLen();
@@ -149,7 +154,7 @@ contract OraclePrice is iOraclePrice {
 
         for (uint256 i = 0; i<len; i++) {
             (address addrActive, uint256 share) = index.getActivesItem(i);
-            allPrices[i] =   getPriceEthforAmount(addrActive, _amount*share / 10**18) * share/10**18;
+            allPrices[i] =   getPriceEthforAmount(addrActive, _amount*share / 10**18, bool _buy) * share/10**18;
 
         }
        return allPrices;

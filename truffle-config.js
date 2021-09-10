@@ -65,8 +65,9 @@ module.exports = {
     ropsten: {
       provider: () => new HDWalletProvider({
         privateKeys: [`${PRIVATE_KEY}`],
-        providerOrUrl: `https://ropsten.infura.io/v3/3362483b5eab409ea69e99f99aefd67a`,
-        // https://ropsten.infura.io/v3/3362483b5eab409ea69e99f99aefd67a", // Endpoint of an node to connect to. Can be on localhost or on the internet
+        providerOrUrl:   "https://ropsten.infura.io/v3/6e8c03180136466e82539db7eae2ae42", // Endpoint of an node to connect to. Can be on localhost or on the internet
+        //`http://localhost:8545`,
+        // "https://ropsten.infura.io/v3/3362483b5eab409ea69e99f99aefd67a", // Endpoint of an node to connect to. Can be on localhost or on the internet
         // https://ropsten.infura.io/v3/753a98a2eb6c4d64918829f47d069440", // Endpoint of an node to connect to. Can be on localhost or on the internet
       }),
       network_id: 3,       // Ropsten's id
