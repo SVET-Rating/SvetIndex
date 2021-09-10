@@ -128,18 +128,24 @@ export const selectAssetInBalance = (state) => {
 };
 
 export const selectAssetPriceForAmountByAddress = (state, address, amountInEth = '1') => {
+  const mode = selectSwapMode(state);
+  const swapType = (mode === c.SWAP_MODE.sell) ? false : true;
+
   if (address && Number(amountInEth)) {
     const inWei = selectToWei(state, amountInEth); // todo: check 10^-18 in amountInEth
-    return selectOraclePriceContract(state).fn.getIndexPriceforAmount(address, inWei);
+    return selectOraclePriceContract(state).fn.getIndexPriceforAmount(address, inWei, swapType);
   }
 };
 
 export const selectStableTokenPrice = (state, amountInEth = '1') => {
   const address = selectStableTokenAddress(state);
 
+  const mode = selectSwapMode(state);
+  const swapType = (mode === c.SWAP_MODE.sell) ? false : true;
+
   if (Number(amountInEth) && address) {
     const inWei = selectToWei(state, amountInEth); // todo: check 10^-18 in amountInEth
-    return selectOraclePriceContract(state).fn.getPriceEthforAmount(address, inWei);
+    return selectOraclePriceContract(state).fn.getPriceEthforAmount(address, inWei, swapType);
   }
 };
 
@@ -209,10 +215,13 @@ export const selectOneAmountAssetPrice = (state) => {
 };
 
 export const selectTokenShare = (state, assetAddress, tokenAddress, tokenAmountInWei) => {
+  const mode = selectSwapMode(state);
+  const swapType = (mode === c.SWAP_MODE.sell) ? false : true;
+
   if (assetAddress && tokenAddress && Number(tokenAmountInWei)) {
     const assetPriceInWei = selectAssetPriceForAmountByAddress(state, assetAddress);
     const tokenPriceInWei = selectOraclePriceContract(state).fn.
-      getPriceEthforAmount(tokenAddress, tokenAmountInWei);
+      getPriceEthforAmount(tokenAddress, tokenAmountInWei, swapType);
 
     if (Number(assetPriceInWei) && tokenPriceInWei) {
       const tokenAmount = selectFromWei(state, tokenAmountInWei); // todo: check 10^-18 in amountInEth

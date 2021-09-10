@@ -127,20 +127,23 @@ contract OraclePrice is iOraclePrice {
         if (_buy) {
             path[0] = uniswapV2Router02.WETH();
             path[1] = _addrToken;
+            uint[] memory amounts = uniswapV2Router02.getAmountsIn(_amount, path);
+            if (amounts[1] == 0) return 0; //no amounts for token
+            return  amounts[0]*10**18/amounts[1];
         } else {
-            path[1] = uniswapV2Router02.WETH();
             path[0] = _addrToken;
+            path[1] = uniswapV2Router02.WETH();
+            uint[] memory amounts = uniswapV2Router02.getAmountsOut(_amount, path);
+            if (amounts[0] == 0) return 0; //no amounts for token
+            return  amounts[1]*10**18/amounts[0];
         }
-        uint[] memory amounts = uniswapV2Router02.getAmountsIn(_amount, path);
-        if (amounts[1] == 0) return 0; //no amounts for token
-        return  amounts[0]*10**18/amounts[1];
     }
 
     function getIndexPriceforAmount (address _indexT, uint256 _amount, bool _buy) public view override returns (uint256 priceIndexTot) {
         iIndexToken index = iIndexToken(_indexT);
         for (uint8 i = 0; i<index.getActivesLen(); i++) {
             (address addrActive, uint256 share) = index.getActivesItem(i);
-            uint priceA = getPriceEthforAmount(addrActive, _amount*share / 10**18, bool _buy);
+            uint priceA = getPriceEthforAmount(addrActive, _amount*share / 10**18, _buy);
             priceIndexTot = priceIndexTot + share * priceA  /10**18  ;
 
         }
@@ -154,7 +157,7 @@ contract OraclePrice is iOraclePrice {
 
         for (uint256 i = 0; i<len; i++) {
             (address addrActive, uint256 share) = index.getActivesItem(i);
-            allPrices[i] =   getPriceEthforAmount(addrActive, _amount*share / 10**18, bool _buy) * share/10**18;
+            allPrices[i] =   getPriceEthforAmount(addrActive, _amount*share / 10**18, _buy) * share/10**18;
 
         }
        return allPrices;
@@ -169,10 +172,10 @@ contract OraclePrice is iOraclePrice {
     }
 
 
-    function test (address _indexT, uint _amount) public onlyOwner {
+    function test (address _indexT, uint _amount, bool _buy) public onlyOwner {
         uint256[] memory pricesss = getAllActsIndPrices(_indexT);
 
-        testprice = getIndexPriceforAmount(_indexT, _amount);
+        testprice = getIndexPriceforAmount(_indexT, _amount, _buy);
     }
 
 }
