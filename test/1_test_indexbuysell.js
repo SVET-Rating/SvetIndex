@@ -47,8 +47,12 @@ contract ("Index2SwapEthMarket", async accounts => {
       console.log ("priceIndexTot:", priceIndexTot);
        ;
       amountEth = indexAmount * priceIndexTot;
-
-      const buyIndexforSvetEth = await index2swap.buyIndexforSvetEth(web3.utils.toWei(indexAmount.toString(),'ether'),index_token1.address , "600", "90", {from:accounts[0], value: web3.utils.toWei(amountEth.toFixed(18),'ether')}); //
+      console.log ("amountEth: ", amountEth)
+      amountEth =  amountEth.toFixed(18)
+      console.log ("amountEth: ", amountEth)
+      amountEth = web3.utils.toWei(amountEth,'ether')
+      console.log ("amountEth: ", amountEth)
+      const buyIndexforSvetEth = await index2swap.buyIndexforSvetEth(web3.utils.toWei(indexAmount.toString(),'ether'),index_token1.address , "600", "90", {from:accounts[0], value: amountEth}); //
 
       console.log("buyIndexforSvetEth", buyIndexforSvetEth.tx);
 //    assert (false); //TODO add checks
@@ -66,7 +70,7 @@ contract ("Index2SwapEthMarket", async accounts => {
         
         } 
 
-        const indbougthAmount = await  index_token1.balanceOf(accounts[1]);
+        const indbougthAmount = await  index_token1.balanceOf(accounts[0]);
         assert (indexAmount == web3.utils.fromWei(indbougthAmount, 'ether'), "Not right index amounts: " +indexAmount + "<>" +  web3.utils.fromWei(indbougthAmount, 'ether'));
 
     }) ,
@@ -93,7 +97,7 @@ contract ("Index2SwapEthMarket", async accounts => {
         assert (0  ==  web3.utils.fromWei(bougthAmount, 'ether'), "Not right amounts: " + 0 +"<>" +  web3.utils.fromWei(bougthAmount, 'ether'));
         
         } 
-        const indbougthAmount = await  index_token1.balanceOf(accounts[1]);
+        const indbougthAmount = await  index_token1.balanceOf(accounts[0]);
         assert (0 == web3.utils.fromWei(indbougthAmount, 'ether'), "Not right index amounts: " + 0  + "<>" +  web3.utils.fromWei(indbougthAmount, 'ether'));
       //   const buyFee = await index2swap.buyFee();
       // if (buyFee.toNumber() > 0) {
