@@ -7,7 +7,8 @@ const contracts = require("../embark4Contracts.json");
 const OraclePrice = artifacts.require('OraclePrice.sol');
 const Erc20 = artifacts.require('TokTst.sol')
 
-netKey = "ropsten"; //testing only on localchain
+var  netKey;
+//"cloudflare"; //testing only on localchain
 
 
 console.log("tests");
@@ -16,7 +17,21 @@ contract ("Index2SwapEthMarket", async accounts => {
   var amountEth =0;
   const indexAmount = 0.1;
   
+  
     it ("1. Buy index 1", async () => { 
+      await web3.eth.net.getNetworkType((netw) => {
+      switch  (netw) {
+        case 3:  
+          netKey = 'ropsten';
+          break;
+        case 137:  
+          netKey = 'pl';
+          break;
+        default:
+          netKey = 'cloudflare';
+      }})
+      console.log('netKey:', netKey);
+      
       const index2swap = await Index2Swap.at(contracts[netKey]["deploy"] ["Index2SwapEthMarket"]["address"]);
       const indexstorage = await IndexStorage.at(contracts[netKey]["deploy"] ["IndexStorage"]["address"]);
       const indexList = await indexstorage.indexList();
@@ -47,11 +62,11 @@ contract ("Index2SwapEthMarket", async accounts => {
       console.log ("priceIndexTot:", priceIndexTot);
        ;
       amountEth = indexAmount * priceIndexTot;
-      console.log ("amountEth: ", amountEth)
+  //    console.log ("amountEth: ", amountEth)
       amountEth =  amountEth.toFixed(18)
-      console.log ("amountEth: ", amountEth)
+  //    console.log ("amountEth: ", amountEth)
       amountEth = web3.utils.toWei(amountEth,'ether')
-      console.log ("amountEth: ", amountEth)
+  //    console.log ("amountEth: ", amountEth)
       const buyIndexforSvetEth = await index2swap.buyIndexforSvetEth(web3.utils.toWei(indexAmount.toString(),'ether'),index_token1.address , "600", "90", {from:accounts[0], value: amountEth}); //
 
       console.log("buyIndexforSvetEth", buyIndexforSvetEth.tx);
@@ -113,8 +128,8 @@ contract ("Index2SwapEthMarket", async accounts => {
 
       const indexList = await indexstorage.indexList();
       const index_token1 = await IndexToken.at(indexList[0].addr);
-      await oraclePrice.test(index_token1.address, "1000000000000000");
-      
+      await oraclePrice.test(index_token1.address, "1000000000000000", true);
+      await oraclePrice.test(index_token1.address, "1000000000000000", false);
       
      // await index2swap.withdrEth4Svet(web3.utils.toWei('0.004','ether'), {from:accounts[0]});
        

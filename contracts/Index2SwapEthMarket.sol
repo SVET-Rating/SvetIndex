@@ -168,8 +168,8 @@ contract Index2SwapEthMarket  {
         path[1] = uniswapV2Router02.WETH(); //eth
 
         amountRet = uniswapV2Router02.getAmountsOut(_amount, path);
-        IERC20(addrActive).approve(address(uniswapV2Router02), amountRet[0]);
-        amountRet = uniswapV2Router02.swapExactTokensForETH(  amountRet[0] , amountRet[1]* _discount / 100, path, address (this), block.timestamp + _miningDelay);
+        IERC20(addrActive).approve(address(uniswapV2Router02), _amount);
+        amountRet = uniswapV2Router02.swapExactTokensForETH(  _amount , amountRet[1]* _discount / 100, path, address (this), block.timestamp + _miningDelay);
 
 
     }

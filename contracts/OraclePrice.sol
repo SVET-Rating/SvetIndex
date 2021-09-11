@@ -135,7 +135,7 @@ contract OraclePrice is iOraclePrice {
             path[1] = uniswapV2Router02.WETH();
             uint[] memory amounts = uniswapV2Router02.getAmountsOut(_amount, path);
             if (amounts[0] == 0) return 0; //no amounts for token
-            return  amounts[1]*10**18/amounts[0];
+            return  amounts[1]*10**18/_amount;
         }
     }
 
