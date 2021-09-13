@@ -45,7 +45,7 @@ const TransactionDelay = ({ delay, setDelay, processState }) => {
         Transaction deadline?
       </label>
 
-      <Typography>
+      <Typography className={classes.value}>
         <AppInput
           className={classes.input}
           id={INPUT_ID}
@@ -54,7 +54,7 @@ const TransactionDelay = ({ delay, setDelay, processState }) => {
           onChange={handleChange}
           onBlur={handleBlur}
         />
-        &nbsp;minutes
+        <span>minutes</span>
       </Typography>
     </Box>
   );

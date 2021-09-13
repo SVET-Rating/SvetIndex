@@ -1,10 +1,10 @@
-import { makeStyles, fade } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(1),
     borderRadius: theme.shape.borderRadius,
-    border: `1px solid ${fade(theme.palette.text.corporate, 0.5)}`,
+    border: `1px solid ${theme.palette.background.secondary}`,
     '& > * + *': {
       marginTop: theme.spacing(1),
     },

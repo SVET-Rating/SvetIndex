@@ -65,7 +65,9 @@ const SwapInAssetBalance = ({
       </Box>
 
       <Box className={classes.balance}>
-        <Typography>Balance:</Typography>
+        <Typography>
+          Balance:
+        </Typography>
         <AppAssetAmount
           className={classes.balanceAmount}
           amount={balance || '0.0'}

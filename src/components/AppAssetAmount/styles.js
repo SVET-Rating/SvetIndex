@@ -8,17 +8,19 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'flex-end',
     flexWrap: 'nowrap',
-    fontSize: 'inherit',
+    font: 'inherit',
     lineHeight: 1,
   },
   amount: {
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
+    font: 'inherit',
   },
   symbol: {
     flexShrink: 0,
     opacity: 0.5,
+    font: 'inherit',
   },
 }));
 

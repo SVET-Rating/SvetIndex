@@ -5,6 +5,9 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: theme.shape.borderRadius,
     backgroundColor: theme.palette.background.main,
   },
+  toolbar: {
+    flexWrap: 'wrap',
+  },
   grow: {
     flexGrow: 1,
     display: 'flex',

@@ -15,7 +15,7 @@ const TheHeader = ({ processState }) => {
 
   return (
     <AppBar className={classes.root} position="static">
-      <Toolbar>
+      <Toolbar className={classes.toolbar}>
 
         <IconButton className={classes.menuButton} disabled color="inherit" aria-label="Menu">
           <MenuIcon />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Stepper, Step, StepLabel } from '@material-ui/core';
+import { Box, Stepper, Step, StepLabel, Tooltip } from '@material-ui/core';
 import useStyles from './styles';
 
 const AppStepper = ({
@@ -12,9 +12,13 @@ const AppStepper = ({
 
   const stepperSteps = steps.map(({ label }) => (
     <Step key={label} className={classes.step}>
-      <StepLabel className={classes.stepLabel}>
-        {label}
-      </StepLabel>
+      <Tooltip
+        classes={{ popper: classes.tooltip }}
+        disableFocusListener
+        title={label}
+      >
+        <StepLabel className={classes.stepLabel} />
+      </Tooltip>
     </Step>
   ));
 

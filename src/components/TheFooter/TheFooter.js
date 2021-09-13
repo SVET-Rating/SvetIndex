@@ -8,7 +8,7 @@ const TheFooter = () => {
   return (
     <Box component='footer' className={classes.root}>
       <Typography>
-        SVET Supply-Weighted Index (SVET-SWI)
+        SVET Supply-Weighted Index
       </Typography>
 
       <Link

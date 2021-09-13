@@ -6,7 +6,7 @@ const HeaderLogo = () => {
 
   return (
     <span className={classes.root}>
-      SvetToken
+      SVET Token
     </span>
   );
 };

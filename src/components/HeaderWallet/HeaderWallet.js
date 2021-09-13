@@ -11,7 +11,9 @@ const HeaderWallet = ({ network, coinbase = {} }) => {
 
   return coinbase.address ? (
       <Box className={classes.root}>
-        <Typography>{network}</Typography>
+        <Typography className={classes.text}>
+          {network}
+        </Typography>
         <AppEtherAddress
           className={classes.address}
           address={coinbase.address}

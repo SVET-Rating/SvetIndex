@@ -196,7 +196,8 @@ export const selectSwapOutAssetAmount = (state) => {
       const slippage = selectSlippage(state);
 
       const ratio = (mode === c.SWAP_MODE.buy)
-        ? 1 + Number(slippage) / 100
+        ? 1.00001
+        // ? 1 + Number(slippage) / 100
         : 1;
 
       const amount = (priceAssetInInEther * assetInAmount) * ratio;

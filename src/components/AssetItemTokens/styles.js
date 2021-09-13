@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
     color: fade(theme.palette.common.white, 0.5),
     textAlign: 'left',
     paddingLeft: theme.spacing(0.5),
+    userSelect: 'none',
   },
 }));
 

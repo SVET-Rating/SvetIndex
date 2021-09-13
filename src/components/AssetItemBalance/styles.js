@@ -4,6 +4,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     paddingTop: theme.spacing(1),
     marginTop: 'auto !important',
+    userSelect: 'none',
   },
   block: {
     display: 'flex',
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.important,
   },
   divider: {
-    backgroundColor: theme.palette.common.white,
+    backgroundColor: theme.palette.background.secondary,
   },
 }));
 
