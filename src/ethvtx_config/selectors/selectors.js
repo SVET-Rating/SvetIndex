@@ -133,7 +133,9 @@ export const selectAssetPriceForAmountByAddress = (state, address, amountInEth =
 
   if (address && Number(amountInEth)) {
     const inWei = selectToWei(state, amountInEth); // todo: check 10^-18 in amountInEth
-    return selectOraclePriceContract(state).fn.getIndexPriceforAmount(address, inWei, swapType);
+
+    const price = selectOraclePriceContract(state).fn.getIndexPriceforAmount(address, inWei, swapType);
+    return (typeof price === 'object') ? undefined : price;
   }
 };
 
@@ -145,7 +147,9 @@ export const selectStableTokenPrice = (state, amountInEth = '1') => {
 
   if (Number(amountInEth) && address) {
     const inWei = selectToWei(state, amountInEth); // todo: check 10^-18 in amountInEth
-    return selectOraclePriceContract(state).fn.getPriceEthforAmount(address, inWei, swapType);
+
+    const price = selectOraclePriceContract(state).fn.getPriceEthforAmount(address, inWei, swapType);
+    return (typeof price === 'object') ? undefined : price;
   }
 };
 
@@ -196,8 +200,7 @@ export const selectSwapOutAssetAmount = (state) => {
       const slippage = selectSlippage(state);
 
       const ratio = (mode === c.SWAP_MODE.buy)
-        ? 1.00001
-        // ? 1 + Number(slippage) / 100
+        ? 1 + Number(slippage) / 100
         : 1;
 
       const amount = (priceAssetInInEther * assetInAmount) * ratio;
@@ -221,8 +224,10 @@ export const selectTokenShare = (state, assetAddress, tokenAddress, tokenAmountI
 
   if (assetAddress && tokenAddress && Number(tokenAmountInWei)) {
     const assetPriceInWei = selectAssetPriceForAmountByAddress(state, assetAddress);
-    const tokenPriceInWei = selectOraclePriceContract(state).fn.
-      getPriceEthforAmount(tokenAddress, tokenAmountInWei, swapType);
+    const price = selectOraclePriceContract(state).fn
+      .getPriceEthforAmount(tokenAddress, tokenAmountInWei, swapType);
+
+    const tokenPriceInWei = (typeof price === 'object') ? undefined : price;
 
     if (Number(assetPriceInWei) && tokenPriceInWei) {
       const tokenAmount = selectFromWei(state, tokenAmountInWei); // todo: check 10^-18 in amountInEth

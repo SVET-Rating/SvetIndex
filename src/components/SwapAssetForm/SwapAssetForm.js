@@ -44,8 +44,8 @@ const SwapAssetForm = ({
   const action = (swapMode === c.SWAP_MODE.buy) ? 'buy' : 'sell';
 
   const isSwapDisabled = (swapMode === c.SWAP_MODE.buy)
-    ? !Number(swapInAmount) || Number(swapOutAmount) > Number(swapOutBalance)
-    : !Number(swapInAmount) || Number(swapInAmount) > Number(swapInBalance);
+    ? !Number(swapInAmount) || !Number(swapOutAmount) || Number(swapOutAmount) > Number(swapOutBalance)
+    : !Number(swapInAmount) || !Number(swapOutAmount) || Number(swapInAmount) > Number(swapInBalance);
 
   const isActionsDisabled = !!processState;
 
