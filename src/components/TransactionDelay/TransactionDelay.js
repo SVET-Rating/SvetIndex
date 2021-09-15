@@ -45,7 +45,7 @@ const TransactionDelay = ({ delay, setDelay, processState }) => {
         Transaction deadline?
       </label>
 
-      <Typography className={classes.value}>
+      <Typography>
         <AppInput
           className={classes.input}
           id={INPUT_ID}

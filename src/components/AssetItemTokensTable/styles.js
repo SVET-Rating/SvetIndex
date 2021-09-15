@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.common.white,
     },
   },
+  tableHeader: {
+    userSelect: 'none',
+  },
 }));
 
 export default useStyles;

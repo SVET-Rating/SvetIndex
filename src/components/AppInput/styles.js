@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 'inherit',
     fontWeight: 700,
     textAlign: 'right',
+    userSelect: 'auto',
   },
 }));
 

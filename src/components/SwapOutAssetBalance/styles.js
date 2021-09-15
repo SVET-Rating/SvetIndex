@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
     '& > * + *': {
       marginTop: theme.spacing(1),
     },
+    userSelect: 'none',
   },
   amount: {
     display: 'flex',

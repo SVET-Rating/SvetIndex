@@ -26,16 +26,18 @@ const TransactionDetails = ({
     <Box className={classes.root}>
       <Box className={classes.record}>
         <Typography className={classes.text}>Current block:</Typography>
-        <Typography className={classes.value}>
-          {currentBlock.number}
-        </Typography>
+        <AppAssetAmount
+          className={classes.value}
+          amount={currentBlock.number}
+        />
       </Box>
 
       {/* <Box className={classes.record}>
         <Typography className={classes.text}>Gas amount:</Typography>
-        <Typography className={classes.value}>
-          {gasAmount}
-        </Typography>
+        <AppAssetAmount
+          className={classes.value}
+          amount={gasAmount}
+        />
       </Box> */}
 
       <Box className={classes.record}>

@@ -45,7 +45,7 @@ const SlippageTolerance = ({ slippage, setSlippage, processState }) => {
         Slippage tolerance?
       </label>
 
-      <Typography className={classes.value}>
+      <Typography>
         <AppInput
           className={classes.input}
           id={INPUT_ID}

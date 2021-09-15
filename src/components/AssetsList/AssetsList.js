@@ -3,25 +3,32 @@ import { connect } from 'react-redux';
 // import contracts from '../embarkArtifacts/contracts';
 // import tokenList from '../../assets/tokenlist.json';
 import { Box, List } from '@material-ui/core';
-import { selectAssetsList } from '../../ethvtx_config/selectors/selectors';
+import * as s from '../../ethvtx_config/selectors/selectors';
 import AssetItem from '../AssetItem/AssetItem';
+import OrbitLoader from '../loaders/OrbitLoader/OrbitLoader';
 import useStyles from './styles';
 
 const AssetsList = ({ assetsList = [] }) => {
   const classes = useStyles();
 
-  if (assetsList.length) {
-    const items = assetsList.map((item) => (
-      <AssetItem key={item.addr} item={item} />
-    ));
-
+  if (!assetsList.length) {
     return (
-      <List className={classes.root}>
-        {items}
-      </List>);
-  } else {
-    return <Box>Data loading...</Box>;
+      <Box className={classes.rootLoading}>
+        <OrbitLoader className={classes.loader} loading={true} />
+        Data loading...
+      </Box>
+    );
   }
+
+  const items = assetsList.map((item) => (
+    <AssetItem key={item.addr} item={item} />
+  ));
+
+  return (
+    <List className={classes.root}>
+      {items}
+    </List>
+  );
 };
 
 // const getIndexPriceInSvet = (indexTokenAddress, state) => {
@@ -107,7 +114,7 @@ const AssetsList = ({ assetsList = [] }) => {
 // };
 
 const mapStateToProps = (state) => ({
-  assetsList: selectAssetsList(state),
+  assetsList: s.selectAssetsList(state),
   // indexList: indexListWithBalance(state),
   // contractsList: getContractList(state),
   // svetTokensAmount: getContract(

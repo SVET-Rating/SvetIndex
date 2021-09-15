@@ -1,7 +1,9 @@
 import { makeStyles, fade } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: {
+    userSelect: 'none',
+  },
   record: {
     display: 'flex',
     justifyContent: 'space-between',

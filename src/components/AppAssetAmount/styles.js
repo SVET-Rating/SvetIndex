@@ -8,19 +8,21 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'flex-end',
     flexWrap: 'nowrap',
-    font: 'inherit',
     lineHeight: 1,
+    userSelect: 'none',
+    '& > *': {
+      opacity: 0.5,
+    }
   },
   amount: {
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    font: 'inherit',
+    userSelect: 'text',
+    opacity: 1,
   },
   symbol: {
     flexShrink: 0,
-    opacity: 0.5,
-    font: 'inherit',
   },
 }));
 

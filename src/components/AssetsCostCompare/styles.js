@@ -5,6 +5,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    userSelect: 'none',
   },
   compareAmount: {
     padding: theme.spacing(0, 1),

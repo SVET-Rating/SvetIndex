@@ -3,16 +3,22 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     '& input': {
-      height: '2.5rem',
+      height: '2.0rem',
+      paddingLeft: 0,
+      paddingRight: '5.0rem',
       border: 'none',
       color: theme.palette.common.white,
-      background: theme.palette.background.linearGradient,
+      background: theme.palette.background.main,
+      boxShadow: 'none',
       pointerEvents: 'none',
+    },
+    '& > div': {
+      marginRight: 0,
     },
     '& div > button': {
       color: theme.palette.text.corporate,
-      background: theme.palette.background.linearGradient,
-      '--main-color': theme.palette.background.linearGradient,
+      background: theme.palette.background.main,
+      '--main-color': theme.palette.background.main,
     },
   },
 }));

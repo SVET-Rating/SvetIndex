@@ -2,9 +2,9 @@ html {
   margin: 0;
   padding: 0;
   list-style-type: none;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen',
   'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-  'Helvetica', sans-serif;
+  'Helvetica', 'sans-serif';
 }
 
 body {
@@ -18,6 +18,17 @@ body {
 *::after,
 *::before {
   box-sizing: inherit;
+}
+
+input,
+textarea,
+button {
+  font-family: inherit;
+}
+
+label,
+button {
+  user-select: none;
 }
 
 @keyframes orbit-spinner-orbit-one-animation {

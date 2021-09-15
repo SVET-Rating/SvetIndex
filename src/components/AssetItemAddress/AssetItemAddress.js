@@ -14,7 +14,6 @@ const AssetItemAddress = ({ address }) => {
 
       <Typography className={classes.text}>
         <span>go to</span>
-        &nbsp;
         <a className={classes.link}
           href={`${ETHERSCAN_ADDRESS_URL}/${address}`}
           target="_blank"

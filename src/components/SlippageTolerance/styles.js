@@ -5,14 +5,11 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    fontFamily: 'inherit',
+    userSelect: 'none',
   },
   label: {
     color: 'inherit',
     cursor: 'pointer',
-  },
-  value: {
-    fontFamily: 'inherit',
   },
   input: {
     width: theme.spacing(5),
