@@ -1,6 +1,5 @@
 require('dotenv').config();
 const PRIVATE_KEY = process.env.REACT_APP_WALLET_PRIVATE_KEY;
-
 // This file contains only the basic configuration you need to run Embark's node
 // For additional configurations, see: https://framework.embarklabs.io/docs/blockchain_configuration.html
 module.exports = {
@@ -50,9 +49,9 @@ module.exports = {
     //753a98a2eb6c4d64918829f47d069440
     accounts: [
       {
-        privateKey: `${PRIVATE_KEY}`
         //privateKeyFile: "./testnet/password",
-        //privateKey: "622306b68d3ad3e9c73a2f847f50f97caf1eb611ac2047624959663837c4e9bd",// process.env.privKey,
+        privateKey: "622306b68d3ad3e9c73a2f847f50f97caf1eb611ac2047624959663837c4e9bd",// process.env.privKey,
+      //  privateKey:`${PRIVATE_KEY}` ,// process.env.privKey,
         //mnemonic: "YOUR_MNEMONIC",
         //hdpath: "m/44'/60'/0'/0/",
         //numAddresses: "1"
@@ -106,8 +105,19 @@ module.exports = {
         password: "config/livenet/password"
       }
     ]
-  }
+  },
 
+  pl: {
+     endpoint: "http://127.0.0.1:8555",
+     // endpoint: "https://ropsten.infura.io/v3/6e8c03180136466e82539db7eae2ae42", // Endpoint of an node to connect to. Can be on localhost or on the internet
+      // 6e8c03180136466e82539db7eae2ae42
+      //753a98a2eb6c4d64918829f47d069440
+      accounts: [
+        {
+          privateKey:`${PRIVATE_KEY}` ,// process.env.privKey,
+        }
+      ]
+    },
   // you can name an environment with specific settings and then specify with
   // "embark run custom_name" or "embark blockchain custom_name"
   //custom_name: {

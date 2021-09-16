@@ -9,7 +9,7 @@ module.exports = async function(deployer,_network, addresses) {
     const [admin,user1] = addresses;
 
 var netKey;
-if (_network == "ropsten" || _network == "mainnet" || _network == "ganache") {
+if (_network == "ropsten" || _network == "mainnet" || _network == "ganache" || _network == "pl") {
     netKey = _network;
 } else
 {
@@ -57,8 +57,8 @@ for (contractName of Object.keys(contracts[netKey]["deploy"])) {
     await deplContract["Experts"].addExpert(admin);
     await deplContract["OraclePrice"].setExpertsContr(deplContract["Experts"].address);
     await deplContract["OraclePrice"].setRouter(deplContract["UniswapV2Router02"].address);
-    await deplContract["OracleTotSupply"].setExpertsContr(deplContract["Experts"].address);
-    await deplContract["OracleCircAmount"].setExpertsContr(deplContract["Experts"].address);
+    // await deplContract["OracleTotSupply"].setExpertsContr(deplContract["Experts"].address);
+    // await deplContract["OracleCircAmount"].setExpertsContr(deplContract["Experts"].address);
 
     await  deplContract["Exchange"].setPriceOracle(deplContract["OraclePrice"].address);  
 

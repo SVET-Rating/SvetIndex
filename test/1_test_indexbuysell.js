@@ -15,7 +15,7 @@ console.log("tests");
 
 contract ("Index2SwapEthMarket", async accounts => {
   var amountEth =0;
-  const indexAmount = 0.1;
+  const indexAmount = 1000;
   
   
     it ("1. Buy index 1", async () => { 
@@ -52,7 +52,7 @@ contract ("Index2SwapEthMarket", async accounts => {
             
             const price = web3.utils.fromWei(await oraclePrice.getLastPrice(act.addr), 'ether')
             const amount = web3.utils.fromWei(act.amount, 'ether')
-           // console.log ("amount:",amount , "price:", price ,  amount * price);
+            console.log ("amount:",amount , "price:", price ,  amount * price);
              // oracle in ether
             priceIndexTot = priceIndexTot + amount * price ;   
            // console.log ("priceIndexTot:", priceIndexTot);
