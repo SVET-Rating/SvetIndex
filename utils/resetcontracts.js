@@ -14,7 +14,7 @@ copyFile(
       for (const contractName of Object.keys(contracts[netKey]["deploy"])) {
         contracts[netKey]["deploy"][contractName].address = "";
       }
-    } else if (myArgs[1] === "mainnet") {
+    } else if (myArgs[1] === "publicnets") {
       const contList = ["Experts", "Exchange", "OraclePrice", "OracleCircAmount",  "OracleTotSupply", "Index2SwapEthMarket", "IndexFactory", "Lstorage",  "IndexStorage", "SVTtst"];
       for (const contractName of contList) {
         contracts[netKey]["deploy"][contractName].address = "";

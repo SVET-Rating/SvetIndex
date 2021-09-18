@@ -9,7 +9,7 @@ import "../../access/roles/MinterRole.sol";
  *
  * At construction, the deployer of the contract is the only minter.
  */
-contract ERC20Mintable is ERC20, MinterRole {
+abstract contract ERC20Mintable is ERC20, MinterRole {
     /**
      * @dev See {ERC20-_mint}.
      *
@@ -17,7 +17,7 @@ contract ERC20Mintable is ERC20, MinterRole {
      *
      * - the caller must have the {MinterRole}.
      */
-    function mint(address account, uint256 amount) public onlyMinter returns (bool) {
+    function mint(address account, uint256 amount) public onlyMinter override returns (bool) {
         _mint(account, amount);
         return true;
     }

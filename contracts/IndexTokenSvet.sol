@@ -1,7 +1,8 @@
 pragma solidity =0.6.12;
 pragma experimental ABIEncoderV2;
 import "./interfaces/iIndextoken.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "./openzeppelin-contracts/contracts/token/ERC20/ERC20.sol";
+
 
 contract IndexTokenSvet is iIndexToken, ERC20 {
   

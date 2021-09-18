@@ -1,9 +1,10 @@
-pragma solidity =0.6.12;
+pragma solidity >=0.6.12;
 import "./TokTst.sol";
 import "./interfaces/iOraclePrice.sol";
 import "./interfaces/IUniswapV2Router02.sol";
 import "./interfaces/IUniswapV2Factory.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "./interfaces/IERC20Uniswap.sol";
+
 
 
 contract Faucet {

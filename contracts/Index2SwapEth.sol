@@ -34,7 +34,7 @@ contract Index2SwapEth  {
     address owner;
     iOraclePrice oraclePrice;
     iLstorage lstorage;
-    IERC20 svetT;
+    IERC20Uniswap svetT;
 
     IUniswapV2Router02 uniswapV2Router02;
     
@@ -62,7 +62,7 @@ contract Index2SwapEth  {
 
     function set ( address _svetT, address _oraclePrice, address _lstor, address _addrRout) public onlyOwner {
 
-            svetT = IERC20(_svetT);
+            svetT = IERC20Uniswap(_svetT);
             oraclePrice = iOraclePrice (_oraclePrice);
             lstorage = iLstorage(_lstor);
             uniswapV2Router02 = IUniswapV2Router02 (_addrRout);
@@ -215,7 +215,7 @@ contract Index2SwapEth  {
         require(_newContract != msg.sender);
         address[] memory tokens  = oraclePrice.getallTokens();
         for (uint256 t=0; t<tokens.length; t++){
-            IERC20 tok = IERC20(tokens[t]);
+            IERC20Uniswap tok = IERC20Uniswap(tokens[t]);
             if (tok.balanceOf(address(this)) > 0) {
                 tok.transfer(_newContract, tok.balanceOf(address(this)));
             }

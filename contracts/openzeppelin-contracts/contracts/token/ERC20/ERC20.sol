@@ -2,7 +2,8 @@ pragma solidity ^0.6.1;
 
 import "../../GSN/Context.sol";
 //import "./IERC20.sol";
-import "./IERC20.sol";
+import "../../../../interfaces/iIndextoken.sol";
+
 import "../../math/SafeMath.sol";
 
 /**
@@ -29,7 +30,7 @@ import "../../math/SafeMath.sol";
  * functions have been added to mitigate the well-known issues around setting
  * allowances. See {IERC20-approve}.
  */
-contract ERC20 is Context, IERC20 {
+abstract contract ERC20 is Context, iIndexToken  {
     using SafeMath for uint256;
     
 
@@ -39,9 +40,51 @@ contract ERC20 is Context, IERC20 {
 
     uint256 private _totalSupply;
 
+    string private _name;
+    string private _symbol;
+    uint8 private _decimals;
+
     /**
      * @dev See {IERC20-totalSupply}.
      */
+
+     constructor (string memory name_, string memory symbol_) public {
+        _name = name_;
+        _symbol = symbol_;
+        _decimals = 18;
+    }
+
+    /**
+     * @dev Returns the name of the token.
+     */
+    function name() public view override returns (string memory) {
+        return _name;
+    }
+
+    /**
+     * @dev Returns the symbol of the token, usually a shorter version of the
+     * name.
+     */
+    function symbol() public view override returns (string memory) {
+        return _symbol;
+    }
+
+    /**
+     * @dev Returns the number of decimals used to get its user representation.
+     * For example, if `decimals` equals `2`, a balance of `505` tokens should
+     * be displayed to a user as `5,05` (`505 / 10 ** 2`).
+     *
+     * Tokens usually opt for a value of 18, imitating the relationship between
+     * Ether and Wei. This is the value {ERC20} uses, unless {_setupDecimals} is
+     * called.
+     *
+     * NOTE: This information is only used for _display_ purposes: it in
+     * no way affects any of the arithmetic of the contract, including
+     * {IERC20-balanceOf} and {IERC20-transfer}.
+     */
+    function decimals() public view override returns (uint8) {
+        return _decimals;
+    }
     function totalSupply() public view override returns (uint256) {
         return _totalSupply;
     }
@@ -61,7 +104,7 @@ contract ERC20 is Context, IERC20 {
      * - `recipient` cannot be the zero address.
      * - the caller must have a balance of at least `amount`.
      */
-    function transfer(address recipient, uint256 amount) public virtual override returns (bool) {
+    function transfer(address recipient, uint256 amount) public override virtual returns (bool) {
         _transfer(_msgSender(), recipient, amount);
         return true;
     }
@@ -97,7 +140,7 @@ contract ERC20 is Context, IERC20 {
      * - the caller must have allowance for `sender`'s tokens of at least
      * `amount`.
      */
-    function transferFrom(address sender, address recipient, uint256 amount) public virtual override returns (bool) {
+    function transferFrom(address sender, address recipient, uint256 amount) public override virtual returns (bool) {
         _transfer(sender, recipient, amount);
         _approve(sender, _msgSender(), _allowances[sender][_msgSender()].sub(amount, "ERC20: transfer amount exceeds allowance"));
         return true;

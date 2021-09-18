@@ -39,7 +39,7 @@ contract Index2Swap is iIndex2Swap {
     address owner;
     iOraclePrice oraclePrice;
     iLstorage lstorage;
-    IERC20 svetT;
+    IERC20Uniswap svetT;
 
     IUniswapV2Router02 uniswapV2Router02;
     
@@ -67,7 +67,7 @@ contract Index2Swap is iIndex2Swap {
 
     function set ( address _svetT, address _oraclePrice, address _lstor, address _addrRout) public onlyOwner {
 
-            svetT = IERC20(_svetT);
+            svetT = IERC20Uniswap(_svetT);
             oraclePrice = iOraclePrice (_oraclePrice);
             lstorage = iLstorage(_lstor);
             uniswapV2Router02 = IUniswapV2Router02 (_addrRout);
@@ -84,7 +84,7 @@ contract Index2Swap is iIndex2Swap {
         // here wee need connection to Uniswap
 
         
-        IERC20 a1 = IERC20 (_addrActive1);
+        IERC20Uniswap a1 = IERC20Uniswap (_addrActive1);
         require(a1.transferFrom(msg.sender, address(this), _amount1), 'transferFrom failed.');
 
         
@@ -171,7 +171,7 @@ contract Index2Swap is iIndex2Swap {
 
         amountRet = uniswapV2Router02.getAmountsOut(_amount, path);
       //  require (reserve1 >= amountRet[1], "No enought tokenTo in pair");
-        IERC20(addrActive).approve(address(uniswapV2Router02), amountRet[0]);
+        IERC20Uniswap(addrActive).approve(address(uniswapV2Router02), amountRet[0]);
         amountRet = uniswapV2Router02.swapExactTokensForETH(  amountRet[0] , amountRet[1]* _discount / 100, path, address (this), block.timestamp + _miningDelay);
 
 
@@ -319,7 +319,7 @@ contract Index2Swap is iIndex2Swap {
         require(_newContract != msg.sender);
         address[] memory tokens  = oraclePrice.getallTokens();
         for (uint256 t=0; t<tokens.length; t++){
-            IERC20 tok = IERC20(tokens[t]);
+            IERC20Uniswap tok = IERC20Uniswap(tokens[t]);
             if (tok.balanceOf(address(this)) > 0) {
                 tok.transfer(_newContract, tok.balanceOf(address(this)));
             }
