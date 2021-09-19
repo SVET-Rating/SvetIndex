@@ -9,21 +9,25 @@ import useStyles from './styles';
 const HeaderWallet = ({ network, coinbase = {} }) => {
   const classes = useStyles();
 
-  return coinbase.address ? (
-      <Box className={classes.root}>
-        <Typography className={classes.text}>
-          {network}:
-        </Typography>
-        <AppEtherAddress
-          className={classes.address}
-          address={coinbase.address}
-        />
-      </Box>
-    ) : (
+  if (!coinbase.address) {
+    return (
       <AppButton disabled>
         Connect wallet
       </AppButton>
     );
+  }
+
+  return (
+    <Box className={classes.root}>
+      <Typography className={classes.text}>
+        {network}:
+      </Typography>
+      <AppEtherAddress
+        className={classes.address}
+        address={coinbase.address}
+      />
+    </Box>
+  );
 };
 
 const mapStateToProps = (state) => ({

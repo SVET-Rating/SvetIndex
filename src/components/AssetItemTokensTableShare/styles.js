@@ -10,7 +10,13 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   address: {
-    minWidth: theme.spacing(25),
+    width: theme.spacing(21),
+    '& div': {
+      fontSize: 'inherit',
+      '& input': {
+        fontSize: 'inherit',
+      },
+    },
   },
   value: {
     paddingLeft: 'unset',

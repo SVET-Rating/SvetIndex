@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  Paper,
   Table,
   TableBody,
   TableCell,
@@ -21,7 +20,7 @@ const AssetItemTokensTable = ({ tokensList }) => {
   ));
 
   return (
-    <TableContainer className={classes.root} component={Paper}>
+    <TableContainer className={classes.root}>
       <Table className={classes.table}>
         <TableHead className={classes.tableHeader}>
           <TableRow>

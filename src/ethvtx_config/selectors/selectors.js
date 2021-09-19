@@ -111,11 +111,20 @@ export const selectSwapAssetGasAmount = (state) => {
 };
 // not correct --------------------------------------------------------------------------------
 
+export const selectAssetSymbolByAddress = (state, address) => {
+  if (address) {
+    const contract = selectIndexTokenContract(state, address);
+    if (contract) {
+      return contract.fn.symbol();
+    }
+  }
+};
+
 export const selectAssetInSymbol = (state) => {
   const address = selectAssetInAddress(state);
 
   if (address) {
-    return selectIndexTokenContract(state, address).fn.symbol();
+    return selectAssetSymbolByAddress(state, address);
   }
 };
 
@@ -136,6 +145,42 @@ export const selectAssetPriceForAmountByAddress = (state, address, amountInEth =
 
     const price = selectOraclePriceContract(state).fn.getIndexPriceforAmount(address, inWei, swapType);
     return (typeof price === 'object') ? undefined : price;
+  }
+};
+
+export const selectAssetInPriceForAmount = (state, amountInEth = '1') => {
+  const address = selectAssetInAddress(state);
+
+  if (address && Number(amountInEth)) {
+    const price = selectAssetPriceForAmountByAddress(state, address, amountInEth);
+
+    if (price) {
+      return selectFromWei(state, price);
+    }
+  }
+};
+
+export const selectAssetAllTokensPriceForAmountByAddress = (state, address, amountInEth = '1') => {
+  const mode = selectSwapMode(state);
+  const swapType = (mode === c.SWAP_MODE.sell) ? false : true;
+
+  if (address && Number(amountInEth)) {
+    const inWei = selectToWei(state, amountInEth); // todo: check 10^-18 in amountInEth
+
+    const prices = selectOraclePriceContract(state).fn.getAllActsIndPricesAmount(address, inWei, swapType);
+    return (typeof prices === 'object' && !Array.isArray(prices)) ? undefined : prices;
+  }
+};
+
+export const selectAssetInAllTokensPriceForAmountByAddress = (state, amountInEth = '1') => {
+  const address = selectAssetInAddress(state);
+
+  if (address && Number(amountInEth)) {
+    const prices = selectAssetAllTokensPriceForAmountByAddress(state, address, amountInEth);
+
+    if (prices && Array.isArray(prices)) {
+      return prices.map((price) => selectFromWei(state, price));
+    }
   }
 };
 

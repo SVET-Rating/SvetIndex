@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: '600px',
+    maxWidth: theme.breakpoints.values.md,
     margin: '0 auto',
   },
 }));

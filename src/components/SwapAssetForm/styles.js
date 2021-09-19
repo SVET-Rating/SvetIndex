@@ -9,7 +9,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'stretch',
-    borderRadius: `${2 * theme.shape.borderRadius}px`,
+    borderRadius: theme.shape.borderRadius,
+    // borderRadius: `${2 * theme.shape.borderRadius}px`,
     backgroundColor: theme.palette.background.main,
     color: theme.palette.common.white,
     '& > * + *': {
@@ -30,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
   },
   swapIcon: {
     alignSelf: 'center',
-    padding: theme.spacing(0.5, 2),
+    padding: theme.spacing(1),
+    background: theme.palette.background.linearGradient,
     textAlign: 'center',
   },
   actionSection: {

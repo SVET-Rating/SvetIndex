@@ -7,8 +7,20 @@ const useStyles = makeStyles((theme) => ({
   stepper: {
     padding: theme.spacing(1, 0),
     backgroundColor: 'transparent',
+
+    '& .MuiStep-alternativeLabel': {
+      alignSelf: 'stretch',
+    },
   },
-  step: {},
+  step: {
+    '& .MuiStepConnector-root': {
+      display: 'none',
+    },
+
+    '& .MuiStepLabel-root': {
+      height: '100%',
+    },
+  },
   tooltip: {
     '& .MuiTooltip-tooltip': {
       background: theme.palette.background.linearGradient,
@@ -35,8 +47,18 @@ const useStyles = makeStyles((theme) => ({
       color: fade(theme.palette.common.white, 0.5),
     },
 
+    '& .MuiStepLabel-label.MuiStepLabel-alternativeLabel': {
+      marginTop: theme.spacing(1),
+    },
+
     '& .MuiStepLabel-iconContainer': {
       paddingRight: 0,
+    },
+
+    [theme.breakpoints.down('xs')]: {
+      '& .MuiStepLabel-label': {
+        display: 'none',
+      },
     },
   },
 }));

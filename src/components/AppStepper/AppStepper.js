@@ -10,24 +10,29 @@ const AppStepper = ({
 }) => {
   const classes = useStyles();
 
+  if (!steps.length || disabled) {
+    return null;
+  }
+
   const stepperSteps = steps.map(({ label }) => (
     <Step key={label} className={classes.step}>
       <Tooltip
         classes={{ popper: classes.tooltip }}
-        disableFocusListener
         title={label}
       >
-        <StepLabel className={classes.stepLabel} />
+        <StepLabel className={classes.stepLabel}>
+          {label}
+        </StepLabel>
       </Tooltip>
     </Step>
   ));
 
-  return disabled ? null : (
+  return (
     <Box className={`${classes.root} ${className}`}>
       <Stepper
         className={classes.stepper}
         activeStep={activeStep}
-        // alternativeLabel
+        alternativeLabel
       >
         {stepperSteps}
       </Stepper>

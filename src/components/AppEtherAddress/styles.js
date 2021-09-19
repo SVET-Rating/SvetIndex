@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
     '& > div': {
       marginRight: 0,
     },
+    '& > div > button': {
+      marginLeft: theme.spacing(0.5),
+    },
     '& div > button': {
       color: theme.palette.text.corporate,
       background: theme.palette.background.main,

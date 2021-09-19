@@ -22,11 +22,11 @@ const AssetItemTokensTableShare = ({
         </Box>
       </TableCell>
 
-      <TableCell align="center">
-        <AppEtherAddress className={classes.address} address={addrActive} />
+      <TableCell className={classes.address} align="center">
+        <AppEtherAddress address={addrActive} />
       </TableCell>
 
-      <TableCell align="center">
+      <TableCell align="right">
         {(share * 100).toFixed(2)}%
       </TableCell>
 
