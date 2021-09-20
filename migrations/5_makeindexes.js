@@ -140,9 +140,11 @@ if ( isindexexist == "0x0000000000000000000000000000000000000000")
     // contracts[netKey]["deploy"] ["SVTtst"]["address"],
 
     ],
-    [web3.utils.toWei('3000','ether'), 
-    web3.utils.toWei('4','ether'),
-     web3.utils.toWei('3000','ether')]); //in WEI
+    //300000000000000000000000000000000000000
+    ['3000000000000000000000', // 3000 DAI decimals = 18
+     '40000000000000000', //0.04 wbtc decimals = 18
+     '3000000000000000000000']); //3000 USDC decimals = 18
+    //4409865971895742203834
   console.log(trIndex6.tx);
   }
 /**

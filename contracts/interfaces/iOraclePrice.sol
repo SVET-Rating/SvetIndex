@@ -1,4 +1,4 @@
-pragma solidity =0.6.12;
+pragma solidity >=0.6.12;
 
 interface iOraclePrice {
 
@@ -23,6 +23,7 @@ interface iOraclePrice {
 
     function getIndexPriceforAmount (address _indexT, uint256 _amount, bool _buy) external view returns (uint256 priceIndexTot); //uint256[] memory allPrices);
     function getAllActsIndPricesAmount (address _indexT, uint256 _amount, bool _buy) external view  returns (uint256[] memory );
+    function getDecimals(address _addrToken) external view returns (uint256) ;
 
 
 }
