@@ -73,7 +73,7 @@ contract OraclePrice is iOraclePrice {
         return prices[_addrToken].length;
     }
 
-    function getDecimals(address _addrToken) internal view returns (uint256) {
+    function getDecimals(address _addrToken) public override view returns (uint256) {
         try iIndexToken(_addrToken).decimals() returns (uint8 dec) {
             return uint256(dec);
         } catch {
@@ -95,16 +95,24 @@ contract OraclePrice is iOraclePrice {
         else  {
             uint decTok = getDecimals(_addrToken);
             uint decEth = getDecimals(uniswapV2Router02.WETH());
-            uint mult = 10**(18-(decTok-decEth));
+            uint mult = 10**(18+decTok-decEth);
            IUniswapV2Pair pair = IUniswapV2Pair(IUniswapV2Factory (uniswapV2Router02.factory()).getPair(uniswapV2Router02.WETH(), _addrToken));
             (uint112 reserve0, uint112 reserve1,) = pair.getReserves();
             require (reserve0 > 0, "reserve0 = 0");
             require (reserve1 > 0, "reserve1 = 0");
 
             if (pair.token0() == _addrToken  ) {
-                lastPrice = reserve1 * mult/ reserve0; //uint(FixedPoint.fraction(reserve0, reserve1)._x) ;
+                lastPrice = reserve1  * mult / reserve0 ; //WETH = token1
+                //uint(FixedPoint.fraction(reserve0, reserve1)._x) ;
+                    /**
+                    DIVIDE RESULT / 10**18!!! 
+                    */
             } else   if (pair.token1() == _addrToken ) {
-                lastPrice = reserve0 * mult / reserve1; // uint(FixedPoint.fraction(reserve1, reserve0)._x);
+                lastPrice = reserve0  * mult  / reserve1;  //WETH = token0
+                // uint(FixedPoint.fraction(reserve1, reserve0)._x);
+                /**
+                DIVIDE RESULT / 10**18!!! 
+                */
             } else {
                 lastPrice = 0; //no price;
             }
@@ -121,7 +129,7 @@ contract OraclePrice is iOraclePrice {
         for (uint8 i = 0; i<index.getActivesLen(); i++) {
             (address addrActive, uint256 share) = index.getActivesItem(i);
          //   allPrices[i] = getLastPrice(addrActive);
-            priceIndexTot = priceIndexTot + share *  getLastPrice(addrActive) /( 1 /* ether */)  ;
+            priceIndexTot = priceIndexTot + share *  getLastPrice(addrActive) /( 1  ether )  ;
 
         }
     }
@@ -134,7 +142,7 @@ contract OraclePrice is iOraclePrice {
 
         for (uint256 i = 0; i<len; i++) {
             (address addrActive, uint256 share) = index.getActivesItem(i);
-            allPrices[i] =   getLastPrice(addrActive) * share/( 1 /* ether */);
+            allPrices[i] =   getLastPrice(addrActive) * share/( 1  ether );
 
         }
        return allPrices;
@@ -145,23 +153,27 @@ contract OraclePrice is iOraclePrice {
         IUniswapV2Pair pair = IUniswapV2Pair(IUniswapV2Factory (uniswapV2Router02.factory()).getPair(uniswapV2Router02.WETH(), _addrToken));  //todo for debugging, remove on release
         uint decTok = getDecimals(_addrToken);
         uint decEth = getDecimals(uniswapV2Router02.WETH());
-        //uint mult = 10**(decEth-decTok);
+//        uint mult = 10**(18+decEth-decTok);
+        uint mult = 10**(18+decTok-decEth);
+
+        uint amount = _amount * 10**decTok / 10**decEth ;
         if (_buy) {
             path[0] = uniswapV2Router02.WETH();
             path[1] = _addrToken;
             (uint112 reserve0, uint112 reserve1,) = pair.getReserves(); //todo for debugging, remove on release
-            uint amount = _amount * 10**decTok / 10**decEth ;
+
             uint[] memory amounts = uniswapV2Router02.getAmountsIn(amount , path);
             if (amounts[1] == 0) return 0; //no amounts for token
-            return  amounts[0]*( 1 /* ether */)/amounts[1];
+            uint priceBuy =   amounts[0]* mult/amounts[1];
+            return priceBuy;
         } else {
             path[0] = _addrToken;
             path[1] = uniswapV2Router02.WETH();
             (uint112 reserve0, uint112 reserve1,) = pair.getReserves(); //todo for debugging, remove on release
-            uint amount = _amount * 10**decTok / 10**decEth ;
             uint[] memory amounts = uniswapV2Router02.getAmountsOut(amount, path);
             if (amounts[0] == 0) return 0; //no amounts for token
-            return  amounts[1]*( 1 /* ether */)/amounts[0]; // price in eth/token
+            uint priceSell = amounts[1]*( 1 * mult )/amounts[0];
+            return  priceSell; // price in eth/token
         }
     }
 
@@ -169,8 +181,8 @@ contract OraclePrice is iOraclePrice {
         iIndexToken index = iIndexToken(_indexT);
         for (uint8 i = 0; i<index.getActivesLen(); i++) {
             (address addrActive, uint256 share) = index.getActivesItem(i);
-            uint priceA = getPriceEthforAmount(addrActive, _amount*share / ( 1 /* ether */), _buy);
-            priceIndexTot = priceIndexTot + share * priceA  /( 1 /* ether */)  ;
+            uint priceA = getPriceEthforAmount(addrActive, _amount*share / ( 1  ether ), _buy);
+            priceIndexTot = priceIndexTot + share * priceA  /( 1  ether )  ;
 
         }
     }

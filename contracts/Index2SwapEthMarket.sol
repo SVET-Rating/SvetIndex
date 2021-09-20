@@ -92,8 +92,11 @@ contract Index2SwapEthMarket  {
                     IUniswapV2Factory (uniswapV2Router02.factory()
                 ).getPair(uniswapV2Router02.WETH(), _addrActive1)
             ).getReserves(); 
-            
-        amountRet = uniswapV2Router02.getAmountsIn(_amount1, path);
+        uint decTok = oraclePrice.getDecimals(_addrActive1);
+        uint decEth = oraclePrice.getDecimals(uniswapV2Router02.WETH());
+        uint amount = _amount1 * 10**decTok / 10**decEth ;
+
+        amountRet = uniswapV2Router02.getAmountsIn(amount, path);
       //  require (reserve1 >= amountRet[1], "No enought tokenTo in pair");
 
         amountRet = uniswapV2Router02.swapETHForExactTokens{ value: amountRet[0] }( amountRet[1], path, address (this), block.timestamp + _miningDelay);
@@ -109,9 +112,10 @@ contract Index2SwapEthMarket  {
         uint256 priceIndexTot;
         uint256 spendedEth;
         iIndexToken index = iIndexToken(_indexT);
-        uint svetPrice = oraclePrice.getLastPrice(address(svetT));
 
         if (buyFee > 0)  {   
+            uint svetPrice = oraclePrice.getLastPrice(address(svetT));
+
             uint fee = _amount * uint(buyFee) / svetPrice /10000; //buyFee in %%  * 100
 
             svetT.transferFrom(msg.sender, address(this), fee );
@@ -185,7 +189,7 @@ contract Index2SwapEthMarket  {
             (address addrActive, uint share) = index.getActivesItem(i);
             uint amount = _amount * lstorage.getBalance (msg.sender, _indexT, addrActive) /  index.balanceOf(msg.sender);
 
-            // *_amount  /10000;
+            //TODO refactor!!!// *_amount  /10000;
             totPriceActSv += amount * 
                         oraclePrice.getLastPrice(addrActive) /
                         oraclePrice.getLastPrice(address(svetT)); //
