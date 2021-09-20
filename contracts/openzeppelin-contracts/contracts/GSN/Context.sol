@@ -1,4 +1,4 @@
-pragma solidity ^0.6.1;
+pragma solidity >=0.6.1;
 
 /*
  * @dev Provides information about the current execution context, including the
@@ -17,7 +17,7 @@ contract Context {
     // solhint-disable-previous-line no-empty-blocks
 
     function _msgSender() internal view returns (address payable) {
-        return msg.sender;
+        return payable ( msg.sender);
     }
 
     function _msgData() internal view returns (bytes memory) {
