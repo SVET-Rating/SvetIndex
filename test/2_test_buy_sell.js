@@ -11,8 +11,8 @@ const Erc20 = artifacts.require('TokTst.sol')
 var  netKey = "pl";
 //"cloudflare"; //testing only on localchain
 var amountEth =0;
-const indexAmount = 100000000000000000;
-
+const indexAmount = 10000000000000000; //0.01 eth
+const slippage = 90 //0.9
 
 console.log("tests");
 
@@ -57,7 +57,7 @@ it ("1. Buy index 1", async () => {
                 
                 //const amount = web3.utils.fromWei(act.amount, 'ether')
                 const amount =act.amount
-                console.log ("amount:",amount.toString() , "price:", price.toString() ,  amount * price.toString());
+                console.log ("amount:",amount.toString() , "price:", price.toString() ,  (amount * price / 10**18).toString());
                  // oracle in ether
                 priceIndexTot = priceIndexTot + amount * price / 10**18 ;   
                // console.log ("priceIndexTot:", priceIndexTot);
@@ -73,13 +73,13 @@ it ("1. Buy index 1", async () => {
           const priceIndexAm = await oraclePrice.getIndexPriceforAmount (indexList[0].addr, indexAmount.toString(), true);
           console.log ( "priceIndexAm: ", priceIndexAm.toString());
     
-          amountEth = indexAmount/0.9 * priceIndexTot/10**18;
+          amountEth = indexAmount * slippage * priceIndexAm/10**(18+1);
           console.log ("priceIndex amountEth: ", amountEth)
           // amountEth =  amountEth.toFixed(18)
           // console.log ("amountEth: ", amountEth)
           // amountEth = web3.utils.toWei(amountEth,'ether')
           // console.log ("amountEth: ", amountEth)
-          const buyIndexforSvetEth = await index2swap.buyIndexforSvetEth(indexAmount.toFixed(0),index_token1.address , "600", "90", {from:accounts[0], value: priceIndexAm / 10**18}); //
+          const buyIndexforSvetEth = await index2swap.buyIndexforSvetEth(indexAmount.toFixed(0),index_token1.address , "600", slippage, {from:accounts[0], value:amountEth}); //
     
           console.log("buyIndexforSvetEth", buyIndexforSvetEth.tx);
     //    assert (false); //TODO add checks
@@ -93,7 +93,7 @@ it ("1. Buy index 1", async () => {
             const token = await Erc20.at(act.addr);
             const bougthAmount = await token.balanceOf(contracts[netKey]["deploy"] ["Index2SwapEthMarket"]["address"]);
            // console.log ("bougthAmount:", bougthAmount)
-            assert (amount * indexAmount ==  web3.utils.fromWei(bougthAmount, 'ether'), "Not right amounts: " + amount * indexAmount +"<>" +  web3.utils.fromWei(bougthAmount, 'ether'));
+            assert (amount * indexAmount / 10**18==  web3.utils.fromWei(bougthAmount, 'ether'), "Not right amounts: " + amount * indexAmount / 10**18 +"<>" +  web3.utils.fromWei(bougthAmount, 'ether'));
             
             } 
     
@@ -107,8 +107,8 @@ it ("1. Buy index 1", async () => {
           const indexstorage = await IndexStorage.at(contracts[netKey]["deploy"] ["IndexStorage"]["address"]);
           const indexList = await indexstorage.indexList();
           const index_token1 = await IndexToken.at(indexList[0].addr);
-          await index_token1.approve(index2swap.address,web3.utils.toWei('0.1','ether'),{from:accounts[0]});
-          const sellIndexforSvet=await index2swap.sellIndexforEth(web3.utils.toWei('0.1','ether'),index_token1.address, "600", "90", {from:accounts[0]});
+          await index_token1.approve(index2swap.address,indexAmount.toString(),{from:accounts[0]});
+          const sellIndexforSvet=await index2swap.sellIndexforEth(indexAmount.toString(),index_token1.address, "600", slippage , {from:accounts[0]});
           console.log("sellIndexforSvet", sellIndexforSvet.tx);
     
           const actList = await index_token1.getActivesList();
@@ -116,7 +116,7 @@ it ("1. Buy index 1", async () => {
                             
             const act  = await index_token1.getActivesItem(i);
             
-            const amount = web3.utils.fromWei(act.amount, 'ether')
+          //  const amount = web3.utils.fromWei(act.amount, 'ether')
             
             const token = await Erc20.at(act.addr);
             const bougthAmount = await token.balanceOf(contracts[netKey]["deploy"] ["Index2SwapEthMarket"]["address"]);

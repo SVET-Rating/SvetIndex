@@ -108,7 +108,7 @@ module.exports = {
   },
 
   pl: {
-     endpoint: "http://127.0.0.1:8555",
+     endpoint: "http://127.0.0.1:8545",
      // endpoint: "https://ropsten.infura.io/v3/6e8c03180136466e82539db7eae2ae42", // Endpoint of an node to connect to. Can be on localhost or on the internet
       // 6e8c03180136466e82539db7eae2ae42
       //753a98a2eb6c4d64918829f47d069440

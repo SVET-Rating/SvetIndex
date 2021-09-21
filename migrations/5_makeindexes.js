@@ -136,14 +136,14 @@ if ( isindexexist == "0x0000000000000000000000000000000000000000")
   const trIndex6 = await index_factory.makeIndex(index_tokenSSTI.address,
     [tokens[netKey]["DAI"]["address"],
       tokens[netKey]["WBTC"]["address"],
-      tokens[netKey]["USDC"]["address"],
+      tokens[netKey]["USDC"]["address"]
     // contracts[netKey]["deploy"] ["SVTtst"]["address"],
-
     ],
     //300000000000000000000000000000000000000
     ['3000000000000000000000', // 3000 DAI decimals = 18
      '40000000000000000', //0.04 wbtc decimals = 18
-     '3000000000000000000000']); //3000 USDC decimals = 18
+     '3000000000000000000000'
+  ]); //3000 USDC decimals = 18
     //4409865971895742203834
   console.log(trIndex6.tx);
   }

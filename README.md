@@ -7,22 +7,21 @@ Use npm i to run the following npm tasks:
 Install ganache, Embark globally:
 `npm i -g ganache embark`
  Clone the repo https://github.com/SVET-rating/svet_token
-Run to deploy system on your localnet:
+Run to deploy system on your poligon localnet:
 ```
-node utils/resetcontracts.js cloudflare all && node utils/resettokens.js cloudflare all
-node utils/resetcontracts.js ropsten all && node utils/resettokens.js ropsten all
+node utils/resetcontracts.js pl mainnet 
 
-ganache-cli -m "clutch captain shoe salt awake harvest setup primary inmate ugly among become" -i 999 -u 0xa0df350d2637096571F7A701CBc1C5fdE30dF76A --db ../ganache_local --allowUnlimitedContractSize -g 18000000000 -e 1000 -b 1
+ ganacheli -m "clutch captain shoe salt awake harvest setup primary inmate ugly among become" -f 'https://polygon-mainnet.infura.io/v3/753a98a2eb6c4d64918829f47d069440' -u 0xa0df350d2637096571F7A701CBc1C5fdE30dF76A --db ../ganache_poly  -p 8545 -e 1000
 
-truffle migrate --reset --compile-all --network cloudflare
-truffle test --network cloudflare
-truffle migrate --reset --compile-all --network ropsten
-truffle migrate --network ropsten
+truffle migrate --reset --compile-all --network pl
 
-embark run --nodashboard cloudflare
-embark run --nodashboard ropsten
+truffle test --network pl 
+
+embark run --nodashboard pl 
 ```
 
 Open http://localhost:8000
 
-truffle debug --network cloudflare 0x2a144e4a8d89ea66e3647a87b2affcd2f202f06b7fd4ac76b36658c91438f9b4
+debugging tranzactions: 
+truffle debug --network pl 
+0x2a144e4a8d89ea66e3647a87b2affcd2f202f06b7fd4ac76b36658c91438f9b4

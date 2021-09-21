@@ -189,10 +189,6 @@ contract Index2SwapEthMarket  {
             (address addrActive, uint share) = index.getActivesItem(i);
             uint amount = _amount * lstorage.getBalance (msg.sender, _indexT, addrActive) /  index.balanceOf(msg.sender);
 
-            //TODO refactor!!!// *_amount  /10000;
-            totPriceActSv += amount * 
-                        oraclePrice.getLastPrice(addrActive) /
-                        oraclePrice.getLastPrice(address(svetT)); //
             amountRet = swapInd4Eth (
                 //_indexT, 
                 addrActive,  //
@@ -207,7 +203,10 @@ contract Index2SwapEthMarket  {
             }
         index.burnFrom(msg.sender, _amount);
         if (sellFee > 0)  {   
-            uint fee = totPriceActSv * uint(sellFee) /10000;
+            uint fee = _amount * oraclePrice.getIndexPrice(_indexT) * 
+                        uint(sellFee) /
+                        oraclePrice.getLastPrice(address(svetT))/
+                        10000;
   
            svetT.transferFrom(msg.sender, address(this), fee);
 

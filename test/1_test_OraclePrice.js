@@ -16,9 +16,6 @@ console.log("tests");
 
 contract ("OraclePrice", async accounts => {
   const indexAmount = "100000000000000000"; //0.1 eth 
-                  //300000000000000000000
-  
-  
 
     it ("test price", async () => { 
       const oraclePriceAaddr = contracts[netKey]["deploy"]["OraclePrice"]["address"]
