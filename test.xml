@@ -1,7 +1,0 @@
-<form string="My Dashboard">
-        <board style="2-1">
-            <column>
-                <action context="{'lang': 'en_US', 'tz': False, 'uid': 2, 'allowed_company_ids': [1], 'graph_measure': '__count__', 'graph_mode': 'bar', 'graph_groupbys': ['start_date:week'], 'group_by': ['start_date:week'], 'dashboard_merge_domains_contexts': False}" dashboard_menu="136" domain="['&amp;', ['status', 'ilike', 'Work'], '&amp;', ['start_date', '&gt;=', '2020-08-31 21:00:00'], ['start_date', '&lt;=', '2020-11-09 21:59:59']]" name="95" string="Dashboard" view_mode="graph"/><action context="{'lang': 'en_US', 'tz': False, 'uid': 2, 'allowed_company_ids': [1], 'graph_measure': '__count__', 'graph_mode': 'bar', 'graph_groupbys': ['start_date:week'], 'group_by': ['start_date:week'], 'dashboard_merge_domains_contexts': False}" dashboard_menu="136" domain="[[&quot;status&quot;,&quot;ilike&quot;,&quot;Work&quot;],&quot;&amp;&quot;,[&quot;start_date&quot;,&quot;&gt;=&quot;,&quot;2020-08-01 00:00:00&quot;],[&quot;end_date&quot;,&quot;&lt;=&quot;,&quot;2020-11-09 23:59:59&quot;]]" name="95" string=" Rollback " view_mode="graph" modifiers="{}" id="action_0_0" uniqId="ui-id-1"/>
-            </column>
-        </board>
-    </form>
