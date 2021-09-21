@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Box, Typography } from '@material-ui/core';
 import * as s from '../../ethvtx_config/selectors/selectors';
 import * as a from '../../ethvtx_config/actions/actions';
-import { SWAP_MODE } from '../../ethvtx_config/reducers/reducers-constants';
+import * as c from '../../ethvtx_config/reducers/reducers-constants';
 import AppInput from '../AppInput/AppInput';
 import AppAssetAmount from '../AppAssetAmount/AppAssetAmount';
 import AppButtonInline from '../AppButtonInline/AppButtonInline';
@@ -73,7 +73,7 @@ const SwapInAssetBalance = ({
           amount={balance || '0.0'}
           precision={8}
         />
-        {mode === SWAP_MODE.sell && (
+        {mode === c.SWAP_MODE.sell && (
           <AppButtonInline
             className={classes.maxButton}
             onClick={handleAllButton}

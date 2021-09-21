@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { Box, Typography } from '@material-ui/core';
 import * as s from '../../ethvtx_config/selectors/selectors';
 import * as a from '../../ethvtx_config/actions/actions';
-import { SETTINGS } from '../../ethvtx_config/reducers/reducers-constants';
+import * as c from '../../ethvtx_config/reducers/reducers-constants';
 import AppInput from '../AppInput/AppInput';
+import AppInfoButton from '../AppInfoButton/AppInfoButton';
 import useStyles from './styles';
 
 const INPUT_ID = 'TransactionDelayId';
@@ -28,9 +29,9 @@ const TransactionDelay = ({ delay, setDelay, processState }) => {
 
     if (Number.isNaN(Number(value))
       || !Number.isInteger(Number(value))
-      || value < SETTINGS.minDelay
-      || value > SETTINGS.maxDelay) {
-      setDelay(value < SETTINGS.minDelay ? SETTINGS.minDelay : SETTINGS.maxDelay);
+      || value < c.SETTINGS.minDelay
+      || value > c.SETTINGS.maxDelay) {
+      setDelay(value < c.SETTINGS.minDelay ? c.SETTINGS.minDelay : c.SETTINGS.maxDelay);
     }
   };
 
@@ -38,12 +39,16 @@ const TransactionDelay = ({ delay, setDelay, processState }) => {
 
   return (
     <Box className={classes.root}>
-      <label
-        className={classes.label}
-        htmlFor={INPUT_ID}
-      >
-        Transaction deadline?
-      </label>
+      <Typography>
+        <label
+          className={classes.label}
+          htmlFor={INPUT_ID}
+        >
+          Transaction deadline?
+        </label>
+
+        <AppInfoButton />
+      </Typography>
 
       <Typography>
         <AppInput

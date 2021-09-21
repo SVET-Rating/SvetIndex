@@ -7,12 +7,16 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     userSelect: 'none',
   },
+  rootDisabled: {
+    opacity: 0.25,
+    pointerEvents: 'none',
+  },
   label: {
     color: 'inherit',
     cursor: 'pointer',
   },
   input: {
-    width: theme.spacing(5),
+    width: theme.spacing(4),
     marginRight: theme.spacing(0.5),
   },
 }));

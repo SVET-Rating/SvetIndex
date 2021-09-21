@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
   },
   input: {
-    width: theme.spacing(5),
+    width: theme.spacing(4),
     marginRight: theme.spacing(0.5),
   },
 }));

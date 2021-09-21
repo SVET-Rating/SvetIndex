@@ -4,7 +4,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 'unset',
     padding: theme.spacing(0, 0.5),
-    display: 'inline-flex',
+    display: 'flex',
     alignItems: 'center',
     color: theme.palette.text.corporate,
     textTransform: 'none',
@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.text.corporate,
     },
   },
+  button: {},
 }));
 
 export default useStyles;
