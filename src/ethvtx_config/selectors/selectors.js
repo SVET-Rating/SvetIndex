@@ -270,7 +270,7 @@ export const selectDataToSwap = (state) => ({
 
 export const getStableTokenAddress = (network) => {
   const networkKey = (network === 'private')
-    ? 'cloudflare'
+    ? 'pl'
     : network === 'ropsten'
       ? 'ropsten'
       : 'mainnet';
@@ -284,7 +284,7 @@ export const getStableTokenAddress = (network) => {
 
 export const getWEtherAddress = (network) => {
   const networkKey = (network === 'private')
-    ? 'cloudflare'
+    ? 'pl'
     : network === 'ropsten'
       ? 'ropsten'
       : 'mainnet';
