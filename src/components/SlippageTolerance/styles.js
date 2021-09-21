@@ -4,7 +4,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'baseline',
     userSelect: 'none',
   },
   rootDisabled: {
@@ -18,6 +18,13 @@ const useStyles = makeStyles((theme) => ({
   input: {
     width: theme.spacing(4),
     marginRight: theme.spacing(0.5),
+  },
+  infoButton: {
+    padding: theme.spacing(0.5),
+    '& svg': {
+      width: '0.8em',
+      height: '0.8em',
+    },
   },
 }));
 

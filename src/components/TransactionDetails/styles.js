@@ -1,4 +1,4 @@
-import { makeStyles, fade } from '@material-ui/core/styles';
+import { makeStyles, alpha } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.common.white,
   },
   value: {
-    color: fade(theme.palette.common.white, 0.5),
+    color: alpha(theme.palette.common.white, 0.5),
   },
 }));
 

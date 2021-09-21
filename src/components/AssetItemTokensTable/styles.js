@@ -1,4 +1,4 @@
-import { makeStyles, fade } from '@material-ui/core/styles';
+import { makeStyles, alpha } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,14 +14,26 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.common.white,
     },
     '& th.MuiTableCell-root': {
-      padding: theme.spacing(1.5),
-      color: fade(theme.palette.common.white, 0.5),
-      fontSize: '0.875em',
+      padding: theme.spacing(1.5, 1),
+      color: alpha(theme.palette.common.white, 0.5),
+      fontSize: '0.75em',
       lineHeight: 1,
+      '& > p': {
+        fontSize: 'inherit',
+        display: 'inline-flex',
+        alignItems: 'center',
+      },
     },
   },
   tableHeader: {
     userSelect: 'none',
+  },
+  infoButton: {
+    padding: theme.spacing(0, 0, 0, 0.5),
+    '& svg': {
+      width: '0.7em',
+      height: '0.7em',
+    },
   },
 }));
 

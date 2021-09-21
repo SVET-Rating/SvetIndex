@@ -1,4 +1,4 @@
-import { fade } from '@material-ui/core/styles';
+import { alpha } from '@material-ui/core/styles';
 import { colors } from '../assets/colors.json';
 
 const getChartColors = (index) => {
@@ -6,7 +6,7 @@ const getChartColors = (index) => {
     ? ((index + 1) % colors.length) - 1
     : index;
 
-  const hoverColor = fade(colors[idx], 0.4);
+  const hoverColor = alpha(colors[idx], 0.4);
   const color = colors[idx];
 
   return {

@@ -20,7 +20,7 @@ const AssetItemBalance = ({ symbol, balance, price, stablePrice }) => {
           className={classes.value}
           amount={balance || '0'}
           symbol={symbol}
-          precision={2}
+          precision={6}
         />
       </Box>
 

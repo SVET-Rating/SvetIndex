@@ -1,6 +1,7 @@
-import { createMuiTheme, responsiveFontSizes } from '@material-ui/core';
+import { responsiveFontSizes } from '@material-ui/core';
+import { createTheme } from '@material-ui/core/styles';
 
-const theme = createMuiTheme({
+const theme = createTheme({
   typography: {
     fontFamily: [
       '-apple-system',

@@ -7,7 +7,7 @@ import useStyles from './styles';
 const AppInfoButton = ({
   className,
   classNameButton,
-  content = 'Info',
+  content = '',
   placement = 'bottom',
 }) => {
   const classes = useStyles();
@@ -19,12 +19,16 @@ const AppInfoButton = ({
     setOpen((prev) => !prev);
   };
 
+  const handleBlur = () => {
+    setOpen(false);
+  };
+
   return (
     <>
       <AppButtonInline
         className={classNameButton}
-        onClick={(e) => handleClick(e)}
-        onBlur={() => setOpen(false)}
+        onClick={handleClick}
+        onBlur={handleBlur}
       >
         <InfoOutlinedIcon />
       </AppButtonInline>
@@ -40,8 +44,8 @@ const AppInfoButton = ({
             {...TransitionProps}
             timeout={350}
           >
-            <Paper className={`${classes.paper} ${className}`}>
-              <Typography className={classes.typography}>
+            <Paper className={`${classes.root} ${className}`}>
+              <Typography>
                 {content}
               </Typography>
             </Paper>

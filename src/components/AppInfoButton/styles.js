@@ -1,19 +1,17 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, alpha } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minWidth: 'unset',
-    padding: theme.spacing(0, 0.5),
-    display: 'flex',
-    alignItems: 'center',
-    color: theme.palette.text.corporate,
-    textTransform: 'none',
-    '&:disabled': {
-      opacity: 0.25,
-      color: theme.palette.text.corporate,
-    },
+    maxWidth: theme.spacing(20),
+    padding: theme.spacing(1),
+    color: alpha(theme.palette.common.white, 0.5),
+    background: theme.palette.background.secondary,
+    borderRadius: theme.shape.borderRadius,
+    userSelect: 'none',
+    '& p': {
+      fontSize: '0.8rem',
+    }
   },
-  button: {},
 }));
 
 export default useStyles;

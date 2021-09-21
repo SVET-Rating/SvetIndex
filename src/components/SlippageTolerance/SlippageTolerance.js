@@ -9,6 +9,7 @@ import AppInfoButton from '../AppInfoButton/AppInfoButton';
 import useStyles from './styles';
 
 const INPUT_ID = 'SlippageToleranceId';
+const SLIPPAGE = 'What is slippage tolerance?';
 
 const SlippageTolerance = ({
   slippage,
@@ -56,7 +57,10 @@ const SlippageTolerance = ({
           Slippage tolerance?
         </label>
 
-        <AppInfoButton />
+        <AppInfoButton
+          classNameButton={classes.infoButton}
+          content={SLIPPAGE}
+        />
       </Typography>
 
       <Typography>

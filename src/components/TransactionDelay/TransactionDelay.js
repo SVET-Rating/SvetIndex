@@ -9,6 +9,7 @@ import AppInfoButton from '../AppInfoButton/AppInfoButton';
 import useStyles from './styles';
 
 const INPUT_ID = 'TransactionDelayId';
+const TRANSACTION_DELAY = 'What is transaction deadline?';
 
 const TransactionDelay = ({ delay, setDelay, processState }) => {
   const classes = useStyles();
@@ -47,7 +48,10 @@ const TransactionDelay = ({ delay, setDelay, processState }) => {
           Transaction deadline?
         </label>
 
-        <AppInfoButton />
+        <AppInfoButton
+          classNameButton={classes.infoButton}
+          content={TRANSACTION_DELAY}
+        />
       </Typography>
 
       <Typography>
