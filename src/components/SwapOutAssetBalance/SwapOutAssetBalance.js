@@ -62,7 +62,7 @@ const SwapOutAssetBalance = ({
 };
 
 const mapStateToProps = (state) => ({
-  symbol: 'WETH',
+  symbol: 'MATIC',
   balance: s.selectSwapOutAssetBalance(state),
   swapAmount: s.selectSwapOutAssetAmount(state),
   mode: s.selectSwapMode(state),

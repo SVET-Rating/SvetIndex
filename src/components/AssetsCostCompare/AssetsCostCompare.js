@@ -30,7 +30,7 @@ const AssetsCostCompare = ({ assetInSymbol, assetOutSymbol, assetOutAmount }) =>
 };
 
 const mapStateToProps = (state) => ({
-  assetOutSymbol: 'ETH',
+  assetOutSymbol: 'MATIC',
   assetInSymbol: s.selectAssetInSymbol(state),
   assetOutAmount: s.selectOneAmountAssetPrice(state),
 });

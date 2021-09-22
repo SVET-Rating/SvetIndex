@@ -6,7 +6,7 @@ import AppAssetAmount from '../AppAssetAmount/AppAssetAmount';
 import useStyles from './styles';
 
 // const WETHER_SYMBOL = 'WETH';
-const ETHER_SYMBOL = 'ETH';
+const ETHER_SYMBOL = 'MATIC';
 const USD_SYMBOL = '$';
 
 const AssetItemBalance = ({ symbol, balance, price, stablePrice }) => {
