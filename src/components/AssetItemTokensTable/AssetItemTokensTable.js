@@ -39,7 +39,7 @@ const AssetItemTokensTable = ({ tokensList = [] }) => {
           <Typography>
             <span>{name}</span>
             {info && <AppInfoButton
-              classNameButton={classes.infoButton}
+              classes={{ button: classes.infoButton }}
               content={info}
             />}
           </Typography>

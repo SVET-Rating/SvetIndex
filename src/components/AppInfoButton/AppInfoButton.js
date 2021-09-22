@@ -5,22 +5,35 @@ import AppButtonInline from '../AppButtonInline/AppButtonInline';
 import useStyles from './styles';
 
 const AppInfoButton = ({
-  className,
-  classNameButton,
+  classes: {
+    button: classNameButton,
+    paper: classNamePaper,
+    icon: classNameIcon,
+  },
   content = '',
   placement = 'bottom',
+  disableCloseOnBlur = false,
+  disableCloseOnClick = false,
+  open = false,
 }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
-  const [open, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(!!open);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-    setOpen((prev) => !prev);
+
+    if (disableCloseOnClick && isOpen) {
+      return;
+    }
+
+    setIsOpen((prev) => !prev);
   };
 
   const handleBlur = () => {
-    setOpen(false);
+    if (!disableCloseOnBlur) {
+      setIsOpen(false);
+    }
   };
 
   return (
@@ -30,11 +43,11 @@ const AppInfoButton = ({
         onClick={handleClick}
         onBlur={handleBlur}
       >
-        <InfoOutlinedIcon />
+        <InfoOutlinedIcon className={classNameIcon} />
       </AppButtonInline>
 
       <Popper
-        open={open}
+        open={isOpen}
         anchorEl={anchorEl}
         placement={placement}
         transition
@@ -44,7 +57,7 @@ const AppInfoButton = ({
             {...TransitionProps}
             timeout={350}
           >
-            <Paper className={`${classes.root} ${className}`}>
+            <Paper className={`${classes.root} ${classNamePaper}`}>
               <Typography>
                 {content}
               </Typography>

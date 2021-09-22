@@ -49,7 +49,7 @@ const TransactionDelay = ({ delay, setDelay, processState }) => {
         </label>
 
         <AppInfoButton
-          classNameButton={classes.infoButton}
+          classes={{ button: classes.infoButton }}
           content={TRANSACTION_DELAY}
         />
       </Typography>

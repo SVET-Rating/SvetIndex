@@ -58,7 +58,7 @@ const SlippageTolerance = ({
         </label>
 
         <AppInfoButton
-          classNameButton={classes.infoButton}
+          classes={{ button: classes.infoButton }}
           content={SLIPPAGE}
         />
       </Typography>
