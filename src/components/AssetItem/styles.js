@@ -9,7 +9,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'stretch',
-    borderRadius: `${2 * theme.shape.borderRadius}px`,
+    borderRadius: theme.shape.borderRadius,
+    // borderRadius: `${2 * theme.shape.borderRadius}px`,
     backgroundColor: theme.palette.background.main,
     '& > * + *': {
       marginTop: theme.spacing(2),

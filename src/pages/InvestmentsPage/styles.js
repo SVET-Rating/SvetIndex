@@ -2,13 +2,13 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'grid',
-    width: '90%',
-    margin: theme.spacing(2),
-    gridTemplateColumns: '1fr 1fr',
+    display: 'flex',
+    flexWrap: 'wrap',
+    maxWidth: theme.breakpoints.values.md,
+    margin: theme.spacing(2, 'auto'),
     gridGap: theme.spacing(2),
-    alignItems: 'start',
-    justifyItems: 'center',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
   },
 }));
 

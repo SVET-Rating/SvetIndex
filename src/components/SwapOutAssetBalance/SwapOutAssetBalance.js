@@ -50,7 +50,8 @@ const SwapOutAssetBalance = ({
           <AppButtonInline
             className={classes.maxButton}
             onClick={handleMaxButton}
-            disabled={!Number(balance)}
+            // disabled={!Number(balance)}
+            disabled={true}
           >
             (max)
           </AppButtonInline>)

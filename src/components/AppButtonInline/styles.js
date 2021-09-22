@@ -4,7 +4,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 'unset',
     padding: theme.spacing(0, 0.5),
-    display: 'flex',
+    display: 'inline-flex',
     alignItems: 'center',
     color: theme.palette.text.corporate,
     textTransform: 'none',

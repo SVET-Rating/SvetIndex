@@ -1,4 +1,4 @@
-import { makeStyles, fade } from '@material-ui/core/styles';
+import { makeStyles, alpha } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   text: {
-    color: fade(theme.palette.common.white, 0.5),
+    color: alpha(theme.palette.common.white, 0.5),
     textAlign: 'left',
     paddingLeft: theme.spacing(0.5),
     userSelect: 'none',

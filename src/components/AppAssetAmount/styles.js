@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
     userSelect: 'none',
     '& > *': {
       opacity: 0.5,
+      fontSize: 'inherit',
     }
   },
   amount: {

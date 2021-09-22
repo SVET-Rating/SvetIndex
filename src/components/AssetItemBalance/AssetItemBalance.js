@@ -9,7 +9,7 @@ import useStyles from './styles';
 const ETHER_SYMBOL = 'ETH';
 const USD_SYMBOL = '$';
 
-const AssetItemBalance = ({ balance, price, stablePrice }) => {
+const AssetItemBalance = ({ symbol, balance, price, stablePrice }) => {
   const classes = useStyles();
 
   return (
@@ -19,7 +19,8 @@ const AssetItemBalance = ({ balance, price, stablePrice }) => {
         <AppAssetAmount
           className={classes.value}
           amount={balance || '0'}
-          precision={2}
+          symbol={symbol}
+          precision={6}
         />
       </Box>
 
@@ -51,6 +52,7 @@ const AssetItemBalance = ({ balance, price, stablePrice }) => {
 
 const mapStateToProps = (state, { address }) => ({
   balance: s.selectAssetBalanceByAddress(state, address),
+  symbol: s.selectAssetSymbolByAddress(state, address),
   price: s.selectFromWei(state, s.selectAssetPriceForAmountByAddress(state, address)),
   stablePrice: s.selectAssetStablePriceByAddress(state, address),
 });

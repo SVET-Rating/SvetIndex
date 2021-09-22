@@ -4,7 +4,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'baseline',
     userSelect: 'none',
   },
   label: {
@@ -12,8 +12,15 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
   },
   input: {
-    width: theme.spacing(5),
+    width: theme.spacing(4),
     marginRight: theme.spacing(0.5),
+  },
+  infoButton: {
+    padding: theme.spacing(0.5),
+    '& svg': {
+      width: '0.8em',
+      height: '0.8em',
+    },
   },
 }));
 

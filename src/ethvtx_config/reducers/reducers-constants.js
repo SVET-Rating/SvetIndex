@@ -16,18 +16,3 @@ export const SETTINGS = {
   minDelay: 1,
   maxDelay: 10,
 };
-
-export const BUY_STEPS = [
-  { step: null, label: 'prepare to swap' },
-  { step: SWAP_STATE.start, label: 'start swap' },
-  { step: SWAP_STATE.approve, label: 'approve swap' },
-  { step: SWAP_STATE.end, label: 'end swap' },
-];
-
-export const SELL_STEPS = [
-  { step: null, label: 'prepare to swap' },
-  { step: SWAP_STATE.start, label: 'start swap' },
-  { step: SWAP_STATE.approveToSpend, label: 'approve to spend' },
-  { step: SWAP_STATE.approve, label: 'approve swap' },
-  { step: SWAP_STATE.end, label: 'end swap' },
-];
