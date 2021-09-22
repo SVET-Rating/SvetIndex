@@ -1,8 +1,8 @@
-export const baseName = '/svetV2';
+export const baseName = '';
 
 export default {
   // HOME: '/',
   // INVESTMENTS: '/investments',
   INVESTMENTS: '/',
-  SWAP: '/:mode/:id',
+  // SWAP: '/:mode/:id',
 };
