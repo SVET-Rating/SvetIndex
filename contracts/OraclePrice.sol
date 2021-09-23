@@ -195,7 +195,7 @@ contract OraclePrice is iOraclePrice {
 
         for (uint256 i = 0; i<len; i++) {
             (address addrActive, uint256 share) = index.getActivesItem(i);
-            allPrices[i] =   getPriceEthforAmount(addrActive, _amount*share / ( 1 /* ether */), _buy) * share/( 1 /* ether */);
+            allPrices[i] =   getPriceEthforAmount(addrActive, _amount*share / ( 1  ether ), _buy) * share/( 1 /* ether */);
 
         }
        return allPrices;
