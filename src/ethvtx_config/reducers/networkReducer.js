@@ -1,7 +1,9 @@
 import * as TYPES from '../actions/types';
 
 const initialState = {
-  network: null,
+  networkType: null,
+  networkId: null,
+  chainId: null,
 };
 
 export const networkReducer = (state = initialState, action) => {
@@ -9,7 +11,7 @@ export const networkReducer = (state = initialState, action) => {
     case TYPES.SET_NETWORK:
       return {
         ...state,
-        network: action.payload.network,
+        ...action.payload,
       };
     default:
       return state;

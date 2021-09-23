@@ -8,8 +8,9 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.background.secondary,
     borderRadius: theme.shape.borderRadius,
     userSelect: 'none',
-    '& p': {
-      fontSize: '0.8em',
+
+    '& div': {
+      fontSize: '0.75rem',
     }
   },
 }));

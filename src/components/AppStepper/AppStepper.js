@@ -14,8 +14,8 @@ const AppStepper = ({
     return null;
   }
 
-  const stepperSteps = steps.map(({ label }) => (
-    <Step key={label} className={classes.step}>
+  const stepperSteps = steps.map(({ step, label }) => (
+    <Step key={step} className={classes.step}>
       <Tooltip
         classes={{ popper: classes.tooltip }}
         title={label}

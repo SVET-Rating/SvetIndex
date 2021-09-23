@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Fade, Paper, Popper, Typography } from '@material-ui/core';
+import { Box, Fade, Paper, Popper } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import AppButtonInline from '../AppButtonInline/AppButtonInline';
 import useStyles from './styles';
@@ -10,6 +11,7 @@ const AppInfoButton = ({
     paper: classNamePaper,
     icon: classNameIcon,
   },
+  children,
   content = '',
   placement = 'bottom',
   disableCloseOnBlur = false,
@@ -17,6 +19,8 @@ const AppInfoButton = ({
   open = false,
 }) => {
   const classes = useStyles();
+  const theme = useTheme();
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [isOpen, setIsOpen] = useState(!!open);
 
@@ -47,6 +51,7 @@ const AppInfoButton = ({
       </AppButtonInline>
 
       <Popper
+        style={{ zIndex: theme.zIndex.tooltip }}
         open={isOpen}
         anchorEl={anchorEl}
         placement={placement}
@@ -58,9 +63,9 @@ const AppInfoButton = ({
             timeout={350}
           >
             <Paper className={`${classes.root} ${classNamePaper}`}>
-              <Typography>
-                {content}
-              </Typography>
+              <Box>
+                {children || content}
+              </Box>
             </Paper>
           </Fade>
         )}

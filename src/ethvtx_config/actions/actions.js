@@ -6,7 +6,7 @@ export const setInitialData = () => ({
 
 export const setNetwork = (network) => ({
   type: TYPES.SET_NETWORK,
-  payload: { network },
+  payload: { ...network },
 });
 
 export const setSlippage = (slippage) => ({

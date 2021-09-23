@@ -9,12 +9,13 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('xs')]: {
       flexDirection: 'row',
       justifyContent: 'unset',
-      alignItems: 'center',
+      alignItems: 'baseline',
       width: '100%',
       marginBottom: theme.spacing(1),
     },
   },
   text: {
+    flexShrink: 0,
     color: alpha(theme.palette.common.white, 0.5),
     fontSize: '0.8em',
     [theme.breakpoints.down('xs')]: {
@@ -26,6 +27,13 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('xs')]: {
       marginLeft: theme.spacing(2),
       maxWidth: 'unset',
+    },
+  },
+  infoButton: {
+    padding: theme.spacing(0.5),
+    '& svg': {
+      width: '0.7em',
+      height: '0.7em',
     },
   },
 }));

@@ -1,12 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Box, Typography } from '@material-ui/core';
-import { selectCoinbaseAccount, selectNetworkType } from '../../ethvtx_config/selectors/selectors';
+import * as s from '../../ethvtx_config/selectors/selectors';
 import AppButton from '../AppButton/AppButton';
 import AppEtherAddress from '../AppEtherAddress/AppEtherAddress';
+import AppInfoButton from '../AppInfoButton/AppInfoButton';
 import useStyles from './styles';
 
-const HeaderWallet = ({ network, coinbase = {} }) => {
+const HeaderWallet = ({
+  networkType,
+  networkId,
+  chainId,
+  coinbase = {},
+}) => {
   const classes = useStyles();
 
   if (!coinbase.address) {
@@ -17,11 +23,20 @@ const HeaderWallet = ({ network, coinbase = {} }) => {
     );
   }
 
+  const tooltip = (<>
+    <span>network Id: {networkId}</span><br />
+    <span>chain Id: {chainId}</span>
+  </>);
+
   return (
     <Box className={classes.root}>
       <Typography className={classes.text}>
-        {network}:
+        {networkType}
+        <AppInfoButton classes={{ button: classes.infoButton }}>
+          {tooltip}
+        </AppInfoButton>
       </Typography>
+
       <AppEtherAddress
         className={classes.address}
         address={coinbase.address}
@@ -31,8 +46,10 @@ const HeaderWallet = ({ network, coinbase = {} }) => {
 };
 
 const mapStateToProps = (state) => ({
-  coinbase: selectCoinbaseAccount(state),
-  network: selectNetworkType(state),
+  coinbase: s.selectCoinbaseAccount(state),
+  networkType: s.selectNetworkType(state),
+  networkId: s.selectNetworkId(state),
+  chainId: s.selectChainId(state),
 });
 
 export default connect(mapStateToProps)(HeaderWallet);

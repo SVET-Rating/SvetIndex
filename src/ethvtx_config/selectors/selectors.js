@@ -21,7 +21,9 @@ export const selectAssetInAddress = (state) => state.swapAssetReducer.assetIn;
 export const selectAssetOutAddress = (state) => state.swapAssetReducer.assetOut;
 
 // networkReducer
-export const selectNetworkType = (state) => state.networkReducer.network;
+export const selectNetworkType = (state) => state.networkReducer.networkType;
+export const selectNetworkId = (state) => state.networkReducer.networkId;
+export const selectChainId = (state) => state.networkReducer.chainId;
 
 // chainTokensReducer
 export const selectWEthAddress = (state) => state.chainTokensReducer.weth;

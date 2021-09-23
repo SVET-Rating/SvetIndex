@@ -23,8 +23,10 @@ const useStyles = makeStyles((theme) => ({
   },
   tooltip: {
     '& .MuiTooltip-tooltip': {
-      background: theme.palette.background.linearGradient,
-      fontSize: '0.85rem',
+      background: theme.palette.background.secondary,
+      color: alpha(theme.palette.common.white, 0.75),
+      fontSize: '0.75rem',
+      boxShadow: theme.shadows[1],
     },
     '& .MuiTooltip-tooltipPlacementBottom': {
       margin: theme.spacing(1, 0),
