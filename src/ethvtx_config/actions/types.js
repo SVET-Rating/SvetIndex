@@ -1,3 +1,4 @@
+export const GET_INITIAL_DATA = 'GET_INITIAL_DATA'
 export const SET_INITIAL_DATA = 'SET_INITIAL_DATA'
 export const SET_SLIPPAGE = 'SET_SLIPPAGE'
 export const SET_DELAY = 'SET_DELAY'
@@ -17,6 +18,6 @@ export const SET_SWAP_PROCESS_STATE = 'SET_SWAP_PROCESS_STATE'
 
 export const GET_GAS_PRICE = 'GET_GAS_PRICE'
 
-export const SET_CHAIN_TOKENS = 'SET_CHAIN_TOKENS'
+export const SET_CHAIN_DATA = 'SET_CHAIN_DATA'
 
 export const SET_INVESTING = 'SET_INVESTING'

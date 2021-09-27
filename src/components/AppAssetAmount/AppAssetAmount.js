@@ -7,26 +7,30 @@ const LEFT_PARENTHESIS = '(';
 const RIGHT_PARENTHESIS = ')';
 
 const AppAssetAmount = ({
-  amount = null,
+  amount,
   symbol = null,
   precision = -1,
   withParentheses = false,
-  className = '',
+  classes: {
+    root,
+    amount: rootAmount,
+    symbol: rootSymbol,
+  } = {},
 }) => {
-  const classes = useStyles();
+  const cl = useStyles();
 
   const normalizedAmount = precision && amount
     ? toPrecision(amount, precision)
     : amount;
 
-  return amount ? (
-    <Box className={`${classes.root} ${className}`}>
+  return (
+    <Box className={`${cl.root} ${root}`}>
       {withParentheses && <Typography>{LEFT_PARENTHESIS}</Typography>}
-      <Typography className={classes.amount}>{normalizedAmount}</Typography>
-      {symbol && <Typography className={classes.symbol}>&nbsp;{symbol}</Typography>}
+      <Typography className={`${cl.amount} ${rootAmount}`}>{normalizedAmount || '...'}</Typography>
+      {symbol && <Typography className={`${cl.symbol} ${rootSymbol}`}>{symbol}</Typography>}
       {withParentheses && <Typography>{RIGHT_PARENTHESIS}</Typography>}
     </Box>
-  ) : null;
+  );
 };
 
 export default AppAssetAmount;

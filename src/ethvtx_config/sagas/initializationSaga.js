@@ -3,7 +3,7 @@ import * as t from '../actions/types';
 import * as a from '../actions/actions';
 import * as s from '../selectors/selectors';
 
-const ERROR_MSG = 'Network error in determining the network type';
+const ERROR_MSG = 'Network error in determining the network data';
 
 const getNetwork = async (web3Instance) => {
   const [networkType, networkId, chainId] = await Promise.all([
@@ -24,13 +24,16 @@ function* workerSetInitialData() {
     const web3Instance = yield select(s.selectWeb3Instance);
 
     const network = yield call(getNetwork, web3Instance);
-    yield put(a.setNetwork(network));
 
     const wethAddress = yield call(s.getWEtherAddress, network.networkType);
     const stableAddress = yield call(s.getStableTokenAddress, network.networkType);
-    yield put(a.setChainTokens({
-      weth: wethAddress,
-      stable: stableAddress,
+
+    const chains = yield select(s.selectChains);
+    const chainData = yield call(s.getChainData, chains, network);
+
+    yield put(a.setInitialData({
+      network: { ...network, isInitialized: true },
+      chainData: { weth: wethAddress, stable: stableAddress, ...chainData }
     }));
   } catch (e) {
     yield put(a.setError(ERROR_MSG));
@@ -38,5 +41,5 @@ function* workerSetInitialData() {
 }
 
 export function* watchInitialData() {
-  yield takeEvery(t.SET_INITIAL_DATA, workerSetInitialData);
+  yield takeEvery(t.GET_INITIAL_DATA, workerSetInitialData);
 }

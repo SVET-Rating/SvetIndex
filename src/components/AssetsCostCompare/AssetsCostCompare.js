@@ -8,20 +8,26 @@ import useStyles from './styles';
 const ASSET_IN_AMOUNT = '1';
 const EQUAL_SYMBOL = '=';
 
-const AssetsCostCompare = ({ assetInSymbol, assetOutSymbol, assetOutAmount }) => {
+const AssetsCostCompare = ({
+  assetInSymbol,
+  assetOutSymbol,
+  assetOutAmount,
+}) => {
   const classes = useStyles();
 
   return (
     <Box className={classes.root}>
       <AppAssetAmount
-        className={classes.compareAmount}
+        classes={{ root: classes.compareAmount}}
         amount={ASSET_IN_AMOUNT}
         symbol={assetInSymbol}
       />
+
       {EQUAL_SYMBOL}
+
       <AppAssetAmount
-        className={classes.compareAmount}
-        amount={assetOutAmount || '0'}
+        classes={{ root: classes.compareAmount}}
+        amount={assetOutAmount}
         symbol={assetOutSymbol}
         precision={assetOutAmount ? 8 : 0}
       />
@@ -30,7 +36,7 @@ const AssetsCostCompare = ({ assetInSymbol, assetOutSymbol, assetOutAmount }) =>
 };
 
 const mapStateToProps = (state) => ({
-  assetOutSymbol: 'MATIC',
+  assetOutSymbol: s.selectNativeCurrencySymbol(state),
   assetInSymbol: s.selectAssetInSymbol(state),
   assetOutAmount: s.selectOneAmountAssetPrice(state),
 });

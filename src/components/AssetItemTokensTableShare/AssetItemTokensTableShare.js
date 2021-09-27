@@ -8,7 +8,9 @@ import AppTokenAddressIdenticon from '../AppTokenAddressIdenticon/AppTokenAddres
 import useStyles from './styles';
 
 const AssetItemTokensTableShare = ({
-  token: { symbol, addrActive }, amount = '0', share = 0,
+  token: { symbol, addrActive },
+  amount = '0',
+  share = 0,
 }) => {
   const classes = useStyles();
 
@@ -27,12 +29,19 @@ const AssetItemTokensTableShare = ({
       </TableCell>
 
       <TableCell align="right">
-        {(share * 100).toFixed(2)}%
+        <AppAssetAmount
+          classes={{
+            root: classes.amountValue,
+            symbol: classes.amountSymbol,
+          }}
+          amount={(share * 100).toFixed(2)}
+          symbol={'%'}
+        />
       </TableCell>
 
       <TableCell align="right">
         <AppAssetAmount
-          className={classes.value}
+          classes={{ root: classes.amountValue}}
           amount={amount}
           precision={6}
         />

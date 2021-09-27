@@ -1,4 +1,4 @@
-import { makeStyles, alpha } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,26 +14,12 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: theme.spacing(1),
     },
   },
-  text: {
-    flexShrink: 0,
-    color: alpha(theme.palette.common.white, 0.5),
-    fontSize: '0.8em',
-    [theme.breakpoints.down('xs')]: {
-      fontSize: 'unset',
-    },
-  },
+  text: {},
   address: {
     maxWidth: theme.spacing(35),
     [theme.breakpoints.down('xs')]: {
       marginLeft: theme.spacing(2),
       maxWidth: 'unset',
-    },
-  },
-  infoButton: {
-    padding: theme.spacing(0.5),
-    '& svg': {
-      width: '0.7em',
-      height: '0.7em',
     },
   },
 }));

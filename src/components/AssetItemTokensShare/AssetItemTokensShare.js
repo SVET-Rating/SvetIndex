@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Box, Typography } from '@material-ui/core';
 import * as s from '../../ethvtx_config/selectors/selectors';
-import AppTokenAddressIdenticon from '../AppTokenAddressIdenticon/AppTokenAddressIdenticon'
+import AppAssetAmount from '../AppAssetAmount/AppAssetAmount';
+import AppTokenAddressIdenticon from '../AppTokenAddressIdenticon/AppTokenAddressIdenticon';
 import useStyles from './styles';
 
 const AssetItemTokensShare = ({ token, share = 0 }) => {
@@ -20,9 +21,14 @@ const AssetItemTokensShare = ({ token, share = 0 }) => {
         {token.symbol}
       </Typography>
 
-      <Typography className={classes.text}>
-        {(share * 100).toFixed(2)}%
-      </Typography>
+      <AppAssetAmount
+        classes={{
+          root: classes.amountValue,
+          symbol: classes.amountSymbol,
+        }}
+        amount={(share * 100).toFixed(2)}
+        symbol={'%'}
+      />
     </Box>
   );
 };

@@ -8,9 +8,6 @@ import * as c from '../reducers/reducers-constants';
 import tokens from '../../../tokens.json';
 import contracts from '../../../embark4Contracts.json';
 
-const SECONDS_IN_MINUTES = 60;
-const FULL_COUNT = 100;
-
 // swapAssetReducer
 export const selectDelay = (state) => state.swapAssetReducer.delay;
 export const selectSlippage = (state) => state.swapAssetReducer.slippage;
@@ -21,13 +18,24 @@ export const selectAssetInAddress = (state) => state.swapAssetReducer.assetIn;
 export const selectAssetOutAddress = (state) => state.swapAssetReducer.assetOut;
 
 // networkReducer
+export const selectIsInitialized = (state) => state.networkReducer.isInitialized;
 export const selectNetworkType = (state) => state.networkReducer.networkType;
 export const selectNetworkId = (state) => state.networkReducer.networkId;
 export const selectChainId = (state) => state.networkReducer.chainId;
+export const selectChains = (state) => state.networkReducer.chains;
 
 // chainTokensReducer
 export const selectWEthAddress = (state) => state.chainTokensReducer.weth;
 export const selectStableTokenAddress = (state) => state.chainTokensReducer.stable;
+export const selectExplorerName = (state) => state.chainTokensReducer.explorerName;
+export const selectExplorerUrl = (state) => state.chainTokensReducer.explorerUrl;
+export const selectNativeCurrencyName = (state) => state.chainTokensReducer.nativeCurrencyName;
+export const selectNativeCurrencySymbol = (state) => state.chainTokensReducer.nativeCurrencySymbol;
+export const selectNativeCurrencyDecimals = (state) => state.chainTokensReducer.nativeCurrencyDecimals;
+export const selectChainName = (state) => state.chainTokensReducer.chainName;
+export const selectChainNetwork = (state) => state.chainTokensReducer.chainNetwork;
+export const selectChainIcon = (state) => state.chainTokensReducer.chainIcon;
+export const selectChain = (state) => state.chainTokensReducer.chain;
 
 // swapProcessReducer
 export const selectSwapProcessState = (state) => state.swapProcessReducer.processState;
@@ -56,14 +64,14 @@ export const selectAssetsList = (state) => selectIndexStorageContract(state).fn.
 // convert
 export const selectToWei = (state, amountInEth) => {
   const web3Instance = selectWeb3Instance(state);
-  if (web3Instance && amountInEth && Number(amountInEth)) {
+  if (web3Instance && amountInEth && amountInEth) {
     return web3Instance.utils.toWei(amountInEth);
   }
 };
 
 export const selectFromWei = (state, amountInWei, base = 'ether') => {
   const web3Instance = selectWeb3Instance(state);
-  if (web3Instance && amountInWei && Number(amountInWei)) {
+  if (web3Instance && amountInWei && amountInWei) {
     return web3Instance.utils.fromWei(amountInWei, base);
   }
 };
@@ -82,7 +90,6 @@ export const selectAssetBalanceByAddress = (state, assetAddress) => {
 
   if (address && assetAddress) {
     const inWei = selectIndexTokenContract(state, assetAddress).fn.balanceOf(address);
-
     if (inWei) {
       return selectFromWei(state, inWei);
     }
@@ -291,11 +298,13 @@ export const selectAssetInTokenShare = (state, tokenAddress, tokenAmountInWei) =
   }
 };
 
+const SECONDS_IN_MINUTES = 60;
 export const selectDelayInSeconds = (state) => {
   const delayInMinutes = selectDelay(state);
   return String(delayInMinutes * SECONDS_IN_MINUTES);
 };
 
+const FULL_COUNT = 100;
 export const selectDiscount = (state) => {
   const slippage = selectSlippage(state);
   return String(FULL_COUNT - slippage);
@@ -314,7 +323,6 @@ export const selectDataToSwap = (state) => ({
 });
 
 // --------------------------------------------------------------------------------------
-
 export const getStableTokenAddress = (network) => {
   const networkKey = (network === 'private')
     ? 'pl'
@@ -341,4 +349,51 @@ export const getWEtherAddress = (network) => {
   }
 
   return contracts[networkKey].deploy.WETH.address;
+};
+
+// ------------------------------------------------------------------------------------------------
+const fallbackChainExplorer = {
+  explorerName: null,
+  explorerUrl: null,
+};
+const fallbackChainNativeCurrency = {
+  nativeCurrencyName: 'Ether',
+  nativeCurrencySymbol: 'ETH',
+  nativeCurrencyDecimals: 18,
+};
+const fallbackChainData = (networkType) => ({
+  chainName: networkType,
+  chainNetwork: 'private',
+  chainIcon: null,
+  chain: 'ETH',
+});
+
+const getNetworkById = (chains, id) => {
+  return chains.find(({ networkId }) => networkId === id);
+};
+
+export const getChainData = (chains, { networkType, networkId }) => {
+  const network = getNetworkById(chains, networkId);
+
+  if (!network) {
+    return {
+      ...fallbackChainExplorer,
+      ...fallbackChainNativeCurrency,
+      ...fallbackChainData(networkType),
+    };
+  }
+
+  return {
+    explorerName: network.explorers ? network.explorers[0].name : fallbackChainExplorer.explorerName,
+    explorerUrl: network.explorers ? network.explorers[0].url : fallbackChainExplorer.explorerUrl,
+
+    nativeCurrencyName: network.nativeCurrency.name,
+    nativeCurrencySymbol: network.nativeCurrency.symbol,
+    nativeCurrencyDecimals: network.nativeCurrency.decimals,
+
+    chainName: network.name,
+    chainNetwork: network.network,
+    chainIcon: network.icon || fallbackChainData.chainIcon,
+    chain: network.chain || fallbackChainData.chain,
+  };
 };

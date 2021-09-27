@@ -11,7 +11,11 @@ const GWEI_SYMBOL = 'Gwei';
 const USD_SYMBOL = '$';
 
 const TransactionDetails = ({
-  gasAmount, gasPrice, stablePrice, currentBlock, getGasPrice,
+  gasAmount,
+  gasPrice,
+  stablePrice,
+  currentBlock,
+  getGasPrice,
 }) => {
   useEffect(() => {
     getGasPrice();
@@ -27,7 +31,7 @@ const TransactionDetails = ({
       <Box className={classes.record}>
         <Typography className={classes.text}>Current block:</Typography>
         <AppAssetAmount
-          className={classes.value}
+          classes={{ root: classes.value}}
           amount={currentBlock.number}
         />
       </Box>
@@ -35,7 +39,7 @@ const TransactionDetails = ({
       {/* <Box className={classes.record}>
         <Typography className={classes.text}>Gas amount:</Typography>
         <AppAssetAmount
-          className={classes.value}
+          classes={{ root: classes.value}}
           amount={gasAmount}
         />
       </Box> */}
@@ -43,7 +47,7 @@ const TransactionDetails = ({
       <Box className={classes.record}>
         <Typography className={classes.text}>Gas price:</Typography>
         <AppAssetAmount
-          className={classes.value}
+          classes={{ root: classes.value}}
           amount={gasPrice}
           precision={1}
           symbol={GWEI_SYMBOL}
@@ -54,7 +58,7 @@ const TransactionDetails = ({
         <Box display='flex' justifyContent='space-between'>
           <Typography className={classes.text}>Transaction cost:</Typography>
           <AppAssetAmount
-            className={classes.value}
+            classes={{ root: classes.value}}
             amount={transactionCost}
             precision={Number(transactionCost) && 6}
             symbol={ETHER_SYMBOL}
@@ -62,8 +66,8 @@ const TransactionDetails = ({
         </Box>
         <Box display='flex' justifyContent='flex-end'>
           <AppAssetAmount
-            className={classes.value}
-            amount={transactionCostInStable || '0'}
+            classes={{ root: classes.value}}}
+            amount={transactionCostInStable}
             symbol={USD_SYMBOL}
             precision={2}
             withParentheses
@@ -75,9 +79,9 @@ const TransactionDetails = ({
 }
 
 const mapStateToProps = (state) => ({
-  gasAmount: s.selectSwapAssetGasAmount(state) || '0',
-  gasPrice: s.selectGasPrice(state) || '0',
-  stablePrice: s.selectFromWei(state, s.selectStableTokenPrice(state)) || '0',
+  gasAmount: s.selectSwapAssetGasAmount(state),
+  gasPrice: s.selectGasPrice(state),
+  stablePrice: s.selectFromWei(state, s.selectStableTokenPrice(state)),
   currentBlock: s.selectCurrentBlock(state),
 });
 

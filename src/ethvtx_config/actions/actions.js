@@ -1,12 +1,22 @@
 import * as TYPES from './types';
 
-export const setInitialData = () => ({
+export const getInitialData = () => ({
+  type: TYPES.GET_INITIAL_DATA,
+});
+
+export const setInitialData = (initialData) => ({
   type: TYPES.SET_INITIAL_DATA,
+  payload: { ...initialData },
 });
 
 export const setNetwork = (network) => ({
   type: TYPES.SET_NETWORK,
   payload: { ...network },
+});
+
+export const setNetworkInitialized = (isInitialized) => ({
+  type: TYPES.SET_NETWORK,
+  payload: { isInitialized },
 });
 
 export const setSlippage = (slippage) => ({
@@ -65,9 +75,9 @@ export const setSwapProcessState = (processState) => ({
   payload: { processState },
 });
 
-export const setChainTokens = (tokens) => ({
-  type: TYPES.SET_CHAIN_TOKENS,
-  payload: { tokens },
+export const setChainData = (chainData) => ({
+  type: TYPES.SET_CHAIN_DATA,
+  payload: { ...chainData },
 });
 
 export const resetSwapProcessState = () => ({

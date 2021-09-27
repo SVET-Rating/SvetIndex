@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   symbol: {
     flexShrink: 0,
+    marginLeft: theme.spacing(0.5),
   },
 }));
 

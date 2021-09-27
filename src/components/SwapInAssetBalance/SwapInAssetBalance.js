@@ -69,7 +69,7 @@ const SwapInAssetBalance = ({
           Balance:
         </Typography>
         <AppAssetAmount
-          className={classes.balanceAmount}
+          classes={{ root: classes.balanceAmount}}
           amount={balance || '0.0'}
           precision={8}
         />

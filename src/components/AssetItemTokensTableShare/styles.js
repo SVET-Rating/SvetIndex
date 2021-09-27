@@ -18,9 +18,12 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
-  value: {
+  amountValue: {
     paddingLeft: 'unset',
-  }
+  },
+  amountSymbol: {
+    marginLeft: 0,
+  },
 }));
 
 export default useStyles;
