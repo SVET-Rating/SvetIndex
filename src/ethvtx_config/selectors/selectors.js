@@ -324,29 +324,31 @@ export const selectDataToSwap = (state) => ({
 
 // --------------------------------------------------------------------------------------
 export const getStableTokenAddress = (network) => {
-  const networkKey = (network === 'private')
-    ? 'pl'
-    : network === 'ropsten'
-      ? 'ropsten'
-      : 'mainnet';
+  const networkKey = 'pl'
+  // const networkKey = (network === 'private')
+  //   ? 'pl'
+  //   : network === 'ropsten'
+  //     ? 'ropsten'
+  //     : 'mainnet';
 
-  if (networkKey === 'mainnet') {
-    throw new Error('Mainnet');
-  }
+  // if (networkKey === 'mainnet') {
+  //   throw new Error('Mainnet');
+  // }
 
   return tokens[networkKey].DAI.address;
 };
 
 export const getWEtherAddress = (network) => {
-  const networkKey = (network === 'private')
-    ? 'pl'
-    : network === 'ropsten'
-      ? 'ropsten'
-      : 'mainnet';
+  const networkKey = 'pl'
+  // const networkKey = (network === 'private')
+  //   ? 'pl'
+  //   : network === 'ropsten'
+  //     ? 'ropsten'
+  //     : 'mainnet';
 
-  if (networkKey === 'mainnet') {
-    throw new Error('Mainnet');
-  }
+  // if (networkKey === 'mainnet') {
+  //   throw new Error('Mainnet');
+  // }
 
   return contracts[networkKey].deploy.WETH.address;
 };
