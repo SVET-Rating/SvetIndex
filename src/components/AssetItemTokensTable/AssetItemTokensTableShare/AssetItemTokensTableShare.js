@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Box, TableRow, TableCell } from '@material-ui/core';
-import * as s from '../../ethvtx_config/selectors/selectors';
+import * as s from '../../../ethvtx_config/selectors/selectors';
 import AppEtherAddress from '../AppEtherAddress/AppEtherAddress';
 import AppAssetAmount from '../AppAssetAmount/AppAssetAmount';
 import AppTokenAddressIdenticon from '../AppTokenAddressIdenticon/AppTokenAddressIdenticon';

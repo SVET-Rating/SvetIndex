@@ -6,6 +6,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(4),
   },
   list: {
+    paddingBottom: 0,
     display: 'flex',
     justifyContent: 'flex-start',
     flexWrap: 'wrap',
@@ -20,6 +21,13 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'left',
     paddingLeft: theme.spacing(0.5),
     userSelect: 'none',
+  },
+  infoButton: {
+    paddingBottom: theme.spacing(1),
+  },
+  infoPaper: {
+    maxWidth: 'unset',
+    width: theme.spacing(36.5),
   },
 }));
 

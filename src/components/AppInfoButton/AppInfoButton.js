@@ -2,21 +2,27 @@ import React, { useState } from 'react';
 import { Box, Fade, Paper, Popper } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import InfoIcon from '@material-ui/icons/Info';
 import AppButtonInline from '../AppButtonInline/AppButtonInline';
 import useStyles from './styles';
 
 const AppInfoButton = ({
   classes: {
-    button: classNameButton,
-    paper: classNamePaper,
-    icon: classNameIcon,
-  },
+    button: classNameButton = '',
+    paper: classNamePaper = '',
+    icon: classNameIcon = '',
+    label: classNameLabel = '',
+  } = {},
   children,
   content = '',
   placement = 'bottom',
   disableCloseOnBlur = false,
   disableCloseOnClick = false,
   open = false,
+  label,
+  labelOn,
+  icon: IconOff,
+  iconOn: IconOn,
 }) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -40,6 +46,12 @@ const AppInfoButton = ({
     }
   };
 
+  const Icon = isOpen
+    ? (IconOn || IconOff || InfoIcon)
+    : (IconOff || InfoOutlinedIcon);
+
+  const buttonLabel = isOpen ? (labelOn || label) : label;
+
   return (
     <>
       <AppButtonInline
@@ -47,7 +59,12 @@ const AppInfoButton = ({
         onClick={handleClick}
         onBlur={handleBlur}
       >
-        <InfoOutlinedIcon className={classNameIcon} />
+        {buttonLabel && (
+          <span className={`${classes.buttonLabel} ${classNameLabel}`}>
+            {buttonLabel}
+          </span>
+        )}
+        <Icon className={classNameIcon} />
       </AppButtonInline>
 
       <Popper

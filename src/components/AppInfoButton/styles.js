@@ -13,6 +13,9 @@ const useStyles = makeStyles((theme) => ({
       fontSize: '0.75rem',
     }
   },
+  buttonLabel: {
+    marginRight: theme.spacing(0.5),
+  },
 }));
 
 export default useStyles;

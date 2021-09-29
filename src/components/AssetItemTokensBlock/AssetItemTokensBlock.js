@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box } from '@material-ui/core';
 import AssetItemTokensTable from '../AssetItemTokensTable/AssetItemTokensTable';
-import AssetItemTokensTableChart from '../AssetItemTokensTableChart/AssetItemTokensTableChart';
+import AssetItemTokensChart from '../AssetItemTokensChart/AssetItemTokensChart';
 import useStyles from './styles';
 
 const AssetItemTokensBlock = () => {
@@ -10,7 +10,7 @@ const AssetItemTokensBlock = () => {
   return (
     <Box className={classes.root}>
       <AssetItemTokensTable />
-      <AssetItemTokensTableChart />
+      <AssetItemTokensChart />
     </Box>
   );
 };

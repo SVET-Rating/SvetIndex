@@ -7,7 +7,7 @@ import { getChartColors } from '../../helpers';
 import { chartOptions } from './chartOptions';
 import useStyles from './styles';
 
-const AssetItemTokensTableChart = ({ items, tokensPrices, assetInPrice }) => {
+const AssetItemTokensChart = ({ items, tokensPrices, assetInPrice }) => {
   const classes = useStyles();
 
   if (!items || !tokensPrices || !assetInPrice) {
@@ -51,4 +51,4 @@ const mapStateToProps = (state) => ({
   assetInPrice: s.selectAssetInPriceForAmount(state),
 });
 
-export default connect(mapStateToProps)(AssetItemTokensTableChart);
+export default connect(mapStateToProps)(AssetItemTokensChart);

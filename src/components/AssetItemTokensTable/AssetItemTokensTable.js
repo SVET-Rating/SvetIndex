@@ -10,7 +10,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import * as s from '../../ethvtx_config/selectors/selectors';
-import AssetItemTokensTableShare from '../AssetItemTokensTableShare/AssetItemTokensTableShare';
+import AssetItemTokensTableShare from './AssetItemTokensTableShare/AssetItemTokensTableShare';
 import AppInfoButton from '../AppInfoButton/AppInfoButton';
 import useStyles from './styles';
 
