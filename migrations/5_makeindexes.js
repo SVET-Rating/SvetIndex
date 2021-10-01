@@ -125,7 +125,7 @@ Mare Tranquillitatis (The Sea of Tranquillity) Index
 33% Dai (DAI), Price: 1.00: 0x6b175474e89094c44da98b954eedeac495271d0f
 33% cDAI (CDAI), Price: 0.02156891: 0x5d3a536e4d6dbd6114cc1ead35777bab948e3643
 33% cUSDT (CUSDT), Price: 0.02127915: 0xf650c3d88d12db855b8bf7d11be6c55a4e07dcc9
- */
+
 var isindexexist = await indexstorage.indexes('The Sea of Tranquillity) Index', 'SSTI');
 console.log ("The Sea of Tranquillity) Index: ",  isindexexist);
 if ( isindexexist == "0x0000000000000000000000000000000000000000") 
@@ -137,16 +137,13 @@ if ( isindexexist == "0x0000000000000000000000000000000000000000")
     [tokens[netKey]["DAI"]["address"],
       tokens[netKey]["WBTC"]["address"],
       tokens[netKey]["USDC"]["address"]
-    // contracts[netKey]["deploy"] ["SVTtst"]["address"],
     ],
-    //300000000000000000000000000000000000000
     ['3000000000000000000000', // 3000 DAI decimals = 18
      '40000000000000000', //0.04 wbtc decimals = 18
      '3000000000000000000000'
-  ]); //3000 USDC decimals = 18
-    //4409865971895742203834
+  ]); 
   console.log(trIndex6.tx);
-  }
+  } */
 /**
  * Svyat Sv, [02.07.21 08:59]
 50 Cents Index
@@ -174,5 +171,128 @@ const trIndex7 = await index_factory.makeIndex(index_tokenS50I.address,
 console.log(trIndex7.tx);
 
   } */
+/**
+ * Play No Pey Index: 
+
+1) Decentraland (MANA): 20%
+2) decentral.games ($DG): 20%
+3) Decentr (DEC): 20% //not found on quickswap
+4) OVR (OVR): 20% //zero liq
+5) Aavegotchi GHST Token (GHST): 20%
+ */
+isindexexist = await indexstorage.indexes('Play No Pey Index', 'PNPI');
+if ( isindexexist == "0x0000000000000000000000000000000000000000") 
+  {
+  await deployer.deploy(IndexToken,'Play No Pey Index', 'PNPI', contracts[netKey]["deploy"]["Lstorage"]["address"]);
+  const index_tokenSSTI = await IndexToken.deployed();
+  console.log('create Play No Pey Index');
+  const trIndex6 = await index_factory.makeIndex(index_tokenSSTI.address,
+    [tokens[netKey]["DecentralandPOS"]["address"],
+      tokens[netKey]["decentral.gamesPOS"]["address"],
+      tokens[netKey]["AavegotchiPOS"]["address"]
+
+    ],
+    ['100000000000000000000', // 2 MANA decimals = 18
+     '10000000000000000000', 
+     '100000000000000000000',
+    //  '2000000000000000000',
+    //  '2000000000000000000',
+     ]); 
+  console.log(trIndex6.tx);
+  }
+  /**
+   * Svyat Sv, [30.09.21 11:46]
+Port Royal Index:
+
+1) SushiToken (SUSHI): 20%
+2) 1INCH Token (1INCH): 20%
+3) LoopringCoin V2 (LRC): 20% //no
+4) Injective Token (INJ): 20% //
+5) Quickswap (QUICK): 20%
+   */
+  isindexexist = await indexstorage.indexes('Port Royal Index', 'PRI');
+  if ( isindexexist == "0x0000000000000000000000000000000000000000") 
+    {
+    await deployer.deploy(IndexToken,'Port Royal Index', 'PRI', contracts[netKey]["deploy"]["Lstorage"]["address"]);
+    const index_tokenSSTI = await IndexToken.deployed();
+    console.log('create index Port Royal Index');
+    const trIndex6 = await index_factory.makeIndex(index_tokenSSTI.address,
+      [tokens[netKey]["SushiTokenPOS"]["address"],
+        tokens[netKey]["1INCHPOS"]["address"],
+        tokens[netKey]["Quickswap"]["address"]
+  
+      ],
+      ['10000000000000000000', // 10 SushiTokenPOS decimals = 18
+       '100000000000000000000', // 100  1INCHPOS
+       '1000000000000000000' // 1Quickswap
+        // '2000000000000000000',
+        // '2000000000000000000',
+    ]);
+    console.log(trIndex6.tx);
+    }
+
+    /**
+     * The Hulk-Ohm Index:
+
+1) Energy Web Token Bridged (EWTB): 25% //near zero liq
+2) PowerLedger (POWR): 25%
+3) DOVU (DOV): 25%
+4) WePower (): 25%
+     */
+
+/* isindexexist = await indexstorage.indexes('The Hulk-Ohm Index', 'HOI');
+if ( isindexexist == "0x0000000000000000000000000000000000000000") 
+  {
+  await deployer.deploy(IndexToken,'The Hulk-Ohm Index', 'HOI', contracts[netKey]["deploy"]["Lstorage"]["address"]);
+  const index_tokenSSTI = await IndexToken.deployed();
+  console.log('create index The Hulk-Ohm Index');
+  const trIndex6 = await index_factory.makeIndex(index_tokenSSTI.address,
+    [tokens[netKey]["PowerLedger"]["address"],
+//      tokens[netKey]["DOVUPOS"]["address"],
+      tokens[netKey]["Quickswap"]["address"]
+
+    ],
+    ['1000000000000000000', // 1 power decimals = 18
+  //   '1000000000000000000', //
+     '1000000000000000000'
+      // '2000000000000000000',
+      // '2000000000000000000',
+  ]);
+  console.log(trIndex6.tx);
+  } */
+
+/**
+ * Lighthouse of Alexandria Index:
+
+1) Dai Stablecoin (DAI): 20%
+2) Tether USD (USDT): 20%
+3) PUSD (PUSD): 20%
+4) USD Coin (USDC): 20%
+5) Wrapped UST Token (UST): 20%
+ */
+
+isindexexist = await indexstorage.indexes('Lighthouse of Alexandria Index:', 'LAI');
+if ( isindexexist == "0x0000000000000000000000000000000000000000") 
+  {
+  await deployer.deploy(IndexToken,'Lighthouse of Alexandria Index:', 'LAI', contracts[netKey]["deploy"]["Lstorage"]["address"]);
+  const index_tokenSSTI = await IndexToken.deployed();
+  console.log('create index Lighthouse of Alexandria Index');
+  const trIndex6 = await index_factory.makeIndex(index_tokenSSTI.address,
+    [tokens[netKey]["DAI"]["address"],
+      tokens[netKey]["PUSD"]["address"],
+      tokens[netKey]["USDC"]["address"],
+      tokens[netKey]["USDT"]["address"],
+    ],
+    ['1000000000000000000', // 1 DAI decimals = 18
+     '1000000000000000000', // 1 PUSD 
+     '1000000000000000000', // 1 USDC decimals = 18
+     '1000000000000000000', // 1 USDT decimals = 18
+  ]); 
+  console.log(trIndex6.tx);
+  } else 
+  {
+    console.log ("Lighthouse of Alexandria Index:: ",  isindexexist);
+
+  }
 }
 }

@@ -77,8 +77,12 @@ module.exports = async function(deployer,_network, addresses) {
         else {
                 console.log("try to find token",  tokenName, token.address);
                 contractTok = await   MockERC20.at(token.address);
+                const sym =  await contractTok.symbol();
+                if (sym != token.symbol) {
+                    console.log(sym, "!=", token.symbol );
+                }
                 }  
-        console.log ("adding price", tokenName );    
+       // console.log ("adding price", tokenName );    
 
        // await oracle_price.addPrice( tokens[netKey][tokenName].address, "0");  //web3.utils.toWei(token.priceETH.toString(), "ether")) ;
                     //await oracle_circ_amount.addamount(token.address,  web3.utils.toBN(1374417194));

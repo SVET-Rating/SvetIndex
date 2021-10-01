@@ -96,7 +96,8 @@ contract OraclePrice is iOraclePrice {
             uint decTok = getDecimals(_addrToken);
             uint decEth = getDecimals(uniswapV2Router02.WETH());
             uint mult = 10**(18+decTok-decEth);
-           IUniswapV2Pair pair = IUniswapV2Pair(IUniswapV2Factory (uniswapV2Router02.factory()).getPair(uniswapV2Router02.WETH(), _addrToken));
+            IUniswapV2Pair pair = IUniswapV2Pair(IUniswapV2Factory (uniswapV2Router02.factory()).getPair(uniswapV2Router02.WETH(), _addrToken));
+            require(pair != IUniswapV2Pair(0), "No pair" );
             (uint112 reserve0, uint112 reserve1,) = pair.getReserves();
             require (reserve0 > 0, "reserve0 = 0");
             require (reserve1 > 0, "reserve1 = 0");
