@@ -9,10 +9,10 @@ import AssetItemTokensList from './AssetItemTokensList/AssetItemTokensList';
 import AppInfoButton from '../AppInfoButton/AppInfoButton';
 import useStyles from './styles';
 
-const AssetItemTokens = ({ address, tokens = [] }) => {
+const AssetItemTokens = ({ address, tokens }) => {
   const classes = useStyles();
 
-  if (!tokens.length) {
+  if (!tokens) {
     return null;
   }
 
@@ -29,28 +29,26 @@ const AssetItemTokens = ({ address, tokens = [] }) => {
       </List>
 
       <Typography className={classes.text}>
-        {items.length >=3 ? (
-          <AppInfoButton
-            classes={{
-              button: classes.infoButton,
-              paper: classes.infoPaper,
-            }}
-            label={`All (${items.length})`}
-            icon={ExpandMoreIcon}
-            iconOn={ExpandLessIcon}
-            placement='bottom-start'
-            disableCloseOnBlur
-          >
-            <AssetItemTokensList address={address} />
-          </AppInfoButton>
-        ) : `All (${items.length})`}
+        <AppInfoButton
+          classes={{
+            button: classes.infoButton,
+            paper: classes.infoPaper,
+          }}
+          label={`All (${items.length})`}
+          icon={ExpandMoreIcon}
+          iconOn={ExpandLessIcon}
+          placement='bottom-start'
+          disableCloseOnBlur
+        >
+          <AssetItemTokensList tokens={tokens} />
+        </AppInfoButton>
       </Typography>
     </Box>
   );
 }
 
 const mapStateToProps = (state, { address }) => ({
-  tokens: s.selectAssetTokensListByAddress(state, address),
+  tokens: s.selectAssetTokensListWithLastPriceSharesByAddress(state, address),
 });
 
 export default connect(mapStateToProps)(AssetItemTokens);

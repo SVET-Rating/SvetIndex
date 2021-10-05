@@ -29,6 +29,12 @@ const useStyles = makeStyles((theme) => ({
   divider: {
     backgroundColor: theme.palette.background.secondary,
   },
+  infoButton: {
+    '& svg': {
+      width: '0.8em',
+      height: '0.8em',
+    },
+  },
 }));
 
 export default useStyles;

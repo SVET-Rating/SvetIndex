@@ -10,7 +10,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   address: {
-    width: theme.spacing(21),
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: theme.spacing(20),
     '& div': {
       fontSize: 'inherit',
       '& input': {

@@ -3,9 +3,11 @@ import { connect } from 'react-redux';
 import { Box, Divider, Typography } from '@material-ui/core';
 import * as s from '../../ethvtx_config/selectors/selectors';
 import AppAssetAmount from '../AppAssetAmount/AppAssetAmount';
+import AppInfoButton from '../AppInfoButton/AppInfoButton';
 import useStyles from './styles';
 
 const USD_SYMBOL = '$';
+const LAST_TRADE_PRICE = 'What is last trade price?';
 
 const AssetItemBalance = ({
   symbol,
@@ -31,8 +33,14 @@ const AssetItemBalance = ({
       <Divider className={classes.divider}/>
 
       <Box className={classes.blockPrice}>
+        <Typography className={classes.text}>
+          Index last trade price:
+          <AppInfoButton
+            classes={{ button: classes.infoButton }}
+            content={LAST_TRADE_PRICE}
+          />
+        </Typography>
         <Box className={classes.price}>
-          <Typography className={classes.text}>Index price:</Typography>
           <AppAssetAmount
             classes={{ root: classes.value}}
             amount={price}
@@ -57,9 +65,9 @@ const AssetItemBalance = ({
 const mapStateToProps = (state, { address }) => ({
   balance: s.selectAssetBalanceByAddress(state, address),
   symbol: s.selectAssetSymbolByAddress(state, address),
-  price: s.selectFromWei(state, s.selectAssetPriceForAmountByAddress(state, address)),
+  price: s.selectAssetLastPriceByAddress(state, address),
   nativeCurrencySymbol: s.selectNativeCurrencySymbol(state),
-  stablePrice: s.selectAssetStablePriceByAddress(state, address),
+  stablePrice: s.selectAssetStableLastPriceByAddress(state, address),
 });
 
 export default connect(mapStateToProps)(AssetItemBalance);

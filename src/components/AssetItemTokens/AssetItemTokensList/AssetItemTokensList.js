@@ -1,18 +1,16 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Table, TableBody, TableContainer } from '@material-ui/core';
-import * as s from '../../../ethvtx_config/selectors/selectors';
 import AssetItemTokensListShare from './AssetItemTokensListShare/AssetItemTokensListShare';
 import useStyles from './styles';
 
-const AssetItemTokensList = ({ tokensList = [] }) => {
+const AssetItemTokensList = ({ tokens = [] }) => {
   const classes = useStyles();
 
-  if (!tokensList.length) {
+  if (!tokens.length) {
     return null;
   }
 
-  const tokens = tokensList.map((item) => (
+  const tokensList = tokens.map((item) => (
     <AssetItemTokensListShare key={item.symbol} token={item}/>
   ));
 
@@ -20,15 +18,11 @@ const AssetItemTokensList = ({ tokensList = [] }) => {
     <TableContainer className={classes.root}>
       <Table className={classes.table}>
         <TableBody>
-          {tokens}
+          {tokensList}
         </TableBody>
       </Table>
     </TableContainer>
   );
 };
 
-const mapStateToProps = (state, { address }) => ({
-  tokensList: s.selectAssetInTokensList(state),
-});
-
-export default connect(mapStateToProps)(AssetItemTokensList);
+export default AssetItemTokensList;

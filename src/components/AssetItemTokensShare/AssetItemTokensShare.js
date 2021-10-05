@@ -1,24 +1,28 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Box, Typography } from '@material-ui/core';
-import * as s from '../../ethvtx_config/selectors/selectors';
 import AppAssetAmount from '../AppAssetAmount/AppAssetAmount';
 import AppTokenAddressIdenticon from '../AppTokenAddressIdenticon/AppTokenAddressIdenticon';
 import useStyles from './styles';
 
-const AssetItemTokensShare = ({ token, share = 0 }) => {
+const AssetItemTokensShare = ({ token }) => {
   const classes = useStyles();
+
+  if (!token) {
+    return null;
+  }
+
+  const { symbol, addrActive, share } = token;
 
   return (
     <Box className={classes.root}>
       <AppTokenAddressIdenticon
         className={classes.icon}
-        address={token.addrActive}
+        address={addrActive}
         size="2rem"
       />
 
       <Typography className={classes.text}>
-        {token.symbol}
+        {symbol}
       </Typography>
 
       <AppAssetAmount
@@ -33,8 +37,4 @@ const AssetItemTokensShare = ({ token, share = 0 }) => {
   );
 };
 
-const mapStateToProps = (state, { assetAddress, token }) => ({
-  share: s.selectTokenShare(state, assetAddress, token.addrActive, token.amount),
-});
-
-export default connect(mapStateToProps)(AssetItemTokensShare);
+export default AssetItemTokensShare;

@@ -169,6 +169,8 @@ export const selectAssetInPriceForAmount = (state, amountInEth = '1') => {
   }
 };
 
+// -----------------------------------------------------------------------------------------------------------
+// forAmount
 export const selectAssetAllTokensPriceForAmountByAddress = (state, address, amountInEth = '1') => {
   const mode = selectSwapMode(state);
   const swapType = (mode === c.SWAP_MODE.sell) ? false : true;
@@ -221,6 +223,91 @@ export const selectAssetStablePriceByAddress = (state, address) => {
     }
   }
 };
+// forAmount
+// -----------------------------------------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------------------------------------
+// lastPrice
+export const selectAssetTokensListWithLastPriceSharesByAddress = (state, address) => {
+  if (!address) { return }
+
+  const tokens = selectAssetTokensListByAddress(state, address);
+  const assetPriceInWei = selectOraclePriceContract(state).fn.getIndexPrice(address);
+  const pricesInWei = selectOraclePriceContract(state).fn.getAllActsIndPrices(address);
+
+  if (!tokens || !assetPriceInWei || !pricesInWei) { return }
+  if (!Array.isArray(pricesInWei)) { return } // check isn't prices an error object
+
+  const assetPrice = selectFromWei(state, assetPriceInWei);
+  const shares = pricesInWei.map((priceInWei) => {
+    const price = selectFromWei(state, priceInWei);
+    return Number(assetPrice) ? String(price / assetPrice) : '0';
+  });
+
+  if (!shares.length) { return }
+
+  return tokens.map((token, idx) => {
+    const share = shares[idx];
+    const amount = selectFromWei(state, token.amount);
+    return { ...token, share, amount };
+  });
+};
+
+export const selectAssetInTokensListWithLastPriceShares = (state) => {
+  const address = selectAssetInAddress(state);
+
+  if (address) {
+    return selectAssetTokensListWithLastPriceSharesByAddress(state, address);
+  }
+};
+
+export const selectAssetLastPriceInWeiByAddress = (state, address) => {
+  if (!address) { return }
+
+  const inWei = selectOraclePriceContract(state).fn.getIndexPrice(address);
+  if (!inWei || typeof inWei === 'object') { return }
+
+  return inWei;
+};
+
+export const selectAssetLastPriceByAddress = (state, address) => {
+  if (!address) { return }
+
+  const inWei = selectAssetLastPriceInWeiByAddress(state, address);
+  if (!inWei) { return }
+
+  return selectFromWei(state, inWei);
+};
+
+export const selectStableTokenLastPriceInWei = (state) => {
+  const address = selectStableTokenAddress(state);
+  if (!address) { return }
+
+  const inWei = selectOraclePriceContract(state).fn.getLastPrice(address);
+  if (!inWei || typeof inWei === 'object') { return }
+
+  return inWei;
+};
+
+export const selectStableTokenLastPrice = (state) => {
+  const inWei = selectStableTokenLastPriceInWei(state);
+  if (!inWei) { return }
+
+  return selectFromWei(state, inWei);
+};
+
+export const selectAssetStableLastPriceByAddress = (state, address) => {
+  const stableAddress = selectStableTokenAddress(state);
+  if (!stableAddress || !address) { return }
+
+  const stable = selectStableTokenLastPrice(state);
+  const asset = selectAssetLastPriceByAddress(state, address);
+  if (!Number(stable) || !asset) { return }
+
+  return String(asset / stable);
+};
+// lastPrice
+// -----------------------------------------------------------------------------------------------------------
 
 // not working yet --------------------------------------------------------------------
 export const selectSwapOutAsset = (state) => {

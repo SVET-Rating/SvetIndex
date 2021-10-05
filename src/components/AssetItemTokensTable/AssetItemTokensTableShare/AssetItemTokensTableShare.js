@@ -1,18 +1,19 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Box, TableRow, TableCell } from '@material-ui/core';
-import * as s from '../../../ethvtx_config/selectors/selectors';
-import AppEtherAddress from '../AppEtherAddress/AppEtherAddress';
-import AppAssetAmount from '../AppAssetAmount/AppAssetAmount';
-import AppTokenAddressIdenticon from '../AppTokenAddressIdenticon/AppTokenAddressIdenticon';
+import AppEtherAddress from '../../AppEtherAddress/AppEtherAddress';
+import AppAssetAmount from '../../AppAssetAmount/AppAssetAmount';
+import AppTokenAddressIdenticon from '../../AppTokenAddressIdenticon/AppTokenAddressIdenticon';
+import AppGoToScanLink from '../../AppGoToScanLink/AppGoToScanLink';
 import useStyles from './styles';
 
-const AssetItemTokensTableShare = ({
-  token: { symbol, addrActive },
-  amount = '0',
-  share = 0,
-}) => {
+const AssetItemTokensTableShare = ({ token }) => {
   const classes = useStyles();
+
+  if (!token) {
+    return null;
+  }
+
+  const { symbol, addrActive, share, amount } = token;
 
   return (
     <TableRow className={classes.root}>
@@ -24,8 +25,11 @@ const AssetItemTokensTableShare = ({
         </Box>
       </TableCell>
 
-      <TableCell className={classes.address} align="center">
-        <AppEtherAddress address={addrActive} />
+      <TableCell align="center">
+        <Box className={classes.address}>
+          <AppEtherAddress address={addrActive} />
+          <AppGoToScanLink address={addrActive} />
+        </Box>
       </TableCell>
 
       <TableCell align="right">
@@ -50,9 +54,4 @@ const AssetItemTokensTableShare = ({
   );
 }
 
-const mapStateToProps = (state, { token }) => ({
-  share: s.selectAssetInTokenShare(state, token.addrActive, token.amount),
-  amount: s.selectFromWei(state, token.amount),
-});
-
-export default connect(mapStateToProps)(AssetItemTokensTableShare);
+export default AssetItemTokensTableShare;

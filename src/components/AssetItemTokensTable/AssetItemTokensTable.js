@@ -25,10 +25,10 @@ const titles = [
   { name: 'BALANCE', align: 'right', info: TOKEN_BALANCE },
 ];
 
-const AssetItemTokensTable = ({ tokensList = [] }) => {
+const AssetItemTokensTable = ({ tokensList }) => {
   const classes = useStyles();
 
-  if (!tokensList.length) {
+  if (!tokensList) {
     return null;
   }
 
@@ -49,7 +49,7 @@ const AssetItemTokensTable = ({ tokensList = [] }) => {
   );
 
   const tokens = tokensList.map((item) => (
-    <AssetItemTokensTableShare key={item.symbol} token={item}/>
+    <AssetItemTokensTableShare key={item.symbol} token={item} />
   ));
 
   return (
@@ -67,7 +67,7 @@ const AssetItemTokensTable = ({ tokensList = [] }) => {
 };
 
 const mapStateToProps = (state) => ({
-  tokensList: s.selectAssetInTokensList(state),
+  tokensList: s.selectAssetInTokensListWithLastPriceShares(state),
 });
 
 export default connect(mapStateToProps)(AssetItemTokensTable);

@@ -2,12 +2,10 @@ import { makeStyles, alpha } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    background: theme.palette.background.main,
+    width: '100%',
     borderRadius: theme.shape.borderRadius,
-    boxShadow: theme.shadows[3],
   },
   table: {
-    width: 'unset',
     '& .MuiTableCell-root': {
       borderColor: theme.palette.background.secondary,
       padding: theme.spacing(0.5, 1),

@@ -9,17 +9,16 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: 0,
     display: 'flex',
     justifyContent: 'flex-start',
-    flexWrap: 'wrap',
     '& > li': {
       width: 'unset',
       padding: '0',
       margin: theme.spacing(0.25),
     },
+    overflowX: 'hidden',
   },
   text: {
     color: alpha(theme.palette.common.white, 0.5),
     textAlign: 'left',
-    paddingLeft: theme.spacing(0.5),
     userSelect: 'none',
   },
   infoButton: {
@@ -27,7 +26,21 @@ const useStyles = makeStyles((theme) => ({
   },
   infoPaper: {
     maxWidth: 'unset',
-    width: theme.spacing(36.5),
+    width: theme.spacing(37),
+    maxHeight: theme.spacing(27),
+    padding: theme.spacing(0.5),
+    overflowY: 'auto',
+    '&::-webkit-scrollbar': {
+      width: '4px',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: alpha(theme.palette.common.white, 0.5),
+      borderRadius: '2px',
+    },
+    '&::-webkit-scrollbar-track': {
+      backgroundColor: 'transparent',
+      borderRadius:'2px',
+    },
   },
 }));
 

@@ -7,10 +7,10 @@ import { getChartColors } from '../../helpers';
 import { chartOptions } from './chartOptions';
 import useStyles from './styles';
 
-const AssetItemTokensChart = ({ items, tokensPrices, assetInPrice }) => {
+const AssetItemTokensChart = ({ tokens }) => {
   const classes = useStyles();
 
-  if (!items || !tokensPrices || !assetInPrice) {
+  if (!tokens) {
     return null;
   }
 
@@ -19,12 +19,12 @@ const AssetItemTokensChart = ({ items, tokensPrices, assetInPrice }) => {
   const hoverBackgroundColor = [];
   const data = [];
 
-  items.forEach(({ symbol }, idx) => {
+  tokens.forEach(({ symbol, share }, idx) => {
     const { color, hoverColor } = getChartColors(idx);
     labels.push(symbol);
     backgroundColor.push(color);
     hoverBackgroundColor.push(hoverColor);
-    data.push((tokensPrices[idx] / assetInPrice * 100).toFixed(2));
+    data.push((share * 100).toFixed(2));
   });
 
   return (
@@ -46,9 +46,7 @@ const AssetItemTokensChart = ({ items, tokensPrices, assetInPrice }) => {
 };
 
 const mapStateToProps = (state) => ({
-  items: s.selectAssetInTokensList(state),
-  tokensPrices: s.selectAssetInAllTokensPriceForAmountByAddress(state),
-  assetInPrice: s.selectAssetInPriceForAmount(state),
+  tokens: s.selectAssetInTokensListWithLastPriceShares(state),
 });
 
 export default connect(mapStateToProps)(AssetItemTokensChart);

@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(0.5),
   },
   text: {
+    height: '2.2rem',
     color: theme.palette.common.white,
     fontSize: '1.875rem',
     fontWeight: theme.typography.fontWeightMedium,
