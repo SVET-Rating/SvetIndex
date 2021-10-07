@@ -15,7 +15,7 @@ copyFile(
         contracts[netKey]["deploy"][contractName].address = "";
       }
     } else if (myArgs[1] === "mainnet") {
-      const contList = ["Experts", "Exchange", "OraclePrice", "OracleCircAmount",  "OracleTotSupply", "Index2SwapEthMarket", "IndexFactory", "Lstorage",  "IndexStorage", "SVTtst"];
+      const contList = ["Experts", "Exchange", "OraclePrice", "OracleCircAmount",  "OracleTotSupply", "Index2SwapEthMarket", "IndexFactory", "Lstorage",  "IndexStorage"/* , "SVTtst" */];
       for (const contractName of contList) {
         contracts[netKey]["deploy"][contractName].address = "";
       }
