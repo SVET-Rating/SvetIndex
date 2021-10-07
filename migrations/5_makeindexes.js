@@ -45,11 +45,11 @@ await deployer.deploy(IndexToken,'Svet index 1', 'SVI1');
  const trIndex1 = await index_factory.makeIndex(index_token1.address,
           [tokens[netKey].Bytom.address,
           tokens[netKey].WaykiChain.address,
-          tokens[netKey].Kyber.address], 
+          tokens[netKey].Kyber.address],
           [ 2624,
             3774,
             3601] ); //in WEI
-console.log(trIndex1.tx);       
+console.log(trIndex1.tx);
 
  //const index_token2 = await deployer.deploy(IndexToken,'Svet index 2', 'SVI2');
 await deployer.deploy(IndexToken,'Svet index BTC-stable', 'SVI3');
@@ -85,7 +85,7 @@ const trIndex5 = await index_factory.makeIndex(index_token5.address,
     tokens[netKey]["DuckDaoDime"]["address"],
     tokens[netKey]["Solana"]["address"],
     tokens[netKey]["PancakeSwap"]["address"],
-    tokens[netKey]["Decentraland"]["address"], 
+    tokens[netKey]["Decentraland"]["address"],
     tokens[netKey]["Trustswap"]["address"]
   ],
   [1000, 1000, 1000, 1000,1000, 1000,1000, 1000,1000, 1000]); //in WEI
@@ -102,7 +102,7 @@ Economic Class Index
  */
 /* var isindexexist = await indexstorage.indexes('EconomicClassIndex', 'SECI' ) ;
 console.log ("EconomicClassIndex ",  isindexexist);
-if (isindexexist == "0x0000000000000000000000000000000000000000") 
+if (isindexexist == "0x0000000000000000000000000000000000000000")
   {
   await deployer.deploy(IndexToken,'EconomicClassIndex', 'SECI', contracts[netKey]["deploy"]["Lstorage"]["address"]);
   const index_tokenSECI = await IndexToken.deployed();
@@ -114,7 +114,7 @@ if (isindexexist == "0x0000000000000000000000000000000000000000")
     // contracts[netKey]["deploy"] ["SVTtst"]["address"],
 
     ],
-    [web3.utils.toWei('0.3','ether'), 
+    [web3.utils.toWei('0.3','ether'),
     web3.utils.toWei('0.4','ether'),
      web3.utils.toWei('0.3','ether')]); //in WEI web3.utils.toWei('0.1','ether')
 console.log(trIndex5.tx);} */
@@ -128,7 +128,7 @@ Mare Tranquillitatis (The Sea of Tranquillity) Index
 
 var isindexexist = await indexstorage.indexes('The Sea of Tranquillity) Index', 'SSTI');
 console.log ("The Sea of Tranquillity) Index: ",  isindexexist);
-if ( isindexexist == "0x0000000000000000000000000000000000000000") 
+if ( isindexexist == "0x0000000000000000000000000000000000000000")
   {
   await deployer.deploy(IndexToken,'The Sea of Tranquillity) Index', 'SSTI', contracts[netKey]["deploy"]["Lstorage"]["address"]);
   const index_tokenSSTI = await IndexToken.deployed();
@@ -141,7 +141,7 @@ if ( isindexexist == "0x0000000000000000000000000000000000000000")
     ['3000000000000000000000', // 3000 DAI decimals = 18
      '40000000000000000', //0.04 wbtc decimals = 18
      '3000000000000000000000'
-  ]); 
+  ]);
   console.log(trIndex6.tx);
   } */
 /**
@@ -153,7 +153,7 @@ if ( isindexexist == "0x0000000000000000000000000000000000000000")
 /* var isindexexist = await indexstorage.indexes('50CentsIndex', 'S50I');
 console.log ("50CentsIndex ",  isindexexist);
 
-if (isindexexist == "0x0000000000000000000000000000000000000000") 
+if (isindexexist == "0x0000000000000000000000000000000000000000")
   {
 await deployer.deploy(IndexToken,'50CentsIndex', 'S50I', contracts[netKey]["deploy"]["Lstorage"]["address"]);
 const index_tokenS50I = await IndexToken.deployed();
@@ -165,14 +165,14 @@ const trIndex7 = await index_factory.makeIndex(index_tokenS50I.address,
    // contracts[netKey]["1INCH"] ["SVTtst"]["address"],
 
   ],
-  [web3.utils.toWei('0.47','ether'), 
+  [web3.utils.toWei('0.47','ether'),
   web3.utils.toWei('0.47','ether'),
    web3.utils.toWei('1','ether')]); //in WEI
 console.log(trIndex7.tx);
 
   } */
 /**
- * Play No Pey Index: 
+ * Play No Pey Index:
 
 1) Decentraland (MANA): 20%
 2) decentral.games ($DG): 20%
@@ -181,7 +181,7 @@ console.log(trIndex7.tx);
 5) Aavegotchi GHST Token (GHST): 20%
  */
 isindexexist = await indexstorage.indexes('Play No Pey Index', 'PNPI');
-if ( isindexexist == "0x0000000000000000000000000000000000000000") 
+if ( isindexexist == "0x0000000000000000000000000000000000000000")
   {
   await deployer.deploy(IndexToken,'Play No Pey Index', 'PNPI', contracts[netKey]["deploy"]["Lstorage"]["address"]);
   const index_tokenSSTI = await IndexToken.deployed();
@@ -192,12 +192,12 @@ if ( isindexexist == "0x0000000000000000000000000000000000000000")
       tokens[netKey]["AavegotchiPOS"]["address"]
 
     ],
-    ['100000000000000000000', // 2 MANA decimals = 18
-     '10000000000000000000', 
-     '100000000000000000000',
+    ['10000000000000000000', // 10 MANA decimals = 18
+     '10000000000000000', // 0.01 $DC
+     '10000000000000000000', // 10 GHST
     //  '2000000000000000000',
     //  '2000000000000000000',
-     ]); 
+     ]);
   console.log(trIndex6.tx);
   }
   /**
@@ -211,7 +211,7 @@ Port Royal Index:
 5) Quickswap (QUICK): 20%
    */
   isindexexist = await indexstorage.indexes('Port Royal Index', 'PRI');
-  if ( isindexexist == "0x0000000000000000000000000000000000000000") 
+  if ( isindexexist == "0x0000000000000000000000000000000000000000")
     {
     await deployer.deploy(IndexToken,'Port Royal Index', 'PRI', contracts[netKey]["deploy"]["Lstorage"]["address"]);
     const index_tokenSSTI = await IndexToken.deployed();
@@ -220,10 +220,10 @@ Port Royal Index:
       [tokens[netKey]["SushiTokenPOS"]["address"],
         tokens[netKey]["1INCHPOS"]["address"],
         tokens[netKey]["Quickswap"]["address"]
-  
+
       ],
       ['10000000000000000000', // 10 SushiTokenPOS decimals = 18
-       '100000000000000000000', // 100  1INCHPOS
+       '100000000000000000', // 0.1  1INCHPOS
        '1000000000000000000' // 1Quickswap
         // '2000000000000000000',
         // '2000000000000000000',
@@ -241,7 +241,7 @@ Port Royal Index:
      */
 
 /* isindexexist = await indexstorage.indexes('The Hulk-Ohm Index', 'HOI');
-if ( isindexexist == "0x0000000000000000000000000000000000000000") 
+if ( isindexexist == "0x0000000000000000000000000000000000000000")
   {
   await deployer.deploy(IndexToken,'The Hulk-Ohm Index', 'HOI', contracts[netKey]["deploy"]["Lstorage"]["address"]);
   const index_tokenSSTI = await IndexToken.deployed();
@@ -272,7 +272,7 @@ if ( isindexexist == "0x0000000000000000000000000000000000000000")
  */
 
 isindexexist = await indexstorage.indexes('Lighthouse of Alexandria Index:', 'LAI');
-if ( isindexexist == "0x0000000000000000000000000000000000000000") 
+if ( isindexexist == "0x0000000000000000000000000000000000000000")
   {
   await deployer.deploy(IndexToken,'Lighthouse of Alexandria Index:', 'LAI', contracts[netKey]["deploy"]["Lstorage"]["address"]);
   const index_tokenSSTI = await IndexToken.deployed();
@@ -284,12 +284,12 @@ if ( isindexexist == "0x0000000000000000000000000000000000000000")
       tokens[netKey]["USDT"]["address"],
     ],
     ['1000000000000000000', // 1 DAI decimals = 18
-     '1000000000000000000', // 1 PUSD 
+     '10000000000000000', // 0.01 PUSD
      '1000000000000000000', // 1 USDC decimals = 18
      '1000000000000000000', // 1 USDT decimals = 18
-  ]); 
+  ]);
   console.log(trIndex6.tx);
-  } else 
+  } else
   {
     console.log ("Lighthouse of Alexandria Index:: ",  isindexexist);
 
