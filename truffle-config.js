@@ -82,7 +82,7 @@ module.exports = {
     // network_id: 2111,   // This network is yours, in the cloud.
     // production: true    // Treats this network as if it was a public net. (default: false)
     // }
-    pl: {  provider: () => new HDWalletProvider({
+    plloc: {  provider: () => new HDWalletProvider({
       privateKeys: [`b8c1b5c1d81f9475fdf2e334517d29f733bdfa40682207571b12fc1142cbf329`],
       providerOrUrl: `http://localhost:8555`,
       // https://ropsten.infura.io/v3/3362483b5eab409ea69e99f99aefd67a", // Endpoint of an node to connect to. Can be on localhost or on the internet
@@ -97,6 +97,14 @@ module.exports = {
 // rm -r ../ganache_poly && ganache-cli -m "clutch captain shoe salt awake harvest setup primary inmate ugly among become" -f 'https://polygon-mainnet.infura.io/v3/753a98a2eb6c4d64918829f47d069440' -u 0xa0df350d2637096571F7A701CBc1C5fdE30dF76A --db ../ganache_poly  -p 8555 -g 20 -e 1000
 
   },
+  pl: {  provider: () => new HDWalletProvider({
+    privateKeys: [`${PRIVATE_KEY}`],
+    providerOrUrl: `https://polygon-mainnet.infura.io/v3/42562fc1754d4557a37d54da6d89a313`,
+   
+  }),
+  network_id: 137,       // Ropsten's id
+ 
+},
   },
   // Set default mocha options here, use special reporters etc.
   mocha: {

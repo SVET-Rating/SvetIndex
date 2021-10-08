@@ -27,7 +27,7 @@ for (contractName of Object.keys(contracts[netKey]["deploy"])) {
   if (contract.address == '') {
      console.log("couldn't find, deploy contracts as new:",  contractName);
      if (contractName == "SVTtst") { 
-        await deployer.deploy(curContract, "SvetToken", "SVT", web3.utils.toWei("21000000" ))}
+        await deployer.deploy(curContract, "SvetTokenTest", "SVTtst", "42")}
      else if  (contractName == "UniswapV2Factory") { 
         await deployer.deploy(curContract, admin)}
       else if  (contractName == "UniswapV2Router02") { 

@@ -107,7 +107,7 @@ module.exports = {
     ]
   },
 
-  pl: {
+  plloc: {
      endpoint: "http://127.0.0.1:8555",
      // endpoint: "https://ropsten.infura.io/v3/6e8c03180136466e82539db7eae2ae42", // Endpoint of an node to connect to. Can be on localhost or on the internet
       // 6e8c03180136466e82539db7eae2ae42
@@ -118,8 +118,14 @@ module.exports = {
         }
       ]
     },
-  // you can name an environment with specific settings and then specify with
-  // "embark run custom_name" or "embark blockchain custom_name"
-  //custom_name: {
+    pl: {
+      endpoint: "https://polygon-mainnet.infura.io/v3/42562fc1754d4557a37d54da6d89a313",
+       accounts: [
+         {
+           privateKey:`${PRIVATE_KEY}` ,// process.env.privKey,
+         }
+       ]
+     },
+
   //}
 };
