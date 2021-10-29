@@ -8,8 +8,16 @@ import AssetItem from '../AssetItem/AssetItem';
 import OrbitLoader from '../loaders/OrbitLoader/OrbitLoader';
 import useStyles from './styles';
 
-const AssetsList = ({ assetsList = [] }) => {
+const AssetsList = ({ assetsList = [], chainId }) => {
   const classes = useStyles();
+
+  if (chainId && chainId !== 137) {
+    return (
+      <Box className={classes.rootLoading}>
+        Connect to polygon to launch SVET Index application!
+      </Box>
+    );
+  }
 
   if (!assetsList.length) {
     return (
@@ -115,6 +123,7 @@ const AssetsList = ({ assetsList = [] }) => {
 
 const mapStateToProps = (state) => ({
   assetsList: s.selectAssetsList(state),
+  chainId: s.selectChainId(state),
   // indexList: indexListWithBalance(state),
   // contractsList: getContractList(state),
   // svetTokensAmount: getContract(

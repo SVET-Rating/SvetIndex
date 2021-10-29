@@ -13,6 +13,9 @@ import useStyles from './styles';
 const App = ({ isInitialized, initialize }) => {
   useEffect(() => {
     initialize();
+    const handleChainChanged = () => { window.location.reload(); }
+    window.ethereum.on('chainChanged', handleChainChanged)
+    return () => { window.ethereum.removeListener('chainChanged', handleChainChanged) }
   }, []);
 
   const classes = useStyles();

@@ -13,9 +13,49 @@ import {
   ERC20, IndexToken, Experts, Exchange, SVTtst,
 } from "../embarkArtifacts/contracts";
 
+const switchToPoligon = async () => {
+  try {
+    await window.ethereum.request({
+      method: 'wallet_switchEthereumChain',
+      params: [{ chainId: '0x89' }],
+    });
+  } catch (switchError) {
+    if (switchError.code !== 4902) {
+      alert('Connect to polygon to launch SVET Index application!')
+    }
+
+    try {
+      await window.ethereum.request({
+        method: 'wallet_addEthereumChain',
+        params: [
+          {
+            "chainId": "0x89",
+            "chainName": "Polygon",
+            "nativeCurrency": {
+              "name": "Matic",
+              "symbol": "MATIC",
+              "decimals": 18
+            },
+            "rpcUrls": [
+              "https://polygon-mainnet.infura.io/v3/42562fc1754d4557a37d54da6d89a313"
+            ],
+            "blockExplorerUrls": [
+              "https://polygonscan.com/"
+            ]
+          }
+        ],
+      });
+    } catch (addError) {
+      window.location.reload();
+    }
+  }
+}
+
 export const setupWeb3 = async (store) => {
   try {
     await EmbarkJs.enableEthereum();
+
+    await switchToPoligon()
 
     return new Promise((ok, ko) => {
       EmbarkJs.onReady(async () => {
