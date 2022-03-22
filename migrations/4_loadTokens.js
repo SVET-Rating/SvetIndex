@@ -5,7 +5,7 @@ const Router = artifacts.require('UniswapV2Router02.sol');
 const WETH = artifacts.require('WETH.sol');
 const Experts = artifacts.require('Experts.sol');
 const Exchange = artifacts.require('Exchange.sol');
-const Index2Swap = artifacts.require('Index2Swap.sol');
+const Index2Swap = artifacts.require('Index2SwapEthMarket.sol');
 const IndexFactory = artifacts.require('IndexFactory.sol');
 const IndexStorage = artifacts.require('IndexStorage.sol');
 const IndexToken = artifacts.require('IndexToken.sol');
@@ -25,10 +25,11 @@ module.exports = async function(deployer,_network, addresses) {
     const admin = addresses[0];
 
     const ethLiq = 0.1;
-    const ethPrice = 1; //prices in eth
-    const svtPrice = "0.000027027027" //0.1/3700; eth
+    const ethPrice = 1.43; //prices in MATIC
+    const svtPrice = "0.1"// 0.000017391 = 0.04/2337 eth
     var netKey;
-    if (_network == "ropsten" || _network == "mainnet" || _network == "ganache") {
+
+    if (_network == "ropsten" || _network == "ganache" ||  _network == "pl" || _network == "mainnet" ) {
         netKey = _network;
     } else
     {
@@ -76,21 +77,39 @@ module.exports = async function(deployer,_network, addresses) {
         else {
                 console.log("try to find token",  tokenName, token.address);
                 contractTok = await   MockERC20.at(token.address);
+                const sym =  await contractTok.symbol();
+                if (sym != token.symbol) {
+                    console.log(sym, "!=", token.symbol );
+                }
                 }  
-        console.log ("adding price", tokenName );    
+       // console.log ("adding price", tokenName );    
 
-        await oracle_price.addPrice( tokens[netKey][tokenName].address,  web3.utils.toWei(token.priceETH.toString(), "ether")) ;
+       // await oracle_price.addPrice( tokens[netKey][tokenName].address, "0");  //web3.utils.toWei(token.priceETH.toString(), "ether")) ;
                     //await oracle_circ_amount.addamount(token.address,  web3.utils.toBN(1374417194));
                 //    await oracle_tot_supply.addamount(token.address,  web3.utils.toBN(2100000000));
     }
 
 
-    await oracle_price.addPrice(weth.address, web3.utils.toWei(ethPrice.toString()));
-    await oracle_price.addPrice(svtT.address, web3.utils.toWei(svtPrice.toString()));
+    //await oracle_price.addPrice(weth.address, 0)// web3.utils.toWei(ethPrice.toString()));
+    //await oracle_price.addPrice(svtT.address, web3.utils.toWei("0.1")); //svtPrice.toString()    ));
+    if ( _network == "pl" || _network == "mainnet") {
 
-    
+    } else
+    {
+
+   let tAmount0 = (ethLiq / svtPrice) 
+   let tAmount =  web3.utils.toWei( tAmount0.toString(), "ether")
+   await   svtT.approve (router.address,tAmount) ;
+   console.log("tokenName:", "SVT", "tAmount:", tAmount0, tAmount);
+   await router.addLiquidityETH(svtT.address,
+    tAmount,
+    tAmount,
+    web3.utils.toWei(ethLiq.toString(),'ether'),
+    admin, 
+    Math.round(Date.now()/1000)+100*60,
+    {from:admin, value: web3.utils.toWei(ethLiq.toString(),'ether')});
     }
-
+}
 /**
  * const tokenA = await MockERC20.new('Bytom','BTM',web3.utils.toWei('100000000000','ether'));
     const tokenB = await MockERC20.new('WaykiChain', 'WIC', web3.utils.toWei('10000000000','ether'));

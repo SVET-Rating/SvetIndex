@@ -4,8 +4,8 @@ import { contractInfo } from './contractSettingTool';
 
 import OraclePrice from '../contracts/OraclePrice.json';
 import OracleCircAmount from '../contracts/OracleCircAmount.json';
-import OracleTotSupply from '../contracts/Index2Swap.json';
-import Index2Swap from '../contracts/IndexFactory.json';
+import OracleTotSupply from '../contracts/OracleTotSupply.json';
+import Index2Swap from '../contracts/Index2SwapEthMarket.json';
 import IndexFactory from '../contracts/IndexFactory.json';
 import Lstorage from '../contracts/Lstorage.json';
 import IndexStorage from '../contracts/IndexStorage.json';
@@ -24,7 +24,7 @@ const addContractsVtxStore = (net_id, store) => {
                         IndexStorage,
                         ERC20,IndexToken,
                         Experts,Exchange,SVTtst]
-    
+
     //initialize contract store
     VtxContract.init(store);
 
@@ -35,17 +35,17 @@ const addContractsVtxStore = (net_id, store) => {
             bin: contractInfoObject.bytecode,
             permanent: true
         });
-       
+
     });
-    
+
     currentContracts.map((jsonFile,key) => {
         loadContractInstance(store.dispatch, contractInfoObject.name, contractInfoObject.address, {
             permanent: true ,
             alias: contractInfoObject.name
         });
     });
-    
-    
+
+
 
 
 }

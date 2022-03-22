@@ -9,7 +9,7 @@ module.exports = async function(deployer,_network, addresses) {
     const [admin,user1] = addresses;
 
 var netKey;
-if (_network == "ropsten" || _network == "mainnet" || _network == "ganache") {
+if (_network == "ropsten" || _network == "mainnet" || _network == "ganache" || _network == "pl") {
     netKey = _network;
 } else
 {
@@ -27,7 +27,7 @@ for (contractName of Object.keys(contracts[netKey]["deploy"])) {
   if (contract.address == '') {
      console.log("couldn't find, deploy contracts as new:",  contractName);
      if (contractName == "SVTtst") { 
-        await deployer.deploy(curContract, "SvetToken", "SVT", web3.utils.toWei("21000000" ))}
+        await deployer.deploy(curContract, "SvetTokenTest", "SVTtst", "42")}
      else if  (contractName == "UniswapV2Factory") { 
         await deployer.deploy(curContract, admin)}
       else if  (contractName == "UniswapV2Router02") { 
@@ -56,27 +56,28 @@ for (contractName of Object.keys(contracts[netKey]["deploy"])) {
     
     await deplContract["Experts"].addExpert(admin);
     await deplContract["OraclePrice"].setExpertsContr(deplContract["Experts"].address);
-    await deplContract["OracleTotSupply"].setExpertsContr(deplContract["Experts"].address);
-    await deplContract["OracleCircAmount"].setExpertsContr(deplContract["Experts"].address);
+    await deplContract["OraclePrice"].setRouter(deplContract["UniswapV2Router02"].address);
+    // await deplContract["OracleTotSupply"].setExpertsContr(deplContract["Experts"].address);
+    // await deplContract["OracleCircAmount"].setExpertsContr(deplContract["Experts"].address);
 
     await  deplContract["Exchange"].setPriceOracle(deplContract["OraclePrice"].address);  
 
     
-   // await  deplContract["Index2Swap"].setSwap(deplContract["UniswapV2Router02"].address ),
+   // await  deplContract["Index2SwapEthMarket"].setSwap(deplContract["UniswapV2Router02"].address ),
    // await index2swap.set(SvetToken.address, oracle_price.address, lstorage.address );
     await deplContract["IndexFactory"].setPriceOracle(deplContract["OraclePrice"].address);
     await deplContract["IndexFactory"].setAmountOracle(deplContract["OracleCircAmount"].address);
     await deplContract["IndexFactory"].setIndexStorage(deplContract["IndexStorage"].address);
     await deplContract["IndexFactory"].setTotSupply(deplContract["OracleTotSupply"].address);
     // Lstorage
-    await deplContract["Lstorage"].setswap(deplContract["Index2Swap"].address);
+    await deplContract["Lstorage"].setswap(deplContract["Index2SwapEthMarket"].address);
     await deplContract["IndexStorage"].setFactory(deplContract["IndexFactory"].address);
     
     await deplContract["Exchange"].setBA(deplContract["SVTtst"].address);
-    await deplContract["SVTtst"].transfer(deplContract["Index2Swap"].address, web3.utils.toWei("20000", "ether"));
-    await deplContract["SVTtst"].approve(deplContract["Index2Swap"].address, web3.utils.toWei('0.02','ether'), {from:admin});
-    await deplContract["Index2Swap"].set(deplContract["SVTtst"].address, deplContract["OraclePrice"].address, deplContract["Lstorage"].address, deplContract["UniswapV2Router02"].address );
-    
+    // await deplContract["SVTtst"].transfer(deplContract["Index2SwapEthMarket"].address, web3.utils.toWei("20000", "ether"));
+    // await deplContract["SVTtst"].approve(deplContract["Index2SwapEthMarket"].address, web3.utils.toWei('0.02','ether'), {from:admin});
+    await deplContract["Index2SwapEthMarket"].set(deplContract["SVTtst"].address, deplContract["OraclePrice"].address, deplContract["Lstorage"].address, deplContract["UniswapV2Router02"].address );
+  //  await deplContract["Index2SwapEthMarket"].setFees(100, 100); //0.1% for buy and sell
 
   
 };
