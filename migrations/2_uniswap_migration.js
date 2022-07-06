@@ -1,5 +1,9 @@
 
 var contracts = require("../embark4Contracts.json");
+const upgradeFlag= false; // change to true when upgrading
+const { deployProxy } = require('@openzeppelin/truffle-upgrades');
+const { upgradeProxy } = require('@openzeppelin/truffle-upgrades');
+
 var deplContract = {};
 
 const fs = require('fs');
@@ -34,7 +38,16 @@ for (contractName of Object.keys(contracts[netKey]["deploy"])) {
         if (deplContract["WETH"].address !=="" && deplContract["UniswapV2Factory"].address !== "") {
         await deployer.deploy(curContract, deplContract["UniswapV2Factory"].address, deplContract["WETH"].address )}}
       else {
-        await deployer.deploy(curContract);
+        if (!upgradeFlag) {
+          instanceStore = await deployProxy(curContract, { deployer });
+        //await deployer.deploy(curContract);
+        }
+        else {
+          const newStoreIOUs = artifacts.require("newStoreIOUs");
+      
+          instanceStore = await upgradeProxy(Curaddresses[networkId].StoreIOUs, newStoreIOUs, {deployer} );
+          console.log("New instanceStore: ", instanceStore.address)
+        }
    }
    
     deplContract[contractName] = await curContract.deployed();

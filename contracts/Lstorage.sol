@@ -1,6 +1,6 @@
 pragma solidity =0.6.12;
 
-import "@openzeppelin/contracts/math/SafeMath.sol";
+import "./openzeppelin-contracts/contracts/math/SafeMath.sol";
 import "./interfaces/iLstorage.sol";
 import "@openzeppelin/upgrades-core/contracts/Initializable.sol";
 

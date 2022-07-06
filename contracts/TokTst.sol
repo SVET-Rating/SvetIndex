@@ -1,14 +1,14 @@
 pragma solidity =0.6.12;
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "./openzeppelin-contracts/contracts/token/ERC20/ERC20Detailed.sol";
 //import "@openzeppelin/contracts/token/ERC20/ERC20Detailed.sol";
 
-contract TokTst is ERC20 {
+contract TokTst is ERC20Detailed {
     string private _name;
     string private _symbol;
     uint8 private _decimals;
 
   constructor (string memory name, string memory symbol, uint8 decimals ) public      
-        ERC20( name, symbol) {
+        ERC20Detailed( name, symbol, 18) {
       _name = name;
       _symbol = symbol;
        _decimals = 18;
