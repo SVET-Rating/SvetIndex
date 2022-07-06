@@ -1,15 +1,17 @@
 pragma solidity =0.6.12;
 pragma experimental ABIEncoderV2;
 import "./interfaces/iIndexStorage.sol";
+import "@openzeppelin/upgrades-core/contracts/Initializable.sol";
 
-contract IndexStorage is iIndexStorage {
+contract IndexStorage is iIndexStorage, Initializable {
     address owner;
     address factory; 
     mapping (bytes32 => address) internal Indexes ;
     
     IndexName[]  IndexList; //todo
     
-    constructor () public {
+    /* constructor */
+    function initialize () public {
         owner = msg.sender;
     }
 

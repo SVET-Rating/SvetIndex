@@ -11,8 +11,8 @@ const IndexStorage = artifacts.require('IndexStorage.sol');
 const IndexToken = artifacts.require('IndexToken.sol');
 const Lstorage = artifacts.require('Lstorage.sol');
 const OraclePrice = artifacts.require('OraclePrice.sol');
-const OracleTotSupply = artifacts.require('OracleTotSupply.sol');
-const OracleCircAmount = artifacts.require('OracleCircAmount.sol');
+// const OracleTotSupply = artifacts.require('OracleTotSupply.sol');
+// const OracleCircAmount = artifacts.require('OracleCircAmount.sol');
 const SvtT = artifacts.require('SVTtst.sol');
 
 var tokens = require ("../tokens.json");

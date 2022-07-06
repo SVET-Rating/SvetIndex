@@ -2,14 +2,17 @@ pragma solidity =0.6.12;
 
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "./interfaces/iLstorage.sol";
+import "@openzeppelin/upgrades-core/contracts/Initializable.sol";
 
-contract Lstorage is iLstorage {
+
+contract Lstorage is iLstorage, Initializable {
     using SafeMath  for uint;
     address owner;
     address swap;
     mapping  (address => mapping  (address => mapping (address =>  uint)))  liq; 
 
-        constructor () public {
+        /* constructor */
+    function initialize () public {
         owner = msg.sender;
     }
 

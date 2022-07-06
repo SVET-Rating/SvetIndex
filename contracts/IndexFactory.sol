@@ -3,25 +3,27 @@ pragma experimental ABIEncoderV2;
 
 import "./IndexToken.sol";
 import "./interfaces/iOraclePrice.sol";
-import "./interfaces/iOracleCircAmount.sol";
-import "./interfaces/iOracleTotSupply.sol";
+// import "./interfaces/iOracleCircAmount.sol";
+// import "./interfaces/iOracleTotSupply.sol";
 import "./interfaces/iIndexStorage.sol"; //todo intertface
+import "@openzeppelin/upgrades-core/contracts/Initializable.sol";
 
-contract IndexFactory  {
+contract IndexFactory is Initializable  {
 
     // is needed to list of products? 
 
     address owner;
     iOraclePrice oraclePrice;
-    iOracleCircAmount oracleCircAmount;
-    iOracleTotSupply oracleTotSupply;
+    // iOracleCircAmount oracleCircAmount;
+    // iOracleTotSupply oracleTotSupply;
     iIndexStorage indexStorage;
 
     function setOwner (address _newOwner) public onlyOwner {
         owner = _newOwner;
     }
 
-    constructor () public {
+    /* constructor */ 
+    function initialize() public {
         owner = msg.sender;
     }
 
@@ -40,15 +42,15 @@ contract IndexFactory  {
         oraclePrice = iOraclePrice(_addr);
         }
 
-    function setAmountOracle(address _addr) public onlyOwner
-        {
-        oracleCircAmount = iOracleCircAmount(_addr);
-        }
+    // function setAmountOracle(address _addr) public onlyOwner
+    //     {
+    //     oracleCircAmount = iOracleCircAmount(_addr);
+    //     }
 
-    function setTotSupply(address _addr) public onlyOwner
-        {
-        oracleTotSupply = iOracleTotSupply(_addr);
-        }
+    // function setTotSupply(address _addr) public onlyOwner
+    //     {
+    //     oracleTotSupply = iOracleTotSupply(_addr);
+    //     }
 
     
 

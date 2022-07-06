@@ -7,6 +7,8 @@ import "./interfaces/iLstorage.sol";
 import "./interfaces/IUniswapV2Factory.sol";
 import "./interfaces/IUniswapV2Pair.sol";
 import "./interfaces/IUniswapV2Router02.sol";
+import "@openzeppelin/upgrades-core/contracts/Initializable.sol";
+
 
 //import "@openzeppelin/contracts/math/SafeMath.sol";
 //import "./libraries/SafeMath.sol";
@@ -14,7 +16,7 @@ import "./interfaces/IUniswapV2Router02.sol";
 //import "./libraries/UniswapV2OracleLibrary.sol";
 
 
-contract Index2SwapEthMarket  {
+contract Index2SwapEthMarket is Initializable {
   //  using SafeMathUniswap for uint;
 
     /**
@@ -45,7 +47,8 @@ contract Index2SwapEthMarket  {
     uint16 public buyFee; // in tens promille (needs to div by 10000)
     uint16 public sellFee; // in tens promille (needs to div by 10000)
 
-    constructor () public  {
+    /* constructor */
+    function initialize () public  {
         owner = msg.sender;
     }
 

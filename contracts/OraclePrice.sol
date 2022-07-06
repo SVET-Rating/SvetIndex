@@ -9,10 +9,10 @@ import './libraries/FixedPoint.sol';
 
 import "./interfaces/IUniswapV2Router02.sol";
 import "./interfaces/iIndextoken.sol";
+import "@openzeppelin/upgrades-core/contracts/Initializable.sol";
 
 
-
-contract OraclePrice is iOraclePrice {
+contract OraclePrice is iOraclePrice, Initializable {
 
     iExperts experts;
     IUniswapV2Router02 uniswapV2Router02;
@@ -28,7 +28,8 @@ contract OraclePrice is iOraclePrice {
     address owner;
     address exchange;
 
-    constructor () public  {
+    /* constructor */
+    function initialize () public  {
         owner =  msg.sender;
     }
 

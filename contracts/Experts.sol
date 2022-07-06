@@ -1,10 +1,13 @@
 pragma solidity =0.6.12;
+import "@openzeppelin/upgrades-core/contracts/Initializable.sol";
  
 
-contract Experts {
+contract Experts is Initializable {
     address owner;
 
-    constructor ()  public {
+    /* constructor  */
+    
+    function initialize()  public {
         owner =  msg.sender;
     }
 

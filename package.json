@@ -80,6 +80,7 @@
     "@babel/core": "^7.13.14",
     "@babel/node": "^7.13.13",
     "@babel/preset-env": "^7.13.12",
+    "@openzeppelin/truffle-upgrades": "^1.15.0",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
     "nodemon": "^2.0.7"
